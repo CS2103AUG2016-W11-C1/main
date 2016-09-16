@@ -1,21 +1,21 @@
 # About Us
 
-** Kai Ling **
+## Kai Ling
 
 * [Main Role] Team Leader
 * [Backup Role]
 
-** Yi Hang **
+## Yi Hang
 
 * [Main Role]
 * [Backup Role]
 
-** Rong Hua **
+## Rong Hua
 
 * [Main Role]
 * [Backup Role]
 
-** Charlton **
+## Charlton
 
 * [Main Role]
 * [Backup Role]
