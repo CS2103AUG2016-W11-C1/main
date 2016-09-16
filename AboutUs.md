@@ -1,46 +1,46 @@
 # Roles
 
-** Kai Ling **
+**Kai Ling**
 
-* Main Role *
+*Main Role*
 
 1. Team Leader
 2. Documentation
 
-* Backup Role *
+*Backup Role*
 
 1. Test
 
-** Yi Hang **
+**Yi Hang**
 
-* Main Role *
+*Main Role*
 
 1. Code Quality
 2. Integration
 
-* Backup Role *
+*Backup Role*
 
 1. Test
 
-** Rong Hua **
+**Rong Hua**
 
-* Main Role *
+*Main Role*
 
 1. Test
 2. Intern
 
-* Backup Role *
+*Backup Role*
 
 1. Test
 
-** Charlton **
+**Charlton**
 
-* Main Role *
+*Main Role*
 
 1. Scheduling and Tracking
 2. Deliverables and Deadlines
 
-* Backup Role *
+*Backup Role*
 
 1. Test
 2. Documentation
