@@ -1,47 +1,37 @@
-# Roles
+# About us
 
-**Kai Ling**
+* [Role](#role)
+    * [Kai Ling](#kai-ling)
+    * [Yi Hang](#yi-hang)
+    * [Rong Hua](#rong-hua)
+    * [Charlton](#charlton)
+* [Contact](#contact)
 
-*Main Role*
+## Role
+
+#### Kai Ling
 
 1. Team Leader
 2. Documentation
 
-*Backup Role*
-
-1. Test
-
-**Yi Hang**
-
-*Main Role*
+#### Yi Hang
 
 1. Code Quality
 2. Integration
 
-*Backup Role*
-
-1. Test
-
-**Rong Hua**
-
-*Main Role*
+#### Rong Hua
 
 1. Test
 2. Intern
 
-*Backup Role*
-
-1. Test
-
-**Charlton**
-
-*Main Role*
+#### Charlton
 
 1. Scheduling and Tracking
 2. Deliverables and Deadlines
 
-*Backup Role*
+## Contact
 
-1. Test
-2. Documentation
-
+* Kai Ling (https://github.com/Kaiiiii)
+* Yi Hang (https://github.com/yihangho)
+* Rong Hua (https://github.com/Roahhh)
+* Charlton (https://github.com/cadmusthefounder)
