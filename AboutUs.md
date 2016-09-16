@@ -2,20 +2,20 @@
 
 ## Kai Ling
 
-* [Main Role] Team Leader
+* [Main Role] Team Leader, Documentation
 * [Backup Role]
 
 ## Yi Hang
 
-* [Main Role]
+* [Main Role] Code Quality, Integration,
 * [Backup Role]
 
 ## Rong Hua
 
-* [Main Role]
+* [Main Role] Intern
 * [Backup Role]
 
 ## Charlton
 
-* [Main Role]
+* [Main Role] Testing, Scheduling and Tracking, Deliverables and Deadlines
 * [Backup Role]
