@@ -1,4 +1,4 @@
-# About us
+# Hello from the other side
 
 #### Kai Ling (https://github.com/Kaiiiii)
 
