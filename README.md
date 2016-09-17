@@ -13,4 +13,5 @@
 7. Print feature. And ask intern to collect.
 8. Syntax highlighting for commands.
 9. Notifications.
+10. Mini window
 
