@@ -37,7 +37,7 @@
 Priorities: High (must have) - `* * *`, Medium (nice to have)  - `* *`,  Low (unlikely to have) - `*`
 
 
-Priority | As a ...  | I want to ...                             | So that I can...
+Priority | As a ...  | I want to ...                             | So that I can ...
 -------- | :-------- | :---------------------------------------  | :---------------
 `* * *`  | user      | see usage instructions                    | have a reference on how to use the App in the event that I do not know the commands or have forgotten them.
 `* * *`  | user      | add a new task                            |
