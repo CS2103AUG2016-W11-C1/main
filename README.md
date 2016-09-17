@@ -1,6 +1,6 @@
-# Linenux
+# Introduction
 
-* This is a CLI (Command Line Interface) Task Manager application written in OOP fashion.
+Linenux is a CLI (Command Line Interface) Task Manager application written in Java. Its goal is to serve users who prefer typing over clicking. Linenux's simple and natural syntax allows users to efficiently organize their schedule. Works offline.
 
 **Useful Links**
 * [User Guide](doc/UserGuide.md)
@@ -17,7 +17,8 @@
 7. Print feature. And ask intern to collect.
 8. Syntax highlighting for commands.
 9. Notifications.
-10. Mini window
+10. Mini-window mode.
+11. Quick launch App using keyboard shortcut.
 
 # Contributors
 
