@@ -17,7 +17,7 @@
 
 **Useful Links**
 * [User Guide](doc/UserGuide.md)
-* [Developer Guide](doc/DeveloperGuide.md)
+* [Developer Guide](doc/DeveloperGuide.md/#testing)
 
 # Contributors
 
