@@ -6,7 +6,7 @@
 * [User Guide](doc/UserGuide.md)
 * [Developer Guide](doc/DeveloperGuide.md)
 
-# Features to implement
+# Upcoming Features
 
 1. Undo function (stack of 3).
 2. Set reminders.
