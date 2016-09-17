@@ -30,15 +30,32 @@
 
 ## Testing
 
-* In Eclipse, right-click on the `test/java` folder and choose `Run as` > `JUnit Test`
+* In Eclipse, right-click on the `test` folder and choose `Run as` > `JUnit Test`
 
 ## Appendix A : User Stories
 
 Priorities: High (must have) - `* * *`, Medium (nice to have)  - `* *`,  Low (unlikely to have) - `*`
 
 
-Priority | As a ... | I want to ... | So that I can...
--------- | :-------- | :--------- | :-----------
+Priority | As a ...  | I want to ...                             | So that I can...
+-------- | :-------  | :---------------------------------------  |  :---------------
+`* * *`  | user      | see usage instructions                    | have a reference on how to use the App in the event that I do not know the commands or have forgotten them.
+`* * *`  | user      | add a new task                            |
+`* * *`  | user      | edit a task                               | update the deadlines or other details regarding the task.
+`* * *`  | user      | delete a task                             | remove tasks that I no longer need.
+`* * *`  | user      | search a task                             | check the details of the task.
+`* * *`  | user      | list tasks by day or deadlines            | plan ahead.
+`* * *`  | user      | undo previous commands                    | correct any erroneous actions.
+`* *`    | user      | set reminders for tasks                   | make preperations before their stipulated deadlines.
+`* *`    | user      | have multiple language support            | choose my preferred working language.
+`* *`    | user      | find free time slots                      | make appointments with others.
+`* *`    | user      | have a day/week/month view                | more easily digest the information.
+`* *`    | user      | print the schedule for the day/week/month | have a hard copy of my schedule.
+`* *`    | user      | sync with Google Calendar                 | have the option to view on any devices with access to the Internet.
+`*`      | user      | see syntax highlighting                   | more easily discern special keywords and commands.
+`*`      | user      | see notifications                         | be constantly reminded without having to open the App.
+`*`      | user      | have a mini-window mode                   | the application does not take up the whole screen.
+
 
 ## Appendix B : Use Cases
 
