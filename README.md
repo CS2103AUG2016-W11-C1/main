@@ -15,3 +15,11 @@
 9. Notifications.
 10. Mini window
 
+**Useful Links**
+* [User Guide](doc/UserGuide.md)
+* [Developer Guide](doc/DeveloperGuide.md)
+
+# Contributors
+
+* [Kai Ling](doc/AboutUs.md/#kai-ling)
+
