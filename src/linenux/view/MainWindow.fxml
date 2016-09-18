@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox prefHeight="300.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="linenux.view.MainWindowController">
+   <children>
+      <TextArea fx:id="outputConsole" prefHeight="249.0" prefWidth="500.0" styleClass="text-area" stylesheets="@DarkTheme.css" />
+      <TextField fx:id="commandInput" onAction="#onCommand" prefHeight="52.0" prefWidth="500.0" styleClass="text-field" stylesheets="@DarkTheme.css" />
+   </children>
+</VBox>
