@@ -9,6 +9,7 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.fxml.FXMLLoader;
 
 /**
@@ -17,6 +18,7 @@ import javafx.fxml.FXMLLoader;
 
 public class Main extends Application implements Stoppable {
 
+    public static final String APP_NAME = "Linenux";
     public static final String VERSION = "Linenux - Version 0.1";
 
     public static final int INITIAL_CONSOLE_WIDTH = 800;
@@ -29,9 +31,13 @@ public class Main extends Application implements Stoppable {
     // TODO: Handle general exception & make TextArea keyboard insensitive.
     @Override
     public void start(Stage primaryStage) throws Exception {
-        ConsoleController consoleController = setUpConsole(primaryStage);
-        consoleController.setControlUnit(new ControlUnit());
-        consoleController.displayWelcomeMessage(VERSION);
+        try {
+            ConsoleController consoleController = setUpConsole(primaryStage);
+            consoleController.setControlUnit(new ControlUnit());
+            consoleController.displayWelcomeMessage(VERSION);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -44,7 +50,9 @@ public class Main extends Application implements Stoppable {
     private ConsoleController setUpConsole(Stage primaryStage) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(Main.class.getResource("view/Console.fxml"));
-        primaryStage.setTitle(VERSION);
+        primaryStage.setTitle(APP_NAME);
+        // TODO: Fix icon
+        primaryStage.getIcons().add(new Image("file:view/images/terminal.png"));
         primaryStage.setScene(new Scene(loader.load(), INITIAL_CONSOLE_WIDTH, INITIAL_CONSOLE_HEIGHT));
         primaryStage.show();
         return loader.getController();
