@@ -1,8 +1,6 @@
-package linenux.data;
+package linenux.model;
 
 import java.util.ArrayList;
-
-import linenux.data.task.Task;
 
 /**
  * Represents the entire schedule.

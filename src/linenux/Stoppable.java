@@ -1,8 +1,9 @@
 package linenux;
 
 /**
- * An application that can be stopped by calling the stop() method.
+ * Stops all processes in the application.
  */
+
 public interface Stoppable {
     public void stop() throws Exception;
 }

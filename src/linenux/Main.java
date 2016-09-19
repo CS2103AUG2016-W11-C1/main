@@ -1,26 +1,37 @@
 package linenux;
 
-import linenux.logic.Logic;
-import linenux.view.Gui;
+import linenux.control.ControlUnit;
+import linenux.view.ConsoleController;
+
+import java.io.IOException;
 
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
+import javafx.scene.Scene;
+import javafx.fxml.FXMLLoader;
 
 /**
- * Main entry point to the application.
+ * Main program for Linenux.
  */
+
 public class Main extends Application implements Stoppable {
 
-    /** Version information of the program. */
     public static final String VERSION = "Linenux - Version 0.1";
 
-    private Gui gui;
+    public static final int INITIAL_CONSOLE_WIDTH = 800;
+    public static final int INITIAL_CONSOLE_HEIGHT = 500;
+    
+    public static void main(String args) {
+        launch(args);
+    }
 
+    // TODO: Handle general exception & make TextArea keyboard insensitive.
     @Override
     public void start(Stage primaryStage) throws Exception {
-        gui = new Gui(new Logic(), VERSION);
-        gui.start(primaryStage, this);
+        ConsoleController consoleController = setUpConsole(primaryStage);
+        consoleController.setControlUnit(new ControlUnit());
+        consoleController.displayWelcomeMessage(VERSION);
     }
 
     @Override
@@ -30,7 +41,12 @@ public class Main extends Application implements Stoppable {
         System.exit(0);
     }
 
-    public static void main(String args) {
-        launch(args);
+    private ConsoleController setUpConsole(Stage primaryStage) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(Main.class.getResource("view/Console.fxml"));
+        primaryStage.setTitle(VERSION);
+        primaryStage.setScene(new Scene(loader.load(), INITIAL_CONSOLE_WIDTH, INITIAL_CONSOLE_HEIGHT));
+        primaryStage.show();
+        return loader.getController();
     }
 }

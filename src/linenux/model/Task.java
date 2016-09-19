@@ -1,4 +1,4 @@
-package linenux.data.task;
+package linenux.model;
 
 import java.time.LocalDateTime;
 
