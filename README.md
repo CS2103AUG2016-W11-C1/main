@@ -1,5 +1,7 @@
 # Introduction
 
+![Build Status](https://travis-ci.org/CS2103AUG2016-W11-C1/linenux.svg?branch=master)
+
 Linenux is a CLI (Command Line Interface) Task Manager application written in Java. Its goal is to serve users who prefer typing over clicking. Linenux's simple and natural syntax allows users to efficiently organize their schedule. Works offline.
 
 **Useful Links**
