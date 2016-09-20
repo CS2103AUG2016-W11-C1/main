@@ -24,6 +24,8 @@ public class Main extends Application implements Stoppable {
     public static final int INITIAL_CONSOLE_WIDTH = 800;
     public static final int INITIAL_CONSOLE_HEIGHT = 500;
     
+    private ConsoleController consoleController;
+    
     public static void main(String args) {
         launch(args);
     }
@@ -32,7 +34,7 @@ public class Main extends Application implements Stoppable {
     @Override
     public void start(Stage primaryStage) throws Exception {
         try {
-            ConsoleController consoleController = setUpConsole(primaryStage);
+            consoleController = setUpConsole(primaryStage);
             consoleController.setControlUnit(new ControlUnit());
             consoleController.displayWelcomeMessage(VERSION);
         } catch (Exception e) {
