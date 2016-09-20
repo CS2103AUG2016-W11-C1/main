@@ -1,8 +1,7 @@
 package linenux.control;
 
+import linenux.command.result.CommandResult;
 import linenux.model.Schedule;
-import linenux.parser.Parser;
-import linenux.parser.commands.Command;
 
 /**
  * Controls data flow for the entire application.
@@ -10,22 +9,22 @@ import linenux.parser.commands.Command;
 
 public class ControlUnit {
     private Schedule schedule;
-    private Parser parser;
-    
+    private CommandManager commandManager;
+
     public ControlUnit() {
         this.schedule = (hasExistingSchedule()) ? getExistingSchedule() : new Schedule();
-        this.parser = new Parser();
+        this.commandManager = new CommandManager(schedule);
     }
 
-    public String[] execute(String userInput) {
-        return null;
-     }
-    
+    public CommandResult execute(String userInput) {
+        return commandManager.delegateCommand(userInput);
+    }
+
     // TODO: Check if JAXB schedule file exist.
     private boolean hasExistingSchedule() {
         return false;
     }
-    
+
     // TODO: Get existing JAXB schedule.
     private Schedule getExistingSchedule() {
         return null;

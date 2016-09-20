@@ -51,7 +51,6 @@ public class Main extends Application implements Stoppable {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(Main.class.getResource("view/Console.fxml"));
         primaryStage.setTitle(APP_NAME);
-        // TODO: Fix icon
         primaryStage.getIcons().add(new Image("file:resources/images/terminal.png"));
         primaryStage.setScene(new Scene(loader.load(), INITIAL_CONSOLE_WIDTH, INITIAL_CONSOLE_HEIGHT));
         primaryStage.show();
