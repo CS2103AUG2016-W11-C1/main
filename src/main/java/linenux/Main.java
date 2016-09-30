@@ -51,9 +51,9 @@ public class Main extends Application implements Stoppable {
 
     private ConsoleController setUpConsole(Stage primaryStage) throws IOException {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(Main.class.getResource("/linenux/view/Console.fxml"));
+        loader.setLocation(Main.class.getResource("/view/Console.fxml"));
         primaryStage.setTitle(APP_NAME);
-        primaryStage.getIcons().add(new Image("file:src/main/resources/images/terminal.png"));
+        primaryStage.getIcons().add(new Image("/images/terminal.png"));
         primaryStage.setScene(new Scene(loader.load(), INITIAL_CONSOLE_WIDTH, INITIAL_CONSOLE_HEIGHT));
         primaryStage.show();
         return loader.getController();

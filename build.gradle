@@ -9,6 +9,12 @@ repositories {
   mavenCentral()
 }
 
+jar {
+  manifest {
+    attributes 'Main-Class': 'linenux.Main'
+  }
+}
+
 sourceSets {
   main {
     java {
@@ -16,7 +22,7 @@ sourceSets {
     }
 
     resources {
-      srcDirs = ['src/main/resources', 'src/main/java']
+      srcDir 'src/main/resources'
     }
   }
 }
