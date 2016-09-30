@@ -1,7 +1,6 @@
 language: java
 jdk:
   - oraclejdk8
-before_script:
-  - mkdir bin
 script:
-  - javac -sourcepath src -d bin src/linenux/Main.java
+  - ./gradlew build
+  - ./gradlew test
