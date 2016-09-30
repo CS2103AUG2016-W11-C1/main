@@ -1,16 +1,24 @@
 apply plugin: 'java'
 apply plugin: 'application'
 
-sourceSets {
-    main {
-        java {
-            srcDir 'src/main/java'
-        }
+dependencies {
+  testCompile 'junit:junit:4.12'
+}
 
-        resources {
-            srcDirs = ['src/main/resources', 'src/main/java']
-        }
+repositories {
+  mavenCentral()
+}
+
+sourceSets {
+  main {
+    java {
+      srcDir 'src/main/java'
     }
+
+    resources {
+      srcDirs = ['src/main/resources', 'src/main/java']
+    }
+  }
 }
 
 mainClassName = 'linenux.Main'
