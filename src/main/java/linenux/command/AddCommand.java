@@ -2,7 +2,6 @@ package linenux.command;
 
 import linenux.model.Schedule;
 import linenux.command.result.CommandResult;
-import linenux.command.result.AddCommandResult;
 import linenux.model.Task;
 
 import java.util.regex.Matcher;
@@ -42,9 +41,13 @@ public class AddCommand implements Command {
                 this.schedule.addTask(task);
             }
 
-            return AddCommandResult.makeResult(task);
+            return makeResult(task);
         }
 
         return null;
+    }
+
+    private CommandResult makeResult(Task task) {
+        return () -> "Added " + task.getTaskName();
     }
 }
