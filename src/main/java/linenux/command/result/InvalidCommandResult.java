@@ -6,7 +6,7 @@ public class InvalidCommandResult implements CommandResult {
     }
 
     @Override
-    public String feedbackToUser() {
+    public String getFeedback() {
         return "No such command.";
     }
 }

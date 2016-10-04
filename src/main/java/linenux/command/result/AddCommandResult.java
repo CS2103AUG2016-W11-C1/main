@@ -6,7 +6,7 @@ public class AddCommandResult implements CommandResult {
     }
 
     @Override
-    public String feedbackToUser() {
+    public String getFeedback() {
         return "Added Trump";
     }
 
