@@ -1,10 +1,7 @@
 package linenux.control;
 
-import linenux.command.ListCommand;
+import linenux.command.*;
 import linenux.model.Schedule;
-import linenux.command.Command;
-import linenux.command.AddCommand;
-import linenux.command.InvalidCommand;
 import linenux.command.result.CommandResult;
 
 import java.util.ArrayList;
@@ -25,6 +22,7 @@ public class CommandManager {
     private void initializeCommands() {
         commandList.add(new AddCommand(this.schedule));
         commandList.add(new ListCommand(this.schedule));
+        commandList.add(new DeleteCommand(this.schedule));
         commandList.add(new InvalidCommand()); // Must be the last element in
                                                // the list.
     }
@@ -34,10 +32,17 @@ public class CommandManager {
      */
     public CommandResult delegateCommand(String userInput) {
         for (Command command : commandList) {
+            if (command.awaitingUserResponse()) {
+                return command.userResponse(userInput);
+            }
+        }
+
+        for (Command command : commandList) {
             if (command.respondTo(userInput)) {
                 return command.execute(userInput);
             }
         }
+
         return null;
     }
 
