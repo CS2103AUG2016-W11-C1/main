@@ -45,4 +45,16 @@ public class ScheduleTest {
         assertTrue(tasks.indexOf(match1) != -1);
         assertTrue(tasks.indexOf(match2) != -1);
     }
+
+    @Test
+    public void testDelete() {
+        Task task = new Task("bla");
+        this.schedule.addTask(task);
+        int beforeSize = this.schedule.getTaskList().size();
+        this.schedule.deleteTask(task);
+        int afterSize = this.schedule.getTaskList().size();
+
+        assertEquals(beforeSize - 1, afterSize);
+        assertTrue(this.schedule.getTaskList().indexOf(task) == -1);
+    }
 }

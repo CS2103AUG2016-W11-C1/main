@@ -33,6 +33,14 @@ public class Schedule {
     }
 
     /**
+     * Delete the specified task.
+     * @param task The task to delete.
+     */
+    public void deleteTask(Task task) {
+        this.taskList.remove(task);
+    }
+
+    /**
      * Clears all tasks from the schedule
      */
     public void clear() {
