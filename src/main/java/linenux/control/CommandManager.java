@@ -21,7 +21,7 @@ public class CommandManager {
      * Adds all supported commands to the commandList.
      */
     private void initializeCommands() {
-        commandList.add(new AddCommand());
+        commandList.add(new AddCommand(this.schedule));
         commandList.add(new InvalidCommand()); // Must be the last element in
                                                // the list.
     }
