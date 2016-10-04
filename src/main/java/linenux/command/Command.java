@@ -19,5 +19,5 @@ public interface Command {
     /**
      * Carries out the command.
      */
-    public CommandResult execute();
+    public CommandResult execute(String userInput);
 }

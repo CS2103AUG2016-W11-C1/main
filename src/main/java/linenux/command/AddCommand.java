@@ -18,7 +18,7 @@ public class AddCommand implements Command {
     }
 
     @Override
-    public CommandResult execute() {
+    public CommandResult execute(String userInput) {
         return new AddCommandResult();
     }
 }

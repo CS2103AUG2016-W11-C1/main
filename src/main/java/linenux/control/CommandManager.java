@@ -32,7 +32,7 @@ public class CommandManager {
     public CommandResult delegateCommand(String userInput) {
         for (Command command : commandList) {
             if (command.respondTo(userInput)) {
-                return command.execute();
+                return command.execute(userInput);
             }
         }
         return null;

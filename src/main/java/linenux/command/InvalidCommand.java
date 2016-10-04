@@ -21,7 +21,7 @@ public class InvalidCommand implements Command {
     }
 
     @Override
-    public CommandResult execute() {
+    public CommandResult execute(String userInput) {
         return new InvalidCommandResult();
     }
 }
