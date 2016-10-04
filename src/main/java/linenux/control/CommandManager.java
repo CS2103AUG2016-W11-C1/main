@@ -13,6 +13,7 @@ public class CommandManager {
     private Schedule schedule;
 
     public CommandManager(Schedule schedule) {
+        this.schedule = schedule;
         commandList = new ArrayList<Command>();
         initializeCommands();
     }
