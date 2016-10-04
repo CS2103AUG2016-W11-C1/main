@@ -31,7 +31,7 @@ public class CommandManager {
      */
     public CommandResult delegateCommand(String userInput) {
         for (Command command : commandList) {
-            if (command.respondTo(schedule, userInput)) {
+            if (command.respondTo(userInput)) {
                 return command.execute();
             }
         }

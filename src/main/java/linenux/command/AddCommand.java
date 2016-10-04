@@ -13,7 +13,7 @@ public class AddCommand implements Command {
     }
 
     @Override
-    public boolean respondTo(Schedule schedule, String userInput) {
+    public boolean respondTo(String userInput) {
         return false;
     }
 
