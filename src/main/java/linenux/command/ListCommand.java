@@ -1,8 +1,11 @@
 package linenux.command;
 
 import linenux.command.result.CommandResult;
-import linenux.command.result.ListCommandResult;
 import linenux.model.Schedule;
+import linenux.model.Task;
+import linenux.util.TasksListUtil;
+
+import java.util.ArrayList;
 
 /**
  * Created by yihangho on 10/4/16.
@@ -23,6 +26,10 @@ public class ListCommand implements Command {
 
     @Override
     public CommandResult execute(String userInput) {
-        return ListCommandResult.makeResult(this.schedule);
+        return makeResult(this.schedule.getTaskList());
+    }
+
+    private CommandResult makeResult(ArrayList<Task> tasks) {
+        return () -> TasksListUtil.display(tasks);
     }
 }
