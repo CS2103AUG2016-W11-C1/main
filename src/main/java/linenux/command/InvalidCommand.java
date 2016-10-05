@@ -16,12 +16,12 @@ public class InvalidCommand implements Command {
      * @return true for all user input.
      */
     @Override
-    public boolean respondTo(Schedule schedule, String userInput) {
+    public boolean respondTo(String userInput) {
         return true;
     }
 
     @Override
-    public CommandResult execute() {
+    public CommandResult execute(String userInput) {
         return new InvalidCommandResult();
     }
 }

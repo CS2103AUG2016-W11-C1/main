@@ -13,6 +13,7 @@ public class CommandManager {
     private Schedule schedule;
 
     public CommandManager(Schedule schedule) {
+        this.schedule = schedule;
         commandList = new ArrayList<Command>();
         initializeCommands();
     }
@@ -21,7 +22,7 @@ public class CommandManager {
      * Adds all supported commands to the commandList.
      */
     private void initializeCommands() {
-        commandList.add(new AddCommand());
+        commandList.add(new AddCommand(this.schedule));
         commandList.add(new InvalidCommand()); // Must be the last element in
                                                // the list.
     }
@@ -31,8 +32,8 @@ public class CommandManager {
      */
     public CommandResult delegateCommand(String userInput) {
         for (Command command : commandList) {
-            if (command.respondTo(schedule, userInput)) {
-                return command.execute();
+            if (command.respondTo(userInput)) {
+                return command.execute(userInput);
             }
         }
         return null;

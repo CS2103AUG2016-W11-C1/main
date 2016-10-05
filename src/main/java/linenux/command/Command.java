@@ -14,10 +14,10 @@ public interface Command {
      * 
      * @return true if format matches and false otherwise.
      */
-    public boolean respondTo(Schedule schedule, String userInput);
+    public boolean respondTo(String userInput);
 
     /**
      * Carries out the command.
      */
-    public CommandResult execute();
+    public CommandResult execute(String userInput);
 }

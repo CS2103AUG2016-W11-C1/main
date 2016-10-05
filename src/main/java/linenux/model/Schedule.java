@@ -35,4 +35,11 @@ public class Schedule {
     public void clear() {
         taskList.clear();
     }
+
+    /**
+     * Returns the list of tasks
+     */
+    public ArrayList<Task> getTaskList() {
+        return this.taskList;
+    }
 }

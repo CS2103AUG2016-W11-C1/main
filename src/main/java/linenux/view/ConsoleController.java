@@ -32,7 +32,7 @@ public class ConsoleController {
         try {
             String userInput = commandInput.getText();
             CommandResult commandResult = controlUnit.execute(userInput);
-            display(commandResult.feedbackToUser());
+            display(commandResult.getFeedback());
             clearCommandInput();
         } catch (NullPointerException e) {
             e.printStackTrace();
