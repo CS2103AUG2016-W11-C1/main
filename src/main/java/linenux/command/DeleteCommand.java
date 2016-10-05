@@ -10,7 +10,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by yihangho on 10/4/16.
+ * Deletes a task from the schedule.
  */
 public class DeleteCommand implements Command {
     private static final String DELETE_PATTERN = "(?i)^delete (?<keywords>.*)$";
@@ -36,6 +36,8 @@ public class DeleteCommand implements Command {
         Matcher matcher = Pattern.compile(DELETE_PATTERN).matcher(userInput);
 
         if (matcher.matches()) {
+            assert (this.schedule != null);
+            
             String keywords = matcher.group("keywords");
             String[] keywordsArr = keywords.split("\\s+");
             ArrayList<Task> tasks = this.schedule.search(keywordsArr);

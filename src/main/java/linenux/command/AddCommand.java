@@ -24,23 +24,16 @@ public class AddCommand implements Command {
         return userInput.matches(TASK_PATTERN);
     }
 
-    /**
-     * Contract: use respondTo to check before calling execute
-     * @param userInput
-     * @return
-     */
     @Override
     public CommandResult execute(String userInput) {
         Matcher matcher = Pattern.compile(TASK_PATTERN).matcher(userInput);
 
         if (matcher.matches()) {
+            assert (this.schedule != null);
+            
             String taskName = matcher.group("taskName");
             Task task = new Task(taskName);
-
-            if (this.schedule != null) {
-                this.schedule.addTask(task);
-            }
-
+            this.schedule.addTask(task);
             return makeResult(task);
         }
 

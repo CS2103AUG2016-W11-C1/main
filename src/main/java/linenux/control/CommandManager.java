@@ -6,6 +6,9 @@ import linenux.command.result.CommandResult;
 
 import java.util.ArrayList;
 
+/**
+ * Assigns commands based on user input. 
+ */
 public class CommandManager {
     private ArrayList<Command> commandList;
     private Schedule schedule;
@@ -29,6 +32,7 @@ public class CommandManager {
 
     /**
      * Assigns the appropriate command to the user input.
+     * Contract: only 1 command should be awaiting user response at any point in time.
      */
     public CommandResult delegateCommand(String userInput) {
         for (Command command : commandList) {
