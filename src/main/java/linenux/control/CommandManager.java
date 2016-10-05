@@ -1,5 +1,6 @@
 package linenux.control;
 
+import linenux.command.ListCommand;
 import linenux.model.Schedule;
 import linenux.command.Command;
 import linenux.command.AddCommand;
@@ -23,6 +24,7 @@ public class CommandManager {
      */
     private void initializeCommands() {
         commandList.add(new AddCommand(this.schedule));
+        commandList.add(new ListCommand(this.schedule));
         commandList.add(new InvalidCommand()); // Must be the last element in
                                                // the list.
     }
