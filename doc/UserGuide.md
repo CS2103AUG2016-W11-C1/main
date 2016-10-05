@@ -1,5 +1,10 @@
 # User Guide
 
+
+## Introduction
+Linenux is a user friendly Tasks Scheduler that helps you manage all your different tasks in
+It is designed to help us manage our tasks via typing.
+
 * [Quick Start](#quick-start)
 
 ## Quick Start
@@ -9,12 +14,206 @@
 3. Click `Run As` > `Java Application` and choose the `Main` class.
 4. The GUI should appear in a few seconds.
 
+
+## Commands summary:
+//table of do what | commands | format
+
 ## Viewing help : `help`
-Format: `help`
+We understand that there may be too many commands to remember and it might be a hassle to refer to the user guide to refer to the list of commands. Thus, this command allows you to get the list of commands available immediately, along with how each command works.
+
+Format:
+```
+help [KEYWORD]
+```
 
 > Help is also shown if you enter an incorrect command e.g. `abcd`
+> Only show help section for keyword.
 
-Adding a task: `add``
-Adds a task to the schedule.
-Format: `add
+## Adding task: `add`
+Add task to schedule.
+Format:
+```
+add TASK_NAME [st/START_TIME] [et/END_TIME] [#/CATEGORY]...
+```
+
+> Words in UPPER_CASE are the parameters, items in SQUARE_BRACKETS are optional, items with ... after them can have multiple instances. Order of parameters are fixed.
+> Time parameters START_TIME and END_TIME are in the format of YYYY-MM-DD
+
+Tasks are categorized under 3 default categories:
+
+- Deadline: tasks added with END_TIME only
+- Event: tasks added with START_TIME and END_TIME
+- To-Dos: tasks added without START_TIME and END_TIME
+
+Example:
+
+```
+add CS2103T tutorial :D #very_important
+```
+```
+add Submit v0.0 deliverables et/2016-10-05 #very_important_also
+```
+
+## Listing all tasks: `list`
+Shows a list of all tasks.
+Format:
+```
+list [KEYWORDS]... [st/START_TIME] [et/END_TIME] [#/CATEGORY]
+```
+
+When list is called without any other parameters, all the tasks will be listed.
+
+Calling list with:
+
+- KEYWORDS:
+  - Lists all tasks with the given KEYWORDS in the task’s name
+  - Lists all remainders with the given KEYWORDS in the reminder’s note
+- CATEGORY:
+  - Lists all tasks in the given CATEGORY
+- START_TIME:
+  - Lists all events, deadlines, reminders that ends after given START_TIME
+  - Lists all to-dos
+- END_TIME:
+  - Lists all events, deadlines, reminders that start before given END_TIME
+  - Lists all to-dos
+
+Example:
+
+```
+list
+```
+```
+list st/2016-06-01 et/2016-07-01
+```
+```
+list st/2016-06-01 et/2016-07-01 #Hobbies
+```
+```
+list assignment st/2016-06-01 et/2016-07-01
+```
+
+## Viewing details of task: `view`
+Format:
+```
+view KEYWORDS...
+```
+
+Example:
+```
+view assignment
+```
+
+## Setting reminders to a task: `remind`
+Adds a reminder to a task
+Format:
+```
+remind KEYWORDS... d/DATE [n/NOTE]
+```
+
+> KEYWORDS refer to keywords in the task name that the reminder will be attached to
+> If there are more than one task found with the same KEYWORDS, the user will be shown the list of tasks found, and will require the user to indicate which task to add the reminder to.
+> Upon starting up the application, the reminders for the day will be shown.
+> Reminders will also be shown along with tasks during listing.
+
+Example:
+```
+remind assignment d/2016-07-18
+```
+```
+remind project deadline d/2016-09-20 n/Complete v0.0 document
+```
+
+
+## Deleting tasks: `delete`
+Deletes a task.
+Format:
+```
+delete KEYWORDS...
+```
+
+> Also deletes all reminders attached to a task.
+> After deletion, shows details of task deleted.
+> KEYWORDS refer to keywords in the task name.
+> If there are more than one task found with the same KEYWORDS, the user will be shown the list of tasks found, and will require the user to indicate which task to delete.
+
+Example:
+```
+delete assignment
+```
+```
+delete CS2103 project
+```
+
+## Marking tasks as done: `done`
+Marks a single task as done.
+
+Format:
+```
+done KEYWORDS...
+```
+
+>​ ​KEYWORDS​ ​refer​ ​to​ ​keywords​ ​in​ ​the​ ​task​ ​name​.
+>​ ​If​ ​there​ ​are​ ​more​ ​than​ ​one​ ​task​ ​found​ ​with​ ​the​ ​same​ ​KEYWORDS,​ ​the​ ​user​ ​will​ ​be​ ​shown​ ​the
+list​ ​of​ ​tasks​ ​found,​ ​and​ ​will​ ​require​ ​the​ ​user​ ​to​ ​indicate​ ​which​ ​task​ ​to​ mark as done.
+
+Example:
+```
+done assignment
+```
+```
+done CS2103 tutorial
+```
+
+## Undo a task: `undo`
+Undo last command executed.
+
+Format:
+```
+undo
+```
+
+## Exiting the Program: `exit`
+Exits the program.
+
+Format: 
+```
+exit
+```
+
+## Edit a task/reminder: `edit`
+Allows editing of the details of a task or reminder.
+
+Format: 
+```
+edit KEYWORDS... [n/NEW_NAME][st/START_TIME] [et/END_TIME]
+```
+
+>​​ KEYWORDS​​ ​​refer​​ ​​to​​ ​​keywords​​ ​​in​​ ​​the​​ ​​task​​ ​​name​.
+>​​ ​​If​​ ​​there​​ ​​are​​ ​​more​​ ​​than​​ ​​one​​ ​​task​​ ​​found​​ ​​with​​ ​​the​​ ​​same​​ ​​KEYWORDS,​​ ​​the​​ ​​user​​ ​​will​​ ​​be​​ ​​shown​​ ​​the
+list​​ ​​of​​ ​​tasks​​ ​​found,​​ ​​and​​ ​​will​​ ​​require​​ ​​the​​ ​​user​​ ​​to​​ ​​indicate​​ ​​which​​ ​​task​​ ​​to​​ ​mark​ ​as​ ​done.
+
+Example:
+```
+edit assignment et/2016-08-13
+```
+```
+edit this n/CS2103 st/2016-09-20 et/2016-05-09
+```
+
+## FREETIME - `freetime`
+Format: 
+```
+freetime [st/START_TIME] et/END_TIME
+```
+
+Example:
+
+```
+freetime et/2016-07-24
+```
+```
+freetime st/2016-07-18 et/2016-07-24
+```
+
+
 
