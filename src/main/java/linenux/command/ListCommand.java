@@ -8,7 +8,7 @@ import linenux.util.TasksListUtil;
 import java.util.ArrayList;
 
 /**
- * Created by yihangho on 10/4/16.
+ * Generates a list of tasks based on userInput.
  */
 public class ListCommand implements Command {
     private static final String TASK_PATTERN = "(?i)^list$";

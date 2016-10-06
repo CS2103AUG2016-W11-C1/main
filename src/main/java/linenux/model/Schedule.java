@@ -1,6 +1,9 @@
 package linenux.model;
 
+import linenux.util.ArrayListUtil;
+
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Contains all outstanding tasks.
@@ -30,6 +33,14 @@ public class Schedule {
     }
 
     /**
+     * Delete the specified task.
+     * @param task The task to delete.
+     */
+    public void deleteTask(Task task) {
+        this.taskList.remove(task);
+    }
+
+    /**
      * Clears all tasks from the schedule
      */
     public void clear() {
@@ -41,5 +52,26 @@ public class Schedule {
      */
     public ArrayList<Task> getTaskList() {
         return this.taskList;
+    }
+
+    /**
+     * Performs case-insensitive search using keywords.
+     * @param keywords Search keywords
+     * @return List of {@code Task} matching the keywords.
+     */
+    public ArrayList<Task> search(String[] keywords) {
+        ArrayList<String> keywordsList = new ArrayListUtil.ChainableArrayListUtil<String>(keywords)
+                                                          .map(String::toLowerCase)
+                                                          .value();
+
+        return new ArrayListUtil.ChainableArrayListUtil<Task>(this.taskList)
+                .filter(task -> {
+                    ArrayList<String> taskKeywords = new ArrayListUtil.ChainableArrayListUtil<String>(task.getTaskName().split("\\s+"))
+                            .map(String::toLowerCase)
+                            .value();
+
+                    return !Collections.disjoint(keywordsList, taskKeywords);
+                })
+                .value();
     }
 }
