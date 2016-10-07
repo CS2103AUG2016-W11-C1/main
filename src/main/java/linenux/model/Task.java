@@ -52,6 +52,18 @@ public class Task {
         return this.taskName;
     }
 
+    public boolean isTodo() {
+        return startTime == null && endTime == null;
+    }
+
+    public boolean isDeadline() {
+        return startTime == null && endTime != null;
+    }
+
+    public boolean isEvent() {
+        return startTime != null && endTime != null;
+    }
+
     /* Getters */
 
     public String getTaskName() {
