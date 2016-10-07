@@ -1,8 +1,8 @@
 package linenux.command;
 
+import linenux.model.Task;
 import linenux.model.Schedule;
 import linenux.command.result.CommandResult;
-import linenux.model.Task;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

@@ -15,7 +15,6 @@ import javafx.fxml.FXMLLoader;
 /**
  * Main program for Linenux.
  */
-
 public class Main extends Application implements Stoppable {
 
     public static final String APP_NAME = "Linenux";
@@ -36,6 +35,7 @@ public class Main extends Application implements Stoppable {
         try {
             consoleController = setUpConsole(primaryStage);
             consoleController.setControlUnit(new ControlUnit());
+            consoleController.setActiveControl();
             consoleController.displayWelcomeMessage(VERSION);
         } catch (Exception e) {
             e.printStackTrace();
