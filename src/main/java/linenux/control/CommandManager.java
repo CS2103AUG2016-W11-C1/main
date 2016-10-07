@@ -30,7 +30,7 @@ public class CommandManager {
         commandList.add(new ExitCommand());
         commandList.add(new HelpCommand(this.commandList));
 
-        this.catchAllCommand = new InvalidCommand();
+        this.catchAllCommand = new InvalidCommand(this.commandList);
     }
 
     /**
