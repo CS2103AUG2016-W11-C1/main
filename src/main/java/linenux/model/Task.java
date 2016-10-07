@@ -2,6 +2,7 @@ package linenux.model;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Represents a task in the schedule.
@@ -49,7 +50,15 @@ public class Task {
 
     @Override
     public String toString() {
-        return this.taskName;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd h:mma");
+
+        if (this.isDeadline()) {
+            return taskName + " (Due " + this.endTime.format(formatter) + ")";
+        } else if (this.isEvent()) {
+            return taskName + " (" + this.startTime.format(formatter) + " - " + this.endTime.format(formatter) + ")";
+        } else {
+            return taskName;
+        }
     }
 
     public boolean isTodo() {
