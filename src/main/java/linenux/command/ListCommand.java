@@ -28,10 +28,10 @@ public class ListCommand implements Command {
 
     @Override
     public CommandResult execute(String userInput) {
-        assert this.schedule != null;
         Matcher matcher = Pattern.compile(TASK_PATTERN).matcher(userInput);
 
         if (matcher.matches()) {
+            assert (this.schedule != null);
             String keywords = matcher.group("keywords");
 
             if (keywords != null) {
