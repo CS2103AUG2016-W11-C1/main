@@ -1,35 +1,37 @@
 apply plugin: 'java'
+apply plugin: 'eclipse'
 apply plugin: 'application'
 
 dependencies {
-  testCompile 'junit:junit:4.12'
+    testCompile 'junit:junit:4.12'
+    testCompile 'com.github.stefanbirkner:system-rules:1.16.0'
 }
 
 repositories {
-  mavenCentral()
+    mavenCentral()
 }
 
 jar {
-  manifest {
-    attributes 'Main-Class': 'linenux.Main'
-  }
+    manifest {
+        attributes 'Main-Class': 'linenux.Main'
+    }
 }
 
 sourceSets {
-  main {
-    java {
-      srcDir 'src/main/java'
-    }
+    main {
+        java {
+            srcDir 'src/main/java'
+        }
 
-    resources {
-      srcDir 'src/main/resources'
+        resources {
+            srcDir 'src/main/resources'
+        }
     }
-  }
 }
 
 javadoc {
-  classpath += sourceSets.test.compileClasspath
-  source += sourceSets.test.allJava
+    classpath += sourceSets.test.compileClasspath
+        source += sourceSets.test.allJava
 }
 
 mainClassName = 'linenux.Main'

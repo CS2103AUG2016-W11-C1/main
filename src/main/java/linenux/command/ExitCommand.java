@@ -5,6 +5,9 @@ import linenux.command.result.CommandResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Exits the program.
+ */
 public class ExitCommand implements Command {
     private static final String TASK_PATTERN = "(?i)^exit$";
 
@@ -22,5 +25,4 @@ public class ExitCommand implements Command {
         }
         return null;
     }
-
 }
