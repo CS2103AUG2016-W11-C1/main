@@ -7,15 +7,16 @@ import linenux.command.result.CommandResult;
 import java.util.ArrayList;
 
 /**
- * Assigns commands based on user input. 
+ * Assigns commands based on user input.
  */
 public class CommandManager {
     private ArrayList<Command> commandList;
     private Schedule schedule;
+    private Command catchAllCommand;
 
     public CommandManager(Schedule schedule) {
         this.schedule = schedule;
-        commandList = new ArrayList<Command>();
+        commandList = new ArrayList<>();
         initializeCommands();
     }
 
@@ -27,8 +28,9 @@ public class CommandManager {
         commandList.add(new ListCommand(this.schedule));
         commandList.add(new DeleteCommand(this.schedule));
         commandList.add(new ExitCommand());
-        commandList.add(new InvalidCommand()); // Must be the last element in
-                                               // the list.
+        commandList.add(new HelpCommand(this.commandList));
+
+        this.catchAllCommand = new InvalidCommand();
     }
 
     /**
@@ -48,7 +50,7 @@ public class CommandManager {
             }
         }
 
-        return null;
+        return this.catchAllCommand.execute(userInput);
     }
 
     /**

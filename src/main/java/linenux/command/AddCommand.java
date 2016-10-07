@@ -13,6 +13,8 @@ import java.util.regex.Pattern;
 public class AddCommand implements Command {
     public static final String COMMAND_FORMAT = "add TASK_NAME";
 
+    private static final String TRIGGER_WORD = "add";
+    private static final String DESCRIPTION = "Adds a task to schedule.";
     private static final String TASK_PATTERN = "(?i)^add(\\s+(?<arguments>.*))?$";
     private static final String ARGUMENT_PATTERN = "(?i)^(?<taskName>.*?)?" +
             "(\\s+(st\\/(?<startTime>.*?)))?" +
@@ -22,6 +24,16 @@ public class AddCommand implements Command {
 
     public AddCommand(Schedule schedule) {
         this.schedule = schedule;
+    }
+
+    @Override
+    public String getTriggerWord() {
+        return TRIGGER_WORD;
+    }
+
+    @Override
+    public String getDescription() {
+        return DESCRIPTION;
     }
 
     @Override

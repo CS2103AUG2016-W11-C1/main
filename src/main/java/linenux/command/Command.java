@@ -20,7 +20,7 @@ public interface Command {
      * Carries out the command.
      * Contract: use respondTo to check before calling execute
      * @param userInput
-     * @return
+     * @return The result of the execution.
      */
     public CommandResult execute(String userInput);
 
@@ -35,9 +35,17 @@ public interface Command {
     /**
      * Carries out the user response.
      * @param userInput
-     * @return
+     * @return The result of the user response.
      */
     default public CommandResult userResponse(String userInput) {
         return null;
     }
+
+    public String getTriggerWord();
+
+    /**
+     * A brief description of what the command is about.
+     * @return A string describing what the command is about.
+     */
+    public String getDescription();
 }

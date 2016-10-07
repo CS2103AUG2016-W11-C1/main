@@ -13,6 +13,8 @@ import java.util.regex.Pattern;
  * Deletes a task from the schedule.
  */
 public class DeleteCommand implements Command {
+    private static final String TRIGGER_WORD = "delete";
+    private static final String DESCRIPTION = "Deletes a task.";
     private static final String DELETE_PATTERN = "(?i)^delete (?<keywords>.*)$";
     private static final String NUMBER_PATTERN = "^\\d+$";
     private static final String CANCEL_PATTERN = "^cancel$";
@@ -27,6 +29,16 @@ public class DeleteCommand implements Command {
     }
 
     @Override
+    public String getTriggerWord() {
+        return TRIGGER_WORD;
+    }
+
+    @Override
+    public String getDescription() {
+        return DESCRIPTION;
+    }
+
+    @Override
     public boolean respondTo(String userInput) {
         return userInput.matches(DELETE_PATTERN);
     }
@@ -37,7 +49,7 @@ public class DeleteCommand implements Command {
 
         if (matcher.matches()) {
             assert (this.schedule != null);
-            
+
             String keywords = matcher.group("keywords");
             String[] keywordsArr = keywords.split("\\s+");
             ArrayList<Task> tasks = this.schedule.search(keywordsArr);

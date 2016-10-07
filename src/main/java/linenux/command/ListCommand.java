@@ -13,12 +13,24 @@ import java.util.regex.Pattern;
  * Generates a list of tasks based on userInput.
  */
 public class ListCommand implements Command {
+    private static final String TRIGGER_WORD = "list";
+    private static final String DESCRIPTION = "Lists all tasks.";
     private static final String TASK_PATTERN = "(?i)^list( (?<keywords>.*))?$";
 
     private Schedule schedule;
 
     public ListCommand(Schedule schedule) {
         this.schedule = schedule;
+    }
+
+    @Override
+    public String getTriggerWord() {
+        return TRIGGER_WORD;
+    }
+
+    @Override
+    public String getDescription() {
+        return DESCRIPTION;
     }
 
     @Override

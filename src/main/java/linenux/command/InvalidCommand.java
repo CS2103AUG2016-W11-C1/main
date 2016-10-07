@@ -7,8 +7,14 @@ import linenux.command.result.InvalidCommandResult;
  * Act as a fail-safe for invalid or unrecognized commands.
  */
 public class InvalidCommand implements Command {
+    @Override
+    public String getTriggerWord() {
+        return null;
+    }
 
-    public InvalidCommand() {
+    @Override
+    public String getDescription() {
+        return null;
     }
 
     /**
