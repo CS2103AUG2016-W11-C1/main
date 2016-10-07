@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 import linenux.command.result.CommandResult;
 import linenux.model.Schedule;
 import linenux.model.Task;
+import linenux.util.ArrayListUtil;
 import linenux.util.TasksListUtil;
 
 /**
@@ -39,7 +40,9 @@ public class DoneCommand implements Command {
 
             String keywords = matcher.group("keywords");
             String[] keywordsArr = keywords.split("\\s+");
-            ArrayList<Task> tasks = this.schedule.search(keywordsArr);
+            ArrayList<Task> tasks = new ArrayListUtil.ChainableArrayListUtil<Task>(this.schedule.search(keywordsArr))
+                                                     .filter(task -> task.isDone() == false)
+                                                     .value();
 
             if (tasks.size() == 0) {
                 return makeNotFoundResult(keywords);
