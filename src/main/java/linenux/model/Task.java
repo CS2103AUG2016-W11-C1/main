@@ -1,6 +1,7 @@
 package linenux.model;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 /**
  * Represents a task in the schedule.
@@ -11,6 +12,7 @@ public class Task {
     private boolean isDone;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
+    private ArrayList<Reminder> reminderList;
 
     /**
      * Constructor for tasks with no deadlines or predetermined time slots.
@@ -20,6 +22,7 @@ public class Task {
         this.isDone = false;
         this.startTime = null;
         this.endTime = null;
+        this.reminderList = new ArrayList<Reminder>();
     }
 
     /**
@@ -30,6 +33,7 @@ public class Task {
         this.isDone = false;
         this.startTime = null;
         this.endTime = endTime;
+        this.reminderList = new ArrayList<Reminder>();
     }
 
     /**
@@ -40,29 +44,34 @@ public class Task {
         this.isDone = false;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.reminderList = new ArrayList<Reminder>();
     }
 
     @Override
     public String toString() {
-        return taskName;
+        return this.taskName;
     }
 
     /* Getters */
 
     public String getTaskName() {
-        return taskName;
+        return this.taskName;
     }
 
     public boolean isDone() {
-        return isDone;
+        return this.isDone;
     }
 
     public LocalDateTime getStartTime() {
-        return startTime;
+        return this.startTime;
     }
 
     public LocalDateTime getEndTime() {
-        return endTime;
+        return this.endTime;
+    }
+
+    public ArrayList<Reminder> getReminderList() {
+        return this.reminderList;
     }
 
     /* Setters */
