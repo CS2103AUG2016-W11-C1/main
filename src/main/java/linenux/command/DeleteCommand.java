@@ -80,6 +80,7 @@ public class DeleteCommand implements Command {
             }
         } else if (userInput.matches(CANCEL_PATTERN)) {
             this.requiresUserResponse = false;
+            this.foundTasks = null;
             return makeCancelledResult();
         } else {
             return makeInvalidUserResponse(userInput);
