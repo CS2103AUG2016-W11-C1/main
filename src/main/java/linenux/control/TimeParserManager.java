@@ -24,7 +24,7 @@ public class TimeParserManager {
     public LocalDateTime delegateTimeParser(String userInput) {
         for (TimeParser parser: parserList) {
             if (parser.respondTo(userInput)) {
-                return parser.execute(userInput);
+                return parser.parse(userInput);
             }
         }
         return null;

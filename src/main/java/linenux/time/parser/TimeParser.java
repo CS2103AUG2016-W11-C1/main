@@ -22,5 +22,5 @@ public interface TimeParser {
      * @param userInput
      * @return
      */
-    public LocalDateTime execute(String userInput);
+    public LocalDateTime parse(String userInput);
 }

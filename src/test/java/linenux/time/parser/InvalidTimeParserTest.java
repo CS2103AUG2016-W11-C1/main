@@ -24,7 +24,7 @@ public class InvalidTimeParserTest {
 
     @Test
     public void testExecuteInvalidTimeParser() {
-        LocalDateTime result = this.invalidTimeParser.execute("");
+        LocalDateTime result = this.invalidTimeParser.parse("");
         assertTrue(result == null);
     }
 }

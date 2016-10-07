@@ -7,9 +7,6 @@ import java.time.LocalDateTime;
  */
 public class InvalidTimeParser implements TimeParser {
     
-    public InvalidTimeParser() {
-    }
-
     /**
      * @return true for all user inputs.
      */
@@ -19,7 +16,7 @@ public class InvalidTimeParser implements TimeParser {
     }
 
     @Override
-    public LocalDateTime execute(String userInput) {
+    public LocalDateTime parse(String userInput) {
         return null;
     }
 
