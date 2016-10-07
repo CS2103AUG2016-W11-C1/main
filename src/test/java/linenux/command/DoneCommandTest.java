@@ -64,7 +64,7 @@ public class DoneCommandTest {
     }
 
     @Test
-    public void testCaseInsensitiveRespondToDeleteCommand() {
+    public void testCaseInsensitiveRespondToDoneCommand() {
         assertTrue(this.doneCommand.respondTo("dOnE hello"));
     }
 
