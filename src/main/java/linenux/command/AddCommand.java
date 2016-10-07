@@ -3,6 +3,10 @@ package linenux.command;
 import linenux.model.Task;
 import linenux.model.Schedule;
 import linenux.command.result.CommandResult;
+import linenux.command.parser.TaskArgumentParser;
+import linenux.control.TimeParserManager;
+import linenux.time.parser.ISODateWithTimeParser;
+import linenux.util.Either;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -11,17 +15,16 @@ import java.util.regex.Pattern;
  * Adds a task to the schedule.
  */
 public class AddCommand implements Command {
-    public static final String COMMAND_FORMAT = "add TASK_NAME";
-
     private static final String TASK_PATTERN = "(?i)^add(\\s+(?<arguments>.*))?$";
-    private static final String ARGUMENT_PATTERN = "(?i)^(?<taskName>.*?)?" +
-            "(\\s+(st\\/(?<startTime>.*?)))?" +
-            "(\\s+(et\\/(?<endTime>.*?)))?$";
 
     private Schedule schedule;
+    private TimeParserManager timeParserManager;
+    private TaskArgumentParser taskArgumentParser;
 
     public AddCommand(Schedule schedule) {
         this.schedule = schedule;
+        this.timeParserManager = new TimeParserManager(new ISODateWithTimeParser());
+        this.taskArgumentParser = new TaskArgumentParser(this.timeParserManager);
     }
 
     @Override
@@ -35,22 +38,15 @@ public class AddCommand implements Command {
         assert this.schedule != null;
 
         String argument = extractArgument(userInput);
-        Matcher matcher = Pattern.compile(ARGUMENT_PATTERN).matcher(argument);
 
-        if (!matcher.matches()) {
-            return makeInvalidArgumentResult();
+        Either<Task, CommandResult> task = this.taskArgumentParser.parse(argument);
+
+        if (task.isLeft()) {
+            this.schedule.addTask(task.getLeft());
+            return makeResult(task.getLeft());
+        } else {
+            return task.getRight();
         }
-
-        String taskName = matcher.group("taskName");
-
-        if (!isTaskNameValid(taskName)) {
-            return makeInvalidArgumentResult();
-        }
-
-        Task task = new Task(taskName);
-        this.schedule.addTask(task);
-
-        return makeResult(task);
     }
 
     private String extractArgument(String userInput) {
@@ -63,19 +59,7 @@ public class AddCommand implements Command {
         }
     }
 
-    private boolean isTaskNameValid(String taskName) {
-        if (taskName == null) {
-            return false;
-        }
-
-        return taskName.matches("^.*?\\S+.*?$");
-    }
-
     private CommandResult makeResult(Task task) {
-        return () -> "Added " + task.getTaskName();
-    }
-
-    private CommandResult makeInvalidArgumentResult() {
-        return () -> "Invalid arguments.\n\n" + COMMAND_FORMAT;
+        return () -> "Added " + task.toString();
     }
 }
