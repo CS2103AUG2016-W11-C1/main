@@ -4,6 +4,7 @@ import linenux.control.ControlUnit;
 import linenux.command.result.CommandResult;
 
 import javafx.fxml.FXML;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -20,11 +21,12 @@ public class ConsoleController {
 
     private ControlUnit controlUnit;
 
-    public ConsoleController() {
-    }
-
     public void setControlUnit(ControlUnit controlUnit) {
         this.controlUnit = controlUnit;
+    }
+    
+    public void setActiveControl() {
+        Platform.runLater(() -> commandInput.requestFocus());
     }
 
     @FXML

@@ -14,7 +14,7 @@ import static linenux.helpers.Assert.assertNoChange;
 import static org.junit.Assert.*;
 
 /**
- * Created by yihangho on 10/4/16.
+ * JUnit test for add command. 
  */
 public class AddCommandTest {
     private Schedule schedule;

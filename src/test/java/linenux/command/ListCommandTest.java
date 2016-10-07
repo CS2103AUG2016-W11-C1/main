@@ -11,7 +11,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Created by yihangho on 10/4/16.
+ * JUnit test for list command. 
  */
 public class ListCommandTest {
     private Schedule schedule;

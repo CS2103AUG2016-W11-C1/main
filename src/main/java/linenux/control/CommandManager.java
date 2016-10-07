@@ -26,6 +26,7 @@ public class CommandManager {
         commandList.add(new AddCommand(this.schedule));
         commandList.add(new ListCommand(this.schedule));
         commandList.add(new DeleteCommand(this.schedule));
+        commandList.add(new ExitCommand());
         commandList.add(new InvalidCommand()); // Must be the last element in
                                                // the list.
     }

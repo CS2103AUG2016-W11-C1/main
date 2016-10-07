@@ -13,7 +13,7 @@ import static linenux.helpers.Assert.assertChangeBy;
 import static linenux.helpers.Assert.assertNoChange;
 
 /**
- * Created by yihangho on 10/5/16.
+ * JUnit test for delete command. 
  */
 public class DeleteCommandTest {
     private Schedule schedule;
