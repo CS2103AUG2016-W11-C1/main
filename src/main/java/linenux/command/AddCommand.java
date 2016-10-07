@@ -32,6 +32,8 @@ public class AddCommand implements Command {
     @Override
     public CommandResult execute(String userInput) {
         assert userInput.matches(TASK_PATTERN);
+        assert this.schedule != null;
+
         String argument = extractArgument(userInput);
         Matcher matcher = Pattern.compile(ARGUMENT_PATTERN).matcher(argument);
 
