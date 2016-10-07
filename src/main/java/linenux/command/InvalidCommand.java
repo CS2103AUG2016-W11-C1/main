@@ -1,6 +1,5 @@
 package linenux.command;
 
-import linenux.model.Schedule;
 import linenux.command.result.CommandResult;
 import linenux.command.result.InvalidCommandResult;
 
@@ -13,7 +12,7 @@ public class InvalidCommand implements Command {
     }
 
     /**
-     * @return true for all user input.
+     * @return true for all user inputs.
      */
     @Override
     public boolean respondTo(String userInput) {
