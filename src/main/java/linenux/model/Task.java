@@ -12,7 +12,7 @@ public class Task {
     private boolean isDone;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
-    private ArrayList<Reminder> reminderList;
+    private ArrayList<Reminder> reminders;
 
     /**
      * Constructor for tasks with no deadlines or predetermined time slots.
@@ -22,7 +22,7 @@ public class Task {
         this.isDone = false;
         this.startTime = null;
         this.endTime = null;
-        this.reminderList = new ArrayList<Reminder>();
+        this.reminders = new ArrayList<Reminder>();
     }
 
     /**
@@ -33,7 +33,7 @@ public class Task {
         this.isDone = false;
         this.startTime = null;
         this.endTime = endTime;
-        this.reminderList = new ArrayList<Reminder>();
+        this.reminders = new ArrayList<Reminder>();
     }
 
     /**
@@ -44,7 +44,7 @@ public class Task {
         this.isDone = false;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.reminderList = new ArrayList<Reminder>();
+        this.reminders = new ArrayList<Reminder>();
     }
 
     @Override
@@ -70,8 +70,8 @@ public class Task {
         return this.endTime;
     }
 
-    public ArrayList<Reminder> getReminderList() {
-        return this.reminderList;
+    public ArrayList<Reminder> getReminders() {
+        return this.reminders;
     }
 
     /* Setters */
