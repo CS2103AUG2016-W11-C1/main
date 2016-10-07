@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
+import static linenux.helpers.Assert.assertChangeBy;
 import static org.junit.Assert.*;
 
 /**
@@ -52,12 +53,9 @@ public class AddCommandTest {
      */
     @Test
     public void testExecuteAddTask() {
-        int beforeCount = this.schedule.getTaskList().size();
-        this.addCommand.execute("add CS2103T Tutorial");
-        int afterCount = this.schedule.getTaskList().size();
-
-        // A new task is actually added to the schedule
-        assertEquals(beforeCount + 1, afterCount);
+        assertChangeBy(() -> this.schedule.getTaskList().size(),
+                1,
+                () -> this.addCommand.execute("add CS2103T Tutorial"));
 
         // The new task has correct name
         ArrayList<Task> tasks = this.schedule.getTaskList();
