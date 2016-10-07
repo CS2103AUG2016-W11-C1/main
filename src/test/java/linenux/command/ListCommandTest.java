@@ -29,6 +29,11 @@ public class ListCommandTest {
     }
 
     @Test
+    public void testRespondToListWithKeywords() {
+        assertTrue(this.listCommand.respondTo("list bla"));
+    }
+
+    @Test
     public void testCaseInsensitiveRespondToList() {
         assertTrue(this.listCommand.respondTo("LiSt"));
     }
@@ -49,6 +54,18 @@ public class ListCommandTest {
         CommandResult result = this.listCommand.execute("list");
 
         String expectedFeedback = "1. First Task\n2. Second Task\n";
+        assertEquals(expectedFeedback, result.getFeedback());
+    }
+
+    @Test
+    public void testDisplayTasksMatchingKeywords() {
+        this.schedule.addTask(new Task("hello"));
+        this.schedule.addTask(new Task("world"));
+        this.schedule.addTask(new Task("hello world"));
+
+        CommandResult result = this.listCommand.execute("list world");
+
+        String expectedFeedback = "1. world\n2. hello world\n";
         assertEquals(expectedFeedback, result.getFeedback());
     }
 }
