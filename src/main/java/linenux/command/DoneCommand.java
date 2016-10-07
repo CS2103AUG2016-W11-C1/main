@@ -41,7 +41,7 @@ public class DoneCommand implements Command {
             String keywords = matcher.group("keywords");
             String[] keywordsArr = keywords.split("\\s+");
             ArrayList<Task> tasks = new ArrayListUtil.ChainableArrayListUtil<Task>(this.schedule.search(keywordsArr))
-                                                     .filter(task -> task.isDone() == false)
+                                                     .filter(task -> task.isNotDone())
                                                      .value();
 
             if (tasks.size() == 0) {

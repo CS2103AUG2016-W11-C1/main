@@ -47,6 +47,14 @@ public class Task {
         this.reminders = new ArrayList<Reminder>();
     }
 
+    public boolean isDone() {
+        return (isDone == true);
+    }
+
+    public boolean isNotDone() {
+        return (isDone == false);
+    }
+
     @Override
     public String toString() {
         return this.taskName;
@@ -56,10 +64,6 @@ public class Task {
 
     public String getTaskName() {
         return this.taskName;
-    }
-
-    public boolean isDone() {
-        return this.isDone;
     }
 
     public LocalDateTime getStartTime() {
