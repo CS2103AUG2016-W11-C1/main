@@ -86,7 +86,7 @@ public class DoneCommandTest {
         this.schedule.addTask(new Task("Live like we are dying"));
         this.schedule.addTask(new Task("Play on broken strings"));
         CommandResult result = assertChangeBy(() -> getSearchResult("done live").size(),
-                - 1,
+                -1,
                 () -> this.doneCommand.execute("done live"));
         assertEquals("\"Live like we are dying\" is marked as done.", result.getFeedback());
     }
