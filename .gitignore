@@ -1,3 +1,8 @@
+
+# Created by https://www.gitignore.io/api/eclipse,gradle,intellij+iml
+
+### Eclipse ###
+
 .metadata
 bin/
 tmp/
@@ -49,15 +54,14 @@ local.properties
 # Code Recommenders
 .recommenders/
 
+
+### Intellij+iml ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and Webstorm
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 
 # User-specific stuff:
 .idea/workspace.xml
 .idea/tasks.xml
-.idea/dictionaries
-.idea/vcs.xml
-.idea/jsLibraryMappings.xml
 
 # Sensitive or high-churn files:
 .idea/dataSources.ids
@@ -94,12 +98,14 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 
-.DS_Store
+### Intellij+iml Patch ###
+# Reason: https://github.com/joeblau/gitignore.io/issues/186#issuecomment-249601023
 
+*.iml
+modules.xml
+.idea/misc.xml
+*.ipr
 
-# Created by https://www.gitignore.io/api/cradle,gradle
-
-#!! ERROR: cradle is undefined. Use list command to see defined gitignore types !!#
 
 ### Gradle ###
 .gradle
@@ -116,3 +122,6 @@ gradle-app.setting
 
 # # Work around https://youtrack.jetbrains.com/issue/IDEA-116898
 # gradle/wrapper/gradle-wrapper.properties
+
+# macOS
+.DS_Store
