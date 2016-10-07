@@ -1,13 +1,13 @@
 package linenux.command;
 
+import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import linenux.command.result.CommandResult;
 import linenux.model.Schedule;
 import linenux.model.Task;
 import linenux.util.TasksListUtil;
-
-import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Deletes a task from the schedule.
@@ -37,7 +37,7 @@ public class DeleteCommand implements Command {
 
         if (matcher.matches()) {
             assert (this.schedule != null);
-            
+
             String keywords = matcher.group("keywords");
             String[] keywordsArr = keywords.split("\\s+");
             ArrayList<Task> tasks = this.schedule.search(keywordsArr);
@@ -79,6 +79,7 @@ public class DeleteCommand implements Command {
                 return makeInvalidIndexResult();
             }
         } else if (userInput.matches(CANCEL_PATTERN)) {
+            this.requiresUserResponse = false;
             return makeCancelledResult();
         } else {
             return makeInvalidUserResponse(userInput);
