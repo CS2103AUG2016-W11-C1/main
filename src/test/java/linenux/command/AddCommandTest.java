@@ -1,8 +1,9 @@
 package linenux.command;
 
-import linenux.command.result.CommandResult;
-import linenux.model.Schedule;
 import linenux.model.Task;
+import linenux.model.Schedule;
+import linenux.command.result.CommandResult;
+
 import org.junit.Before;
 import org.junit.Test;
 
