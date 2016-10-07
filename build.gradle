@@ -31,7 +31,7 @@ sourceSets {
 
 javadoc {
     classpath += sourceSets.test.compileClasspath
-        source += sourceSets.test.allJava
+    source += sourceSets.test.allJava
 }
 
 mainClassName = 'linenux.Main'
