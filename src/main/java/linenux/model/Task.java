@@ -15,7 +15,7 @@ public class Task {
     private ArrayList<Reminder> reminders;
 
     /**
-     * Constructor for tasks with no deadlines or predetermined time slots.
+     * Constructor for To-Dos (tasks with no deadlines or predetermined time slots).
      */
     public Task(String taskName) {
         this.taskName = taskName;
@@ -26,7 +26,7 @@ public class Task {
     }
 
     /**
-     * Constructor for tasks with deadlines only.
+     * Constructor for Deadlines (tasks with deadlines only).
      */
     public Task(String taskName, LocalDateTime endTime) {
         this.taskName = taskName;
@@ -37,7 +37,7 @@ public class Task {
     }
 
     /**
-     * Constructor for tasks with predetermined time slots.
+     * Constructor for Events (tasks with predetermined time slots).
      */
     public Task(String taskName, LocalDateTime startTime, LocalDateTime endTime) {
         this.taskName = taskName;
