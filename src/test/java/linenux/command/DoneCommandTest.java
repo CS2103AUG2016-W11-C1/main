@@ -28,7 +28,7 @@ public class DoneCommandTest {
     private DoneCommand doneCommand;
 
     @Before
-    public void setupDeleteCommand() {
+    public void setupDoneCommand() {
         this.schedule = new Schedule();
         this.doneCommand = new DoneCommand(this.schedule);
     }
