@@ -2,6 +2,7 @@
 
 * [Introduction](#introduction)
 * [Setting Up](#setting-up)
+    *[Prerequisites](#prerequisites)
 * [Design](#design)
 * [Testing](#testing)
 * [Appendix A: User Stories](#appendix-a--user-stories)
@@ -11,7 +12,7 @@
 * [Appendix E: Product Survey](#appendix-e--product-survey)
 
 ## Introduction
-Linenux is a command-line, task manager application designed for consumers who are quick at typing. We have written this guide for developers who wants to contribute to the project but do not know where to begin. With that goal in mind, we have tried to include all the necessary information about the project that one might require, such as key design considerations and the overall software architecture. We hope that by the end of this developer guide, you will in a better position to start working on improving Linenux.
+Linenux is a command-line, task manager application designed for consumers who are quick at typing. Being an open-source project, we understand that there are developers (yes, you) who wants to contribute to the project but do not know where to begin. Thus, we have written this guide to inform newcomers to the project on the key design considerations and the overall software architecture. We hope that by the end of this developer guide, you will in a better position to start working on improving Linenux.
 
 ## Setting up
 
@@ -19,7 +20,9 @@ Linenux is a command-line, task manager application designed for consumers who a
 
 1. **JDK 8** or later
 2. **Eclipse** IDE
-3. **e(fx)clipse** plugin for Eclipse (Do the steps 2 onwards given in [this page](https://www.eclipse.org/efxclipse/install.html#for-the-ambitious))
+3. **e(fx)clipse** plugin for Eclipse (Do the steps 2 onwards given in [this page](https://www.eclipse.org/efxclipse/install.html#for-the-ambitious).)
+4. **Scene Builder 8.0** (Get it [here](http://gluonhq.com/labs/scene-builder/).)
+5. **Gradle** (Follow the user guide on their [website](https://docs.gradle.org/current/userguide/installation.html?_ga=1.32481590.94426092.1475838180).)
 
 #### Importing the project into Eclipse
 
