@@ -1,20 +1,25 @@
 package linenux.command;
 
-import linenux.model.Task;
-import linenux.model.Schedule;
-import linenux.command.result.CommandResult;
-import linenux.command.parser.TaskArgumentParser;
-import linenux.control.TimeParserManager;
-import linenux.time.parser.ISODateWithTimeParser;
-import linenux.util.Either;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import linenux.command.parser.TaskArgumentParser;
+import linenux.command.result.CommandResult;
+import linenux.control.TimeParserManager;
+import linenux.model.Schedule;
+import linenux.model.Task;
+import linenux.time.parser.ISODateWithTimeParser;
+import linenux.util.Either;
 
 /**
  * Adds a task to the schedule.
  */
 public class AddCommand implements Command {
+    public static final String COMMAND_FORMAT = "add TASK_NAME";
+
+    private static final String TRIGGER_WORD = "add";
+    private static final String DESCRIPTION = "Adds a task to schedule.";
+
     private static final String TASK_PATTERN = "(?i)^add(\\s+(?<arguments>.*))?$";
 
     private Schedule schedule;
@@ -25,6 +30,16 @@ public class AddCommand implements Command {
         this.schedule = schedule;
         this.timeParserManager = new TimeParserManager(new ISODateWithTimeParser());
         this.taskArgumentParser = new TaskArgumentParser(this.timeParserManager);
+    }
+
+    @Override
+    public String getTriggerWord() {
+        return TRIGGER_WORD;
+    }
+
+    @Override
+    public String getDescription() {
+        return DESCRIPTION;
     }
 
     @Override
