@@ -1,5 +1,6 @@
 # Developer Guide
 
+* [Introduction](#introduction)
 * [Setting Up](#setting-up)
 * [Design](#design)
 * [Testing](#testing)
@@ -8,6 +9,9 @@
 * [Appendix C: Non Functional Requirements](#appendix-c--non-functional-requirements)
 * [Appendix D: Glossary](#appendix-d--glossary)
 * [Appendix E: Product Survey](#appendix-e--product-survey)
+
+## Introduction
+Linenux is a command-line, task manager application designed for consumers who are quick at typing. We have written this guide for developers who wants to contribute to the project but do not know where to begin. With that goal in mind, we have tried to include all the necessary information about the project that one might require, such as key design considerations and the overall software architecture. We hope that by the end of this developer guide, you will in a better position to start working on improving Linenux.
 
 ## Setting up
 
