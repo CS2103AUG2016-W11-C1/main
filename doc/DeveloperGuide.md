@@ -2,7 +2,7 @@
 
 * [Introduction](#introduction)
 * [Setting Up](#setting-up)
-    *[Prerequisites](#prerequisites)
+    * [Prerequisites](#prerequisites)
 * [Design](#design)
 * [Testing](#testing)
 * [Appendix A: User Stories](#appendix-a--user-stories)
@@ -18,11 +18,11 @@ Linenux is a command-line, task manager application designed for consumers who a
 
 #### Prerequisites
 
-1. **JDK 8** or later
-2. **Eclipse** IDE
-3. **e(fx)clipse** plugin for Eclipse (Do the steps 2 onwards given in [this page](https://www.eclipse.org/efxclipse/install.html#for-the-ambitious).)
-4. **Scene Builder 8.0** (Get it [here](http://gluonhq.com/labs/scene-builder/).)
-5. **Gradle** (Follow the user guide on their [website](https://docs.gradle.org/current/userguide/installation.html?_ga=1.32481590.94426092.1475838180).)
+1. **JDK 8** or later.
+2. **Eclipse** IDE.
+3. **e(fx)clipse** plugin for Eclipse. Do the instructions given in [this page](https://www.eclipse.org/efxclipse/install.html#for-the-ambitious) from step 2 onwards.
+4. **Scene Builder 8.0**. Available [here](http://gluonhq.com/labs/scene-builder/).
+5. **Gradle**. Follow the user guide on their [website](https://docs.gradle.org/current/userguide/installation.html?_ga=1.32481590.94426092.1475838180).
 
 #### Importing the project into Eclipse
 
