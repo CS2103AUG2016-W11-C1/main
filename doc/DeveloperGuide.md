@@ -3,13 +3,16 @@
 * [Introduction](#introduction)
 * [Setting Up](#setting-up)
     * [Prerequisites](#prerequisites)
+    * [Importing-project-into-Eclipse](#importing-project-into-eclipse)
+    * [Troubleshooting](#troubleshooting)
 * [Design](#design)
 * [Testing](#testing)
-* [Appendix A: User Stories](#appendix-a--user-stories)
-* [Appendix B: Use Cases](#appendix-b--use-cases)
-* [Appendix C: Non Functional Requirements](#appendix-c--non-functional-requirements)
-* [Appendix D: Glossary](#appendix-d--glossary)
-* [Appendix E: Product Survey](#appendix-e--product-survey)
+* [Appendices](#appendices)
+    * [Appendix A: User Stories](#appendix-a--user-stories)
+    * [Appendix B: Use Cases](#appendix-b--use-cases)
+    * [Appendix C: Non Functional Requirements](#appendix-c--non-functional-requirements)
+    * [Appendix D: Glossary](#appendix-d--glossary)
+    * [Appendix E: Product Survey](#appendix-e--product-survey)
 
 ## Introduction
 Linenux is a command-line, task manager application designed for consumers who are quick at typing. Being an open-source project, we understand that there are developers (yes, you) who wants to contribute to the project but do not know where to begin. Thus, we have written this guide to inform newcomers to the project on the key design considerations and the overall software architecture. We hope that by the end of this developer guide, you will in a better position to start working on improving Linenux.
@@ -19,25 +22,35 @@ Linenux is a command-line, task manager application designed for consumers who a
 #### Prerequisites
 
 1. **JDK 8** or later.
-2. **Eclipse** IDE.
-3. **e(fx)clipse** plugin for Eclipse. Do the instructions given in [this page](https://www.eclipse.org/efxclipse/install.html#for-the-ambitious) from step 2 onwards.
-4. **Scene Builder 8.0**. Available [here](http://gluonhq.com/labs/scene-builder/).
-5. **Gradle**. Follow the user guide on their [website](https://docs.gradle.org/current/userguide/installation.html?_ga=1.32481590.94426092.1475838180).
+2. **Eclipse** IDE with **e(fx)clipse** plugin. Follow the instructions given on their [website](https://www.eclipse.org/efxclipse/install.html#for-the-ambitious).
+3. **Scene Builder 8.0**. Available [here](http://gluonhq.com/labs/scene-builder/).
+4. **Gradle**. Follow the instuctions on their [website](https://docs.gradle.org/current/userguide/installation.html?_ga=1.32481590.94426092.1475838180).
 
-#### Importing the project into Eclipse
+#### Importing project into Eclipse
 
-1. Clone this repository to your computer
-2. Open Eclipse (Note: Ensure you have installed the **e(fx)clipse plugin** as given in the prerequisites above)
-3. Click `File` > `Import`
-4. Click `General` > `Existing Projects into Workspace` > `Next`
-5. Click `Browse`, then locate the project's directory
-6. Click `Finish`
+1. Fork this repository and clone the fork to your computer.
+2. Open the Eclipse application.
+3. Click `File` > `Import` > `General` > `Existing Projects into Workspace` > `Next`.
+4. Click `Browse`, then locate the project's directory.
+5. Click `Finish`.
+6. Run command `gradle run` in terminal to ensure that everything is working properly.
+
+#### Troubleshooting
+
+1. **Eclipse reports that some of the required libraries are missing.**
+    * Reason: Required libraries were not downloaded during project import.
+    * Solution: Run command `gradle test` once to refresh libraries.
+2. **Eclipse reports compile errors after new commits are pulled from Git.**
+    * Reason: Eclipse fails to detect the changes made to the project during `git pull`.
+    * Solution: Refresh the project in Eclipse by clicking on the project in the package explorer window and pressing `F5`.
 
 ## Design
 
 ## Testing
 
 * In Eclipse, right-click on the `test` folder and choose `Run as` > `JUnit Test`
+
+## Appendices
 
 ## Appendix A : User Stories
 
