@@ -15,6 +15,7 @@ import linenux.util.TasksListUtil;
 public class DeleteCommand implements Command {
     private static final String TRIGGER_WORD = "delete";
     private static final String DESCRIPTION = "Deletes a task.";
+
     private static final String DELETE_PATTERN = "(?i)^delete (?<keywords>.*)$";
     private static final String NUMBER_PATTERN = "^\\d+$";
     private static final String CANCEL_PATTERN = "^cancel$";

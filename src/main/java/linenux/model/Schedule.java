@@ -63,6 +63,13 @@ public class Schedule {
     }
 
     /**
+     * Returns the list of states.
+     */
+    public LinkedList<State> getStates() {
+        return states;
+    }
+
+    /**
      * Returns the list of tasks.
      */
     public ArrayList<Task> getTaskList() {
@@ -84,6 +91,6 @@ public class Schedule {
         while (states.size() + 1 > MAX_STATES && states.size() > 1) {
             states.removeFirst();
         }
-        states.add(state);
+        states.addLast(state);
     }
 }
