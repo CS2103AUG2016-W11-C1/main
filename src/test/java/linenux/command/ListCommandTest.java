@@ -6,6 +6,8 @@ import linenux.model.Task;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.time.LocalDateTime;
+
 import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -50,10 +52,15 @@ public class ListCommandTest {
     public void testDisplayTheEntireList() {
         this.schedule.addTask(new Task("First Task"));
         this.schedule.addTask(new Task("Second Task"));
+        this.schedule.addTask(new Task("Deadline", null, LocalDateTime.of(2016, 1, 1, 17, 0)));
+        this.schedule.addTask(new Task("Event", LocalDateTime.of(2016, 1, 1, 17, 0), LocalDateTime.of(2016, 1, 1, 18, 0)));
 
         CommandResult result = this.listCommand.execute("list");
 
-        String expectedFeedback = "1. First Task\n2. Second Task\n";
+        String expectedFeedback = "1. First Task\n" +
+                "2. Second Task\n" +
+                "3. Deadline (Due 2016-01-01 5:00PM)\n" +
+                "4. Event (2016-01-01 5:00PM - 2016-01-01 6:00PM)\n";
         assertEquals(expectedFeedback, result.getFeedback());
     }
 

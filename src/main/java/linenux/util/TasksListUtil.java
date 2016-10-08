@@ -19,7 +19,7 @@ public class TasksListUtil {
         for (int i = 0; i < tasks.size(); i++) {
             builder.append(i + 1);
             builder.append(". ");
-            builder.append(tasks.get(i).getTaskName());
+            builder.append(tasks.get(i).toString());
             builder.append('\n');
         }
 

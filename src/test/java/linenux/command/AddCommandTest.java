@@ -1,5 +1,6 @@
 package linenux.command;
 
+import linenux.command.parser.TaskArgumentParser;
 import linenux.model.Task;
 import linenux.model.Schedule;
 import linenux.command.result.CommandResult;
@@ -7,6 +8,7 @@ import linenux.command.result.CommandResult;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import static linenux.helpers.Assert.assertChangeBy;
@@ -56,10 +58,10 @@ public class AddCommandTest {
     }
 
     /**
-     * Test that executing an add task command will correctly add new task to the schedule.
+     * Test that executing the add task command will correctly add new todo to the schedule.
      */
     @Test
-    public void testExecuteAddTask() {
+    public void testExecuteAddTodo() {
         assertChangeBy(() -> this.schedule.getTaskList().size(),
                 1,
                 () -> this.addCommand.execute("add CS2103T Tutorial"));
@@ -77,6 +79,54 @@ public class AddCommandTest {
     }
 
     /**
+     * Test that executing the add task command will correctly add new deadline to the schedule.
+     */
+    @Test
+    public void testExecuteAddDeadline() {
+        assertChangeBy(() -> this.schedule.getTaskList().size(),
+                1,
+                () -> this.addCommand.execute("add CS2103T Tutorial et/2016-01-01 5:00PM"));
+
+        // The new deadline has the correct name, start time, and end time
+        ArrayList<Task> tasks = this.schedule.getTaskList();
+        Task addedTask = tasks.get(tasks.size() - 1);
+        assertEquals("CS2103T Tutorial", addedTask.getTaskName());
+        assertNull(addedTask.getStartTime());
+        assertEquals(LocalDateTime.of(2016, 1, 1, 17, 0), addedTask.getEndTime());
+    }
+
+    /**
+     * Test that executing the add task command will correctly add new event to the schedule
+     */
+    @Test
+    public void testExecuteAddEvent() {
+        assertChangeBy(() -> this.schedule.getTaskList().size(),
+                1,
+                () -> this.addCommand.execute("add CS2103T Tutorial st/2016-01-01 5:00PM et/2016-01-02 5:00PM"));
+
+        // The new event has the correct name, start time, and end time
+        ArrayList<Task> tasks = this.schedule.getTaskList();
+        Task addedTask = tasks.get(tasks.size() - 1);
+        assertEquals("CS2103T Tutorial", addedTask.getTaskName());
+        assertEquals(LocalDateTime.of(2016, 1, 1, 17, 0), addedTask.getStartTime());
+        assertEquals(LocalDateTime.of(2016, 1, 2, 17, 0), addedTask.getEndTime());
+    }
+
+    @Test
+    public void testExecuteAddEventIgnoringOrderOfTimes() {
+        assertChangeBy(() -> this.schedule.getTaskList().size(),
+                1,
+                () -> this.addCommand.execute("add CS2103T Tutorial et/2016-01-02 5:00PM st/2016-01-01 5:00PM"));
+
+        // The new event has the correct name, start time, and end time
+        ArrayList<Task> tasks = this.schedule.getTaskList();
+        Task addedTask = tasks.get(tasks.size() - 1);
+        assertEquals("CS2103T Tutorial", addedTask.getTaskName());
+        assertEquals(LocalDateTime.of(2016, 1, 1, 17, 0), addedTask.getStartTime());
+        assertEquals(LocalDateTime.of(2016, 1, 2, 17, 0), addedTask.getEndTime());
+    }
+
+    /**
      * Test that executing an add task command should return the correct result
      */
     @Test
@@ -86,13 +136,31 @@ public class AddCommandTest {
     }
 
     /**
+     * Test that adding a new deadline should return the correct result
+     */
+    @Test
+    public void testExecuteAddDeadlineResult() {
+        CommandResult result = this.addCommand.execute("add CS2103T Tutorial et/2016-01-01 5:00PM");
+        assertEquals("Added CS2103T Tutorial (Due 2016-01-01 5:00PM)", result.getFeedback());
+    }
+
+    /**
+     * Test that adding a new event should return the correct result
+     */
+    @Test
+    public void testExecuteAddEventResult() {
+        CommandResult result = this.addCommand.execute("add CS2103T Tutorial st/2016-01-01 5:00PM et/2016-01-02 5:00PM");
+        assertEquals("Added CS2103T Tutorial (2016-01-01 5:00PM - 2016-01-02 5:00PM)", result.getFeedback());
+    }
+
+    /**
      * Test the result when running without a task name
      */
     @Test
     public void testMissingTaskNameCommandResult() {
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
                 () -> this.addCommand.execute("add"));
-        assertEquals("Invalid arguments.\n\n" + AddCommand.COMMAND_FORMAT, result.getFeedback());
+        assertEquals(expectedInvalidArgumentMessage(), result.getFeedback());
     }
 
     /**
@@ -102,6 +170,56 @@ public class AddCommandTest {
     public void testTaskNameIsEmptyCommandResult() {
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
                 () -> this.addCommand.execute("add             "));
-        assertEquals("Invalid arguments.\n\n" + AddCommand.COMMAND_FORMAT, result.getFeedback());
+        assertEquals(expectedInvalidArgumentMessage(), result.getFeedback());
+    }
+
+    @Test
+    public void testStartTimeWithoutTaskName() {
+        CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
+                () -> this.addCommand.execute("add st/2016-01-01 5:00PM"));
+        assertEquals(expectedInvalidArgumentMessage(), result.getFeedback());
+    }
+
+    @Test
+    public void testEndTimeWithoutTaskName() {
+        CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
+                () -> this.addCommand.execute("add et/2016-01-01 5:00PM"));
+        assertEquals(expectedInvalidArgumentMessage(), result.getFeedback());
+    }
+
+    @Test
+    public void testInvalidStartTime() {
+        CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
+                () -> this.addCommand.execute("add hello st/yesterday et/2016-12-31 11:59PM"));
+
+        assertEquals("Cannot parse \"yesterday\".", result.getFeedback());
+    }
+
+    @Test
+    public void testInvalidEndTime() {
+        CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
+                () -> this.addCommand.execute("add hello et/tomorrow"));
+
+        assertEquals("Cannot parse \"tomorrow\".", result.getFeedback());
+    }
+
+    @Test
+    public void testStartTimeWithoutEndTime() {
+        CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
+                () -> this.addCommand.execute("add hello st/2016-01-01 5:00PM"));
+
+        assertEquals("Cannot create task with start time but without end time.", result.getFeedback());
+    }
+
+    @Test
+    public void testEndTimeBeforeStartTime() {
+        CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
+                () -> this.addCommand.execute("add hello st/2016-01-02 5:00PM et/2016-01-01 5:00PM"));
+
+        assertEquals("End time cannot come before start time.", result.getFeedback());
+    }
+
+    private String expectedInvalidArgumentMessage() {
+        return "Invalid arguments.\n\n" + TaskArgumentParser.ARGUMENT_FORMAT;
     }
 }
