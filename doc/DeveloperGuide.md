@@ -3,7 +3,7 @@
 * [Introduction](#introduction)
 * [Setting Up](#setting-up)
     * [Prerequisites](#prerequisites)
-    * [Importing-project-into-Eclipse](#importing-project-into-eclipse)
+    * [Importing project into Eclipse](#importing-project-into-eclipse)
     * [Troubleshooting](#troubleshooting)
 * [Design](#design)
     * [Architecture](#architecture)
@@ -34,16 +34,16 @@ Linenux is a command-line, task manager application designed for consumers who a
 3. Click `File` > `Import` > `General` > `Existing Projects into Workspace` > `Next`.
 4. Click `Browse`, then locate the project's directory.
 5. Click `Finish`.
-6. Run `gradle run` in terminal to ensure that everything is working properly.
+6. Run `gradle run` in your terminal to ensure that everything is working properly.
 
 #### Troubleshooting
 
 1. **Eclipse reports that some of the required libraries are missing.**
     * Reason: Required libraries were not downloaded during project import.
-    * Solution: Run `gradle test` in terminal once to refresh libraries.
+    * Solution: Run `gradle test` in your terminal once to refresh libraries.
 2. **Eclipse reports compile errors after new commits are pulled from Git.**
-    * Reason: Eclipse fails to detect the changes made to the project during `git pull`.
-    * Solution: Refresh the project in Eclipse by clicking on the project in the package explorer window and pressing `F5`.
+    * Reason: Eclipse fails to detect the changes made to your project during `git pull`.
+    * Solution: Refresh your project in Eclipse by clicking on it in the package explorer window and pressing `F5`.
 
 ## Design
 
@@ -51,6 +51,15 @@ Linenux is a command-line, task manager application designed for consumers who a
 
 <img src="images/architectureDiagram.png"/>
 > Figure 1: Architecture Diagram
+
+Linenux is made up of 6 main components.
+
+1. **Main** - Sets up the main application window during program's startup.
+2. **UI** - Regulates user interaction and display.
+3. **Control** - Assigns user request to the correct action.
+4. **Command** - Carries out the action.
+5. **Model** - Stores the data of Linenux in-memory.
+6. **Storage** - Reads data from, and writes data to, the hard disk.
 
 ## Testing
 
