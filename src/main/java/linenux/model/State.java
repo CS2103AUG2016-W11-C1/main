@@ -11,8 +11,12 @@ import linenux.util.ArrayListUtil;
  public class State {
      private final ArrayList<Task> taskList;
 
-     public State(State previous) {
-         this.taskList = new ArrayList<Task>(previous.getTaskList());
+     public State() {
+         this.taskList = new ArrayList<Task>();
+     }
+
+     public State(ArrayList<Task> taskList) {
+         this.taskList = taskList;
      }
 
      /**
@@ -28,13 +32,6 @@ import linenux.util.ArrayListUtil;
       */
      public void deleteTask(Task task) {
          this.taskList.remove(task);
-     }
-
-     /**
-      * Clears all tasks from the schedule
-      */
-     public void clear() {
-         taskList.clear();
      }
 
      /**
@@ -55,13 +52,31 @@ import linenux.util.ArrayListUtil;
                                                            .value();
 
          return new ArrayListUtil.ChainableArrayListUtil<Task>(this.taskList)
-                 .filter(task -> {
-                     ArrayList<String> taskKeywords = new ArrayListUtil.ChainableArrayListUtil<String>(task.getTaskName().split("\\s+"))
-                             .map(String::toLowerCase)
-                             .value();
+                                 .filter(task -> { ArrayList<String> taskKeywords =
+                                                     new ArrayListUtil.ChainableArrayListUtil<String>(task.getTaskName().split("\\s+"))
+                                                                      .map(String::toLowerCase)
+                                                                      .value();
+                                                   return !Collections.disjoint(keywordsList, taskKeywords);
+                                                   })
+                                 .value();
+     }
 
-                     return !Collections.disjoint(keywordsList, taskKeywords);
-                 })
-                 .value();
+     /**
+      * Creates a copy of the state.
+      * @return
+      */
+     public State copyState() {
+         return new State(copyTaskList(taskList));
+     }
+
+     /**
+      * Creates a deep copy of the task list.
+      * @param taskList
+      * @return
+      */
+     private ArrayList<Task> copyTaskList(ArrayList<Task> taskList) {
+         return new ArrayListUtil.ChainableArrayListUtil<Task>(taskList)
+                                 .map(task -> task.copyTask())
+                                 .value();
      }
 }
