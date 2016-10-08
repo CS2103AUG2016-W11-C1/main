@@ -6,6 +6,7 @@
     * [Importing-project-into-Eclipse](#importing-project-into-eclipse)
     * [Troubleshooting](#troubleshooting)
 * [Design](#design)
+    * [Architecture](#architecture)
 * [Testing](#testing)
 * [Appendices](#appendices)
     * [Appendix A: User Stories](#appendix-a--user-stories)
@@ -45,6 +46,11 @@ Linenux is a command-line, task manager application designed for consumers who a
     * Solution: Refresh the project in Eclipse by clicking on the project in the package explorer window and pressing `F5`.
 
 ## Design
+
+#### Architecture
+
+<img src="images/architectureDiagram.png"/>
+> Figure 1: Architecture Diagram
 
 ## Testing
 
