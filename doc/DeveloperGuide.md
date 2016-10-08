@@ -23,7 +23,7 @@ Linenux is a command-line, task manager application designed for consumers who a
 
 1. **JDK 8** or later.
 2. **Eclipse** IDE with **e(fx)clipse** plugin. Follow the instructions given on their [website](https://www.eclipse.org/efxclipse/install.html#for-the-ambitious).
-3. **Scene Builder 8.0**. Available [here](http://gluonhq.com/labs/scene-builder/).
+3. **Scene Builder 8.0**. Available for download [here](http://gluonhq.com/labs/scene-builder/).
 4. **Gradle**. Follow the instuctions on their [website](https://docs.gradle.org/current/userguide/installation.html?_ga=1.32481590.94426092.1475838180).
 
 #### Importing project into Eclipse
@@ -33,13 +33,13 @@ Linenux is a command-line, task manager application designed for consumers who a
 3. Click `File` > `Import` > `General` > `Existing Projects into Workspace` > `Next`.
 4. Click `Browse`, then locate the project's directory.
 5. Click `Finish`.
-6. Run command `gradle run` in terminal to ensure that everything is working properly.
+6. Run `gradle run` in terminal to ensure that everything is working properly.
 
 #### Troubleshooting
 
 1. **Eclipse reports that some of the required libraries are missing.**
     * Reason: Required libraries were not downloaded during project import.
-    * Solution: Run command `gradle test` once to refresh libraries.
+    * Solution: Run `gradle test` in terminal once to refresh libraries.
 2. **Eclipse reports compile errors after new commits are pulled from Git.**
     * Reason: Eclipse fails to detect the changes made to the project during `git pull`.
     * Solution: Refresh the project in Eclipse by clicking on the project in the package explorer window and pressing `F5`.
