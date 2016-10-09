@@ -1,9 +1,9 @@
 package linenux.command;
 
-import linenux.command.result.CommandResult;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import linenux.command.result.CommandResult;
 
 /**
  * Exits the program.
@@ -33,6 +33,7 @@ public class ExitCommand implements Command {
         Matcher matcher = Pattern.compile(TASK_PATTERN).matcher(userInput);
 
         if (matcher.matches()) {
+            // TODO: Platform.exit();
             System.exit(0);
         }
         return null;

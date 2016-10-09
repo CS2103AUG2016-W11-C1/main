@@ -6,7 +6,7 @@ import java.util.Collections;
 import linenux.util.ArrayListUtil;
 
 /**
- * Represents a snapshot in time of a schedule.
+ * Represents a snapshot in time of a schedule. The State class is immutable.
  */
  public class State {
      private final ArrayList<Task> taskList;
@@ -21,17 +21,25 @@ import linenux.util.ArrayListUtil;
 
      /**
       * Adds a task to the schedule
+      * @param task The task to add.
+      * @return The new State of the schedule.
       */
-     public void addTask(Task task) {
-         taskList.add(task);
+     public State addTask(Task task) {
+         ArrayList<Task> newTaskList = copyTaskList(taskList);
+         newTaskList.add(task);
+         return new State(newTaskList);
      }
 
      /**
       * Delete the specified task.
       * @param task The task to delete.
+      * @return The new State of the schedule.
       */
-     public void deleteTask(Task task) {
-         this.taskList.remove(task);
+     public State deleteTask(Task task) {
+         int taskIndex = taskList.indexOf(task);
+         ArrayList<Task> newTaskList = copyTaskList(taskList);
+         newTaskList.remove(taskIndex);
+         return new State(newTaskList);
      }
 
      /**
@@ -59,14 +67,6 @@ import linenux.util.ArrayListUtil;
                                                    return !Collections.disjoint(keywordsList, taskKeywords);
                                                    })
                                  .value();
-     }
-
-     /**
-      * Creates a copy of the state.
-      * @return
-      */
-     public State copyState() {
-         return new State(copyTaskList(taskList));
      }
 
      /**

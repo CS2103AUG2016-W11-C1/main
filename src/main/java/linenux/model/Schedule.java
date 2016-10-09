@@ -30,9 +30,7 @@ public class Schedule {
      * Adds a task to the schedule
      */
     public void addTask(Task task) {
-        State newState = getMostRecentState().copyState();
-        newState.addTask(task);
-        addState(newState);
+        addState(getMostRecentState().addTask(task));
     }
 
     /**
@@ -40,9 +38,7 @@ public class Schedule {
      * @param task The task to delete.
      */
     public void deleteTask(Task task) {
-        State newState = getMostRecentState().copyState();
-        newState.deleteTask(task);
-        addState(newState);
+        addState(getMostRecentState().deleteTask(task));
     }
 
     /**
