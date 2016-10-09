@@ -1,10 +1,16 @@
 package linenux.control;
 
-import linenux.command.*;
-import linenux.model.Schedule;
-import linenux.command.result.CommandResult;
-
 import java.util.ArrayList;
+
+import linenux.command.AddCommand;
+import linenux.command.Command;
+import linenux.command.DeleteCommand;
+import linenux.command.DoneCommand;
+import linenux.command.ExitCommand;
+import linenux.command.InvalidCommand;
+import linenux.command.ListCommand;
+import linenux.command.result.CommandResult;
+import linenux.model.Schedule;
 
 /**
  * Assigns commands based on user input.
@@ -27,6 +33,7 @@ public class CommandManager {
         commandList.add(new AddCommand(this.schedule));
         commandList.add(new ListCommand(this.schedule));
         commandList.add(new DeleteCommand(this.schedule));
+        commandList.add(new DoneCommand(this.schedule));
         commandList.add(new ExitCommand());
         commandList.add(new HelpCommand(this.commandList));
 

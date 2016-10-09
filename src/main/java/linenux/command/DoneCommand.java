@@ -7,15 +7,14 @@ import java.util.regex.Pattern;
 import linenux.command.result.CommandResult;
 import linenux.model.Schedule;
 import linenux.model.Task;
+import linenux.util.ArrayListUtil;
 import linenux.util.TasksListUtil;
 
 /**
- * Deletes a task from the schedule.
+ * Marks task as done.
  */
-public class DeleteCommand implements Command {
-    private static final String TRIGGER_WORD = "delete";
-    private static final String DESCRIPTION = "Deletes a task.";
-    private static final String DELETE_PATTERN = "(?i)^delete (?<keywords>.*)$";
+public class DoneCommand implements Command {
+    private static final String DONE_PATTERN = "(?i)^done (?<keywords>.*)$";
     private static final String NUMBER_PATTERN = "^\\d+$";
     private static final String CANCEL_PATTERN = "^cancel$";
 
@@ -23,42 +22,33 @@ public class DeleteCommand implements Command {
     private boolean requiresUserResponse;
     private ArrayList<Task> foundTasks;
 
-    public DeleteCommand(Schedule schedule) {
+    public DoneCommand(Schedule schedule) {
         this.schedule = schedule;
-        this.requiresUserResponse = false;
-    }
-
-    @Override
-    public String getTriggerWord() {
-        return TRIGGER_WORD;
-    }
-
-    @Override
-    public String getDescription() {
-        return DESCRIPTION;
     }
 
     @Override
     public boolean respondTo(String userInput) {
-        return userInput.matches(DELETE_PATTERN);
+        return userInput.matches(DONE_PATTERN);
     }
 
     @Override
     public CommandResult execute(String userInput) {
-        Matcher matcher = Pattern.compile(DELETE_PATTERN).matcher(userInput);
+        Matcher matcher = Pattern.compile(DONE_PATTERN).matcher(userInput);
 
         if (matcher.matches()) {
             assert (this.schedule != null);
 
             String keywords = matcher.group("keywords");
             String[] keywordsArr = keywords.split("\\s+");
-            ArrayList<Task> tasks = this.schedule.search(keywordsArr);
+            ArrayList<Task> tasks = new ArrayListUtil.ChainableArrayListUtil<Task>(this.schedule.search(keywordsArr))
+                                                     .filter(task -> task.isNotDone())
+                                                     .value();
 
             if (tasks.size() == 0) {
                 return makeNotFoundResult(keywords);
             } else if (tasks.size() == 1) {
-                this.schedule.deleteTask(tasks.get(0));
-                return makeDeletedTask(tasks.get(0));
+                tasks.get(0).markAsDone();
+                return makeDoneTask(tasks.get(0));
             } else {
                 this.requiresUserResponse = true;
                 this.foundTasks = tasks;
@@ -81,12 +71,12 @@ public class DeleteCommand implements Command {
 
             if (1 <= index && index <= this.foundTasks.size()) {
                 Task task = this.foundTasks.get(index - 1);
-                this.schedule.deleteTask(task);
+                task.markAsDone();
 
                 this.requiresUserResponse = false;
                 this.foundTasks = null;
 
-                return makeDeletedTask(task);
+                return makeDoneTask(task);
             } else {
                 return makeInvalidIndexResult();
             }
@@ -103,8 +93,8 @@ public class DeleteCommand implements Command {
         return () -> "Cannot find \"" + keywords + "\".";
     }
 
-    private CommandResult makeDeletedTask(Task task) {
-        return () -> "Deleted \"" + task.getTaskName() + "\".";
+    private CommandResult makeDoneTask(Task task) {
+        return () -> "\"" + task.getTaskName() + "\" is marked as done.";
     }
 
     private CommandResult makePromptResult(ArrayList<Task> tasks) {
@@ -121,14 +111,14 @@ public class DeleteCommand implements Command {
     }
 
     private CommandResult makeCancelledResult() {
-        return () -> "OK! Not deleting anything.";
+        return () -> "OK! Not marking any task as done.";
     }
 
     private CommandResult makeInvalidUserResponse(String userInput) {
         return () -> {
             StringBuilder builder = new StringBuilder();
             builder.append("I don't understand \"" + userInput + "\".\n");
-            builder.append("Enter a number to indicate which task to delete.\n");
+            builder.append("Enter a number to indicate which task to mark as done.\n");
             builder.append(TasksListUtil.display(this.foundTasks));
             return builder.toString();
         };
@@ -144,4 +134,5 @@ public class DeleteCommand implements Command {
             return builder.toString();
         };
     }
+
 }

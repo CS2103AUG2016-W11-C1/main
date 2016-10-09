@@ -1,19 +1,20 @@
 package linenux.command;
 
-import linenux.command.result.CommandResult;
-import linenux.model.Schedule;
-import linenux.model.Task;
-import org.junit.Before;
-import org.junit.Test;
-
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertTrue;
 import static linenux.helpers.Assert.assertChangeBy;
 import static linenux.helpers.Assert.assertNoChange;
 
+import org.junit.Before;
+import org.junit.Test;
+
+import linenux.command.result.CommandResult;
+import linenux.model.Schedule;
+import linenux.model.Task;
+
 /**
- * JUnit test for delete command. 
+ * JUnit test for delete command.
  */
 public class DeleteCommandTest {
     private Schedule schedule;
@@ -86,6 +87,7 @@ public class DeleteCommandTest {
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
                 () -> this.deleteCommand.userResponse("cancel"));
         assertEquals("OK! Not deleting anything.", result.getFeedback());
+        assertFalse(this.deleteCommand.awaitingUserResponse());
     }
 
     @Test
