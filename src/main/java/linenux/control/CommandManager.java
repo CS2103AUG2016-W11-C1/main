@@ -7,6 +7,7 @@ import linenux.command.Command;
 import linenux.command.DeleteCommand;
 import linenux.command.DoneCommand;
 import linenux.command.ExitCommand;
+import linenux.command.HelpCommand;
 import linenux.command.InvalidCommand;
 import linenux.command.ListCommand;
 import linenux.command.result.CommandResult;

@@ -14,6 +14,7 @@ import linenux.util.TasksListUtil;
  * Marks task as done.
  */
 public class DoneCommand implements Command {
+    private static final String TRIGGER_WORD = "done";
     private static final String DONE_PATTERN = "(?i)^done (?<keywords>.*)$";
     private static final String NUMBER_PATTERN = "^\\d+$";
     private static final String CANCEL_PATTERN = "^cancel$";
@@ -87,6 +88,16 @@ public class DoneCommand implements Command {
         } else {
             return makeInvalidUserResponse(userInput);
         }
+    }
+
+    @Override
+    public String getTriggerWord() {
+        return TRIGGER_WORD;
+    }
+
+    @Override
+    public String getDescription() {
+        return "Mark a task as done.";
     }
 
     private CommandResult makeNotFoundResult(String keywords) {
