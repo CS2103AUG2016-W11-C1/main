@@ -16,7 +16,7 @@
     * [Viewing details of task or reminder: `view`](#viewing-details-of-task-or-reminder-view)
     * [Viewing help: `help`](#viewing-help-help)
     * [Exiting the Program: `exit`](#exiting-the-program-exit)
-    * [Viewing Help: `help`](#viewing-help-help)
+    * [Viewing Help: `help`](#viewing-help--help)
     * [Exiting Linenux: `exit`](#exiting-linenux-exit)
 
 
@@ -47,7 +47,7 @@ We understand that in everyone’s daily lives, we will be thrown many tasks, fo
 | Finding a free timeslot | [`freetime`](#finding-a-free-timeslot---freetime) | `freetime` [st/START_TIME] et/END_TIME |
 | Listing all tasks and reminders | [`list`](#listing-all-tasks-list) | `list` [KEYWORDS]... [st/START_TIME] [et/END_TIME] [#/TAG] |
 | Viewing details of tasks and reminders | [`view`](#viewing-details-of-task-or-reminder-view) | `view` KEYWORDS… |
-| Help for commands | [`help`](#viewing-help-help) | `help` [KEYWORD] |
+| Help for commands | [`help`](#viewing-help--help) | `help` [KEYWORD] |
 | Exiting Linenux | [`exit`](#exiting-linenux-exit) | `exit` |
 
 
