@@ -9,13 +9,15 @@
     * [Adding reminders to a task: `remind`](#adding-reminders-to-a-task-remind)
     * [Edit a task/reminder: `edit`](#edit-a-taskreminder-edit)
     * [Deleting tasks: `delete`](#deleting-tasks-delete)
-    * [Marking tasks as done: `done`](#marking-tasks-as-done)
+    * [Marking tasks as done: `done`](#marking-tasks-as-done-done)
     * [Undo an action: `undo`](#undo-an-action-undo)
-    * [Finding a free timeslot - `freetime`](#finding-a-free-timeslot-freetime)
+    * [Finding a free timeslot - `freetime`](#finding-a-free-timeslot---freetime)
     * [Listing all tasks: `list`](#listing-all-tasks-list)
     * [Viewing details of task or reminder: `view`](#viewing-details-of-task-or-reminder-view)
     * [Viewing help: `help`](#viewing-help-help)
     * [Exiting the Program: `exit`](#exiting-the-program-exit)
+    * [Viewing Help: `help`](#viewing-help-help)
+    * [Exiting Linenux: `exit`](#exiting-linenux-exit)
 
 
 
@@ -40,13 +42,13 @@ We understand that in everyone’s daily lives, we will be thrown many tasks, fo
 | Add a reminder to a task | [`remind`](#adding-reminders-to-a-task-remind) | `remind` KEYWORDS... d/DATE [n/NOTE] |
 | Edit a task or reminder | [`edit`](#edit-a-taskreminder-edit) | `edit` KEYWORDS... [n/NEW_NAME] [st/START_TIME] [et/END_TIME] |
 | Delete a task or reminder | [`delete`](#deleting-tasks-delete) | `delete` KEYWORDS… |
-| Mark a task as done | [`done`](#marking-tasks-as-done) | `done` KEYWORDS… |
+| Mark a task as done | [`done`](#marking-tasks-as-done-done) | `done` KEYWORDS… |
 | Undo | [`undo`](#undo-an-action-undo) | `undo` |
-| Finding a free timeslot | [`freetime`](#finding-a-free-timeslot-freetime) | `freetime` [st/START_TIME] et/END_TIME |
+| Finding a free timeslot | [`freetime`](#finding-a-free-timeslot---freetime) | `freetime` [st/START_TIME] et/END_TIME |
 | Listing all tasks and reminders | [`list`](#listing-all-tasks-list) | `list` [KEYWORDS]... [st/START_TIME] [et/END_TIME] [#/TAG] |
 | Viewing details of tasks and reminders | [`view`](#viewing-details-of-task-or-reminder-view) | `view` KEYWORDS… |
-| Help for commands | `help` | `help` [KEYWORD] |
-| Exiting Linenux | `exit` | `exit` |
+| Help for commands | [`help`](#viewing-help-help) | `help` [KEYWORD] |
+| Exiting Linenux | [`exit`](#exiting-linenux-exit) | `exit` |
 
 
 
@@ -269,7 +271,7 @@ help [KEYWORD]
 > When Linenux is unable to understand your command, it will also show you the `help` section.
 
 
-#### Exiting the Program: `exit`
+#### Exiting Linenux: `exit`
 Although we are sad to see you goTo exit the program, apart from clicking the ‘x’ button, we too have catered to your love of typing. Simply type `exit` and you’re done!
 
 Format:
