@@ -1,10 +1,10 @@
 # User Guide
 
+* [Introduction](#introduction)
+* [Quick Start](#quick-start)
 
 ## Introduction
 We understand that in everyone’s daily lives, we will be thrown many tasks, for example, to attend meetings, preparing documents by a certain deadline etc. Our application, Linenux, aims to help you effectively organize and manage all your different tasks with a simple type on your keyboard.
-
-* [Quick Start](#quick-start)
 
 ## Quick Start
 
