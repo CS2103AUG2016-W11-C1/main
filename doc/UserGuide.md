@@ -17,9 +17,9 @@ We understand that in everyone’s daily lives, we will be thrown many tasks, fo
 ## Commands Summary:
 | Description | Command | Format |
 |---|---|---|
-| Add a task to Linenux | `add` | add TASK_NAME [st/START_TIME] [et/END_TIME] [#/TAG]... |
+| Add a task to Linenux | `add` | add TASK_NAME [st/START_TIME] [et/END_TIME] [#/TAGS]... |
 | Add a reminder to a task | `remind` | remind KEYWORDS... d/DATE [n/NOTE] |
-| Edit a task or reminder | `edit` | edit KEYWORDS... [n/NEW_NAME][st/START_TIME] [et/END_TIME] |
+| Edit a task or reminder | `edit` | edit KEYWORDS... [n/NEW_NAME] [st/START_TIME] [et/END_TIME] |
 | Delete a task or reminder | `delete` | delete KEYWORDS… |
 | Mark a task as done | `done` | done KEYWORDS… |
 | Undo | `undo` | undo |
@@ -30,6 +30,19 @@ We understand that in everyone’s daily lives, we will be thrown many tasks, fo
 | Exiting Linenux | `exit` | exit |
 
 ## List of Commands
+
+#### Some notes before you start:
+Command format:
+1. Any capitalized words, e.g TASK_NAME, is a field required by the command.
+2. Any field surrounded by square brackets, '[ ]', are optional.
+3. Each field represents one word, and fields are seperated by spaces.
+4. The only exception to (3) is when you see '...' after a field, indicating that you can key in multiple words for that particular field.
+
+* Some of the commands in Linenux will ask for KEYWORDS of the task/reminder that you are doing the command for. In those cases, Linenux will search your schedule for the tasks/reminders that matches your KEYWORDS. There are 2 things that can happen when the Linenux finds something from your schedule:
+1. Only one task/reminder was found:
+Linenux will do the command on the found task.
+2. More than one task/reminder was found:
+Linenux will prompt you with a list of all the tasks and reminders found, which you will then need to tell Linenux which task/reminder to execute the command on.
 
 #### Viewing help : `help`
 We understand that there may be too many commands to remember and it might be a hassle to refer to the user guide to refer to the list of commands. Thus, this command allows you to get the list of commands available immediately, along with how each command works.
@@ -105,7 +118,7 @@ list st/2016-06-01 et/2016-07-01 #Hobbies
 list assignment st/2016-06-01 et/2016-07-01
 ```
 
-## Viewing details of task: `view`
+#### Viewing details of task: `view`
 Format:
 ```
 view KEYWORDS...
