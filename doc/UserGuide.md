@@ -34,9 +34,10 @@ We understand that in everyone’s daily lives, we will be thrown many tasks, fo
 #### Some notes before you start:
 Command format:
   1. Any capitalized words, e.g TASK_NAME, is a field required by the command.
-  2. Any field surrounded by square brackets, '[ ]', are optional.
-  3. Each field represents one word, and fields are seperated by spaces.
-  4. The only exception to (3) is when you see '...' after a field, indicating that you can key in multiple words for that particular field.
+  2. All time fields are in the format of YYYY-MM-DD.
+  3. Any field surrounded by square brackets, '[ ]', are optional.
+  4. Each field represents one word, and fields are seperated by spaces.
+  5. The only exception to (3) is when you see '...' after a field, indicating that you can key in multiple words for that particular field.
 
 \* Some of the commands in Linenux will ask for KEYWORDS of the task/reminder that you are doing the command for. In those cases, Linenux will search your schedule for the tasks/reminders that matches your KEYWORDS. There are 2 things that can happen when the Linenux finds something from your schedule:
   1. Only one task/reminder was found:
@@ -45,6 +46,36 @@ Command format:
   2. More than one task/reminder was found:
 
       Linenux will prompt you with a list of all the tasks and reminders found, which you will then need to tell Linenux which task/reminder to execute the command on.
+
+#### Adding task: `add`
+Linenux’s goal is to help you organize and manage your tasks, so the most important feature will be to add said tasks into Linenux.
+To help organize your tasks, our add command allows you tag your task to help you easily search for them in the future. Furthermore, our team has looked into all possible tasks and discovered that tasks can be generally categorized into the following 3 groups:
+  1. Deadlines (Tasks with end times only)
+  2. Events (Tasks with start and end times)
+  3. To-Dos (Tasks without start and end times)
+
+As such, all tasks will be categorize under these 3 groups by default(no input from you required!) and will tagged under #deadlines, #events, #todos respectively.
+
+Thus, to add any different type of task, all you need to do is to type add, followed by your task name. Depending on your needs, you may also include the optional fields specified in the format of the add command.
+
+Format:
+```
+add TASK_NAME [st/START_TIME] [et/END_TIME] [#/TAG]...
+```
+
+Example:
+```
+//Adding a deadline
+add Submit v0.0 deliverables et/2016-10-05 #quite_important
+```
+```
+//Adding an Event
+add Hackathon st/2016-10-01 et/2016-10-02 :D #really_important
+```
+```
+//Adding a To-Do
+add CS2103T tutorial :D #very_important
+```
 
 #### Viewing help : `help`
 We understand that there may be too many commands to remember and it might be a hassle to refer to the user guide to refer to the list of commands. Thus, this command allows you to get the list of commands available immediately, along with how each command works.
@@ -56,31 +87,6 @@ help [KEYWORD]
 
 > Help is also shown if you enter an incorrect command e.g. `abcd`
 > Only show help section for keyword.
-
-#### Adding task: `add`
-Add task to schedule.
-Format:
-```
-add TASK_NAME [st/START_TIME] [et/END_TIME] [#/CATEGORY]...
-```
-
-> Words in UPPER_CASE are the parameters, items in SQUARE_BRACKETS are optional, items with ... after them can have multiple instances. Order of parameters are fixed.
-> Time parameters START_TIME and END_TIME are in the format of YYYY-MM-DD
-
-Tasks are categorized under 3 default categories:
-
-- Deadline: tasks added with END_TIME only
-- Event: tasks added with START_TIME and END_TIME
-- To-Dos: tasks added without START_TIME and END_TIME
-
-Example:
-
-```
-add CS2103T tutorial :D #very_important
-```
-```
-add Submit v0.0 deliverables et/2016-10-05 #very_important_also
-```
 
 #### Listing all tasks: `list`
 Shows a list of all tasks.
