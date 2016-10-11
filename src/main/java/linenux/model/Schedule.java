@@ -1,9 +1,9 @@
 package linenux.model;
 
-import linenux.util.ArrayListUtil;
-
 import java.util.ArrayList;
 import java.util.Collections;
+
+import linenux.util.ArrayListUtil;
 
 /**
  * Contains all outstanding tasks.
@@ -39,6 +39,18 @@ public class Schedule {
     public void deleteTask(Task task) {
         this.taskList.remove(task);
     }
+
+	/**
+	 * Edits the specified task.
+	 *
+	 * @param originalTask
+	 *            The original version of the specified task.
+	 * @param newTask
+	 *            The edited version of the specified task.
+	 */
+	public void editTask(Task originalTask, Task newTask) {
+		this.taskList.set(this.taskList.indexOf(originalTask), newTask);
+	}
 
     /**
      * Clears all tasks from the schedule
