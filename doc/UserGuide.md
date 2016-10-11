@@ -14,8 +14,20 @@ We understand that in everyone’s daily lives, we will be thrown many tasks, fo
 4. The GUI should appear in a few seconds.
 
 
-## Commands summary:
-//table of do what | commands | format
+## Commands Summary:
+| Description | Command | Format |
+|---|---|---|
+| Add a task to Linenux | add | add TASK_NAME [st/START_TIME] [et/END_TIME] [#/TAG]... |
+| Add a reminder to a task | remind | remind KEYWORDS... d/DATE [n/NOTE] |
+| Edit a task or reminder | edit | edit KEYWORDS... [n/NEW_NAME][st/START_TIME] [et/END_TIME] |
+| Delete a task or reminder | delete | delete KEYWORDS… |
+| Mark a task as done | done | done KEYWORDS… |
+| Undo | undo | undo |
+| Finding a free timeslot | freetime | freetime [st/START_TIME] et/END_TIME |
+| Listing all tasks and reminders | list | list [KEYWORDS]... [st/START_TIME] [et/END_TIME] [#/CATEGORY] |
+| Viewing details of tasks and reminders | view | view KEYWORDS… |
+| Help for commands | help | help [KEYWORD] |
+| Exiting Linenux | exit | exit |
 
 ## Viewing help : `help`
 We understand that there may be too many commands to remember and it might be a hassle to refer to the user guide to refer to the list of commands. Thus, this command allows you to get the list of commands available immediately, along with how each command works.
