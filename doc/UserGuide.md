@@ -4,8 +4,8 @@
 * [Quick Start](#quick-start)
 * [Commands Summary](#commands-summary)
 * [List of Commands](#list-of-commands)
-    *[Notes](#some-notes-before-you-start)
-    *[Adding a task: `add`](#adding-a-task-add)
+    * [Notes](#some-notes-before-you-start)
+    * [Adding a task: `add`](#adding-a-task-add)
 
 ## Introduction
 We understand that in everyone’s daily lives, we will be thrown many tasks, for example, to attend meetings, preparing documents by a certain deadline etc. Our application, Linenux, aims to help you effectively organize and manage all your different tasks with a simple type on your keyboard.
@@ -21,7 +21,7 @@ We understand that in everyone’s daily lives, we will be thrown many tasks, fo
 ## Commands Summary:
 | Description | Command | Format |
 |---|---|---|
-| Add a task to Linenux | `add` | add TASK_NAME [st/START_TIME] [et/END_TIME] [#/TAGS]... |
+| Add a task to Linenux | `add`(#adding-a-task-add) | add TASK_NAME [st/START_TIME] [et/END_TIME] [#/TAGS]... |
 | Add a reminder to a task | `remind` | remind KEYWORDS... d/DATE [n/NOTE] |
 | Edit a task or reminder | `edit` | edit KEYWORDS... [n/NEW_NAME] [st/START_TIME] [et/END_TIME] |
 | Delete a task or reminder | `delete` | delete KEYWORDS… |
