@@ -2,6 +2,10 @@
 
 * [Introduction](#introduction)
 * [Quick Start](#quick-start)
+* [Commands Summary](#commands-summary)
+* [List of Commands](#list-of-commands)
+    *[Notes](#some-notes-before-you-start)
+    *[Adding a task: `add`](#adding-a-task-add)
 
 ## Introduction
 We understand that in everyone’s daily lives, we will be thrown many tasks, for example, to attend meetings, preparing documents by a certain deadline etc. Our application, Linenux, aims to help you effectively organize and manage all your different tasks with a simple type on your keyboard.
@@ -47,7 +51,7 @@ Command format:
 
       Linenux will prompt you with a list of all the tasks and reminders found, which you will then need to tell Linenux which task/reminder to execute the command on.
 
-#### Adding task: `add`
+#### Adding a task: `add`
 Linenux’s goal is to help you organize and manage your tasks, so the most important feature will be to add said tasks into Linenux.
 To help organize your tasks, our add command allows you tag your task to help you easily search for them in the future. Furthermore, our team has looked into all possible tasks and discovered that tasks can be generally categorized into the following 3 groups:
   1. Deadlines (Tasks with end times only)
