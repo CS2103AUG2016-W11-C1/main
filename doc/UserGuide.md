@@ -17,19 +17,21 @@ We understand that in everyone’s daily lives, we will be thrown many tasks, fo
 ## Commands Summary:
 | Description | Command | Format |
 |---|---|---|
-| Add a task to Linenux | add | add TASK_NAME [st/START_TIME] [et/END_TIME] [#/TAG]... |
-| Add a reminder to a task | remind | remind KEYWORDS... d/DATE [n/NOTE] |
-| Edit a task or reminder | edit | edit KEYWORDS... [n/NEW_NAME][st/START_TIME] [et/END_TIME] |
-| Delete a task or reminder | delete | delete KEYWORDS… |
-| Mark a task as done | done | done KEYWORDS… |
-| Undo | undo | undo |
-| Finding a free timeslot | freetime | freetime [st/START_TIME] et/END_TIME |
-| Listing all tasks and reminders | list | list [KEYWORDS]... [st/START_TIME] [et/END_TIME] [#/CATEGORY] |
-| Viewing details of tasks and reminders | view | view KEYWORDS… |
-| Help for commands | help | help [KEYWORD] |
-| Exiting Linenux | exit | exit |
+| Add a task to Linenux | `add` | add TASK_NAME [st/START_TIME] [et/END_TIME] [#/TAG]... |
+| Add a reminder to a task | `remind` | remind KEYWORDS... d/DATE [n/NOTE] |
+| Edit a task or reminder | `edit` | edit KEYWORDS... [n/NEW_NAME][st/START_TIME] [et/END_TIME] |
+| Delete a task or reminder | `delete` | delete KEYWORDS… |
+| Mark a task as done | `done` | done KEYWORDS… |
+| Undo | `undo` | undo |
+| Finding a free timeslot | `freetime` | freetime [st/START_TIME] et/END_TIME |
+| Listing all tasks and reminders | `list` | list [KEYWORDS]... [st/START_TIME] [et/END_TIME] [#/CATEGORY] |
+| Viewing details of tasks and reminders | `view` | view KEYWORDS… |
+| Help for commands | `help` | help [KEYWORD] |
+| Exiting Linenux | `exit` | exit |
 
-## Viewing help : `help`
+## List of Commands
+
+#### Viewing help : `help`
 We understand that there may be too many commands to remember and it might be a hassle to refer to the user guide to refer to the list of commands. Thus, this command allows you to get the list of commands available immediately, along with how each command works.
 
 Format:
@@ -40,7 +42,7 @@ help [KEYWORD]
 > Help is also shown if you enter an incorrect command e.g. `abcd`
 > Only show help section for keyword.
 
-## Adding task: `add`
+#### Adding task: `add`
 Add task to schedule.
 Format:
 ```
@@ -65,7 +67,7 @@ add CS2103T tutorial :D #very_important
 add Submit v0.0 deliverables et/2016-10-05 #very_important_also
 ```
 
-## Listing all tasks: `list`
+#### Listing all tasks: `list`
 Shows a list of all tasks.
 Format:
 ```
@@ -114,7 +116,7 @@ Example:
 view assignment
 ```
 
-## Setting reminders to a task: `remind`
+#### Setting reminders to a task: `remind`
 Adds a reminder to a task
 Format:
 ```
@@ -135,7 +137,7 @@ remind project deadline d/2016-09-20 n/Complete v0.0 document
 ```
 
 
-## Deleting tasks: `delete`
+#### Deleting tasks: `delete`
 Deletes a task.
 Format:
 ```
@@ -155,7 +157,7 @@ delete assignment
 delete CS2103 project
 ```
 
-## Marking tasks as done: `done`
+#### Marking tasks as done: `done`
 Marks a single task as done.
 
 Format:
@@ -175,7 +177,7 @@ done assignment
 done CS2103 tutorial
 ```
 
-## Undo a task: `undo`
+#### Undo a task: `undo`
 Undo last command executed.
 
 Format:
@@ -183,18 +185,18 @@ Format:
 undo
 ```
 
-## Exiting the Program: `exit`
+#### Exiting the Program: `exit`
 Exits the program.
 
-Format: 
+Format:
 ```
 exit
 ```
 
-## Edit a task/reminder: `edit`
+#### Edit a task/reminder: `edit`
 Allows editing of the details of a task or reminder.
 
-Format: 
+Format:
 ```
 edit KEYWORDS... [n/NEW_NAME][st/START_TIME] [et/END_TIME]
 ```
@@ -212,7 +214,7 @@ edit this n/CS2103 st/2016-09-20 et/2016-05-09
 ```
 
 ## FREETIME - `freetime`
-Format: 
+Format:
 ```
 freetime [st/START_TIME] et/END_TIME
 ```
@@ -225,6 +227,3 @@ freetime et/2016-07-24
 ```
 freetime st/2016-07-18 et/2016-07-24
 ```
-
-
-
