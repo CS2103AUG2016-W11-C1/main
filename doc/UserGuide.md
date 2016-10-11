@@ -40,9 +40,9 @@ Command format:
 
 \* Some of the commands in Linenux will ask for KEYWORDS of the task/reminder that you are doing the command for. In those cases, Linenux will search your schedule for the tasks/reminders that matches your KEYWORDS. There are 2 things that can happen when the Linenux finds something from your schedule:
   1. Only one task/reminder was found:
-Linenux will do the command on the found task.
+     Linenux will do the command on the found task.
   2. More than one task/reminder was found:
-Linenux will prompt you with a list of all the tasks and reminders found, which you will then need to tell Linenux which task/reminder to execute the command on.
+     Linenux will prompt you with a list of all the tasks and reminders found, which you will then need to tell Linenux which task/reminder to execute the command on.
 
 #### Viewing help : `help`
 We understand that there may be too many commands to remember and it might be a hassle to refer to the user guide to refer to the list of commands. Thus, this command allows you to get the list of commands available immediately, along with how each command works.
