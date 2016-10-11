@@ -2,8 +2,7 @@
 
 
 ## Introduction
-Linenux is a user friendly Tasks Scheduler that helps you manage all your different tasks in
-It is designed to help us manage our tasks via typing.
+We understand that in everyone’s daily lives, we will be thrown many tasks, for example, to attend meetings, preparing documents by a certain deadline etc. Our application, Linenux, aims to help you effectively organize and manage all your different tasks with a simple type on your keyboard.
 
 * [Quick Start](#quick-start)
 
