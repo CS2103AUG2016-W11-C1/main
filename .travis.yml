@@ -2,12 +2,20 @@ language: java
 jdk:
   - oraclejdk8
 script:
-  - ./gradlew build
-  - ./gradlew test
+  - "./gradlew build"
+  - "./gradlew test"
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -fr $HOME/.gradle/caches/*/plugin-resolution
 cache:
   directories:
-    - $HOME/.gradle/caches/
-    - $HOME/.gradle/wrapper/
+    - "$HOME/.gradle/caches/"
+    - "$HOME/.gradle/wrapper/"
+deploy:
+  provider: releases
+  api_key:
+    secure: ZYocZ2B5lM/VwBph8LPqKDELWgZCKuEhu7OSvjx7Y8bqr+KngRWOfhH4qnloUmBLTHD+957jx4sHXAtNPEoGnNBvxFR2w4XeOO2huRDnf7pZ0jaLPuVdLOXPPQeMwWX49hbE4TceWvna6irG1LUQQl5l6g+8BnBtmUmjQaaSMNzJJX1C4sNIcgvo6la1p2m4/6OotBvFgWdpSZ/sjjKgyDO4oixJ1zUpObsy0U/MmmmImfuFfCyJfofBeuepnxJQy9SGFf5MlAJ4CKM3IrGETjbYBUQy8TrmE7ogzC+HZEmNKDO6WSGHVucnb+nTUgWYd1QMJUnXb1iEuf7BjYUW1OeQzUlDt1aZRnGJvP7Np36lq7TRS4L4ceH5k93u7/0mvmGr2teekTyOPhPg2BQRIaJUygGQt3JPpE7xwq2xfbz+jsMCit5zs7nLUorXWmUi7EE1HHWQMeLWSGhcpxLYwwkzaBwNBNv57z7c7rxMN8qaTtkaVgI+i5vYtSFAuwJJjT1kJuR94NzdWW/ibOxCCmlpv+ZttuJkXAIp5PHEzFmQG9oZ32aSoP708+FglRbB0zPag5V1cGAM39j4CvwfMpg6g4uRxiEvKr6owQpfr/cCtpZLPShcBaAez+bvQWN+/nA4fzIqry8NxKnsaVY2fE74LaD0ra2TUVv7unSGeU4=
+  file: build/distributions/linenux.zip
+  on:
+    tags: true
+    repo: CS2103AUG2016-W11-C1/linenux
