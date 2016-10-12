@@ -15,7 +15,7 @@ import linenux.util.TasksListUtil;
 public class ViewCommand implements Command {
     private static final String TRIGGER_WORD = "view";
     private static final String DESCRIPTION = "Views details of specific task.";
-    private static final String VIEW_PATTERN = "(?i)^view( (?<keywords>.*))?$";
+    private static final String VIEW_PATTERN = "(?i)^view (?<keywords>.*)$";
     private static final String NUMBER_PATTERN = "^\\d+$";
     private static final String CANCEL_PATTERN = "^cancel$";
 
