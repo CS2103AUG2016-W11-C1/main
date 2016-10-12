@@ -18,4 +18,4 @@ deploy:
   file: build/distributions/linenux.zip
   on:
     tags: true
-    repo: CS2103AUG2016-W11-C1/linenux
+    repo: CS2103AUG2016-W11-C1/main
