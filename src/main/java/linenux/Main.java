@@ -18,7 +18,7 @@ import javafx.fxml.FXMLLoader;
 public class Main extends Application implements Stoppable {
 
     public static final String APP_NAME = "Linenux";
-    public static final String VERSION = "Linenux - Version 0.1";
+    public static final String VERSION = "Linenux - Version 0.3";
 
     public static final int INITIAL_CONSOLE_WIDTH = 800;
     public static final int INITIAL_CONSOLE_HEIGHT = 500;
