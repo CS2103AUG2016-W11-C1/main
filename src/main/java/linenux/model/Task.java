@@ -116,4 +116,8 @@ public class Task {
      public void setEndTime(LocalDateTime endTime) {
          this.endTime = endTime;
      }
+
+     public void addReminder(Reminder reminder) {
+        this.reminders.add(reminder);
+     }
 }
