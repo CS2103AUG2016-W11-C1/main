@@ -227,8 +227,7 @@ list assignment st/2016-06-01 et/2016-07-01
 ##### Callouts
 >
 * To help organize and manage your tasks, Linenux will group your tasks under the 3 default categories (Deadlines, Events, To-Dos) and before listing them.
->
-* To avoid over cluttering of data, `list` will only show you the name and start/end time(if any) of each task and reminder.
+
 >
 * Your deadlines, events and reminders will be listed in a sorted manner as follows:
      * Deadlines - by earliest end time
@@ -242,7 +241,7 @@ list assignment st/2016-06-01 et/2016-07-01
 
 
 #### Viewing details of task or reminder: `view`
-Sometimes, listing down all the tasks is simply not enough. There’s too many details to show, which, Linenux has left out in list. To help you with that, Linenux supports view, which allows you to view all the details of a task in your schedule, inclusive of the reminders that are attached to your task.
+Sometimes, listing down all the tasks and reminders is simply not enough, as we might want to check all the reminders that we have created for a particular task.
 
 Just type `view`, followed by some keywords to search for your task and Linenux will show all the details of the task that you searched for.
 
