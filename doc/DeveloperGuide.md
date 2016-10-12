@@ -7,6 +7,9 @@
     * [Troubleshooting](#troubleshooting)
 * [Design](#design)
     * [Architecture](#architecture)
+    * [View](#view)
+    * [Controller]
+    * [Model]
 * [Testing](#testing)
 * [Appendices](#appendices)
     * [Appendix A: User Stories](#appendix-a--user-stories)
@@ -52,7 +55,11 @@ Linenux is a command-line, task manager application designed for consumers who a
 <img src="images/architectureDiagram.png"/>
 > Figure 1: Architecture Diagram
 
-Linenux is made up of 6 main components.
+Linenux follows the Model-View-Controller (MVC) pattern which is made up of 3 main components.
+
+1. **Model** is where Linenux's data objects are stored. It is independent from the view and controller.
+2. **View** is the window that our user sees and interacts with. It updates whenever there are changes to the model.
+3. **Controller** is the decision maker and the glue between model and view.
 
 1. **Main** - Sets up the main application window during program's startup.
 2. **UI** - Regulates user interaction and display.
@@ -60,6 +67,11 @@ Linenux is made up of 6 main components.
 4. **Command** - Carries out the action.
 5. **Model** - Stores the data of Linenux in-memory.
 6. **Storage** - Reads data from, and writes data to, the hard disk.
+
+#### View component
+
+
+
 
 ## Testing
 
