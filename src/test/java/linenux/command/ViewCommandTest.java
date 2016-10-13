@@ -88,4 +88,44 @@ public class ViewCommandTest {
         CommandResult result = this.setupMultipleHelloTaskAndExecuteAmbiguousCommand();
         assertEquals("Which one? (1-2)\n1. hello it's me\n2. hello from the other side", result.getFeedback());
     }
+
+    @Test
+    public void testAwaitingUserResponse() {
+        assertFalse(this.viewCommand.awaitingUserResponse());
+        this.setupMultipleHelloTaskAndExecuteAmbiguousCommand();
+        assertTrue(this.viewCommand.awaitingUserResponse());
+    }
+
+    @Test
+    public void testUserResponseCancel() {
+        this.setupMultipleHelloTaskAndExecuteAmbiguousCommand();
+        CommandResult result = this.viewCommand.userResponse("cancel");
+        assertEquals("OK! Not viewing any task.", result.getFeedback());
+        assertFalse(this.viewCommand.awaitingUserResponse());
+    }
+
+    @Test
+    public void testUserResponseValidIndex() {
+        this.setupMultipleHelloTaskAndExecuteAmbiguousCommand();
+        CommandResult result = this.viewCommand.userResponse("1");
+        assertEquals("hello it's me\nReminders:\nThere are no reminders found!", result.getFeedback());
+    }
+
+    @Test
+    public void testUserResponseInvalidIndex() {
+        this.setupMultipleHelloTaskAndExecuteAmbiguousCommand();
+        CommandResult result = this.viewCommand.userResponse("3");
+        String expectedResponse = "That's not a valid index. Enter a number between 1 and 2:\n" +
+                "1. hello it's me\n2. hello from the other side";
+        assertEquals(expectedResponse, result.getFeedback());
+    }
+
+    @Test
+    public void testUserResponseInvalidResponse() {
+        this.setupMultipleHelloTaskAndExecuteAmbiguousCommand();
+        CommandResult result = this.viewCommand.userResponse("notindex");
+        String expectedResponse = "I don't understand \"notindex\".\n" + "Enter a number to indicate which task to delete.\n" +
+                "1. hello it's me\n2. hello from the other side";
+        assertEquals(expectedResponse, result.getFeedback());
+    }
 }
