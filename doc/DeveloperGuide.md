@@ -206,14 +206,28 @@ MSS
 5. Use Case ends.
 
 Extensions
-1a. User provides start time without end time.
-    1a1. TaskManager shows error message to indicate that task is not a valid task.
-    1a2. Use Case ends.
+<div class="indent">
+  1a. User provides start time without end time.
+    <div class="indent">
+      1a1. TaskManager shows error message to indicate that task is not a valid task.
+    </div>
+    <div class="indent">
+      1a2. Use Case ends.
+    </div>
+</div>
 
-1b. User requests to add an event with overlapping timeslot with an existing event.
-    1b1. TaskManager shows list of overlapping events.
-    b2. TaskManager will show filtered tasks instead.
-    1b3. Use Case ends.
+<div class="indent mb16">
+  1b. User requests to add an event with overlapping timeslot with an existing event.
+    <div class="indent">
+      1b1. TaskManager shows list of overlapping events.
+    </div>
+    <div class="indent">
+      1b2. TaskManager will show filtered tasks instead.
+    </div>
+    <div class="indent">
+      1b3. Use Case ends.
+    </div>
+</div>
 
 >Use Case: List tasks
 MSS
@@ -222,10 +236,18 @@ MSS
 3. Use Case ends.
 
 Extensions
-1a. User provides search parameters.
-    1a1. TaskManager will perform fuzzy search and filter tasks based on search parameters.
-    1a2. TaskManager will show filtered tasks instead.
-    1a3. Use Case ends.
+<div class="indent mb16">
+  1a. User provides search parameters.
+    <div class="indent">
+      1a1. TaskManager will perform fuzzy search and filter tasks based on search parameters.
+    </div>
+    <div class="indent">
+      1a2. TaskManager will show filtered tasks instead.
+    </div>
+    <div class="indent">
+      1a3. Use Case ends.
+    </div>
+</div>
 
 >Use Case: Add reminder to tasks
 MSS
@@ -235,16 +257,36 @@ MSS
 4. Use Case ends.
 
 Extensions
-1. More than one task found when with the given parameters.
-    1a1. TaskManager shows the list of tasks found.
-    1a2. User select task from given list.
-    1a3. Use Case resumes at step 2.
-1b. No task found from given parameters.
-    1b1. TaskManager shows error indicating no task found.
-    1b2. Use Case ends.
-1c. Specified index is invalid
-    1c1. TaskManager shows error message indicating invalid index.
-    1c2. Use Case resumes at step 1a1.
+<div class="indent">
+  1a. More than one task found when with the given parameters.
+    <div class="indent">
+      1a1. TaskManager shows the list of tasks found.
+    </div>
+    <div class="indent">
+      1a2. User select task from given list.
+    </div>
+    <div class="indent">
+      1a3. Use Case resumes at step 2.
+    </div>
+</div>
+<div class="indent">
+  1b. No task found from given parameters.
+    <div class="indent">
+      1b1. TaskManager shows error indicating no task found.
+    </div>
+    <div class="indent">
+      1b2. Use Case ends.
+    </div>
+</div>
+<div class="indent mb16">
+  1c. Specified index is invalid
+    <div class="indent">
+      1c1. TaskManager shows error message indicating invalid index.
+    </div>
+    <div class="indent">
+      1c2. Use Case resumes at step 1a1.
+    </div>
+</div>
 
 >Use Case: Delete task
 MSS
@@ -254,84 +296,166 @@ MSS
 4. Use Case ends.
 
 Extensions:
-1a. No tasks found.
-    1a1. TaskManager shows error message indicating no task found.
-    1a2. Use Case ends
-1b. More than one task found.
-    1b1. TaskManager show list of tasks found.
-    1b2. User specify index of task to delete.
-    1b3. Use Case resumes at step 2.
-1c. Specified index is invalid.
-    1c1. TaskManager shows error message indicating invalid index.
-    1c2. Use Case resumes at step 1b1.
+<div class="indent">
+  1a. No tasks found.
+    <div class="indent">
+      1a1. TaskManager shows error message indicating no task found.
+    </div>
+    <div class="indent">
+      1a2. Use Case ends
+    </div>
+</div>
+<div class="indent">
+  1b. More than one task found.
+    <div class="indent">
+      1b1. TaskManager show list of tasks found.
+    </div>
+    <div class="indent">
+      1b2. User specify index of task to delete.
+    </div>
+    <div class="indent">
+      1b3. Use Case resumes at step 2.
+    </div>
+</div>
+<div class="indent mb16">
+  1c. Specified index is invalid.
+    <div class="indent">
+      1c1. TaskManager shows error message indicating invalid index.
+    </div>
+    <div class="indent">
+      1c2. Use Case resumes at step 1b1.
+    </div>
+</div>
 
 >Use Case: Mark task as done.
 MSS
-User requests to mark task as done by giving search parameters.
-TaskManager marks specific task as done
-TaskManager shows message indicating task is marked as done, including details of task
-	Use Case ends
+1. User requests to mark task as done by giving search parameters.
+2. TaskManager marks specific task as done
+3. TaskManager shows message indicating task is marked as done, including details of task
+4. Use Case ends
 
 Extensions:
-1a. No tasks found
-	1a1. TaskManager shows error message indicating no task found
-	Use Case ends
-1b. More than one task found
-	1b1. TaskManager show list of tasks found
-	1b2. User specify index of task to mark as done
-	Use Case resumes at step 2
-1b2a. Specified index is invalid
-	1b2a1. TaskManager shows error message indicating invalid index
-	Use Case resumes at step 1b1
+<div class="indent">
+  1a. No tasks found
+  <div class="indent">
+    1a1. TaskManager shows error message indicating no task found
+  </div>
+  <div class="indent">
+    1a2. Use Case ends
+  </div>
+</div>
+<div class="indent">
+  1b. More than one task found
+    <div class="indent">
+      1b1. TaskManager show list of tasks found
+    </div>
+    <div class="indent">
+      1b2. User specify index of task to mark as done
+    </div>
+    <div class="indent">
+      1b3. Use Case resumes at step 2
+    </div>
+</div>
+<div class="indent mb16">
+  1b2a. Specified index is invalid
+    <div class="indent">
+      1b2a1. TaskManager shows error message indicating invalid index
+    </div>
+    <div class="indent">
+      1b2a2. Use Case resumes at step 1b1
+    </div>
+</div>
 
 >Use Case: Undo
 MSS
-User requests to undo to previous state
-TaskManager undos to previous state
-	Use case ends
+1. User requests to undo to previous state
+2. TaskManager undos to previous state
+3. Use case ends
 
 Extensions:
-1a. No previous state to undo to
-	1a1. TaskManager shows error indicating unable to undo
-	Use Case ends
+<div class="indent mb16">
+  1a. No previous state to undo to
+    <div class="indent">
+      1a1. TaskManager shows error indicating unable to undo
+    </div>
+    <div class="indent">
+      1a2. Use Case ends
+    </div>
+</div>
 
 >Use Case: Exit
-
 MSS:
-User requests to exit application.
-TaskManager prompts user to confirm application exit.
-TaskManager closes.
-Use case ends
+1. User requests to exit application.
+2. TaskManager prompts user to confirm application exit.
+3. TaskManager closes.
+4. Use case ends
 
 Extensions:
-2a. User confirms exit while TaskManager is still processing information (e.g. reading/ saving a file).
-	2a1. TaskManager blocks input until process is done.
-	2a2. TaskManager closes.
-	        Use case ends.
-2b. User cancels exit operation.
-      Use case ends.
+<div class="indent">
+  2a. User confirms exit while TaskManager is still processing information (e.g. reading/ saving a file).
+    <div class="indent">
+      2a1. TaskManager blocks input until process is done.
+    </div>
+    <div class="indent">
+      2a2. TaskManager closes.
+    </div>
+    <div class="indent">
+      2a3. Use case ends.
+    </div>
+</div>
+<div class="indent mb16">
+  2b. User cancels exit operation.
+    <div class="indent">
+      2b1. Use case ends.
+    </div>
+</div>
 
 >Use Case: Edit
-
 MSS:
-User requests to edit task by giving search parameters and changes to be made.
-TaskManager processes changes.
-TaskManager shows changes made.
+1. User requests to edit task by giving search parameters and changes to be made.
+2. TaskManager processes changes.
+3. TaskManager shows changes made.
 
 Extensions:
-1a. No tasks found.
-	1a1. TaskManager shows error message indicating no task found.
-	        Use case ends.
-1b. More than 1 task found.
-	1b1. TaskManager shows list of tasks found.
-	1b2. User specifies index of task to edit.
-                    Use case resumes at step 2.
-1b2a. Specified index is invalid.
-	1b2a1. TaskManager shows error message indicating invalid index.
-	            Use case resumes at step 1b1.
-1c. Specified changes are invalid.
-	1c1. TaskManager shows error message indicating invalid changes.
-	        Use case ends.
+<div class="indent">
+  1a. No tasks found.
+    <div class="indent">
+      1a1. TaskManager shows error message indicating no task found.
+    </div>
+    <div class="indent">
+      1a2. Use case ends.
+    </div>
+</div>
+<div class="indent">
+  1b. More than 1 task found.
+    <div class="indent">
+      1b1. TaskManager shows list of tasks found.
+    </div>
+    <div class="indent">
+      1b2. User specifies index of task to edit.
+    </div>
+    <div class="indent">
+      1b3. Use case resumes at step 2.
+    </div>
+</div>
+<div class="indent">
+  1b2a. Specified index is invalid.
+    <div class="indent">
+      1b2a1. TaskManager shows error message indicating invalid index.
+    </div>
+    <div class="indent">
+      1b2a2. Use case resumes at step 1b1.
+    </div>
+</div>
+<div class="indent mb16">
+  1c. Specified changes are invalid.
+    <div class="indent">
+      1c1. TaskManager shows error message indicating invalid changes.
+    </div>
+    <div class="indent">
+      1c2. Use case ends.
+    </div>
+</div>
 
 #### Appendix C : Non Functional Requirements
 
