@@ -16,7 +16,7 @@ public class Schedule {
      * Constructs an empty schedule
      */
     public Schedule() {
-        this.taskList = new ArrayList<Task>();
+        this.taskList = new ArrayList<>();
     }
 
     /**
@@ -51,7 +51,13 @@ public class Schedule {
         StringBuilder builder = new StringBuilder();
         builder.append(task.toString());
         builder.append('\n');
-        builder.append(RemindersListUtil.display(reminders));
+        builder.append("Reminders:" + '\n');
+
+        if (reminders.size() == 0) {
+            builder.append("There are no reminders found!");
+        } else {
+            builder.append(RemindersListUtil.display(reminders));
+        }
 
         return builder.toString();
     }
@@ -76,13 +82,13 @@ public class Schedule {
      * @return List of {@code Task} matching the keywords.
      */
     public ArrayList<Task> search(String[] keywords) {
-        ArrayList<String> keywordsList = new ArrayListUtil.ChainableArrayListUtil<String>(keywords)
+        ArrayList<String> keywordsList = new ArrayListUtil.ChainableArrayListUtil<>(keywords)
                                                           .map(String::toLowerCase)
                                                           .value();
 
-        return new ArrayListUtil.ChainableArrayListUtil<Task>(this.taskList)
+        return new ArrayListUtil.ChainableArrayListUtil<>(this.taskList)
                 .filter(task -> {
-                    ArrayList<String> taskKeywords = new ArrayListUtil.ChainableArrayListUtil<String>(task.getTaskName().split("\\s+"))
+                    ArrayList<String> taskKeywords = new ArrayListUtil.ChainableArrayListUtil<>(task.getTaskName().split("\\s+"))
                             .map(String::toLowerCase)
                             .value();
 
