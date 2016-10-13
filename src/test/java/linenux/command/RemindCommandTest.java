@@ -1,6 +1,7 @@
 package linenux.command;
 
 import static linenux.helpers.Assert.assertChangeBy;
+import static linenux.helpers.Assert.assertNoChange;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -11,6 +12,8 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
+import linenux.command.parser.ReminderArgumentParser;
+import linenux.command.result.CommandResult;
 import linenux.model.Reminder;
 import linenux.model.Schedule;
 import linenux.model.Task;
@@ -195,4 +198,50 @@ public class RemindCommandTest {
 		assertEquals(LocalDateTime.of(2000, 1, 1, 17, 0), addedReminder.getTimeOfReminder());
 		assertEquals("Attend Workshop", addedReminder.getNote());
 	}
+
+	/**
+	 * Test the result when no task name is given to search.
+	 */
+	@Test
+	public void testTimeWithoutTaskNameCommandResult() {
+		CommandResult result = assertNoChange(() -> this.schedule.getTaskList().get(0).getReminders().size(),
+				() -> this.remindCommand.execute("remind t/2011-01-01 05:00PM"));
+		assertEquals(expectedInvalidArgumentMessage(), result.getFeedback());
+	}
+
+	/**
+	 * Test the result when no task name is given to search + not affected by optional field notes.
+	 */
+	@Test
+	public void testTimeWithoutTaskNameWithNotesCommandResult() {
+		CommandResult result = assertNoChange(() -> this.schedule.getTaskList().get(0).getReminders().size(),
+				() -> this.remindCommand.execute("remind t/2011-01-01 05:00PM n/Attend Workshop"));
+		assertEquals(expectedInvalidArgumentMessage(), result.getFeedback());
+	}
+
+
+	/**
+	 * Test the result when no time is given for the reminder.
+	 */
+	@Test
+	public void testTaskNameWithoutTimeCommandResult() {
+		CommandResult result = assertNoChange(() -> this.schedule.getTaskList().get(0).getReminders().size(),
+				() -> this.remindCommand.execute("remind Todo1"));
+		assertEquals("Cannot create reminder without date.", result.getFeedback());
+	}
+
+	/**
+	 * Test the result when no time is given for the reminder + not affected by optional field Notes
+	 */
+	@Test
+	public void testTaskNameWithoutTimeWithNotesCommandResult() {
+		CommandResult result = assertNoChange(() -> this.schedule.getTaskList().get(0).getReminders().size(),
+				() -> this.remindCommand.execute("remind Todo1 n/Attend Workshop"));
+		assertEquals("Cannot create reminder without date.", result.getFeedback());
+	}
+
+
+    private String expectedInvalidArgumentMessage() {
+        return "Invalid arguments.\n\n" + ReminderArgumentParser.ARGUMENT_FORMAT;
+    }
 }
