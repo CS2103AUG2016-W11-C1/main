@@ -7,10 +7,17 @@
     * [Troubleshooting](#troubleshooting)
 * [Design](#design)
     * [Architecture](#architecture)
-    * [View](#view)
-    * [Controller]
-    * [Model]
+    * [Model Component](#model-component)
+    * [View Component](#view-component)
+    * [Controller Component](#controller-component)
 * [Testing](#testing)
+    * [In Eclipse](#in-eclipse)
+    * [Using Gradle](#using-gradle)
+* [Dev Ops](#dev-ops)
+    * [Build Automation](#build-automation)
+    * [Continuous Integration](#continuous-integration)
+    * [Making a Release](#making-a-release)
+    * [Managing Dependencies](#managing-dependencies)
 * [Appendices](#appendices)
     * [Appendix A: User Stories](#appendix-a--user-stories)
     * [Appendix B: Use Cases](#appendix-b--use-cases)
@@ -37,7 +44,8 @@ Linenux is a command-line, task manager application designed for consumers who a
 3. Click `File` > `Import` > `General` > `Existing Projects into Workspace` > `Next`.
 4. Click `Browse`, then locate the project's directory.
 5. Click `Finish`.
-6. Run `gradle run` in your terminal to ensure that everything is working properly.
+6. Run `gradle eclipse` in your terminal to set up the folders in Linenx.
+7. Run `gradle run` in your terminal to ensure that everything is working properly.
 
 #### Troubleshooting
 
@@ -61,21 +69,104 @@ Linenux follows the Model-View-Controller (MVC) pattern which is made up of 3 ma
 2. **View** is the window that our user sees and interacts with. It updates whenever there are changes to the model.
 3. **Controller** is the decision maker and the glue between model and view.
 
-1. **Main** - Sets up the main application window during program's startup.
-2. **UI** - Regulates user interaction and display.
-3. **Control** - Assigns user request to the correct action.
-4. **Command** - Carries out the action.
-5. **Model** - Stores the data of Linenux in-memory.
-6. **Storage** - Reads data from, and writes data to, the hard disk.
+#### Model Component
 
-#### View component
+<img src="images/modelDiagram.png">
+> Figure 2: Model Diagram
 
+The **Schedule** class stores a collection of states. A **State** is an immutable class that is created whenever a task or reminder is added or deleted from the **Schedule**. This design allows users to `undo` their previous command.
 
+The **Task** class is made up of the name of the task, a start time, an end time and a list of reminders. There are 3 types of tasks:
+1. **Deadlines** - tasks that have an end time but no start time.
+2. **Events** - tasks that have both start and end times.
+3. **To-dos** - tasks that have neither start nor end times.
 
+The **Reminder** class allows our users to set one or more reminders for their tasks.
+
+The **Storage** class allows the in-memory data to persist after the application is closed. The state of the **Schedule** is stored as an XML file called **XMLScheduleStorage**.
+
+#### View Component
+<img src="images/viewDiagram.png">
+> Figure 3: View Diagram
+
+The **View Component** follows the JavaFx UI framework. Each of the classes (**MainWindow**, **CommandBox** etc) has their own respective `.fxml` file stored in `src/main/resources/view`.
+
+#### Controller Component
+<img src="images/controllerDiagram.png">
+> Figure 4: Controller Diagram
+
+The **ConsoleController** takes the user input and sends it to the "brain" of Linenux, the "ControlUnit" class. The "ControlUnit" class is in charge of retrieving the appropriate schedule from storage and passing it over to the **CommandManager" class. The "CommandManager" class then delegates the right command based on the user input.
+
+``` java
+public CommandResult delegateCommand(String userInput) {
+    for (Command command : commandList) {
+        if (command.awaitingUserResponse()) {
+            return command.userResponse(userInput);
+        }
+    }
+
+    for (Command command : commandList) {
+        if (command.respondTo(userInput)) {
+            return command.execute(userInput);
+        }
+    }
+
+    return this.catchAllCommand.execute(userInput);
+}
+```
+The above code shows how the **CommandManager** class delegates the right command based on the user input. Every command class must implement the **Command** interface. At any point in time, only 1 command is awaiting user response. If there are none, then each command will check if the user input corressponds to the command format.
+
+``` java
+public boolean canParse(String userInput) {
+    for (TimeParser parser: parserList) {
+        if (parser.respondTo(userInput)) {
+            return true;
+        }
+    }
+
+    return false;
+}
+```
+Similarly, the same pattern is used if the command has to parse the time. These commands will have their own **TimeParserManager** and they can pick and choose which **TimeParser** format they want to support.
 
 ## Testing
 
-* In Eclipse, right-click on the `test` folder and choose `Run as` > `JUnit Test`
+Tests can be found in the `./src/test/java` folder.
+
+#### In Eclipse
+
+* To run all tests, right click on the `src/test/java` folder in the package explorer and choose `Run as` > `JUnit Test`.
+* To run a subset of tests, you can right click on a test package, test class or a test in the package explorer and choose `Run as` > `JUnit Test`.
+
+#### Using Gradle
+
+* To run all tests, run `gradle test` command in the terminal.
+
+## Dev Ops
+
+#### Build Automation
+
+Gradle is a build automation tool. It can automate build-related tasks such as:
+* Running tests
+* Managing library dependecies
+* Analysing code for style compliance
+
+The gradle configuration for this project is defined in the build script `build.gradle`.
+
+#### Continuous Integration
+
+Travis CI is a Continuous Integration platform for GitHub projects. It runs the projects' tests automaticaally whenever new code is pushed to the repo. This ensures that existing functionality and features  have not been broken by the changes.
+
+The current Travis CI set up performs the following things whenever someone push code to the repo:
+* Runs the `./gradlew test` command.
+
+#### Making a Release
+
+Linenux automatically creates a new release by using Travis.
+
+#### Managing Dependecies
+
+A project often depends on third-party libraries. Linenux manages and automates these dependencies using Gradle.
 
 ## Appendices
 
