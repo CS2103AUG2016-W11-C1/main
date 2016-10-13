@@ -21,15 +21,10 @@ public class EditTaskArgumentParser {
 		this.timeParserManager = timeParserManager;
 	}
 
-	public Either<Task, CommandResult> parse(String argument) {
-		Either<String, CommandResult> taskName = extractTaskName(argument);
-		if (taskName.isRight()) {
-			return Either.right(taskName.getRight());
-		}
-
+	public Either<Task, CommandResult> parse(Task original, String argument) {
 		Either<String, CommandResult> newTaskName = extractNewTaskName(argument);
 		if (newTaskName.isRight()) {
-			return Either.right(taskName.getRight());
+			return Either.right(newTaskName.getRight());
 		}
 
 		Either<LocalDateTime, CommandResult> startTime = extractStartTime(argument);
@@ -42,14 +37,23 @@ public class EditTaskArgumentParser {
 			return Either.right(endTime.getRight());
 		}
 
-		String actualTaskName = taskName.getLeft();
+		String actualTaskName = newTaskName.getLeft();
 		LocalDateTime actualStartTime = startTime.getLeft();
 		LocalDateTime actualEndTime = endTime.getLeft();
+
+		if (actualTaskName == null) {
+			actualTaskName = original.getTaskName();
+		}
+		if (actualStartTime == null) {
+			actualStartTime = original.getStartTime();
+		}
+		if (actualEndTime == null) {
+			actualEndTime = original.getEndTime();
+		}
 
 		if (actualStartTime != null && actualEndTime == null) {
 			return Either.right(makeStartTimeWithoutEndTimeResult());
 		}
-
 		if (actualStartTime != null && actualEndTime != null && actualEndTime.compareTo(actualStartTime) < 0) {
 			return Either.right(makeEndTimeBeforeStartTimeResult());
 		}
@@ -59,23 +63,13 @@ public class EditTaskArgumentParser {
 		return Either.left(task);
 	}
 
-	private Either<String, CommandResult> extractTaskName(String argument) {
-		String[] parts = argument.split("(^| )(n|st|et)/");
-
-		if (parts.length > 0 && parts[0].trim().length() > 0) {
-			return Either.left(parts[0].trim());
-		} else {
-			return Either.right(makeInvalidArgumentResult());
-		}
-	}
-
 	private Either<String, CommandResult> extractNewTaskName(String argument) {
-		String[] parts = argument.split("(^| )(n|st|et)/");
+		Matcher matcher = Pattern.compile("(^|.*?)n/(?<name>.*?)((st|et)/.*)?$").matcher(argument);
 
-		if (parts.length > 0 && parts[1].trim().length() > 0) {
-			return Either.left(parts[1].trim());
+		if (matcher.matches() && matcher.group("name") != null) {
+			return Either.left(matcher.group("name"));
 		} else {
-			return Either.right(makeInvalidArgumentResult());
+			return Either.left(null);
 		}
 	}
 
