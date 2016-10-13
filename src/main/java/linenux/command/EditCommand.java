@@ -133,7 +133,7 @@ public class EditCommand implements Command {
 
 		if (result.isLeft()) {
 			this.schedule.editTask(original, result.getLeft());
-			return makeEditedTask(result.getLeft());
+			return makeEditedTask(original, result.getLeft());
 		} else {
 			return result.getRight();
 		}
@@ -143,8 +143,8 @@ public class EditCommand implements Command {
 		return () -> "Cannot find \"" + keywords + "\".";
 	}
 
-	private CommandResult makeEditedTask(Task task) {
-		return () -> "Edited \"" + task.toString() + "\".";
+	private CommandResult makeEditedTask(Task original, Task task) {
+		return () -> "Edited \"" + original.getTaskName() + "\".\nNew task details: " + task.toString();
 	}
 
 	private CommandResult makePromptResult(ArrayList<Task> tasks) {
