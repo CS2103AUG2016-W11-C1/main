@@ -39,7 +39,7 @@ We understand that in everyone’s daily lives, we will be thrown many tasks, fo
 | Description | Command | Format |
 |---|---|---|
 | Add a task to Linenux | [`add`](#adding-a-task-add) | `add` TASK_NAME [st/START_TIME] [et/END_TIME] [#/TAGS]... |
-| Add a reminder to a task | [`remind`](#adding-reminders-to-a-task-remind) | `remind` KEYWORDS... d/DATE [n/NOTE] |
+| Add a reminder to a task | [`remind`](#adding-reminders-to-a-task-remind) | `remind` KEYWORDS... t/TIME [n/NOTE] |
 | Edit a task or reminder | [`edit`](#edit-a-taskreminder-edit) | `edit` KEYWORDS... [n/NEW_NAME] [st/START_TIME] [et/END_TIME] |
 | Delete a task or reminder | [`delete`](#deleting-tasks-delete) | `delete` KEYWORDS… |
 | Mark a task as done | [`done`](#marking-tasks-as-done-done) | `done` KEYWORDS… |
@@ -108,15 +108,15 @@ To add a reminder, type `remind`, along with some keywords for Linenux to search
 
 ##### Format:
 ```
-remind KEYWORDS... d/DATE [n/NOTE]
+remind KEYWORDS... t/TIME [n/NOTE]
 ```
 
 ##### Examples:
 ```
-remind assignment d/2016-07-18
+remind assignment t/2016-07-18 05:00PM
 ```
 ```
-remind project deadline d/2016-07-18 n/Complete v0.0 document
+remind project deadline t/2016-07-18 05:00PM n/Complete v0.0 document
 ```
 
 ##### Callouts:
