@@ -170,7 +170,7 @@ A project often depends on third-party libraries. Linenux manages and automates 
 
 ## Appendices
 
-## Appendix A : User Stories
+#### Appendix A : User Stories
 
 Priorities: High (must have) - `* * *`, Medium (nice to have)  - `* *`,  Low (unlikely to have) - `*`
 
@@ -195,16 +195,164 @@ Priority | As a ...  | I want to ...                             | So that I can
 `*`      | user      | have a mini-window mode                   | the application does not take up the whole screen.
 
 
-## Appendix B : Use Cases
+#### Appendix B : Use Cases
 
-#### Use case:
+>Use Case: Add task
+MSS
+1. User requests to add task.
+2. TaskManager categorizes task under one of the 3 default tasks.
+3. TaskManager adds task into schedule.
+4. TaskManager shows message indicating successful add, including details of added task.
+5. Use Case ends.
 
-**MSS**
+Extensions
+1a. User provides start time without end time.
+    1a1. TaskManager shows error message to indicate that task is not a valid task.
+    1a2. Use Case ends.
 
-**Extensions**
+1b. User requests to add an event with overlapping timeslot with an existing event.
+    1b1. TaskManager shows list of overlapping events.
+    b2. TaskManager will show filtered tasks instead.
+    1b3. Use Case ends.
 
-## Appendix C : Non Functional Requirements
+>Use Case: List tasks
+MSS
+1. User requests to list all tasks.
+2. TaskManager shows a list of task.
+3. Use Case ends.
 
-## Appendix D : Glossary
+Extensions
+1a. User provides search parameters.
+    1a1. TaskManager will perform fuzzy search and filter tasks based on search parameters.
+    1a2. TaskManager will show filtered tasks instead.
+    1a3. Use Case ends.
 
-## Appendix E : Product Survey
+>Use Case: Add reminder to tasks
+MSS
+1. User requests to add reminder to task by providing search parameters for task.
+2. TaskManager adds reminder to task.
+3. TaskManager shows message indicating successful add, including details of reminder and task that reminder was added to.
+4. Use Case ends.
+
+Extensions
+1. More than one task found when with the given parameters.
+    1a1. TaskManager shows the list of tasks found.
+    1a2. User select task from given list.
+    1a3. Use Case resumes at step 2.
+1b. No task found from given parameters.
+    1b1. TaskManager shows error indicating no task found.
+    1b2. Use Case ends.
+1c. Specified index is invalid
+    1c1. TaskManager shows error message indicating invalid index.
+    1c2. Use Case resumes at step 1a1.
+
+>Use Case: Delete task
+MSS
+1. User requests to delete task by giving search parameters.
+2. TaskManager deletes specific task from schedule.
+3. TaskManager shows message indicating successful delete, including details of task deleted.
+4. Use Case ends.
+
+Extensions:
+1a. No tasks found.
+    1a1. TaskManager shows error message indicating no task found.
+    1a2. Use Case ends
+1b. More than one task found.
+    1b1. TaskManager show list of tasks found.
+    1b2. User specify index of task to delete.
+    1b3. Use Case resumes at step 2.
+1c. Specified index is invalid.
+    1c1. TaskManager shows error message indicating invalid index.
+    1c2. Use Case resumes at step 1b1.
+
+>Use Case: Mark task as done.
+MSS
+User requests to mark task as done by giving search parameters.
+TaskManager marks specific task as done
+TaskManager shows message indicating task is marked as done, including details of task
+	Use Case ends
+
+Extensions:
+1a. No tasks found
+	1a1. TaskManager shows error message indicating no task found
+	Use Case ends
+1b. More than one task found
+	1b1. TaskManager show list of tasks found
+	1b2. User specify index of task to mark as done
+	Use Case resumes at step 2
+1b2a. Specified index is invalid
+	1b2a1. TaskManager shows error message indicating invalid index
+	Use Case resumes at step 1b1
+
+>Use Case: Undo
+MSS
+User requests to undo to previous state
+TaskManager undos to previous state
+	Use case ends
+
+Extensions:
+1a. No previous state to undo to
+	1a1. TaskManager shows error indicating unable to undo
+	Use Case ends
+
+>Use Case: Exit
+
+MSS:
+User requests to exit application.
+TaskManager prompts user to confirm application exit.
+TaskManager closes.
+Use case ends
+
+Extensions:
+2a. User confirms exit while TaskManager is still processing information (e.g. reading/ saving a file).
+	2a1. TaskManager blocks input until process is done.
+	2a2. TaskManager closes.
+	        Use case ends.
+2b. User cancels exit operation.
+      Use case ends.
+
+>Use Case: Edit
+
+MSS:
+User requests to edit task by giving search parameters and changes to be made.
+TaskManager processes changes.
+TaskManager shows changes made.
+
+Extensions:
+1a. No tasks found.
+	1a1. TaskManager shows error message indicating no task found.
+	        Use case ends.
+1b. More than 1 task found.
+	1b1. TaskManager shows list of tasks found.
+	1b2. User specifies index of task to edit.
+                    Use case resumes at step 2.
+1b2a. Specified index is invalid.
+	1b2a1. TaskManager shows error message indicating invalid index.
+	            Use case resumes at step 1b1.
+1c. Specified changes are invalid.
+	1c1. TaskManager shows error message indicating invalid changes.
+	        Use case ends.
+
+#### Appendix C : Non Functional Requirements
+
+1. **Backup** - Should be easy for user to backup their data
+2. **Documentation** - User guides, Developer guides and UML diagrams available
+3. **Efficiency & Response time** - All commands run within 3 seconds
+4. **Open source** - Adopt a developer friendly license that permits users to modify and improve the program.
+5. **Quality** - Code is peer-reviewed before merging the pull requests.
+6. **Reliability** - Code is in accordance to the official Java coding style.
+7. **Testability** - Use of Travis Continuous Integration.
+8. **Backup** - Should be easy for user to backup their data.
+
+#### Appendix D : Glossary
+
+Users are able to create 2 objects, Tasks and Reminders.
+
+Tasks are split into 3 different sub-categories:
+1. Deadline: Tasks created with end dates only.
+2. Event: Tasks created with both start and end dates.
+3. To-do: Tasks created with no start and end dates.
+
+**Tasks cannot be created with start dates only.**
+
+#### Appendix E : Product Survey
