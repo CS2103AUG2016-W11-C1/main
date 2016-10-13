@@ -107,4 +107,48 @@ public class RemindCommandTest {
 		assertEquals(LocalDateTime.of(2000, 1, 1, 17, 0), addedReminder.getTimeOfReminder());
 		assertEquals("Attend Workshop", addedReminder.getNote());
 	}
+
+	/**
+	 * Test that executing adding reminder without notes to a Deadline should return correct result
+	 */
+	@Test
+	public void testExecuteAddReminderWithoutNotesToDeadline() {
+		assertChangeBy(() -> this.schedule.getTaskList().get(2).getReminders().size(),
+			1,
+			() -> this.remindCommand.execute("remind Deadline1 t/2000-01-01 05:00PM"));
+		ArrayList<Task> tasks = this.schedule.getTaskList();
+		ArrayList<Reminder> reminders = tasks.get(2).getReminders();
+		Reminder addedReminder = reminders.get(reminders.size() - 1);
+		assertEquals(LocalDateTime.of(2000, 1, 1, 17, 0), addedReminder.getTimeOfReminder());
+	}
+
+	/**
+	 * Test that executing adding reminder with notes to a Deadline should return correct result
+	 */
+	@Test
+	public void testExecuteAddReminderWithNotesToDeadline() {
+		assertChangeBy(() -> this.schedule.getTaskList().get(2).getReminders().size(),
+			1,
+			() -> this.remindCommand.execute("remind Deadline1 t/2000-01-01 05:00PM n/Attend Workshop"));
+		ArrayList<Task> tasks = this.schedule.getTaskList();
+		ArrayList<Reminder> reminders = tasks.get(2).getReminders();
+		Reminder addedReminder = reminders.get(reminders.size() - 1);
+		assertEquals(LocalDateTime.of(2000, 1, 1, 17, 0), addedReminder.getTimeOfReminder());
+		assertEquals("Attend Workshop", addedReminder.getNote());
+	}
+
+	/**
+	 * Test that executing adding reminder with notes in different order to a Deadline should return correct result
+	 */
+	@Test
+	public void testExecuteAddReminderWithDiffParamOrderToDeadline() {
+		assertChangeBy(() -> this.schedule.getTaskList().get(2).getReminders().size(),
+			1,
+			() -> this.remindCommand.execute("remind Deadline1 n/Attend Workshop t/2000-01-01 05:00PM"));
+		ArrayList<Task> tasks = this.schedule.getTaskList();
+		ArrayList<Reminder> reminders = tasks.get(2).getReminders();
+		Reminder addedReminder = reminders.get(reminders.size() - 1);
+		assertEquals(LocalDateTime.of(2000, 1, 1, 17, 0), addedReminder.getTimeOfReminder());
+		assertEquals("Attend Workshop", addedReminder.getNote());
+	}
 }
