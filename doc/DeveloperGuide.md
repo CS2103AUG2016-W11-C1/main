@@ -95,7 +95,7 @@ The **View Component** follows the JavaFx UI framework. Each of the classes (**M
 <img src="images/controllerDiagram.png">
 > Figure 4: Controller Diagram
 
-The **ConsoleController** takes the user input and sends it to the "brain" of Linenux, the "ControlUnit" class. The "ControlUnit" class is in charge of retrieving the appropriate schedule from storage and passing it over to the **CommandManager" class. The "CommandManager" class then delegates the right command based on the user input.
+The **ConsoleController** takes the user input and sends it to the "brain" of Linenux, the "ControlUnit" class. The "ControlUnit" class is in charge of retrieving the appropriate schedule from storage and passing it over to the **CommandManager** class. The **CommandManager** class then delegates the right command based on the user input.
 
 ``` java
 public CommandResult delegateCommand(String userInput) {
@@ -114,7 +114,7 @@ public CommandResult delegateCommand(String userInput) {
     return this.catchAllCommand.execute(userInput);
 }
 ```
-The above code shows how the **CommandManager** class delegates the right command based on the user input. Every command class must implement the **Command** interface. At any point in time, only 1 command is awaiting user response. If there are none, then each command will check if the user input corressponds to the command format.
+The above code shows how the **CommandManager** class delegates the right command based on the user input. Every command class must implement the **Command** interface. At any point in time, only 1 command is awaiting user response. If there are none, then each command will check if the user input corresponds to the command format.
 
 ``` java
 public boolean canParse(String userInput) {
