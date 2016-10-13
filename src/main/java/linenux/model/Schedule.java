@@ -59,7 +59,7 @@ public class Schedule {
             builder.append(RemindersListUtil.display(reminders));
         }
 
-        return builder.toString();
+        return builder.toString().trim();
     }
 
     /**

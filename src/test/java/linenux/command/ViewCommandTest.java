@@ -38,6 +38,12 @@ public class ViewCommandTest {
         reminders.add(new Reminder("Attend Workshop 3", LocalDateTime.of(2016, 3, 1, 17, 0)));
     }
 
+    public CommandResult setupMultipleHelloTaskAndExecuteAmbiguousCommand() {
+        this.schedule.addTask(new Task("hello it's me"));
+        this.schedule.addTask(new Task("hello from the other side"));
+        return this.viewCommand.execute("view hello");
+    }
+
     @Test
     public void testRespondToViewWithKeywords() {
         assertTrue(this.viewCommand.respondTo("view keyword"));
@@ -71,9 +77,15 @@ public class ViewCommandTest {
     public void testCommandResultWhenExactlyOneTaskWithRemindersFound() {
         this.setupTaskWithAndWithoutReminders();
         CommandResult result = this.viewCommand.execute("view Found");
-        assertEquals("Found" + '\n' + "Reminders:" + '\n'
-            + "1. Attend Workshop 1 (On 2016-01-01 5:00PM)" + '\n'
-            + "2. Attend Workshop 2 (On 2016-02-01 5:00PM)" + '\n'
-            + "3. Attend Workshop 3 (On 2016-03-01 5:00PM)" + '\n', result.getFeedback());
+        assertEquals("Found\n" + "Reminders:\n"
+            + "1. Attend Workshop 1 (On 2016-01-01 5:00PM)\n"
+            + "2. Attend Workshop 2 (On 2016-02-01 5:00PM)\n"
+            + "3. Attend Workshop 3 (On 2016-03-01 5:00PM)", result.getFeedback());
+    }
+
+    @Test
+    public void testCommandResultWhenMultipleMatchesFound() {
+        CommandResult result = this.setupMultipleHelloTaskAndExecuteAmbiguousCommand();
+        assertEquals("Which one? (1-2)\n1. hello it's me\n2. hello from the other side", result.getFeedback());
     }
 }

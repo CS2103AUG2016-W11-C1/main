@@ -1,19 +1,20 @@
 package linenux.command;
 
-import linenux.command.result.CommandResult;
-import linenux.model.Schedule;
-import linenux.model.Task;
-import org.junit.Before;
-import org.junit.Test;
-
-import java.time.LocalDateTime;
-
 import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.time.LocalDateTime;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import linenux.command.result.CommandResult;
+import linenux.model.Schedule;
+import linenux.model.Task;
+
 /**
- * JUnit test for list command. 
+ * JUnit test for list command.
  */
 public class ListCommandTest {
     private Schedule schedule;
@@ -60,7 +61,7 @@ public class ListCommandTest {
         String expectedFeedback = "1. First Task\n" +
                 "2. Second Task\n" +
                 "3. Deadline (Due 2016-01-01 5:00PM)\n" +
-                "4. Event (2016-01-01 5:00PM - 2016-01-01 6:00PM)\n";
+                "4. Event (2016-01-01 5:00PM - 2016-01-01 6:00PM)";
         assertEquals(expectedFeedback, result.getFeedback());
     }
 
@@ -72,7 +73,7 @@ public class ListCommandTest {
 
         CommandResult result = this.listCommand.execute("list world");
 
-        String expectedFeedback = "1. world\n2. hello world\n";
+        String expectedFeedback = "1. world\n2. hello world";
         assertEquals(expectedFeedback, result.getFeedback());
     }
 }

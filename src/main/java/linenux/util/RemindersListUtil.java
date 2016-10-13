@@ -20,6 +20,6 @@ public class RemindersListUtil {
             builder.append('\n');
         }
 
-        return builder.toString();
+        return builder.toString().trim();
     }
 }

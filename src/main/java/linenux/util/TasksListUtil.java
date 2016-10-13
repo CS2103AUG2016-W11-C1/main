@@ -23,6 +23,6 @@ public class TasksListUtil {
             builder.append('\n');
         }
 
-        return builder.toString();
+        return builder.toString().trim();
     }
 }
