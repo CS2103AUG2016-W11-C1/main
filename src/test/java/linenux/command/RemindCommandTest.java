@@ -240,6 +240,15 @@ public class RemindCommandTest {
 		assertEquals("Cannot create reminder without date.", result.getFeedback());
 	}
 
+	/**
+	 * Test the result when time is invalid
+	 */
+	@Test
+	public void testInvalidTimeCommandResult() {
+		CommandResult result = assertNoChange(() -> this.schedule.getTaskList().get(0).getReminders().size(),
+				() -> this.remindCommand.execute("remind Todo1 t/tomorrow"));
+		assertEquals("Cannot parse \"tomorrow\".", result.getFeedback());
+	}
 
     private String expectedInvalidArgumentMessage() {
         return "Invalid arguments.\n\n" + ReminderArgumentParser.ARGUMENT_FORMAT;
