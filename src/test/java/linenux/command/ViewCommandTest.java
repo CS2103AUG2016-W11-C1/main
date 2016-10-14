@@ -16,11 +16,13 @@ import linenux.model.Schedule;
 import linenux.model.Task;
 
 /**
- * JUnit test for list command.
+ * JUnit test for view command.
  */
 public class ViewCommandTest {
     private Schedule schedule;
     private ViewCommand viewCommand;
+    private Task task1;
+    private Task task2;
 
     @Before
     public void setupListCommand() {
@@ -29,10 +31,11 @@ public class ViewCommandTest {
     }
 
     public void setupTaskWithAndWithoutReminders() {
-        this.schedule.addTask(new Task("Task"));
-        this.schedule.addTask(new Task("Found"));
-        ArrayList<Task> tasks = this.schedule.getTaskList();
-        ArrayList<Reminder> reminders = tasks.get(1).getReminders();
+        this.task1 = new Task("Task1");
+        this.task2 = new Task("Task2");
+        this.schedule.addTask(task1);
+        this.schedule.addTask(task2);
+        ArrayList<Reminder> reminders = this.task2.getReminders();
         reminders.add(new Reminder("Attend Workshop 1", LocalDateTime.of(2016, 1, 1, 17, 0)));
         reminders.add(new Reminder("Attend Workshop 2", LocalDateTime.of(2016, 2, 1, 17, 0)));
         reminders.add(new Reminder("Attend Workshop 3", LocalDateTime.of(2016, 3, 1, 17, 0)));
@@ -69,15 +72,15 @@ public class ViewCommandTest {
     @Test
     public void testCommandResultWhenExactlyOneTaskWithNoRemindersFound() {
         this.setupTaskWithAndWithoutReminders();
-        CommandResult result = this.viewCommand.execute("view Task");
-        assertEquals("Task" + '\n' + "Reminders:" + '\n' + "There are no reminders found!", result.getFeedback());
+        CommandResult result = this.viewCommand.execute("view Task1");
+        assertEquals("Task1" + '\n' + "Reminders:" + '\n' + "There are no reminders found!", result.getFeedback());
     }
 
     @Test
     public void testCommandResultWhenExactlyOneTaskWithRemindersFound() {
         this.setupTaskWithAndWithoutReminders();
-        CommandResult result = this.viewCommand.execute("view Found");
-        assertEquals("Found\n" + "Reminders:\n"
+        CommandResult result = this.viewCommand.execute("view Task2");
+        assertEquals("Task2\n" + "Reminders:\n"
             + "1. Attend Workshop 1 (On 2016-01-01 5:00PM)\n"
             + "2. Attend Workshop 2 (On 2016-02-01 5:00PM)\n"
             + "3. Attend Workshop 3 (On 2016-03-01 5:00PM)", result.getFeedback());
@@ -114,7 +117,7 @@ public class ViewCommandTest {
     @Test
     public void testUserResponseInvalidIndex() {
         this.setupMultipleHelloTaskAndExecuteAmbiguousCommand();
-        CommandResult result = this.viewCommand.userResponse("3");
+        CommandResult result = this.viewCommand.userResponse("0");
         String expectedResponse = "That's not a valid index. Enter a number between 1 and 2:\n" +
                 "1. hello it's me\n2. hello from the other side";
         assertEquals(expectedResponse, result.getFeedback());

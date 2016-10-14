@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import linenux.util.ArrayListUtil;
-import linenux.util.RemindersListUtil;
 
 /**
  * Contains all outstanding tasks.
@@ -39,27 +38,6 @@ public class Schedule {
      */
     public void deleteTask(Task task) {
         this.taskList.remove(task);
-    }
-
-    /**
-    * View the specific task.
-    * @param task The task to view.
-    */
-    public String viewTask(Task task) {
-        ArrayList<Reminder> reminders = task.getReminders();
-
-        StringBuilder builder = new StringBuilder();
-        builder.append(task.toString());
-        builder.append('\n');
-        builder.append("Reminders:" + '\n');
-
-        if (reminders.size() == 0) {
-            builder.append("There are no reminders found!");
-        } else {
-            builder.append(RemindersListUtil.display(reminders));
-        }
-
-        return builder.toString().trim();
     }
 
     /**

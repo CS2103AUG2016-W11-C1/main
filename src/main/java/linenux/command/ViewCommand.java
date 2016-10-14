@@ -5,8 +5,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import linenux.command.result.CommandResult;
+import linenux.model.Reminder;
 import linenux.model.Schedule;
 import linenux.model.Task;
+import linenux.util.RemindersListUtil;
 import linenux.util.TasksListUtil;
 
 /**
@@ -101,7 +103,20 @@ public class ViewCommand implements Command {
     }
 
     private CommandResult makeResult(Task task) {
-        return () -> this.schedule.viewTask(task);
+        ArrayList<Reminder> reminders = task.getReminders();
+        StringBuilder builder = new StringBuilder();
+        builder.append(task.toString());
+        builder.append('\n');
+        builder.append("Reminders:" + '\n');
+
+        if (reminders.size() == 0) {
+            builder.append("There are no reminders found!");
+        } else {
+            builder.append(RemindersListUtil.display(reminders));
+        }
+
+        return () -> builder.toString().trim();
+
     }
 
     private CommandResult makePromptResult(ArrayList<Task> tasks) {
