@@ -64,10 +64,10 @@ public class EditTaskArgumentParser {
 	}
 
 	private Either<String, CommandResult> extractNewTaskName(String argument) {
-		Matcher matcher = Pattern.compile("(^|.*?)n/(?<name>.*?)((st|et)/.*)?$").matcher(argument);
+		Matcher matcher = Pattern.compile("(^|.*?)n/(?<name>.*?)((n|st|et)/.*)?$").matcher(argument);
 
 		if (matcher.matches() && matcher.group("name") != null) {
-			return Either.left(matcher.group("name"));
+			return Either.left(matcher.group("name").trim());
 		} else {
 			return Either.left(null);
 		}

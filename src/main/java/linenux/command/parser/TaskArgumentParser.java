@@ -1,13 +1,13 @@
 package linenux.command.parser;
 
+import java.time.LocalDateTime;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import linenux.command.result.CommandResult;
 import linenux.control.TimeParserManager;
 import linenux.model.Task;
 import linenux.util.Either;
-
-import java.time.LocalDateTime;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Created by yihangho on 10/8/16.
@@ -55,7 +55,7 @@ public class TaskArgumentParser {
     }
 
     private Either<String, CommandResult> extractTaskName(String argument) {
-        String[] parts = argument.split("(^| )(st|et)/");
+		String[] parts = argument.split("(^| )(n|st|et)/");
 
         if (parts.length > 0 && parts[0].trim().length() > 0) {
             return Either.left(parts[0].trim());
