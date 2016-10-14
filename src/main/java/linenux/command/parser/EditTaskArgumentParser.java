@@ -22,17 +22,17 @@ public class EditTaskArgumentParser {
 	}
 
 	public Either<Task, CommandResult> parse(Task original, String argument) {
-		Either<String, CommandResult> newTaskName = extractNewTaskName(argument);
+		Either<String, CommandResult> newTaskName = extractNewTaskName(original, argument);
 		if (newTaskName.isRight()) {
 			return Either.right(newTaskName.getRight());
 		}
 
-		Either<LocalDateTime, CommandResult> startTime = extractStartTime(argument);
+		Either<LocalDateTime, CommandResult> startTime = extractStartTime(original, argument);
 		if (startTime.isRight()) {
 			return Either.right(startTime.getRight());
 		}
 
-		Either<LocalDateTime, CommandResult> endTime = extractEndTime(argument);
+		Either<LocalDateTime, CommandResult> endTime = extractEndTime(original, argument);
 		if (endTime.isRight()) {
 			return Either.right(endTime.getRight());
 		}
@@ -40,16 +40,6 @@ public class EditTaskArgumentParser {
 		String actualTaskName = newTaskName.getLeft();
 		LocalDateTime actualStartTime = startTime.getLeft();
 		LocalDateTime actualEndTime = endTime.getLeft();
-
-		if (actualTaskName == null) {
-			actualTaskName = original.getTaskName();
-		}
-		if (actualStartTime == null) {
-			actualStartTime = original.getStartTime();
-		}
-		if (actualEndTime == null) {
-			actualEndTime = original.getEndTime();
-		}
 
 		if (actualStartTime != null && actualEndTime == null) {
 			return Either.right(makeStartTimeWithoutEndTimeResult());
@@ -63,7 +53,7 @@ public class EditTaskArgumentParser {
 		return Either.left(task);
 	}
 
-	private Either<String, CommandResult> extractNewTaskName(String argument) {
+	private Either<String, CommandResult> extractNewTaskName(Task original, String argument) {
 		Matcher matcher = Pattern.compile("(^|.*?)n/(?<name>.*?)((n|st|et)/.*)?$").matcher(argument);
 
 		if (matcher.matches() && matcher.group("name") != null) {
@@ -73,33 +63,35 @@ public class EditTaskArgumentParser {
 				return Either.right(makeInvalidArgumentResult());
 			}
 		} else {
-			return Either.left(null);
+			return Either.left(original.getTaskName());
 		}
 	}
 
-	private Either<LocalDateTime, CommandResult> extractStartTime(String argument) {
+	private Either<LocalDateTime, CommandResult> extractStartTime(Task original, String argument) {
 		Matcher matcher = Pattern.compile("(^|.*? )st/(?<startTime>.*?)(\\s+et/.*)?").matcher(argument);
 
 		if (matcher.matches() && matcher.group("startTime") != null) {
 			return parseDateTime(matcher.group("startTime").trim());
 		} else {
-			return Either.left(null);
+			return Either.left(original.getStartTime());
 		}
 	}
 
-	private Either<LocalDateTime, CommandResult> extractEndTime(String argument) {
+	private Either<LocalDateTime, CommandResult> extractEndTime(Task original, String argument) {
 		Matcher matcher = Pattern.compile("(^|.*? )et/(?<endTime>.*?)(\\s+st/.*)?$").matcher(argument);
 
 		if (matcher.matches() && matcher.group("endTime") != null) {
 			return parseDateTime(matcher.group("endTime").trim());
 		} else {
-			return Either.left(null);
+			return Either.left(original.getEndTime());
 		}
 	}
 
 	private Either<LocalDateTime, CommandResult> parseDateTime(String string) {
 		if (this.timeParserManager.canParse(string)) {
 			return Either.left(this.timeParserManager.delegateTimeParser(string));
+		} else if (string.matches("rm")) {
+			return Either.left(null);
 		} else {
 			return Either.right(makeInvalidDateTimeResult(string));
 		}
