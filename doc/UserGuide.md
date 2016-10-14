@@ -16,8 +16,6 @@
     * [Viewing details of task or reminder: `view`](#viewing-details-of-task-or-reminder-view)
     * [Viewing help: `help`](#viewing-help-help)
     * [Exiting the Program: `exit`](#exiting-the-program-exit)
-    * [Viewing Help: `help`](#viewing-help--help)
-    * [Exiting Linenux: `exit`](#exiting-linenux-exit)
 
 
 
