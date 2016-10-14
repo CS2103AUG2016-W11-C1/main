@@ -1,5 +1,6 @@
 package linenux.command;
 
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -160,7 +161,9 @@ public class RemindCommand implements Command {
     }
 
     private CommandResult makeResult(Task task, Reminder reminder) {
-    	return () -> "Added reminder on " + reminder.getTimeOfReminder() + " for the task, " + task.getTaskName();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd h:mma");
+
+    	return () -> "Added reminder on " + reminder.getTimeOfReminder().format(formatter) + " for " + task.getTaskName();
     }
 
     private CommandResult makePromptResult(ArrayList<Task> tasks) {
@@ -184,7 +187,7 @@ public class RemindCommand implements Command {
         return () -> {
             StringBuilder builder = new StringBuilder();
             builder.append("I don't understand \"" + userInput + "\".\n");
-            builder.append("Enter a number to indicate which task to delete.\n");
+            builder.append("Enter a number to indicate which task to add reminder to:\n");
             builder.append(TasksListUtil.display(this.foundTasks));
             return builder.toString();
         };

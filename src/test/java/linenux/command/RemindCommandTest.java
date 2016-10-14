@@ -43,6 +43,15 @@ public class RemindCommandTest {
 		this.remindCommand = new RemindCommand(this.schedule);
 	}
 
+	private void setupTaskWithSameNameAndExecuteAmbiguousCommand() {
+	    this.schedule.addTask(new Task("Todo 2"));
+        this.remindCommand.execute("remind Todo t/2016-01-01 05:00PM");
+    }
+
+    private String expectedInvalidArgumentMessage() {
+        return "Invalid arguments.\n\n" + ReminderArgumentParser.ARGUMENT_FORMAT;
+    }
+
 	/**
      * Test that respondTo detects various versions of the commands. It should return true even if
      * the format of the arguments are invalid.
@@ -199,8 +208,14 @@ public class RemindCommandTest {
 	 */
 	@Test
 	public void testTimeWithoutTaskNameCommandResult() {
-		CommandResult result = assertNoChange(() -> this.todo.getReminders().size(),
-				() -> this.remindCommand.execute("remind t/2011-01-01 05:00PM"));
+        ArrayList<Task> tasks = this.schedule.getTaskList();
+        CommandResult result = assertNoChange(() -> {
+            int size = 0;
+            for (int i = 0; i < tasks.size(); i++) {
+                size += tasks.get(i).getReminders().size();
+            }
+            return size;
+        }, () -> this.remindCommand.execute("remind t/2011-01-01 05:00PM"));
 		assertEquals(expectedInvalidArgumentMessage(), result.getFeedback());
 	}
 
@@ -209,8 +224,14 @@ public class RemindCommandTest {
 	 */
 	@Test
 	public void testTimeWithoutTaskNameWithNotesCommandResult() {
-		CommandResult result = assertNoChange(() -> this.todo.getReminders().size(),
-				() -> this.remindCommand.execute("remind t/2011-01-01 05:00PM n/Attend Workshop"));
+        ArrayList<Task> tasks = this.schedule.getTaskList();
+        CommandResult result = assertNoChange(() -> {
+            int size = 0;
+            for (int i = 0; i < tasks.size(); i++) {
+                size += tasks.get(i).getReminders().size();
+            }
+            return size;
+        }, () -> this.remindCommand.execute("remind t/2011-01-01 05:00PM n/Attend Workshop"));
 		assertEquals(expectedInvalidArgumentMessage(), result.getFeedback());
 	}
 
@@ -245,7 +266,79 @@ public class RemindCommandTest {
 		assertEquals("Cannot parse \"tomorrow\".", result.getFeedback());
 	}
 
-    private String expectedInvalidArgumentMessage() {
-        return "Invalid arguments.\n\n" + ReminderArgumentParser.ARGUMENT_FORMAT;
+    @Test
+    public void testCommandResultWhenNoMatchFound() {
+        ArrayList<Task> tasks = this.schedule.getTaskList();
+        CommandResult result = assertNoChange(() -> {
+            int size = 0;
+            for (int i = 0; i < tasks.size(); i++) {
+                size += tasks.get(i).getReminders().size();
+            }
+            return size;
+        }, () -> this.remindCommand.execute("remind not task t/2016-01-01 05:00PM"));
+        assertEquals("Cannot find \"not task\".", result.getFeedback());
+    }
+
+    @Test
+    public void testCommandResultWhenMultipleMatchesFound() {
+        this.schedule.addTask(new Task("todo 2"));
+        ArrayList<Task> tasks = this.schedule.getTaskList();
+        CommandResult result = assertNoChange(() -> {
+            int size = 0;
+            for (int i = 0; i < tasks.size(); i++) {
+                size += tasks.get(i).getReminders().size();
+            }
+            return size;
+        }, () -> this.remindCommand.execute("remind todo t/2016-01-01 05:00PM"));
+        assertEquals("Which one? (1-2)\n1. Todo\n2. todo 2\n", result.getFeedback());
+    }
+
+    @Test
+    public void testAwaitingUserResponse() {
+        assertFalse(this.remindCommand.awaitingUserResponse());
+        this.setupTaskWithSameNameAndExecuteAmbiguousCommand();
+        assertTrue(this.remindCommand.awaitingUserResponse());
+    }
+
+    @Test
+    public void testUserResponseCancel() {
+        ArrayList<Task> tasks = this.schedule.getTaskList();
+        this.setupTaskWithSameNameAndExecuteAmbiguousCommand();
+        CommandResult result = assertNoChange(() -> {
+            int size = 0;
+            for (int i = 0; i < tasks.size(); i++) {
+                size += tasks.get(i).getReminders().size();
+            }
+            return size;
+        }, () -> this.remindCommand.userResponse("cancel"));
+        assertEquals("OK! Not adding new reminder.", result.getFeedback());
+        assertFalse(this.remindCommand.awaitingUserResponse());
+    }
+
+    @Test
+    public void testUserResponseValidIndex() {
+        this.setupTaskWithSameNameAndExecuteAmbiguousCommand();
+        CommandResult result = assertChangeBy(() -> this.todo.getReminders().size(), 1,
+                () -> this.remindCommand.userResponse("1"));
+        assertEquals("Added reminder on 2016-01-01 5:00PM for Todo", result.getFeedback());
+    }
+
+    @Test
+    public void testUserResponseInvalidIndex() {
+        this.setupTaskWithSameNameAndExecuteAmbiguousCommand();
+        CommandResult result = assertNoChange(() -> this.todo.getReminders().size(),
+                () -> this.remindCommand.userResponse("0"));
+        assertEquals("That's not a valid index. Enter a number between 1 and 2:\n" + "1. Todo\n2. Todo 2\n",
+                result.getFeedback());
+    }
+
+    @Test
+    public void testUserResponseInvalidUserResponse() {
+        this.setupTaskWithSameNameAndExecuteAmbiguousCommand();
+        CommandResult result = assertNoChange(() -> this.todo.getReminders().size(),
+                () -> this.remindCommand.userResponse("One"));
+        assertEquals("I don't understand \"One\".\nEnter a number to indicate which task to add reminder to:\n"
+                + "1. Todo\n2. Todo 2\n",
+                result.getFeedback());
     }
 }
