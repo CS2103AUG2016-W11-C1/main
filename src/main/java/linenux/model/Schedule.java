@@ -60,11 +60,11 @@ public class Schedule {
      * @return List of {@code Task} matching the keywords.
      */
     public ArrayList<Task> search(String[] keywords) {
-        ArrayList<String> keywordsList = new ArrayListUtil.ChainableArrayListUtil<>(keywords)
+        ArrayList<String> keywordsList = new ArrayListUtil.ChainableArrayListUtil<String>(keywords)
                                                           .map(String::toLowerCase)
                                                           .value();
 
-        return new ArrayListUtil.ChainableArrayListUtil<>(this.taskList)
+        return new ArrayListUtil.ChainableArrayListUtil<Task>(this.taskList)
                 .filter(task -> {
                     ArrayList<String> taskKeywords = new ArrayListUtil.ChainableArrayListUtil<>(task.getTaskName().split("\\s+"))
                             .map(String::toLowerCase)
