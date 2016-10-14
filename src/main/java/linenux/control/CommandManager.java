@@ -37,7 +37,6 @@ public class CommandManager {
         commandList.add(new ListCommand(this.schedule));
         commandList.add(new DeleteCommand(this.schedule));
         commandList.add(new DoneCommand(this.schedule));
-        commandList.add(new ExitCommand());
         commandList.add(new UndoCommand(this.schedule));
         commandList.add(new HelpCommand(this.commandList));
 
