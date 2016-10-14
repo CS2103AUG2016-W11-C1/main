@@ -23,7 +23,7 @@ public class EditCommand implements Command {
 	private static final String TRIGGER_WORD = "edit";
 	private static final String DESCRIPTION = "Edits a task in the schedule.";
 
-	private static final String EDIT_PATTERN = "(?i)^edit ((?<keywords>.*?)(?<arguments>((n|st|et)/)+?.*))??";
+	private static final String EDIT_PATTERN = "(?i)^edit((?<keywords>.*?)(?<arguments>((n|st|et)/)+?.*)??)";
 	private static final String NUMBER_PATTERN = "^\\d+$";
 	private static final String CANCEL_PATTERN = "^cancel$";
 
@@ -67,9 +67,17 @@ public class EditCommand implements Command {
 		if (matcher.matches()){
 			assert (this.schedule != null);
 
+			if (matcher.group("keywords") == null || matcher.group("keywords").trim().isEmpty()) {
+				return makeNoKeywordsResult();
+			}
+
 			String keywords = matcher.group("keywords");
 			String[] keywordsArr = keywords.split("\\s+");
 			ArrayList<Task> tasks = this.schedule.search(keywordsArr);
+
+			if (matcher.group("arguments") == null) {
+				return makeNoArgumentsResult();
+			}
 
 			if (tasks.size() == 0) {
 				return makeNotFoundResult(keywords);
@@ -137,6 +145,14 @@ public class EditCommand implements Command {
 		} else {
 			return result.getRight();
 		}
+	}
+
+	private CommandResult makeNoKeywordsResult() {
+		return () -> "No keywords entered!";
+	}
+
+	private CommandResult makeNoArgumentsResult() {
+		return () -> "No changes to be made!";
 	}
 
 	private CommandResult makeNotFoundResult(String keywords) {
