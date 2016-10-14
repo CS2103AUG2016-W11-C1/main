@@ -67,7 +67,11 @@ public class EditTaskArgumentParser {
 		Matcher matcher = Pattern.compile("(^|.*?)n/(?<name>.*?)((n|st|et)/.*)?$").matcher(argument);
 
 		if (matcher.matches() && matcher.group("name") != null) {
-			return Either.left(matcher.group("name").trim());
+			if (matcher.group("name").trim().length() > 0) {
+				return Either.left(matcher.group("name").trim());
+			} else {
+				return Either.right(makeInvalidArgumentResult());
+			}
 		} else {
 			return Either.left(null);
 		}
