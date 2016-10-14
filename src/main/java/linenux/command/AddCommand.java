@@ -15,8 +15,6 @@ import linenux.util.Either;
  * Adds a task to the schedule.
  */
 public class AddCommand implements Command {
-    public static final String COMMAND_FORMAT = "add TASK_NAME";
-
     private static final String TRIGGER_WORD = "add";
     private static final String DESCRIPTION = "Adds a task to schedule.";
 

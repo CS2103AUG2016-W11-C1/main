@@ -1,35 +1,36 @@
 package linenux.model;
 
-import linenux.util.ArrayListUtil;
-
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.LinkedList;
 
 /**
  * Contains all outstanding tasks.
  */
 public class Schedule {
-    private final ArrayList<Task> taskList;
+    private static final int MAX_STATES = 10;
+    private final LinkedList<State> states;
 
     /**
      * Constructs an empty schedule
      */
     public Schedule() {
-        this.taskList = new ArrayList<Task>();
+        this.states = new LinkedList<State>();
+        states.add(new State());
     }
 
     /**
      * Constructs the schedule with the given data.
      */
     public Schedule(ArrayList<Task> taskList) {
-        this.taskList = taskList;
+        this.states = new LinkedList<State>();
+        states.add(new State(taskList));
     }
 
     /**
      * Adds a task to the schedule
      */
     public void addTask(Task task) {
-        taskList.add(task);
+        addState(getMostRecentState().addTask(task));
     }
 
     /**
@@ -37,21 +38,15 @@ public class Schedule {
      * @param task The task to delete.
      */
     public void deleteTask(Task task) {
-        this.taskList.remove(task);
+        addState(getMostRecentState().deleteTask(task));
     }
 
     /**
      * Clears all tasks from the schedule
      */
     public void clear() {
-        taskList.clear();
-    }
-
-    /**
-     * Returns the list of tasks
-     */
-    public ArrayList<Task> getTaskList() {
-        return this.taskList;
+        State newState = new State();
+        addState(newState);
     }
 
     /**
@@ -60,18 +55,38 @@ public class Schedule {
      * @return List of {@code Task} matching the keywords.
      */
     public ArrayList<Task> search(String[] keywords) {
-        ArrayList<String> keywordsList = new ArrayListUtil.ChainableArrayListUtil<String>(keywords)
-                                                          .map(String::toLowerCase)
-                                                          .value();
+        return getMostRecentState().search(keywords);
+    }
 
-        return new ArrayListUtil.ChainableArrayListUtil<Task>(this.taskList)
-                .filter(task -> {
-                    ArrayList<String> taskKeywords = new ArrayListUtil.ChainableArrayListUtil<String>(task.getTaskName().split("\\s+"))
-                            .map(String::toLowerCase)
-                            .value();
+    /**
+     * Returns the list of states.
+     */
+    public LinkedList<State> getStates() {
+        return states;
+    }
 
-                    return !Collections.disjoint(keywordsList, taskKeywords);
-                })
-                .value();
+    /**
+     * Returns the list of tasks.
+     */
+    public ArrayList<Task> getTaskList() {
+        return getMostRecentState().getTaskList();
+    }
+
+    /**
+     * Returns the most recent state of schedule
+     */
+    private State getMostRecentState() {
+        return states.getLast();
+    }
+
+    /**
+     * Adds a new state to states.
+     * @param state
+     */
+    private void addState(State state) {
+        while (states.size() + 1 > MAX_STATES && states.size() > 1) {
+            states.removeFirst();
+        }
+        states.addLast(state);
     }
 }
