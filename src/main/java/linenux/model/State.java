@@ -43,6 +43,18 @@ import linenux.util.ArrayListUtil;
      }
 
      /**
+      * Marks the specified task as done.
+      * @param task The task to mark as done.
+      * @return The new State of the schedule.
+      */
+     public State doneTask(Task task) {
+         int taskIndex = taskList.indexOf(task);
+         ArrayList<Task> newTaskList = copyTaskList(taskList);
+         newTaskList.get(taskIndex).markAsDone();;
+         return new State(newTaskList);
+     }
+
+     /**
       * Returns the list of tasks.
       */
      public ArrayList<Task> getTaskList() {
