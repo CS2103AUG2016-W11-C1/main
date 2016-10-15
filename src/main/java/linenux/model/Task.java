@@ -22,43 +22,45 @@ public class Task {
      * Constructor for To-Dos (tasks with no deadlines or predetermined time
      * slots).
      */
-    public Task(String taskName) {
+    public Task(String taskName, ArrayList<String> categories) {
         this.taskName = taskName;
         this.isDone = false;
         this.startTime = null;
         this.endTime = null;
-        this.categories = new ArrayList<String>();
+        this.categories = categories;
         this.reminders = new ArrayList<Reminder>();
     }
 
     /**
      * Constructor for Deadlines (tasks with deadlines only).
      */
-    public Task(String taskName, LocalDateTime endTime) {
+    public Task(String taskName, LocalDateTime endTime, ArrayList<String> categories) {
         this.taskName = taskName;
         this.isDone = false;
         this.startTime = null;
         this.endTime = endTime;
-        this.categories = new ArrayList<String>();
+        this.categories = categories;
         this.reminders = new ArrayList<Reminder>();
     }
 
     /**
      * Constructor for Events (tasks with predetermined time slots).
      */
-    public Task(String taskName, LocalDateTime startTime, LocalDateTime endTime) {
+    public Task(String taskName, LocalDateTime startTime, LocalDateTime endTime, ArrayList<String> categories) {
         this.taskName = taskName;
         this.isDone = false;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.categories = new ArrayList<String>();
+        this.categories = categories;
         this.reminders = new ArrayList<Reminder>();
     }
 
     public Task copyTask() {
-        Task copyTask = new Task(taskName, startTime, endTime);
+        Task copyTask = new Task(taskName, startTime, endTime, categories);
         copyTask.setIsDone(isDone);
-        copyTask.setCategories(categories);
+        copyTask.setCategories(new ArrayListUtil.ChainableArrayListUtil<String>(categories)
+                .map(category -> category.toString()).value());
+        System.out.println(copyTask.categoriesToString());
         copyTask.setReminders(new ArrayListUtil.ChainableArrayListUtil<Reminder>(reminders)
                 .map(reminder -> reminder.copyReminder()).value());
         return copyTask;
@@ -69,11 +71,12 @@ public class Task {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd h:mma");
 
         if (this.isDeadline()) {
-            return taskName + " (Due " + this.endTime.format(formatter) + ")";
+            return taskName + " (Due " + this.endTime.format(formatter) + ")" + categoriesToString();
         } else if (this.isEvent()) {
-            return taskName + " (" + this.startTime.format(formatter) + " - " + this.endTime.format(formatter) + ")";
+            return taskName + " (" + this.startTime.format(formatter) + " - " + this.endTime.format(formatter) + ")"
+                    + categoriesToString();
         } else {
-            return taskName;
+            return taskName + categoriesToString();
         }
     }
 
@@ -149,16 +152,21 @@ public class Task {
         this.reminders = reminders;
     }
 
-    private String categoriesToString() {
+    public String categoriesToString() {
         StringBuilder builder = new StringBuilder();
         if (this.categories.isEmpty()) {
-            return null;
+            return "";
         }
 
-        builder.append("Categories: ");
+        builder.append(" [");
+        builder.append("Categories:");
         for (String s : this.categories) {
-            builder.append(s + " ");
+            builder.append(" \"");
+            builder.append(s);
+            builder.append("\"");
         }
+        builder.append(" ]");
+
         return builder.toString();
     }
 }
