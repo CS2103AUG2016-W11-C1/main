@@ -35,10 +35,24 @@ public class Schedule {
 
     /**
      * Delete the specified task.
-     * @param task The task to delete.
+     *
+     * @param task
+     *            The task to delete.
      */
     public void deleteTask(Task task) {
         addState(getMostRecentState().deleteTask(task));
+    }
+
+    /**
+     * Edits the specified task.
+     *
+     * @param originalTask
+     *            The original version of the specified task.
+     * @param newTask
+     *            The edited version of the specified task.
+     */
+    public void editTask(Task originalTask, Task newTask) {
+        this.getTaskList().set(this.getTaskList().indexOf(originalTask), newTask);
     }
 
     /**
@@ -51,7 +65,9 @@ public class Schedule {
 
     /**
      * Performs case-insensitive search using keywords.
-     * @param keywords Search keywords
+     *
+     * @param keywords
+     *            Search keywords
      * @return List of {@code Task} matching the keywords.
      */
     public ArrayList<Task> search(String[] keywords) {
