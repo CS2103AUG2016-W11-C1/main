@@ -1,12 +1,13 @@
 package linenux.model;
 
-import org.junit.Test;
-
-import java.time.LocalDateTime;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+
+import org.junit.Test;
 
 /**
  * Created by yihangho on 10/7/16.
@@ -14,7 +15,7 @@ import static org.junit.Assert.assertTrue;
 public class TaskTest {
     @Test
     public void testIsTodo() {
-        Task task = new Task("bla", null, null);
+        Task task = new Task("bla", null, null, new ArrayList<String>());
         assertTrue(task.isTodo());
         assertFalse(task.isDeadline());
         assertFalse(task.isEvent());
@@ -38,7 +39,7 @@ public class TaskTest {
 
     @Test
     public void testTodoToString() {
-        Task task = new Task("hello", null, null);
+        Task task = new Task("hello", null, null, new ArrayList<String>());
         assertEquals("hello", task.toString());
     }
 

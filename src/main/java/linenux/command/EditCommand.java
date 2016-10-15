@@ -23,7 +23,7 @@ public class EditCommand implements Command {
     private static final String TRIGGER_WORD = "edit";
     private static final String DESCRIPTION = "Edits a task in the schedule.";
 
-    private static final String EDIT_PATTERN = "(?i)^edit((?<keywords>.*?)(?<arguments>((n|st|et)/)+?.*)??)";
+    private static final String EDIT_PATTERN = "(?i)^edit((?<keywords>.*?)(?<arguments>((n|st|et|#)/)+?.*)??)";
     private static final String NUMBER_PATTERN = "^\\d+$";
     private static final String CANCEL_PATTERN = "^cancel$";
 

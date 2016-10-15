@@ -1,6 +1,7 @@
 package linenux.command.parser;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -37,9 +38,15 @@ public class EditTaskArgumentParser {
             return Either.right(endTime.getRight());
         }
 
+        Either<ArrayList<String>, CommandResult> categories = extractCategories(original, argument);
+        if (categories.isRight()) {
+            return Either.right(categories.getRight());
+        }
+
         String actualTaskName = newTaskName.getLeft();
         LocalDateTime actualStartTime = startTime.getLeft();
         LocalDateTime actualEndTime = endTime.getLeft();
+        ArrayList<String> actualCategories = categories.getLeft();
 
         if (actualStartTime != null && actualEndTime == null) {
             return Either.right(makeStartTimeWithoutEndTimeResult());
@@ -48,7 +55,7 @@ public class EditTaskArgumentParser {
             return Either.right(makeEndTimeBeforeStartTimeResult());
         }
 
-        Task task = new Task(actualTaskName, actualStartTime, actualEndTime);
+        Task task = new Task(actualTaskName, actualStartTime, actualEndTime, actualCategories);
 
         return Either.left(task);
     }
@@ -87,6 +94,17 @@ public class EditTaskArgumentParser {
         }
     }
 
+    private Either<ArrayList<String>, CommandResult> extractCategories(Task original, String argument) {
+        Matcher matcher = Pattern.compile("(^|.*? )#/(?<categories>.*?)(\\s+(n|st|et)/.*)?$").matcher(argument);
+
+        if (matcher.matches() && matcher.group("categories") != null) {
+            String[] categories = matcher.group("categories").split(" ");
+            return getCategoryArray(categories);
+        } else {
+            return Either.left(original.getCategories());
+        }
+    }
+
     private Either<LocalDateTime, CommandResult> parseDateTime(String string) {
         if (this.timeParserManager.canParse(string)) {
             return Either.left(this.timeParserManager.delegateTimeParser(string));
@@ -111,5 +129,22 @@ public class EditTaskArgumentParser {
 
     private CommandResult makeEndTimeBeforeStartTimeResult() {
         return () -> "End time cannot come before start time.";
+    }
+
+    private Either<ArrayList<String>, CommandResult> getCategoryArray(String[] categories) {
+        if (categories.length == 0) {
+            return Either.right(makeInvalidArgumentResult());
+        }
+
+        ArrayList<String> categoryList = new ArrayList<String>();
+
+        for (String s : categories) {
+            if (s.trim().isEmpty()) {
+                return Either.right(makeInvalidArgumentResult());
+            }
+            categoryList.add(s.trim());
+        }
+
+        return Either.left(categoryList);
     }
 }
