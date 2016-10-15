@@ -148,6 +148,10 @@ public class Task {
         this.categories = categories;
     }
 
+    public void addReminder(Reminder reminder) {
+        this.reminders.add(reminder);
+    }
+
     public void setReminders(ArrayList<Reminder> reminders) {
         this.reminders = reminders;
     }
