@@ -294,7 +294,7 @@ public class EditCommandTest {
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
                 () -> this.editCommand.execute("edit hello n/CS2103T Tutorial"));
 
-        assertEquals("Which one? (1-2)\n1. hello world\n2. say hello\n", result.getFeedback());
+        assertEquals("Which one? (1-2)\n1. hello world\n2. say hello", result.getFeedback());
     }
 
     @Test
@@ -354,7 +354,7 @@ public class EditCommandTest {
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
                 () -> this.editCommand.userResponse("0"));
         String expectedResponse = "That's not a valid index. Enter a number between 1 and 2:\n"
-                + "1. hello world\n2. say hello\n";
+                + "1. hello world\n2. say hello";
         assertEquals(expectedResponse, result.getFeedback());
     }
 
@@ -364,7 +364,7 @@ public class EditCommandTest {
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
                 () -> this.editCommand.userResponse("roses are red"));
         String expectedResponse = "I don't understand \"roses are red\".\n"
-                + "Enter a number to indicate which task to edit.\n1. hello world\n2. say hello\n";
+                + "Enter a number to indicate which task to edit.\n1. hello world\n2. say hello";
         assertEquals(expectedResponse, result.getFeedback());
     }
 

@@ -110,7 +110,7 @@ public class ViewCommand implements Command {
         builder.append("Reminders:" + '\n');
 
         if (reminders.size() == 0) {
-            builder.append("There are no reminders found!");
+            builder.append("You have not set any reminders for this task.");
         } else {
             builder.append(RemindersListUtil.display(reminders));
         }

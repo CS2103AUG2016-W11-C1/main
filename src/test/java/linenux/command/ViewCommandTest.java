@@ -73,7 +73,7 @@ public class ViewCommandTest {
     public void testCommandResultWhenExactlyOneTaskWithNoRemindersFound() {
         this.setupTaskWithAndWithoutReminders();
         CommandResult result = this.viewCommand.execute("view Task1");
-        assertEquals("Task1" + '\n' + "Reminders:" + '\n' + "There are no reminders found!", result.getFeedback());
+        assertEquals("Task1" + '\n' + "Reminders:" + '\n' + "You have not set any reminders for this task.", result.getFeedback());
     }
 
     @Test
@@ -111,7 +111,7 @@ public class ViewCommandTest {
     public void testUserResponseValidIndex() {
         this.setupMultipleHelloTaskAndExecuteAmbiguousCommand();
         CommandResult result = this.viewCommand.userResponse("1");
-        assertEquals("hello it's me\nReminders:\nThere are no reminders found!", result.getFeedback());
+        assertEquals("hello it's me\nReminders:\nYou have not set any reminders for this task.", result.getFeedback());
     }
 
     @Test
