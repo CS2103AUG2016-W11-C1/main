@@ -1,22 +1,22 @@
 package linenux.command;
 
-import linenux.command.parser.TaskArgumentParser;
-import linenux.model.Task;
-import linenux.model.Schedule;
-import linenux.command.result.CommandResult;
-
-import org.junit.Before;
-import org.junit.Test;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-
 import static linenux.helpers.Assert.assertChangeBy;
 import static linenux.helpers.Assert.assertNoChange;
 import static org.junit.Assert.*;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import linenux.command.parser.TaskArgumentParser;
+import linenux.command.result.CommandResult;
+import linenux.model.Schedule;
+import linenux.model.Task;
+
 /**
- * JUnit test for add command. 
+ * JUnit test for add command.
  */
 public class AddCommandTest {
     private Schedule schedule;
@@ -35,10 +35,17 @@ public class AddCommandTest {
     @Test
     public void testRespondToAddTaskCommand() {
         assertTrue(this.addCommand.respondTo("add"));
+        assertTrue(this.addCommand.respondTo("add #/category"));
         assertTrue(this.addCommand.respondTo("add CS2103T Tutorial"));
+        assertTrue(this.addCommand.respondTo("add CS2103T Tutorial #/category"));
+
         assertTrue(this.addCommand.respondTo("add CS2103T Tutorial st/2016-01-01"));
+        assertTrue(this.addCommand.respondTo("add CS2103T Tutorial st/2016-01-01 #/category"));
         assertTrue(this.addCommand.respondTo("add CS2103T Tutorial et/2016-01-01"));
+        assertTrue(this.addCommand.respondTo("add CS2103T Tutorial et/2016-01-01 #/category"));
+
         assertTrue(this.addCommand.respondTo("add CS2103T Tutorial st/2016-01-01 et/2016-01-01"));
+        assertTrue(this.addCommand.respondTo("add CS2103T Tutorial st/2016-01-01 et/2016-01-01 #/category"));
     }
 
     /**
@@ -112,6 +119,25 @@ public class AddCommandTest {
         assertEquals(LocalDateTime.of(2016, 1, 2, 17, 0), addedTask.getEndTime());
     }
 
+    /**
+     * Test that executing the add task command will correctly add a categorized
+     * Todo to schedule
+     */
+    @Test
+    public void testExecuteAddCategorizedTask() {
+        this.schedule.clear();
+        assertChangeBy(() -> this.schedule.getTaskList().size(), 1,
+                () -> this.addCommand.execute("add CS2103T Tutorial #/category1 category2"));
+
+        ArrayList<Task> tasks = this.schedule.getTaskList();
+        Task addedTask = tasks.get(0);
+
+        assertEquals("CS2103T Tutorial", addedTask.getTaskName());
+        assertEquals(2, addedTask.getCategories().size());
+        assertEquals("category1", addedTask.getCategories().get(0));
+        assertEquals("category2", addedTask.getCategories().get(1));
+    }
+
     @Test
     public void testExecuteAddEventIgnoringOrderOfTimes() {
         assertChangeBy(() -> this.schedule.getTaskList().size(),
@@ -154,6 +180,16 @@ public class AddCommandTest {
     }
 
     /**
+     * Test that adding a new categorized Todo should return the correct result
+     *
+     */
+    @Test
+    public void testExecuteAddCategorizedTaskResult() {
+        CommandResult result = this.addCommand.execute("add CS2103T Tutorial #/category1 category2");
+        assertEquals("Added CS2103T Tutorial [Categories: \"category1\" \"category2\" ]", result.getFeedback());
+    }
+
+    /**
      * Test the result when running without a task name
      */
     @Test
@@ -188,6 +224,13 @@ public class AddCommandTest {
     }
 
     @Test
+    public void testCategoryWithoutStartName() {
+        CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
+                () -> this.addCommand.execute("add #/category1 category2"));
+        assertEquals(expectedInvalidArgumentMessage(), result.getFeedback());
+    }
+
+    @Test
     public void testInvalidStartTime() {
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
                 () -> this.addCommand.execute("add hello st/yesterday et/2016-12-31 11:59PM"));
@@ -201,6 +244,14 @@ public class AddCommandTest {
                 () -> this.addCommand.execute("add hello et/tomorrow"));
 
         assertEquals("Cannot parse \"tomorrow\".", result.getFeedback());
+    }
+
+    @Test
+    public void testInvalidCategory() {
+        CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
+                () -> this.addCommand.execute("add hello #/"));
+
+        assertEquals(expectedInvalidArgumentMessage(), result.getFeedback());
     }
 
     @Test
