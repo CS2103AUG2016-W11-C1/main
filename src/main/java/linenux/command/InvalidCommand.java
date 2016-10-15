@@ -15,21 +15,6 @@ public class InvalidCommand implements Command {
         this.commands = commands;
     }
 
-    @Override
-    public String getTriggerWord() {
-        return null;
-    }
-
-    @Override
-    public String getDescription() {
-        return null;
-    }
-
-    @Override
-    public String getCommandFormat() {
-        return null;
-    }
-
     /**
      * @return true for all user inputs.
      */
@@ -57,6 +42,21 @@ public class InvalidCommand implements Command {
         } else {
             return this.makeResponseWithSuggestion(closestCommand.getTriggerWord());
         }
+    }
+
+    @Override
+    public String getTriggerWord() {
+        return null;
+    }
+
+    @Override
+    public String getDescription() {
+        return null;
+    }
+
+    @Override
+    public String getCommandFormat() {
+        return null;
     }
 
     private String extractCommand(String userInput) {
