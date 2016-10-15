@@ -34,23 +34,25 @@ public class Schedule {
 
     /**
      * Delete the specified task.
-     * @param task The task to delete.
+     *
+     * @param task
+     *            The task to delete.
      */
     public void deleteTask(Task task) {
         this.taskList.remove(task);
     }
 
-	/**
-	 * Edits the specified task.
-	 *
-	 * @param originalTask
-	 *            The original version of the specified task.
-	 * @param newTask
-	 *            The edited version of the specified task.
-	 */
-	public void editTask(Task originalTask, Task newTask) {
-		this.taskList.set(this.taskList.indexOf(originalTask), newTask);
-	}
+    /**
+     * Edits the specified task.
+     *
+     * @param originalTask
+     *            The original version of the specified task.
+     * @param newTask
+     *            The edited version of the specified task.
+     */
+    public void editTask(Task originalTask, Task newTask) {
+        this.taskList.set(this.taskList.indexOf(originalTask), newTask);
+    }
 
     /**
      * Clears all tasks from the schedule
@@ -68,22 +70,20 @@ public class Schedule {
 
     /**
      * Performs case-insensitive search using keywords.
-     * @param keywords Search keywords
+     *
+     * @param keywords
+     *            Search keywords
      * @return List of {@code Task} matching the keywords.
      */
     public ArrayList<Task> search(String[] keywords) {
         ArrayList<String> keywordsList = new ArrayListUtil.ChainableArrayListUtil<String>(keywords)
-                                                          .map(String::toLowerCase)
-                                                          .value();
+                .map(String::toLowerCase).value();
 
-        return new ArrayListUtil.ChainableArrayListUtil<Task>(this.taskList)
-                .filter(task -> {
-                    ArrayList<String> taskKeywords = new ArrayListUtil.ChainableArrayListUtil<String>(task.getTaskName().split("\\s+"))
-                            .map(String::toLowerCase)
-                            .value();
+        return new ArrayListUtil.ChainableArrayListUtil<Task>(this.taskList).filter(task -> {
+            ArrayList<String> taskKeywords = new ArrayListUtil.ChainableArrayListUtil<String>(
+                    task.getTaskName().split("\\s+")).map(String::toLowerCase).value();
 
-                    return !Collections.disjoint(keywordsList, taskKeywords);
-                })
-                .value();
+            return !Collections.disjoint(keywordsList, taskKeywords);
+        }).value();
     }
 }
