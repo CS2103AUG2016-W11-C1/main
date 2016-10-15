@@ -132,6 +132,10 @@ public class Task {
          this.endTime = endTime;
      }
 
+     public void addReminder(Reminder reminder) {
+        this.reminders.add(reminder);
+     }
+
      public void setReminders(ArrayList<Reminder> reminders) {
          this.reminders = reminders;
      }
