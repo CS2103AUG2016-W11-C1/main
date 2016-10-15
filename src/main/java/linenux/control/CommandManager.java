@@ -11,6 +11,7 @@ import linenux.command.ExitCommand;
 import linenux.command.HelpCommand;
 import linenux.command.InvalidCommand;
 import linenux.command.ListCommand;
+import linenux.command.RemindCommand;
 import linenux.command.UndoCommand;
 import linenux.command.ViewCommand;
 import linenux.command.result.CommandResult;
@@ -37,6 +38,7 @@ public class CommandManager {
         commandList.add(new AddCommand(this.schedule));
         commandList.add(new EditCommand(this.schedule));
         commandList.add(new DoneCommand(this.schedule));
+        commandList.add(new RemindCommand(this.schedule));
         commandList.add(new DeleteCommand(this.schedule));
 
         commandList.add(new ListCommand(this.schedule));
