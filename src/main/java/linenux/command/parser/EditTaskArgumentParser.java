@@ -13,15 +13,22 @@ import linenux.util.Either;
  * Parses new details of task to be edited.
  */
 public class EditTaskArgumentParser {
-    public static final String ARGUMENT_FORMAT = "TASK_NAME [n/NEW_TASK_NAME] [st/START_TIME] [et/END_TIME] [#/CATEGORY]...";
+    public static String COMMAND_FORMAT;
+    public static String CALLOUTS;
 
     private TimeParserManager timeParserManager;
 
-    public EditTaskArgumentParser(TimeParserManager timeParserManager) {
+    public EditTaskArgumentParser(TimeParserManager timeParserManager, String commandFormat, String callouts) {
         this.timeParserManager = timeParserManager;
+        EditTaskArgumentParser.COMMAND_FORMAT = commandFormat;
+        EditTaskArgumentParser.CALLOUTS = callouts;
     }
 
     public Either<Task, CommandResult> parse(Task original, String argument) {
+        if (argument.trim().isEmpty()) {
+            return Either.right(makeNoArgumentsResult());
+        }
+
         Either<String, CommandResult> newTaskName = extractNewTaskName(original, argument);
         if (newTaskName.isRight()) {
             return Either.right(newTaskName.getRight());
@@ -97,8 +104,12 @@ public class EditTaskArgumentParser {
         }
     }
 
+    private CommandResult makeNoArgumentsResult() {
+        return () -> "No changes to be made!";
+    }
+
     private CommandResult makeInvalidArgumentResult() {
-        return () -> "Invalid arguments.\n\n" + ARGUMENT_FORMAT;
+        return () -> "Invalid arguments.\n\n" + COMMAND_FORMAT + "\n\n" + CALLOUTS;
     }
 
     private CommandResult makeInvalidDateTimeResult(String dateTime) {
