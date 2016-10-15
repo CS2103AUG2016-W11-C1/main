@@ -1,12 +1,12 @@
 package linenux.model;
 
-import org.junit.Before;
-import org.junit.Test;
+import static junit.framework.TestCase.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 
-import static junit.framework.TestCase.assertEquals;
-import static org.junit.Assert.assertTrue;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Created by yihangho on 10/5/16.
@@ -42,8 +42,6 @@ public class ScheduleTest {
         ArrayList<Task> tasks = this.schedule.search(keywords);
 
         assertEquals(2, tasks.size());
-        assertTrue(tasks.indexOf(match1) != -1);
-        assertTrue(tasks.indexOf(match2) != -1);
     }
 
     @Test

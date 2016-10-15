@@ -16,6 +16,14 @@ public class Reminder {
         this.timeOfReminder = timeOfReminder;
     }
 
+    /**
+     * Creates a copy of the reminder.
+     * @return
+     */
+    public Reminder copyReminder() {
+        return new Reminder(this.getNote(), this.getTimeOfReminder());
+    }
+
     @Override
     public String toString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd h:mma");
