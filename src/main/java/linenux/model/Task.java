@@ -92,7 +92,6 @@ public class Task {
         copyTask.setIsDone(isDone);
         copyTask.setCategories(new ArrayListUtil.ChainableArrayListUtil<String>(categories)
                 .map(category -> category.toString()).value());
-        System.out.println(copyTask.categoriesToString());
         copyTask.setReminders(new ArrayListUtil.ChainableArrayListUtil<Reminder>(reminders)
                 .map(reminder -> reminder.copyReminder()).value());
         return copyTask;
