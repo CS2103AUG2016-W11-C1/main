@@ -41,7 +41,7 @@ public class Task {
     /**
      * Constructor for uncategorized Events (tasks with predetermined time
      * slots).
-     * 
+     *
      * @param taskName
      * @param startTime
      * @param endTime
@@ -188,7 +188,7 @@ public class Task {
         this.reminders = reminders;
     }
 
-    public String categoriesToString() {
+    private String categoriesToString() {
         StringBuilder builder = new StringBuilder();
         if (this.categories.isEmpty()) {
             return "";

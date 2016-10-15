@@ -61,7 +61,7 @@ public class EditTaskArgumentParser {
     }
 
     private Either<String, CommandResult> extractNewTaskName(Task original, String argument) {
-        Matcher matcher = Pattern.compile("(^|.*?)n/(?<name>.*?)((n|st|et)/.*)?$").matcher(argument);
+        Matcher matcher = Pattern.compile("(^|.*?)n/(?<name>.*?)((n|st|et|#)/.*)?$").matcher(argument);
 
         if (matcher.matches() && matcher.group("name") != null) {
             if (matcher.group("name").trim().length() > 0) {
@@ -75,7 +75,7 @@ public class EditTaskArgumentParser {
     }
 
     private Either<LocalDateTime, CommandResult> extractStartTime(Task original, String argument) {
-        Matcher matcher = Pattern.compile("(^|.*? )st/(?<startTime>.*?)(\\s+(n|et)/.*)?").matcher(argument);
+        Matcher matcher = Pattern.compile("(^|.*? )st/(?<startTime>.*?)(\\s+(n|et|#)/.*)?").matcher(argument);
 
         if (matcher.matches() && matcher.group("startTime") != null) {
             return parseDateTime(matcher.group("startTime").trim());
@@ -85,7 +85,7 @@ public class EditTaskArgumentParser {
     }
 
     private Either<LocalDateTime, CommandResult> extractEndTime(Task original, String argument) {
-        Matcher matcher = Pattern.compile("(^|.*? )et/(?<endTime>.*?)(\\s+(n|st)/.*)?$").matcher(argument);
+        Matcher matcher = Pattern.compile("(^|.*? )et/(?<endTime>.*?)(\\s+(n|st|#)/.*)?$").matcher(argument);
 
         if (matcher.matches() && matcher.group("endTime") != null) {
             return parseDateTime(matcher.group("endTime").trim());
