@@ -23,7 +23,7 @@ public class RemindCommand implements Command {
 	public static final String COMMAND_FORMAT = "remind " + ARGUMENT_FORMAT;
 
 	private static final String TRIGGER_WORD = "remind";
-	private static final String DESCRIPTION = "Adds a reminder to a task.";
+	private static final String DESCRIPTION = "Adds a reminder to a task in the schedule.";
 
 	private static final String REMIND_PATTERN = "(?i)^remind(\\s+(?<arguments>.*))?$";
     private static final String NUMBER_PATTERN = "^\\d+$";

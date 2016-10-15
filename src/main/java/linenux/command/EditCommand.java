@@ -34,8 +34,6 @@ public class EditCommand implements Command {
     private TimeParserManager timeParserManager;
     private EditTaskArgumentParser editTaskArgumentParser;
 
-
-
     public EditCommand(Schedule schedule) {
         this.schedule = schedule;
         this.searchKeywordParser = new SearchKeywordParser(this.schedule);
