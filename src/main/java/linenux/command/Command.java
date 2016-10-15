@@ -41,6 +41,9 @@ public interface Command {
         return null;
     }
 
+    /**
+     * Returns the command word.
+     */
     public String getTriggerWord();
 
     /**

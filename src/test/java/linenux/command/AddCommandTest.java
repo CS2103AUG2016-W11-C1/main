@@ -1,22 +1,25 @@
 package linenux.command;
 
-import linenux.command.parser.TaskArgumentParser;
-import linenux.model.Task;
-import linenux.model.Schedule;
-import linenux.command.result.CommandResult;
-
-import org.junit.Before;
-import org.junit.Test;
+import static linenux.helpers.Assert.assertChangeBy;
+import static linenux.helpers.Assert.assertNoChange;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-import static linenux.helpers.Assert.assertChangeBy;
-import static linenux.helpers.Assert.assertNoChange;
-import static org.junit.Assert.*;
+import org.junit.Before;
+import org.junit.Test;
+
+import linenux.command.parser.AddArgumentParser;
+import linenux.command.result.CommandResult;
+import linenux.model.Schedule;
+import linenux.model.Task;
 
 /**
- * JUnit test for add command. 
+ * JUnit test for add command.
  */
 public class AddCommandTest {
     private Schedule schedule;
@@ -58,7 +61,7 @@ public class AddCommandTest {
     }
 
     /**
-     * Test that executing the add task command will correctly add new todo to the schedule.
+     * Test that executing the add task command will correctly add new to-do to the schedule.
      */
     @Test
     public void testExecuteAddTodo() {
@@ -220,6 +223,6 @@ public class AddCommandTest {
     }
 
     private String expectedInvalidArgumentMessage() {
-        return "Invalid arguments.\n\n" + TaskArgumentParser.ARGUMENT_FORMAT;
+        return "Invalid arguments.\n\n" + AddArgumentParser.ARGUMENT_FORMAT;
     }
 }
