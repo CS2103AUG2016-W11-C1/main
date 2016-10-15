@@ -136,7 +136,9 @@ public class TaskArgumentParser {
             if (s.trim().isEmpty()) {
                 return Either.right(makeInvalidArgumentResult());
             }
-            categoryList.add(s.trim());
+            if (!categoryList.contains(s)) {
+                categoryList.add(s.trim());
+            }
         }
 
         return Either.left(categoryList);
