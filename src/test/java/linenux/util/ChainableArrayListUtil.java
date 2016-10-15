@@ -44,4 +44,29 @@ public class ChainableArrayListUtil {
         assertEquals(1, list.size());
         assertEquals("2", list.get(0));
     }
+
+    @Test
+    public void testSort() {
+        ArrayList<Integer> numbers = ArrayListUtil.fromArray(new Integer[] {3, 2, 4, 1});
+        ArrayList<Integer> sortedNumbers = new ArrayListUtil.ChainableArrayListUtil<>(numbers)
+                .sort((a, b) -> a - b)
+                .value();
+        assertEquals(4, sortedNumbers.size());
+        assertEquals(1, (int)sortedNumbers.get(0));
+        assertEquals(2, (int)sortedNumbers.get(1));
+        assertEquals(3, (int)sortedNumbers.get(2));
+        assertEquals(4, (int)sortedNumbers.get(3));
+    }
+
+    @Test
+    public void testSortBy() {
+        ArrayList<String> strings = ArrayListUtil.fromArray(new String[] {"apple", "bla", "walala"});
+        ArrayList<String> sortedStrings = new ArrayListUtil.ChainableArrayListUtil<>(strings)
+                .sortBy(String::length)
+                .value();
+        assertEquals(3, sortedStrings.size());
+        assertEquals("bla", sortedStrings.get(0));
+        assertEquals("apple", sortedStrings.get(1));
+        assertEquals("walala", sortedStrings.get(2));
+    }
 }

@@ -2,6 +2,8 @@ package linenux.util;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -66,6 +68,27 @@ public class ArrayListUtil {
          */
         public ChainableArrayListUtil<T> filter(Predicate<T> fn) {
             return new ChainableArrayListUtil<T>(ArrayListUtil.filter(fn, this.list));
+        }
+
+        /**
+         * Sort the {@code ArrayList} by the {@code comparator}.
+         * @param comparator The comparator used to determine the weak ordering of the elements.
+         * @return A new {@code ChainableArrayListUtil} wrapping the new {@code ArrayList}.
+         */
+        public ChainableArrayListUtil<T> sort(Comparator<T> comparator) {
+            ArrayList<T> copy = new ArrayList<>(this.list);
+            Collections.sort(copy, comparator);
+            return new ChainableArrayListUtil<>(copy);
+        }
+
+        /**
+         * Sort the {@code ArrayList} according to the value given by the specified function.
+         * @param fn A pure function taking in elements of the array list and returning some {@code Comparable}.
+         * @param <R> Any type implementing {@code Comparable}.
+         * @return A new {@code ChainableArrayListUtil} wrapping the new {@code ArrayList}.
+         */
+        public <R extends Comparable<R>> ChainableArrayListUtil<T> sortBy(Function<T, R> fn) {
+            return this.sort((a, b) -> fn.apply(a).compareTo(fn.apply(b)));
         }
 
         /**
