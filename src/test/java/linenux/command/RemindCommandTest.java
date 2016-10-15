@@ -290,7 +290,7 @@ public class RemindCommandTest {
             }
             return size;
         }, () -> this.remindCommand.execute("remind todo t/2016-01-01 05:00PM"));
-        assertEquals("Which one? (1-2)\n1. Todo\n2. todo 2\n", result.getFeedback());
+        assertEquals("Which one? (1-2)\n1. Todo\n2. todo 2", result.getFeedback());
     }
 
     @Test
@@ -318,7 +318,7 @@ public class RemindCommandTest {
     @Test
     public void testUserResponseValidIndex() {
         this.setupTaskWithSameNameAndExecuteAmbiguousCommand();
-        CommandResult result = assertChangeBy(() -> this.todo.getReminders().size(), 1,
+        CommandResult result = assertChangeBy(() -> this.schedule.getTaskList().get(0).getReminders().size(), 1,
                 () -> this.remindCommand.userResponse("1"));
         assertEquals("Added reminder on 2016-01-01 5:00PM for Todo", result.getFeedback());
     }
@@ -328,7 +328,7 @@ public class RemindCommandTest {
         this.setupTaskWithSameNameAndExecuteAmbiguousCommand();
         CommandResult result = assertNoChange(() -> this.todo.getReminders().size(),
                 () -> this.remindCommand.userResponse("0"));
-        assertEquals("That's not a valid index. Enter a number between 1 and 2:\n" + "1. Todo\n2. Todo 2\n",
+        assertEquals("That's not a valid index. Enter a number between 1 and 2:\n" + "1. Todo\n2. Todo 2",
                 result.getFeedback());
     }
 
@@ -338,7 +338,7 @@ public class RemindCommandTest {
         CommandResult result = assertNoChange(() -> this.todo.getReminders().size(),
                 () -> this.remindCommand.userResponse("One"));
         assertEquals("I don't understand \"One\".\nEnter a number to indicate which task to add reminder to:\n"
-                + "1. Todo\n2. Todo 2\n",
+                + "1. Todo\n2. Todo 2",
                 result.getFeedback());
     }
 }
