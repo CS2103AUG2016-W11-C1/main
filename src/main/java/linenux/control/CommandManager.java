@@ -6,11 +6,13 @@ import linenux.command.AddCommand;
 import linenux.command.Command;
 import linenux.command.DeleteCommand;
 import linenux.command.DoneCommand;
+import linenux.command.EditCommand;
 import linenux.command.ExitCommand;
 import linenux.command.HelpCommand;
 import linenux.command.InvalidCommand;
 import linenux.command.ListCommand;
 import linenux.command.UndoCommand;
+import linenux.command.ViewCommand;
 import linenux.command.result.CommandResult;
 import linenux.model.Schedule;
 
@@ -32,20 +34,24 @@ public class CommandManager {
      * Adds all supported commands to the commandList.
      */
     private void initializeCommands() {
-        commandList.add(new ExitCommand());
         commandList.add(new AddCommand(this.schedule));
-        commandList.add(new ListCommand(this.schedule));
-        commandList.add(new DeleteCommand(this.schedule));
+        commandList.add(new EditCommand(this.schedule));
         commandList.add(new DoneCommand(this.schedule));
+        commandList.add(new DeleteCommand(this.schedule));
+
+        commandList.add(new ListCommand(this.schedule));
+        commandList.add(new ViewCommand(this.schedule));
+
         commandList.add(new UndoCommand(this.schedule));
         commandList.add(new HelpCommand(this.commandList));
+        commandList.add(new ExitCommand());
 
         this.catchAllCommand = new InvalidCommand(this.commandList);
     }
 
     /**
-     * Assigns the appropriate command to the user input.
-     * Contract: only 1 command should be awaiting user response at any point in time.
+     * Assigns the appropriate command to the user input. Contract: only 1
+     * command should be awaiting user response at any point in time.
      */
     public CommandResult delegateCommand(String userInput) {
         for (Command command : commandList) {
