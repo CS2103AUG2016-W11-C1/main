@@ -21,6 +21,40 @@ public class HelpCommand implements Command {
     }
 
     @Override
+    public boolean respondTo(String userInput) {
+        return userInput.matches(HELP_PATTERN);
+    }
+
+    @Override
+    public CommandResult execute(String userInput) {
+        return () -> {
+            int maxLength = 0;
+            for (Command command: this.commands) {
+                if (command.getTriggerWord().length() > maxLength) {
+                    maxLength = command.getTriggerWord().length();
+                }
+            }
+
+            StringBuilder builder = new StringBuilder();
+            for (Command command: this.commands) {
+                builder.append(command.getTriggerWord());
+                builder.append(" - ");
+                builder.append(new String(new char[maxLength - command.getTriggerWord().length()]).replace("\0", " "));
+
+                builder.append("Description: ");
+                builder.append(command.getDescription());
+                builder.append('\n');
+                builder.append(new String(new char[maxLength + 3]).replace("\0", " "));
+
+                builder.append("Format: ");
+                builder.append(command.getCommandFormat());
+                builder.append("\n\n");
+            }
+            return builder.toString();
+        };
+    }
+
+    @Override
     public String getTriggerWord() {
         return TRIGGER_WORD;
     }
@@ -33,24 +67,5 @@ public class HelpCommand implements Command {
     @Override
     public String getCommandFormat() {
         return COMMAND_FORMAT;
-    }
-
-    @Override
-    public boolean respondTo(String userInput) {
-        return userInput.matches(HELP_PATTERN);
-    }
-
-    @Override
-    public CommandResult execute(String userInput) {
-        return () -> {
-            StringBuilder builder = new StringBuilder();
-            for (Command command: this.commands) {
-                builder.append(command.getTriggerWord());
-                builder.append(" - ");
-                builder.append(command.getDescription());
-                builder.append('\n');
-            }
-            return builder.toString();
-        };
     }
 }

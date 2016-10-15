@@ -13,7 +13,7 @@ public class ExitCommand implements Command {
     private static final String DESCRIPTION = "Exits the program.";
     public static final String COMMAND_FORMAT = "exit";
 
-    private static final String EXIT_PATTERN = "(?i)^exit.*$";
+    private static final String EXIT_PATTERN = "(?i)^\\s*exit\\s*$";
 
     @Override
     public boolean respondTo(String userInput) {
