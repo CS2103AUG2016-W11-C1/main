@@ -19,6 +19,38 @@ public class Task {
     private ArrayList<Reminder> reminders;
 
     /**
+     * Constructor for uncategorized To-Dos (tasks with no deadlines or
+     * predetermined time slots).
+     *
+     * @param taskName
+     */
+    public Task(String taskName) {
+        this(taskName, new ArrayList<String>());
+    }
+
+    /**
+     * Constructor for uncategorized Deadlines (tasks with deadlines only).
+     *
+     * @param taskName
+     * @param endTime
+     */
+    public Task(String taskName, LocalDateTime endTime) {
+        this(taskName, endTime, new ArrayList<String>());
+    }
+
+    /**
+     * Constructor for uncategorized Events (tasks with predetermined time
+     * slots).
+     * 
+     * @param taskName
+     * @param startTime
+     * @param endTime
+     */
+    public Task(String taskName, LocalDateTime startTime, LocalDateTime endTime) {
+        this(taskName, startTime, endTime, new ArrayList<String>());
+    }
+
+    /**
      * Constructor for To-Dos (tasks with no deadlines or predetermined time
      * slots).
      */
