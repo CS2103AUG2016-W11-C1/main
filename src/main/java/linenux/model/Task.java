@@ -1,8 +1,10 @@
 package linenux.model;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+
+import linenux.util.ArrayListUtil;
 
 /**
  * Represents a task in the schedule.
@@ -48,12 +50,13 @@ public class Task {
         this.reminders = new ArrayList<Reminder>();
     }
 
-    public boolean isDone() {
-        return (isDone == true);
-    }
-
-    public boolean isNotDone() {
-        return (isDone == false);
+    public Task copyTask() {
+        Task copyTask = new Task(taskName, startTime, endTime);
+        copyTask.setIsDone(isDone);
+        copyTask.setReminders(new ArrayListUtil.ChainableArrayListUtil<Reminder>(reminders)
+                                               .map(reminder -> reminder.copyReminder())
+                                               .value());
+        return copyTask;
     }
 
     @Override
@@ -79,6 +82,14 @@ public class Task {
 
     public boolean isEvent() {
         return startTime != null && endTime != null;
+    }
+
+    public boolean isDone() {
+        return isDone == true;
+    }
+
+    public boolean isNotDone() {
+        return isDone == false;
     }
 
     /* Getters */
@@ -109,6 +120,10 @@ public class Task {
          this.isDone = true;
      }
 
+     public void setIsDone(boolean isDone) {
+         this.isDone = isDone;
+     }
+
      public void setStartTime(LocalDateTime startTime) {
          this.startTime = startTime;
      }
@@ -119,5 +134,9 @@ public class Task {
 
      public void addReminder(Reminder reminder) {
         this.reminders.add(reminder);
+     }
+
+     public void setReminders(ArrayList<Reminder> reminders) {
+         this.reminders = reminders;
      }
 }

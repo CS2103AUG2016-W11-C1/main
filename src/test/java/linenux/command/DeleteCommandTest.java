@@ -71,7 +71,7 @@ public class DeleteCommandTest {
         this.schedule.addTask(new Task("say hello"));
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
                 () -> this.deleteCommand.execute("delete hello"));
-        assertEquals("Which one? (1-2)\n1. hello world\n2. say hello\n", result.getFeedback());
+        assertEquals("Which one? (1-2)\n1. hello world\n2. say hello", result.getFeedback());
     }
 
     @Test
@@ -105,7 +105,7 @@ public class DeleteCommandTest {
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
                 () -> this.deleteCommand.userResponse("0"));
         String expectedResponse = "That's not a valid index. Enter a number between 1 and 2:\n" +
-                "1. hello world\n2. say hello\n";
+                "1. hello world\n2. say hello";
         assertEquals(expectedResponse, result.getFeedback());
     }
 
@@ -115,7 +115,7 @@ public class DeleteCommandTest {
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
                 () -> this.deleteCommand.userResponse("roses are red"));
         String expectedResponse = "I don't understand \"roses are red\".\n" +
-                "Enter a number to indicate which task to delete.\n1. hello world\n2. say hello\n";
+                "Enter a number to indicate which task to delete.\n1. hello world\n2. say hello";
         assertEquals(expectedResponse, result.getFeedback());
     }
 }

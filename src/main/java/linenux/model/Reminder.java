@@ -1,6 +1,7 @@
 package linenux.model;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Represents a reminder for a task.
@@ -15,9 +16,23 @@ public class Reminder {
         this.timeOfReminder = timeOfReminder;
     }
 
+    /**
+     * Creates a copy of the reminder.
+     * @return
+     */
+    public Reminder copyReminder() {
+        return new Reminder(this.getNote(), this.getTimeOfReminder());
+    }
+
     @Override
     public String toString() {
-        return this.note;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd h:mma");
+
+        if (this.note != null) {
+            return this.note + " (On " + this.timeOfReminder.format(formatter) + ")";
+        } else {
+            return "Reminder on " + this.timeOfReminder.format(formatter);
+        }
     }
 
     /* Getters */

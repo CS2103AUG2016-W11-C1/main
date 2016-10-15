@@ -4,29 +4,45 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import linenux.command.parser.EditTaskArgumentParser;
 import linenux.command.result.CommandResult;
+import linenux.control.TimeParserManager;
 import linenux.model.Schedule;
 import linenux.model.Task;
+import linenux.time.parser.ISODateWithTimeParser;
+import linenux.util.Either;
 import linenux.util.TasksListUtil;
 
 /**
- * Deletes a task from the schedule.
+ * Adds a task to the schedule.
  */
-public class DeleteCommand implements Command {
-    private static final String TRIGGER_WORD = "delete";
-    private static final String DESCRIPTION = "Deletes a task.";
+public class EditCommand implements Command {
+    public static final String COMMAND_FORMAT = "add TASK_NAME";
+    public static final String EDIT_FORMAT = "edit KEYWORDS... [n/NEW_NAME][st/START_TIME][et/END_TIME]";
 
-    private static final String DELETE_PATTERN = "(?i)^delete (?<keywords>.*)$";
+    private static final String TRIGGER_WORD = "edit";
+    private static final String DESCRIPTION = "Edits a task in the schedule.";
+
+    private static final String EDIT_PATTERN = "(?i)^edit((?<keywords>.*?)(?<arguments>((n|st|et)/)+?.*)??)";
     private static final String NUMBER_PATTERN = "^\\d+$";
     private static final String CANCEL_PATTERN = "^cancel$";
 
     private Schedule schedule;
-    private boolean requiresUserResponse;
     private ArrayList<Task> foundTasks;
+    private TimeParserManager timeParserManager;
+    private EditTaskArgumentParser editTaskArgumentParser;
 
-    public DeleteCommand(Schedule schedule) {
+    private boolean requiresUserResponse;
+    private String commandString;
+
+    public EditCommand(Schedule schedule) {
         this.schedule = schedule;
+
+        this.timeParserManager = new TimeParserManager(new ISODateWithTimeParser());
+        this.editTaskArgumentParser = new EditTaskArgumentParser(this.timeParserManager);
+
         this.requiresUserResponse = false;
+        this.commandString = null;
     }
 
     @Override
@@ -41,32 +57,45 @@ public class DeleteCommand implements Command {
 
     @Override
     public boolean respondTo(String userInput) {
-        return userInput.matches(DELETE_PATTERN);
+        return userInput.matches(EDIT_PATTERN);
+    }
+
+    public String getCommandString() {
+        return this.commandString;
     }
 
     @Override
     public CommandResult execute(String userInput) {
-        Matcher matcher = Pattern.compile(DELETE_PATTERN).matcher(userInput);
+        Matcher matcher = Pattern.compile(EDIT_PATTERN).matcher(userInput);
 
         if (matcher.matches()) {
             assert (this.schedule != null);
 
-            String keywords = matcher.group("keywords");
+            if (matcher.group("keywords") == null || matcher.group("keywords").trim().isEmpty()) {
+                return makeNoKeywordsResult();
+            }
+
+            String keywords = matcher.group("keywords").trim();
             String[] keywordsArr = keywords.split("\\s+");
             ArrayList<Task> tasks = this.schedule.search(keywordsArr);
+
+            if (matcher.group("arguments") == null) {
+                return makeNoArgumentsResult();
+            }
 
             if (tasks.size() == 0) {
                 return makeNotFoundResult(keywords);
             } else if (tasks.size() == 1) {
-                this.schedule.deleteTask(tasks.get(0));
-                return makeDeletedTask(tasks.get(0));
+                this.commandString = userInput;
+                return implementEdit(tasks.get(0));
             } else {
+                this.commandString = userInput;
                 this.requiresUserResponse = true;
                 this.foundTasks = tasks;
+
                 return makePromptResult(tasks);
             }
         }
-
         return null;
     }
 
@@ -82,12 +111,11 @@ public class DeleteCommand implements Command {
 
             if (1 <= index && index <= this.foundTasks.size()) {
                 Task task = this.foundTasks.get(index - 1);
-                this.schedule.deleteTask(task);
 
                 this.requiresUserResponse = false;
                 this.foundTasks = null;
 
-                return makeDeletedTask(task);
+                return implementEdit(task);
             } else {
                 return makeInvalidIndexResult();
             }
@@ -100,12 +128,43 @@ public class DeleteCommand implements Command {
         }
     }
 
+    private String extractArgument(String userInput) {
+        Matcher matcher = Pattern.compile(EDIT_PATTERN).matcher(userInput);
+
+        if (matcher.matches() && matcher.group("arguments") != null) {
+            return matcher.group("arguments");
+        } else {
+            return "";
+        }
+    }
+
+    private CommandResult implementEdit(Task original) {
+        String argument = extractArgument(commandString);
+        this.commandString = null;
+        Either<Task, CommandResult> result = editTaskArgumentParser.parse(original, argument);
+
+        if (result.isLeft()) {
+            this.schedule.editTask(original, result.getLeft());
+            return makeEditedTask(original, result.getLeft());
+        } else {
+            return result.getRight();
+        }
+    }
+
+    private CommandResult makeNoKeywordsResult() {
+        return () -> "No keywords entered!";
+    }
+
+    private CommandResult makeNoArgumentsResult() {
+        return () -> "No changes to be made!";
+    }
+
     private CommandResult makeNotFoundResult(String keywords) {
         return () -> "Cannot find \"" + keywords + "\".";
     }
 
-    private CommandResult makeDeletedTask(Task task) {
-        return () -> "Deleted \"" + task.getTaskName() + "\".";
+    private CommandResult makeEditedTask(Task original, Task task) {
+        return () -> "Edited \"" + original.getTaskName() + "\".\nNew task details: " + task.toString();
     }
 
     private CommandResult makePromptResult(ArrayList<Task> tasks) {
@@ -122,14 +181,15 @@ public class DeleteCommand implements Command {
     }
 
     private CommandResult makeCancelledResult() {
-        return () -> "OK! Not deleting anything.";
+        this.commandString = null;
+        return () -> "OK! Not editing anything.";
     }
 
     private CommandResult makeInvalidUserResponse(String userInput) {
         return () -> {
             StringBuilder builder = new StringBuilder();
             builder.append("I don't understand \"" + userInput + "\".\n");
-            builder.append("Enter a number to indicate which task to delete.\n");
+            builder.append("Enter a number to indicate which task to edit.\n");
             builder.append(TasksListUtil.display(this.foundTasks));
             return builder.toString();
         };

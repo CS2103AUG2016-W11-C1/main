@@ -43,7 +43,7 @@ public class DoneCommandTest {
         if (matcher.matches()) {
             String keywords = matcher.group("keywords");
             String[] keywordsArr = keywords.split("\\s+");
-            ArrayList<Task> tasks = new ArrayListUtil.ChainableArrayListUtil<Task>(this.schedule.search(keywordsArr))
+            ArrayList<Task> tasks = new ArrayListUtil.ChainableArrayListUtil<>(this.schedule.search(keywordsArr))
                                                      .filter(task -> task.isNotDone())
                                                      .value();
             return tasks;
@@ -97,7 +97,7 @@ public class DoneCommandTest {
         this.schedule.addTask(new Task("say hello"));
         CommandResult result = assertNoChange(() -> getSearchResult("done hello").size(),
                 () -> this.doneCommand.execute("done hello"));
-        assertEquals("Which one? (1-2)\n1. hello world\n2. say hello\n", result.getFeedback());
+        assertEquals("Which one? (1-2)\n1. hello world\n2. say hello", result.getFeedback());
     }
 
     @Test
@@ -131,7 +131,7 @@ public class DoneCommandTest {
         CommandResult result = assertNoChange(() -> getSearchResult("done hello").size(),
                 () -> this.doneCommand.userResponse("0"));
         String expectedResponse = "That's not a valid index. Enter a number between 1 and 2:\n" +
-                "1. hello world\n2. say hello from the other side\n";
+                "1. hello world\n2. say hello from the other side";
         assertEquals(expectedResponse, result.getFeedback());
     }
 
@@ -141,7 +141,7 @@ public class DoneCommandTest {
         CommandResult result = assertNoChange(() -> getSearchResult("done hello").size(),
                 () -> this.doneCommand.userResponse("roses are red"));
         String expectedResponse = "I don't understand \"roses are red\".\n" +
-                "Enter a number to indicate which task to mark as done.\n1. hello world\n2. say hello from the other side\n";
+                "Enter a number to indicate which task to mark as done.\n1. hello world\n2. say hello from the other side";
         assertEquals(expectedResponse, result.getFeedback());
     }
 }

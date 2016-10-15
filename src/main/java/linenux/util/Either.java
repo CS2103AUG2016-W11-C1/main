@@ -1,7 +1,6 @@
 package linenux.util;
 
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 /**
  * A data structure inspired by the FP world. Can be used to represent an operation that can have two possible
