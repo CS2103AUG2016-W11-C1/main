@@ -68,7 +68,7 @@ public class EditTaskArgumentParser {
 	}
 
 	private Either<LocalDateTime, CommandResult> extractStartTime(Task original, String argument) {
-		Matcher matcher = Pattern.compile("(^|.*? )st/(?<startTime>.*?)(\\s+et/.*)?").matcher(argument);
+		Matcher matcher = Pattern.compile("(^|.*? )st/(?<startTime>.*?)(\\s+(n|et)/.*)?").matcher(argument);
 
 		if (matcher.matches() && matcher.group("startTime") != null) {
 			return parseDateTime(matcher.group("startTime").trim());
@@ -78,7 +78,7 @@ public class EditTaskArgumentParser {
 	}
 
 	private Either<LocalDateTime, CommandResult> extractEndTime(Task original, String argument) {
-		Matcher matcher = Pattern.compile("(^|.*? )et/(?<endTime>.*?)(\\s+st/.*)?$").matcher(argument);
+		Matcher matcher = Pattern.compile("(^|.*? )et/(?<endTime>.*?)(\\s+(n|st)/.*)?$").matcher(argument);
 
 		if (matcher.matches() && matcher.group("endTime") != null) {
 			return parseDateTime(matcher.group("endTime").trim());

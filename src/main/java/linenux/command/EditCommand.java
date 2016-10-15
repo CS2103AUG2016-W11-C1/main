@@ -60,6 +60,10 @@ public class EditCommand implements Command {
 		return userInput.matches(EDIT_PATTERN);
 	}
 
+	public String getCommandString() {
+		return this.commandString;
+	}
+
 	@Override
 	public CommandResult execute(String userInput) {
 		Matcher matcher = Pattern.compile(EDIT_PATTERN).matcher(userInput);
@@ -71,7 +75,7 @@ public class EditCommand implements Command {
 				return makeNoKeywordsResult();
 			}
 
-			String keywords = matcher.group("keywords");
+			String keywords = matcher.group("keywords").trim();
 			String[] keywordsArr = keywords.split("\\s+");
 			ArrayList<Task> tasks = this.schedule.search(keywordsArr);
 
@@ -177,6 +181,7 @@ public class EditCommand implements Command {
 	}
 
 	private CommandResult makeCancelledResult() {
+		this.commandString = null;
 		return () -> "OK! Not editing anything.";
 	}
 
