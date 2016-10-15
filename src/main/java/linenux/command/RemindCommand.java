@@ -54,6 +54,11 @@ public class RemindCommand implements Command {
 	}
 
 	@Override
+    public String getCommandFormat() {
+        return COMMAND_FORMAT;
+    }
+
+	@Override
 	public boolean respondTo(String userInput) {
 		return userInput.matches(REMIND_PATTERN);
 	}

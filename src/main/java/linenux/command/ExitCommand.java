@@ -11,6 +11,8 @@ import linenux.command.result.CommandResult;
 public class ExitCommand implements Command {
     private static final String TRIGGER_WORD = "exit";
     private static final String DESCRIPTION = "Exits the program.";
+    public static final String COMMAND_FORMAT = "exit";
+
     private static final String TASK_PATTERN = "(?i)^exit$";
 
     @Override
@@ -23,6 +25,10 @@ public class ExitCommand implements Command {
         return DESCRIPTION;
     }
 
+    @Override
+    public String getCommandFormat() {
+        return COMMAND_FORMAT;
+    }
     @Override
     public boolean respondTo(String userInput) {
         return userInput.matches(TASK_PATTERN);

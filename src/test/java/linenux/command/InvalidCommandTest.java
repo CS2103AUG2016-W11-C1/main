@@ -1,12 +1,13 @@
 package linenux.command;
 
-import linenux.command.result.CommandResult;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.Before;
+import org.junit.Test;
+
+import linenux.command.result.CommandResult;
 
 /**
  * Created by yihangho on 10/8/16.
@@ -43,6 +44,11 @@ public class InvalidCommandTest {
 
         @Override
         public String getDescription() {
+            return null;
+        }
+
+        @Override
+        public String getCommandFormat() {
             return null;
         }
 

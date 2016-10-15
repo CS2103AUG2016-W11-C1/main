@@ -1,9 +1,9 @@
 package linenux.command;
 
+import java.util.ArrayList;
+
 import linenux.command.result.CommandResult;
 import linenux.util.StringsSimilarity;
-
-import java.util.ArrayList;
 
 /**
  * Act as a fail-safe for invalid or unrecognized commands.
@@ -22,6 +22,11 @@ public class InvalidCommand implements Command {
 
     @Override
     public String getDescription() {
+        return null;
+    }
+
+    @Override
+    public String getCommandFormat() {
         return null;
     }
 

@@ -15,6 +15,9 @@ import linenux.util.TasksListUtil;
  */
 public class DoneCommand implements Command {
     private static final String TRIGGER_WORD = "done";
+    private static final String DESCRIPTION = "Mark a task as done.";
+    private static final String COMMAND_FORMAT = "done KEYWORDS";
+
     private static final String DONE_PATTERN = "(?i)^done (?<keywords>.*)$";
     private static final String NUMBER_PATTERN = "^\\d+$";
     private static final String CANCEL_PATTERN = "^cancel$";
@@ -97,7 +100,12 @@ public class DoneCommand implements Command {
 
     @Override
     public String getDescription() {
-        return "Mark a task as done.";
+        return DESCRIPTION;
+    }
+
+    @Override
+    public String getCommandFormat() {
+        return COMMAND_FORMAT;
     }
 
     private CommandResult makeNotFoundResult(String keywords) {

@@ -16,7 +16,8 @@ import linenux.util.Either;
  */
 public class AddCommand implements Command {
     private static final String TRIGGER_WORD = "add";
-    private static final String DESCRIPTION = "Adds a task to schedule.";
+    private static final String DESCRIPTION = "Adds a task to the schedule.";
+    private static final String COMMAND_FORMAT = "add TASK_NAME [st/START_TIME] [et/END_TIME] [#/TAGS]";
 
     private static final String ADD_PATTERN = "(?i)^add(\\s+(?<arguments>.*))?$";
 
@@ -27,7 +28,7 @@ public class AddCommand implements Command {
     public AddCommand(Schedule schedule) {
         this.schedule = schedule;
         this.timeParserManager = new TimeParserManager(new ISODateWithTimeParser());
-        this.addArgumentParser = new AddArgumentParser(this.timeParserManager);
+        this.addArgumentParser = new AddArgumentParser(this.timeParserManager, COMMAND_FORMAT, CALLOUTS);
     }
 
     @Override
@@ -60,6 +61,11 @@ public class AddCommand implements Command {
     @Override
     public String getDescription() {
         return DESCRIPTION;
+    }
+
+    @Override
+    public String getCommandFormat() {
+        return COMMAND_FORMAT;
     }
 
     private String extractArgument(String userInput) {

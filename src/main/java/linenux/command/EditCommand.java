@@ -17,11 +17,11 @@ import linenux.util.TasksListUtil;
  * Adds a task to the schedule.
  */
 public class EditCommand implements Command {
-    public static final String COMMAND_FORMAT = "add TASK_NAME";
     public static final String EDIT_FORMAT = "edit KEYWORDS... [n/NEW_NAME][st/START_TIME][et/END_TIME]";
 
     private static final String TRIGGER_WORD = "edit";
     private static final String DESCRIPTION = "Edits a task in the schedule.";
+    public static final String COMMAND_FORMAT = "edit KEYWORDS... [n/NEW_NAME][st/START_TIME][et/END_TIME]";
 
     private static final String EDIT_PATTERN = "(?i)^edit((?<keywords>.*?)(?<arguments>((n|st|et)/)+?.*)??)";
     private static final String NUMBER_PATTERN = "^\\d+$";
@@ -53,6 +53,11 @@ public class EditCommand implements Command {
     @Override
     public String getDescription() {
         return DESCRIPTION;
+    }
+
+    @Override
+    public String getCommandFormat() {
+        return COMMAND_FORMAT;
     }
 
     @Override

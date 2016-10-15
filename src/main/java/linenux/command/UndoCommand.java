@@ -10,6 +10,7 @@ import linenux.util.Either;
 public class UndoCommand implements Command {
     private static final String TRIGGER_WORD = "undo";
     private static final String DESCRIPTION = "Undo the previous command.";
+    private static final String COMMAND_FORMAT = "undo";
 
     private static final String UNDO_PATTERN = "(?i)^undo$";
 
@@ -45,6 +46,11 @@ public class UndoCommand implements Command {
     @Override
     public String getDescription() {
         return DESCRIPTION;
+    }
+
+    @Override
+    public String getCommandFormat() {
+        return COMMAND_FORMAT;
     }
 
     private Either<CommandResult, CommandResult> tryUndo() {

@@ -15,6 +15,8 @@ import linenux.util.TasksListUtil;
 public class ListCommand implements Command {
     private static final String TRIGGER_WORD = "list";
     private static final String DESCRIPTION = "Lists all tasks.";
+    private static final String COMMAND_FORMAT = "list KEYWORDS";
+
     private static final String TASK_PATTERN = "(?i)^list( (?<keywords>.*))?$";
 
     private Schedule schedule;
@@ -31,6 +33,11 @@ public class ListCommand implements Command {
     @Override
     public String getDescription() {
         return DESCRIPTION;
+    }
+
+    @Override
+    public String getCommandFormat() {
+        return COMMAND_FORMAT;
     }
 
     @Override

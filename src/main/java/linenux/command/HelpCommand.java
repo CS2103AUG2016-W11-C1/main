@@ -1,8 +1,8 @@
 package linenux.command;
 
-import linenux.command.result.CommandResult;
-
 import java.util.ArrayList;
+
+import linenux.command.result.CommandResult;
 
 /**
  * Created by yihangho on 10/8/16.
@@ -10,6 +10,8 @@ import java.util.ArrayList;
 public class HelpCommand implements Command {
     private static final String TRIGGER_WORD = "help";
     private static final String DESCRIPTION = "Shows this help message.";
+    private static final String COMMAND_FORMAT = "help";
+
     private static final String HELP_PATTERN = "(?i)^\\s*help\\s*$";
 
     private ArrayList<Command> commands;
@@ -26,6 +28,11 @@ public class HelpCommand implements Command {
     @Override
     public String getDescription() {
         return DESCRIPTION;
+    }
+
+    @Override
+    public String getCommandFormat() {
+        return COMMAND_FORMAT;
     }
 
     @Override

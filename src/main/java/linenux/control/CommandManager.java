@@ -70,11 +70,4 @@ public class CommandManager {
 
         return this.catchAllCommand.execute(userInput);
     }
-
-    /**
-     * Sets the reference for the schedule.
-     */
-    private void setSchedule(Schedule schedule) {
-        this.schedule = schedule;
-    }
 }
