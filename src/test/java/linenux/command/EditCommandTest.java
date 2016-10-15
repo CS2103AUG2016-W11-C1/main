@@ -2,7 +2,10 @@ package linenux.command;
 
 import static linenux.helpers.Assert.assertChangeBy;
 import static linenux.helpers.Assert.assertNoChange;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -306,7 +309,7 @@ public class EditCommandTest {
         this.schedule.addTask(new Task("hello"));
         assertNull(this.editCommand.getCommandString());
 
-        CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
+        assertNoChange(() -> this.schedule.getTaskList().size(),
                 () -> this.editCommand.execute("edit hello n/new name"));
 
         assertNull(this.editCommand.getCommandString());
@@ -318,7 +321,7 @@ public class EditCommandTest {
         this.setupMultipleHelloTasksAndExecuteAmbiguousCommand();
         assertEquals("edit hello n/CS2103T Tutorial", this.editCommand.getCommandString());
 
-        CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
+        assertNoChange(() -> this.schedule.getTaskList().size(),
                 () -> this.editCommand.userResponse("1"));
         assertNull(this.editCommand.getCommandString());
     }

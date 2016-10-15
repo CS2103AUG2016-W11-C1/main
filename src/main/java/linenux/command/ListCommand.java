@@ -1,13 +1,13 @@
 package linenux.command;
 
+import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import linenux.command.result.CommandResult;
 import linenux.model.Schedule;
 import linenux.model.Task;
 import linenux.util.TasksListUtil;
-
-import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Generates a list of tasks based on userInput.
