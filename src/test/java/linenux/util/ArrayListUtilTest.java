@@ -54,4 +54,10 @@ public class ArrayListUtilTest {
         assertEquals("2", strings.get(1));
         assertEquals("1", strings.get(2));
     }
+
+    public void testFromSingleton() {
+        ArrayList<String> strings = ArrayListUtil.fromSingleton("hello");
+        assertEquals(1, strings.size());
+        assertEquals("hello", strings.get(0));
+    }
 }
