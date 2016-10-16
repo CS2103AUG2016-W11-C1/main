@@ -14,7 +14,7 @@ import linenux.util.Either;
  * Created by yihangho on 10/8/16.
  */
 public class TaskArgumentParser {
-    public static final String ARGUMENT_FORMAT = "TASK_NAME [st/START_TIME] [et/END_TIME] [#/CATEGORY]...";
+    public static final String ARGUMENT_FORMAT = "TASK_NAME [st/START_TIME] [et/END_TIME] [#/TAGS...]";
 
     private TimeParserManager timeParserManager;
 
@@ -38,15 +38,15 @@ public class TaskArgumentParser {
             return Either.right(endTime.getRight());
         }
 
-        Either<ArrayList<String>, CommandResult> categories = extractCategories(argument);
-        if (categories.isRight()) {
-            return Either.right(categories.getRight());
+        Either<ArrayList<String>, CommandResult> tags = extractTags(argument);
+        if (tags.isRight()) {
+            return Either.right(tags.getRight());
         }
 
         String actualTaskName = taskName.getLeft();
         LocalDateTime actualStartTime = startTime.getLeft();
         LocalDateTime actualEndTime = endTime.getLeft();
-        ArrayList<String> actualCategories = categories.getLeft();
+        ArrayList<String> actualTags = tags.getLeft();
 
         if (actualStartTime != null && actualEndTime == null) {
             return Either.right(makeStartTimeWithoutEndTimeResult());
@@ -56,7 +56,7 @@ public class TaskArgumentParser {
             return Either.right(makeEndTimeBeforeStartTimeResult());
         }
 
-        Task task = new Task(actualTaskName, actualStartTime, actualEndTime, actualCategories);
+        Task task = new Task(actualTaskName, actualStartTime, actualEndTime, actualTags);
         return Either.left(task);
     }
 
@@ -90,12 +90,12 @@ public class TaskArgumentParser {
         }
     }
 
-    private Either<ArrayList<String>, CommandResult> extractCategories(String argument) {
-        Matcher matcher = Pattern.compile("(^|.*? )#/(?<categories>.*?)(\\s+(n|st|et)/.*)?$").matcher(argument);
+    private Either<ArrayList<String>, CommandResult> extractTags(String argument) {
+        Matcher matcher = Pattern.compile("(^|.*? )#/(?<tags>.*?)(\\s+(n|st|et)/.*)?$").matcher(argument);
 
-        if (matcher.matches() && matcher.group("categories") != null) {
-            String[] categories = matcher.group("categories").split(" ");
-            return getCategoryArray(categories);
+        if (matcher.matches() && matcher.group("tags") != null) {
+            String[] tags = matcher.group("tags").split(" ");
+            return getTagArray(tags);
         } else {
             return Either.left(new ArrayList<String>());
         }
@@ -125,22 +125,22 @@ public class TaskArgumentParser {
         return () -> "End time cannot come before start time.";
     }
 
-    private Either<ArrayList<String>, CommandResult> getCategoryArray(String[] categories) {
-        if (categories.length == 0) {
+    private Either<ArrayList<String>, CommandResult> getTagArray(String[] tags) {
+        if (tags.length == 0) {
             return Either.right(makeInvalidArgumentResult());
         }
 
-        ArrayList<String> categoryList = new ArrayList<String>();
+        ArrayList<String> tagList = new ArrayList<String>();
 
-        for (String s : categories) {
+        for (String s : tags) {
             if (s.trim().isEmpty()) {
                 return Either.right(makeInvalidArgumentResult());
             }
-            if (!categoryList.contains(s)) {
-                categoryList.add(s.trim());
+            if (!tagList.contains(s)) {
+                tagList.add(s.trim());
             }
         }
 
-        return Either.left(categoryList);
+        return Either.left(tagList);
     }
 }

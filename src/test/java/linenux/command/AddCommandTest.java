@@ -120,22 +120,22 @@ public class AddCommandTest {
     }
 
     /**
-     * Test that executing the add task command will correctly add a categorized
-     * Todo to schedule
+     * Test that executing the add task command will correctly add a tagged Todo
+     * to schedule
      */
     @Test
-    public void testExecuteAddCategorizedTask() {
+    public void testExecuteAddTaggedTask() {
         this.schedule.clear();
         assertChangeBy(() -> this.schedule.getTaskList().size(), 1,
-                () -> this.addCommand.execute("add CS2103T Tutorial #/category1 category2"));
+                () -> this.addCommand.execute("add CS2103T Tutorial #/tag1 tag2"));
 
         ArrayList<Task> tasks = this.schedule.getTaskList();
         Task addedTask = tasks.get(0);
 
         assertEquals("CS2103T Tutorial", addedTask.getTaskName());
-        assertEquals(2, addedTask.getCategories().size());
-        assertEquals("category1", addedTask.getCategories().get(0));
-        assertEquals("category2", addedTask.getCategories().get(1));
+        assertEquals(2, addedTask.getTags().size());
+        assertEquals("tag1", addedTask.getTags().get(0));
+        assertEquals("tag2", addedTask.getTags().get(1));
     }
 
     @Test
@@ -185,8 +185,8 @@ public class AddCommandTest {
      */
     @Test
     public void testExecuteAddCategorizedTaskResult() {
-        CommandResult result = this.addCommand.execute("add CS2103T Tutorial #/category1 category2");
-        assertEquals("Added CS2103T Tutorial [Categories: \"category1\" \"category2\" ]", result.getFeedback());
+        CommandResult result = this.addCommand.execute("add CS2103T Tutorial #/tag1 tag2");
+        assertEquals("Added CS2103T Tutorial [Tags: \"tag1\" \"tag2\" ]", result.getFeedback());
     }
 
     /**
@@ -224,9 +224,9 @@ public class AddCommandTest {
     }
 
     @Test
-    public void testCategoryWithoutStartName() {
+    public void testTagWithoutStartName() {
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
-                () -> this.addCommand.execute("add #/category1 category2"));
+                () -> this.addCommand.execute("add #/tag1 tag2"));
         assertEquals(expectedInvalidArgumentMessage(), result.getFeedback());
     }
 
@@ -246,10 +246,13 @@ public class AddCommandTest {
         assertEquals("Cannot parse \"tomorrow\".", result.getFeedback());
     }
 
+    /**
+     * Test that edit tag with empty spaces in category will return an error.
+     */
     @Test
-    public void testInvalidCategory() {
+    public void testEmptyTag() {
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
-                () -> this.addCommand.execute("add hello #/"));
+                () -> this.addCommand.execute("add hello #/      "));
 
         assertEquals(expectedInvalidArgumentMessage(), result.getFeedback());
     }

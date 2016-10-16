@@ -15,12 +15,12 @@ public class Task {
     private boolean isDone;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
-    private ArrayList<String> categories;
+    private ArrayList<String> tags;
     private ArrayList<Reminder> reminders;
 
     /**
-     * Constructor for uncategorized To-Dos (tasks with no deadlines or
-     * predetermined time slots).
+     * Constructor for tagged To-Dos (tasks with no deadlines or predetermined
+     * time slots).
      *
      * @param taskName
      */
@@ -29,7 +29,7 @@ public class Task {
     }
 
     /**
-     * Constructor for uncategorized Deadlines (tasks with deadlines only).
+     * Constructor for tagged Deadlines (tasks with deadlines only).
      *
      * @param taskName
      * @param endTime
@@ -39,8 +39,7 @@ public class Task {
     }
 
     /**
-     * Constructor for uncategorized Events (tasks with predetermined time
-     * slots).
+     * Constructor for tagged Events (tasks with predetermined time slots).
      *
      * @param taskName
      * @param startTime
@@ -54,44 +53,45 @@ public class Task {
      * Constructor for To-Dos (tasks with no deadlines or predetermined time
      * slots).
      */
-    public Task(String taskName, ArrayList<String> categories) {
+    public Task(String taskName, ArrayList<String> tags) {
         this.taskName = taskName;
         this.isDone = false;
         this.startTime = null;
         this.endTime = null;
-        this.categories = categories;
+        this.tags = tags;
         this.reminders = new ArrayList<Reminder>();
     }
 
     /**
      * Constructor for Deadlines (tasks with deadlines only).
      */
-    public Task(String taskName, LocalDateTime endTime, ArrayList<String> categories) {
+    public Task(String taskName, LocalDateTime endTime, ArrayList<String> tags) {
         this.taskName = taskName;
         this.isDone = false;
         this.startTime = null;
         this.endTime = endTime;
-        this.categories = categories;
+        this.tags = tags;
         this.reminders = new ArrayList<Reminder>();
     }
 
     /**
      * Constructor for Events (tasks with predetermined time slots).
      */
-    public Task(String taskName, LocalDateTime startTime, LocalDateTime endTime, ArrayList<String> categories) {
+    public Task(String taskName, LocalDateTime startTime, LocalDateTime endTime, ArrayList<String> tags) {
         this.taskName = taskName;
         this.isDone = false;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.categories = categories;
+        this.tags = tags;
         this.reminders = new ArrayList<Reminder>();
     }
 
     public Task copyTask() {
-        Task copyTask = new Task(taskName, startTime, endTime, categories);
+        Task copyTask = new Task(taskName, startTime, endTime, tags);
         copyTask.setIsDone(isDone);
-        copyTask.setCategories(new ArrayListUtil.ChainableArrayListUtil<String>(categories)
-                .map(category -> category.toString()).value());
+        copyTask.setCategories(
+                new ArrayListUtil.ChainableArrayListUtil<String>(tags)
+                        .map(tag -> tag.toString()).value());
         copyTask.setReminders(new ArrayListUtil.ChainableArrayListUtil<Reminder>(reminders)
                 .map(reminder -> reminder.copyReminder()).value());
         return copyTask;
@@ -102,12 +102,12 @@ public class Task {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd h:mma");
 
         if (this.isDeadline()) {
-            return taskName + " (Due " + this.endTime.format(formatter) + ")" + categoriesToString();
+            return taskName + " (Due " + this.endTime.format(formatter) + ")" + tagsToString();
         } else if (this.isEvent()) {
             return taskName + " (" + this.startTime.format(formatter) + " - " + this.endTime.format(formatter) + ")"
-                    + categoriesToString();
+                    + tagsToString();
         } else {
-            return taskName + categoriesToString();
+            return taskName + tagsToString();
         }
     }
 
@@ -145,8 +145,8 @@ public class Task {
         return this.endTime;
     }
 
-    public ArrayList<String> getCategories() {
-        return this.categories;
+    public ArrayList<String> getTags() {
+        return this.tags;
     }
 
     public ArrayList<Reminder> getReminders() {
@@ -175,8 +175,8 @@ public class Task {
         this.endTime = endTime;
     }
 
-    public void setCategories(ArrayList<String> categories) {
-        this.categories = categories;
+    public void setCategories(ArrayList<String> tags) {
+        this.tags = tags;
     }
 
     public void addReminder(Reminder reminder) {
@@ -187,15 +187,15 @@ public class Task {
         this.reminders = reminders;
     }
 
-    private String categoriesToString() {
+    private String tagsToString() {
         StringBuilder builder = new StringBuilder();
-        if (this.categories.isEmpty()) {
+        if (this.tags.isEmpty()) {
             return "";
         }
 
         builder.append(" [");
-        builder.append("Categories:");
-        for (String s : this.categories) {
+        builder.append("Tags:");
+        for (String s : this.tags) {
             builder.append(" \"");
             builder.append(s);
             builder.append("\"");
