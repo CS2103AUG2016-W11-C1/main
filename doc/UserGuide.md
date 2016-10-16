@@ -63,19 +63,19 @@ Double-click on the file to launch Linenux. Wait for a few seconds for the main 
 
 *This section is a scenario driven, step-by-step introduction on how to use Linenux. For a more in-depth coverage of the commands, refer to our [Commands](#commands) section in the user guide.*
 
-**Step 1: Adding a task.**
+*Step 1: Adding a task.*
 
 The date is October 17, 2016. You have to buy groceries from the local supermarket but you are only free to do so on a weekend. You decide to remind youself with the aid of Linenux. Type the following line in the command box:
 
 `> add buy groceries et/2016-10-22`
 
-**Step 2: Setting a reminder.**
+*Step 2: Setting a reminder.*
 
 You worry that you might not have enough cash to buy groceries and decide to draw money from a nearby ATM machine on the way home from work on Friday. Type the following line in the command box:
 
 `> remind buy groceries n/draw money et/2016-10-21 6:00pm`
 
-**Step 3: Listing tasks for the day.**
+*Step 3: Listing tasks for the day.*
 
 Time flies and it is already Friday. You wonder what needs to be done for the day. Type the following line in the command box:
 
@@ -87,7 +87,7 @@ or more simply,
 
 This will show you the list of tasks and reminders to be done for the day.
 
-**Step 4: Marking a task as done.**
+*Step 4: Marking a task as done.*
 
 You repeat step 3 on Saturday and realised that you needed to buy the groceries. You hastily went out to buy them, thus completing all of your work for the day. Type the following line in the command box:
 
@@ -95,7 +95,7 @@ You repeat step 3 on Saturday and realised that you needed to buy the groceries.
 
 This command will prevent the task from showing up again in subsequent `list` or `today` commands.
 
-**Step 5: Becoming proficient**
+*Step 5: Becoming proficient*
 
 You are very impressed with what you have seen thus far and want to learn more about the amazing things you can do with Linenux. Type the following line in the command box:
 
@@ -215,7 +215,7 @@ Ever wondered why we use the word `KEYWORDS` rather than `TASK_NAME`? This is be
 > remind assignment t/2016-10-16 10:00pm
 ```
 
-In this scenario, since there are multiple task names with the keyword `assignment`, both results are returned and you get to choose, via specifying an index, which task is the reminder for. This mechanism is known as fuzzy searching and it works for all commands with the field `KEYWORDS`. How cool is that?
+In this scenario, since there are multiple task names with the keyword `assignment`, both results are returned and you get to choose, via specifying an index, which task is the reminder for. This mechanism is known as fuzzy searching and it is implemented for all commands with the field `KEYWORDS`. How cool is that?
 
 #### Edit a task/reminder: `edit`
 Things change all the time, and that applies to tasks too. To help facilitate these changes, you can edit your tasks and reminders. All you have to do, is to type `edit` and some keywords to search for your task and provide the new details and Linenux will update your tasks and reminders.
