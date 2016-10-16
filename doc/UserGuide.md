@@ -94,10 +94,10 @@ This brings up the list of Linenux commands with their description and format. I
 
 ## Commands Summary
 
-*Legend:
-1. Optional fields are enclosed in square brackets `[]`.
-2. `...` means that multiple words can be used for that field. E.g. `> add assignment #/nus cs2103 assignments`.
-3. All commands and arguments are case-insensitive.* 
+*Legend:*
+*1. Optional fields are enclosed in square brackets `[]`.*
+*2. `...` means that multiple words can be used for that field. E.g. `> add assignment #/nus cs2103 assignments`.*
+
 
 | Command                  | Description                                | Format                                                         |
 |--------------------------|--------------------------------------------|----------------------------------------------------------------|
@@ -136,6 +136,7 @@ This brings up the list of Linenux commands with their description and format. I
   3. Any field surrounded by square brackets, '[ ]', are optional.
   4. Each field represents one word, and fields are seperated by spaces.
   5. The only exception to (4) is when you see '...' after a field, indicating that you can key in multiple words for that particular field.
+  6. case insensitive
 
 \* Some of the commands in Linenux will ask for KEYWORDS of the task/reminder that you are doing the command for. In those cases, Linenux will search your schedule for the tasks/reminders that matches your KEYWORDS. There are 2 things that can happen when the Linenux finds something from your schedule:
   1. Only one task/reminder was found:
