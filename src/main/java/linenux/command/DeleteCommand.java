@@ -51,7 +51,7 @@ public class DeleteCommand implements Command {
 
         Either<ArrayList<Task>, CommandResult> tasks = this.searchKeywordParser.parse(keywords);
 
-        if (tasks.getLeft() != null) {
+        if (tasks.isLeft()) {
             if (tasks.getLeft().size() == 1) {
                 this.schedule.deleteTask(tasks.getLeft().get(0));
                 return makeDeletedTask(tasks.getLeft().get(0));

@@ -53,7 +53,7 @@ public class ViewCommand implements Command {
 
         Either<ArrayList<Task>, CommandResult> tasks = this.searchKeywordParser.parse(keywords);
 
-        if (tasks.getLeft() != null) {
+        if (tasks.isLeft()) {
             if (tasks.getLeft().size() == 1) {
                 return makeResult(tasks.getLeft().get(0));
             } else {

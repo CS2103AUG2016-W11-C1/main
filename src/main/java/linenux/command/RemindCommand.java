@@ -61,7 +61,7 @@ public class RemindCommand implements Command {
 
         Either<ArrayList<Task>, CommandResult> tasks = this.searchKeywordParser.parse(keywords);
 
-        if (tasks.getLeft() != null) {
+        if (tasks.isLeft()) {
             String argument = extractArgument(userInput);
 
             if (tasks.getLeft().size() == 1) {
