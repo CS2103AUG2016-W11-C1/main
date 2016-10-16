@@ -83,8 +83,9 @@ public class RemindCommand implements Command {
 
     @Override
     public CommandResult userResponse(String userInput) {
-        //TODO
+        assert this.argument != null;
         assert this.foundTasks != null;
+        assert this.schedule != null;
 
         if (userInput.matches(NUMBER_PATTERN)) {
             int index = Integer.parseInt(userInput);

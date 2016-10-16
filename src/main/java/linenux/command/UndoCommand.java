@@ -7,12 +7,15 @@ import linenux.model.Schedule;
 import linenux.model.State;
 import linenux.util.Either;
 
+/**
+ * Undo the previous command that mutated the state of the schedule.
+ */
 public class UndoCommand implements Command {
     private static final String TRIGGER_WORD = "undo";
     private static final String DESCRIPTION = "Undo the previous command.";
     private static final String COMMAND_FORMAT = "undo";
 
-    private static final String UNDO_PATTERN = "(?i)^undo$";
+    private static final String UNDO_PATTERN = "(?i)^\\s*undo\\s*$";
 
     private Schedule schedule;
 

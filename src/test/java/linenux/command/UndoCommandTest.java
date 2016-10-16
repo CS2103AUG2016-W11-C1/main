@@ -28,7 +28,8 @@ public class UndoCommandTest {
     @Test
     public void testRespondToUndoCommand() {
         assertTrue(undoCommand.respondTo("undo"));
-        assertFalse(undoCommand.respondTo("undo "));
+        assertTrue(undoCommand.respondTo("undo "));
+        assertTrue(undoCommand.respondTo(" undo"));
     }
 
     /**

@@ -80,6 +80,10 @@ public class EditCommand implements Command {
 
     @Override
     public CommandResult userResponse(String userInput) {
+        assert this.argument != null;
+        assert this.foundTasks != null;
+        assert this.schedule != null;
+
         if (userInput.matches(NUMBER_PATTERN)) {
             int index = Integer.parseInt(userInput);
 

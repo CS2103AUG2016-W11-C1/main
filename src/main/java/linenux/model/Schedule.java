@@ -7,7 +7,7 @@ import java.util.LinkedList;
  * Contains all outstanding tasks.
  */
 public class Schedule {
-    private static final int MAX_STATES = 10;
+    public static final int MAX_STATES = 10;
     private final LinkedList<State> states;
 
     /**

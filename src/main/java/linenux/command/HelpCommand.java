@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import linenux.command.result.CommandResult;
 
 /**
- * Created by yihangho on 10/8/16.
+ * Displays available command and their formats.
  */
 public class HelpCommand implements Command {
     private static final String TRIGGER_WORD = "help";
