@@ -6,20 +6,25 @@
 	* [Launching](#launching)
 	* [Walkthrough](#walkthrough)
 * [Commands Summary](#commands-summary)
-* [List of Commands](#list-of-commands)
-    * [Notes](#some-notes-before-you-start)
-    * [Adding a task: `add`](#adding-a-task-add)
-    * [Adding reminders to a task: `remind`](#adding-reminders-to-a-task-remind)
-    * [Edit a task/reminder: `edit`](#edit-a-taskreminder-edit)
-    * [Deleting tasks: `delete`](#deleting-tasks-delete)
-    * [Marking tasks as done: `done`](#marking-tasks-as-done-done)
-    * [Undo an action: `undo`](#undo-an-action-undo)
-    * [Finding a free timeslot - `freetime`](#finding-a-free-timeslot---freetime)
-    * [Listing all tasks: `list`](#listing-all-tasks-list)
-    * [Viewing details of task or reminder: `view`](#viewing-details-of-task-or-reminder-view)
-    * [Viewing help: `help`](#viewing-help-help)
-    * [Exiting the Program: `exit`](#exiting-the-program-exit)
-
+* [Supported Time Fomats](#supported-time-formats)
+* [Commands](#commands)
+    * [Add](#add)
+    * [Remind](#remind)
+    * [Edit](#edit)
+	* [Done](#done)
+    * [Delete](#delete)
+	* [Clear](#clear)
+	* [Freetime](#freetime)
+	* [List](#list)
+	* [Today](#today)
+	* [Tomorrow](#tomorrow)
+	* [View](#view)
+    * [Undo](#undo)
+    * [Help](#help)
+	* [Alias](#alias)
+    * [Exit](#exit)
+* [Miscellaneous](#miscellaneous)
+	
 ## About
 
 Everyone of us will face, at some point in our lives, the feeling of being overwhelmed by the amount of things to do: meeting project deadlines, attending a friend's wedding ceremony, paying the bills and the list goes on. This hectic pace of life is the new normal, but it doesn't mean we have to suffer in silence. We believe that everyone should have control over their own lives and Linenux is the key to achieving just that.
@@ -85,24 +90,39 @@ You are very impressed with what you have seen thus far and want to learn more a
 
 `> help`
 
-This brings up the list of Linenux commands with their description and format. It is meant for a quick look-up. Continue to read the next section if you want a complete explanation of the commands.
+This brings up the list of Linenux commands with their description and format. It is meant for a quick in-app look-up. Continue to read the next section if you want a complete explanation of the commands.
 
-## Commands Summary:
-| Description | Command | Format |
-|---|---|---|
-| Add a task to Linenux | [`add`](#adding-a-task-add) | `add` TASK_NAME [st/START_TIME] [et/END_TIME] [#/TAGS]... |
-| Add a reminder to a task | [`remind`](#adding-reminders-to-a-task-remind) | `remind` KEYWORDS... t/TIME [n/NOTE] |
-| Edit a task or reminder | [`edit`](#edit-a-taskreminder-edit) | `edit` KEYWORDS... [n/NEW_NAME] [st/START_TIME] [et/END_TIME] |
-| Delete a task or reminder | [`delete`](#deleting-tasks-delete) | `delete` KEYWORDS… |
-| Mark a task as done | [`done`](#marking-tasks-as-done-done) | `done` KEYWORDS… |
-| Undo | [`undo`](#undo-an-action-undo) | `undo` |
-| Finding a free timeslot | [`freetime`](#finding-a-free-timeslot---freetime) | `freetime` [st/START_TIME] et/END_TIME |
-| Listing all tasks and reminders | [`list`](#listing-all-tasks-list) | `list` [KEYWORDS]... [st/START_TIME] [et/END_TIME] [#/TAG] |
-| Viewing details of tasks and reminders | [`view`](#viewing-details-of-task-or-reminder-view) | `view` KEYWORDS… |
-| Help for commands | [`help`](#viewing-help--help) | `help` [KEYWORD] |
-| Exiting Linenux | [`exit`](#exiting-linenux-exit) | `exit` |
+## Commands Summary
 
-## List of Commands
+| Description                                | Command                 | Format                                                         |
+|--------------------------------------------|-------------------------|----------------------------------------------------------------|
+| Adding a task.	   	     	  		     | [`add`](#add) 		   | `add` TASK_NAME [st/START_TIME] [et/END_TIME] [#/TAGS...]      |
+| Setting a reminder for a task  	         | [`remind`](#remind) 	   | `remind` KEYWORDS... t/TIME [n/NOTE]                           |
+| Editing a task or reminder   	  		     | [`edit`](#edit) 		   | `edit` KEYWORDS... [n/NEW_NAME] [st/START_TIME] [et/END_TIME]  |
+| Marking a task as done       	  		 	 | [`done`](#done) 	       | `done` KEYWORDS... 										    |
+| Deleting a task or reminder 	  		     | [`delete`](#delete) 	   | `delete` KEYWORDS... 										    |
+| Clearing a set of tasks					 | [`clear`](#clear)       | `clear [#/TAGS...]											    |
+| Finding a free timeslot   	  		 	 | [`freetime`](#freetime) | `freetime` [st/START_TIME] et/END_TIME 				        |
+| Listing tasks and reminders 		         | [`list`](#list) 		   | `list` [KEYWORDS...] [st/START_TIME] [et/END_TIME] [#/TAGS...] |
+| Discovering things to do for the day       | [`today`]               | `today` 													    |
+| Uncovering what lies ahead the next day    | [`tomorrow`]            | `tomorrow` 													|
+| Viewing details around tasks and reminders | [`view`](#view)         | `view` KEYWORDS...        									    |
+| Undoing previous command          	     | [`undo`](#undo) 		   | `undo` 				   									    |
+| Seeking help				  		         | [`help`](#help) 		   | `help` [COMMMAND_NAME]    									    |
+| Making aliases for the commands            | [`alias`](#alias)       | `alias` COMMMAND_NAME n/NEW_NAME                               |
+| Exiting Linenux 				  		     | [`exit`](#exit) 	   	   | `exit` 			       									    |
+
+## Supported Time Formats
+
+*All of the examples below have the equivalent meaning to the date 26 October 2016, 5.50pm*
+
+| Format             | Example                | 
+|--------------------|------------------------|
+| dd month yy hh.mma | 26 October 2016 5.50pm |
+| yyyy-MM-dd hh:mma  | 2016-10-16 5:50pm      |
+| ddMMyyyy HHmm      | 16102016 1750          | 
+
+## Commands
 #### Some notes before you start:
 ##### Command format:
   1. Any capitalized words, e.g TASK_NAME, is a field required by the command.
