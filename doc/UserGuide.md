@@ -110,27 +110,28 @@ This brings up the list of Linenux commands with their description and format. I
 1. *Optional fields are enclosed in square brackets `[]`.*
 2. *The notation `...` means that **multiple** words can be used for that field.*
 
-| Command                  | Description                                | Format                                                            |
-|--------------------------|--------------------------------------------|-------------------------------------------------------------------|
-| [`add`](#add) 		   | Adding a task.	   	     	  		        | `add` TASK_NAME... [st/START_TIME] [et/END_TIME] [#/TAGS...]...   |
-| [`remind`](#remind) 	   | Setting a reminder for a task  	        | `remind` KEYWORDS... t/TIME [n/NOTE...]                           |
-| [`edit`](#edit) 		   | Editing a task or reminder   	  		    | `edit` KEYWORDS... [n/NEW_NAME] [st/START_TIME] [et/END_TIME]     |
-| [`done`](#done) 	       | Marking a task as done       	  		 	| `done` KEYWORDS... 										        |
-| [`delete`](#delete) 	   | Deleting a task or reminder 	  		    | `delete` KEYWORDS... 										        |
-| [`clear`](#clear)        | Clearing a set of tasks					| `clear [#/TAGS...]											    |
-| [`freetime`](#freetime)  | Finding a free timeslot   	  		 	    | `freetime` [st/START_TIME] et/END_TIME 				            |
-| [`list`](#list) 		   | Listing tasks and reminders 		        | `list` [KEYWORDS...] [st/START_TIME] [et/END_TIME] [#/TAGS...]... |
-| [`today`](#today)        | Listing tasks and reminders for today      | `today` 													        |
-| [`tomorrow`](#tomorrow)  | Listing tasks and reminders for tomorrow   | `tomorrow` 													 	|
-| [`view`](#view)          | Viewing details around tasks and reminders | `view` KEYWORDS...        									 	|
-| [`undo`](#undo) 		   | Undoing the previous command          	    | `undo` 				   									     	|
-| [`help`](#help) 		   | Seeking help				  		        | `help` [COMMMAND_NAME]    									 	|
-| [`alias`](#alias)        | Making aliases for the commands            | `alias` COMMMAND_NAME n/NEW_NAME                               	|
-| [`exit`](#exit) 	   	   | Exiting Linenux 				  		    | `exit` 			       									     	|
+| Command                  | Description                                 | Format                                                            	 		 |
+|--------------------------|---------------------------------------------|-------------------------------------------------------------------------------|
+| [`add`](#add) 		   | Adding a task.	   	     	  		         | `add` TASK_NAME... [st/START_TIME] [et/END_TIME] [#/TAGS...]...   	 		 |
+| [`remind`](#remind) 	   | Setting a reminder for a task.  	         | `remind` KEYWORDS... t/TIME [n/NOTE...]                           	 		 |
+| [`edit`](#edit) 		   | Editing a task.   	  		                 | `edit` KEYWORDS... [n/NEW_TASK_NAME...] [st/NEW_START_TIME] [et/NEW_END_TIME] |
+| [`editr`](#editr)        | Editing a reminder.                         | `editr` KEYWORDS... [t/NEW_TIME] [n/NEW_NOTE...]                      	 	 |
+| [`done`](#done) 	       | Marking a task as done.       	  		 	 | `done` KEYWORDS... 										             		 |
+| [`delete`](#delete) 	   | Deleting a task or reminder. 	  		     | `delete` KEYWORDS... 										         		 |
+| [`clear`](#clear)        | Clearing a set of tasks.					 | `clear [#/TAGS...]											         		 |
+| [`freetime`](#freetime)  | Finding a free timeslot.   	  		 	 | `freetime` [st/START_TIME] et/END_TIME 				                 		 | 
+| [`list`](#list) 		   | Listing tasks and reminders. 		         | `list` [KEYWORDS...] [st/START_TIME] [et/END_TIME] [#/TAGS...]...     		 |
+| [`today`](#today)        | Listing tasks and reminders for today.      | `today` 													        	 		 |
+| [`tomorrow`](#tomorrow)  | Listing tasks and reminders for tomorrow.   | `tomorrow` 													 		 		 |
+| [`view`](#view)          | Viewing details around tasks and reminders. | `view` KEYWORDS...        									 		 		 |
+| [`undo`](#undo) 		   | Undoing the previous command.          	 | `undo` 				   									     		 		 |
+| [`help`](#help) 		   | Seeking help.				  		         | `help` [COMMMAND_NAME]    									 		 		 |
+| [`alias`](#alias)        | Making aliases for the commands.            | `alias` COMMMAND_NAME n/NEW_NAME                               		 		 |
+| [`exit`](#exit) 	   	   | Exiting Linenux. 				  		     | `exit` 			       									     		 		 |
 
 ## Supported Time Formats
 
-*All of the examples below have the equivalent meaning to the date 26 October 2016, 5.50pm*
+*All of the examples below have the equivalent meaning to the time 26 October 2016, 5.50pm*
 
 | Format             | Example                | 
 |--------------------|------------------------|
@@ -165,26 +166,19 @@ Adding a task has never been this easy. Just indicate the appropriate fields and
 *Examples:*
 
 ```
-// Adding a to-do.
+// Adding a to-do with tag 'trump'.
 > add watch videos on presidential election #/trump
 
-// Adding a deadline.
+// Adding a deadline with tags 'household' and 'bills and money'.
 > add pay utility bills et/2016-10-16 #/household #/bills and money
 
-// Adding an event.
+// Adding an event with tag 'household'.
 > add house warming st/2016-10-16 5:00pm et/2016-10-16 9:00pm #/household
 ```
 
-*Results:*
-
-1. Tasks `pay utility bills`, `house warming` and `watch videos on presidential election` are automically assigned to their respective categories.
-2. Deadline `pay utility bills` belongs to the group `household` and `bills and money`.
-3. Event `house warming` belongs to the group `household`.
-4. To-do `watch videos on presidential election` belongs to the group `trump`.
-
 #### Remind
 
-Setting reminders are as simple as adding a task. Just indicate the name of task you want to add the reminder to, the time of the reminder, notes (if any) associated with that reminder and you are all set. Reminders will show up on the display panel upon launch or when the commands `list`, `today` and `tomorrow` are entered.
+Setting reminders are as simple as adding a task. Just specify the appropriate fields and we will assign the reminder to the task that you want. Reminders will show up on the display panel upon launch or when the commands `list`, `today` and `tomorrow` are entered.
 
 *Format:*
 
@@ -193,17 +187,12 @@ Setting reminders are as simple as adding a task. Just indicate the name of task
 *Examples:*
 
 ```
-// Setting a reminder at 15 October 2016, 6pm without any notes.
+// Setting a reminder for the deadline 'pay utility bills' without any notes.
 > remind pay utility bills t/2016-10-15 06:00pm 
 
-// Setting a reminder at 16 October 2016, 7am with the note buy groceries .
+// Setting a reminder for the event 'house warming' with the note 'buy groceries'.
 > remind house warming t/2016-10-16 07:00am n/buy groceries
 ```
-
-*Results:*
-
-1. A reminder is added to the deadline `pay utility bills`.
-2. A reminder with a note `buy groceries` attached is added to the event `house warming`.
 
 *Fun Fact:*
 
@@ -217,20 +206,26 @@ Ever wondered why we use the word `KEYWORDS` rather than `TASK_NAME`? This is be
 
 In this scenario, since there are multiple task names with the keyword `assignment`, both results are returned and you get to choose, via specifying an index, which task is the reminder for. This mechanism is known as fuzzy searching and it is implemented for all commands with the field `KEYWORDS`. How cool is that?
 
-#### Edit a task/reminder: `edit`
-Things change all the time, and that applies to tasks too. To help facilitate these changes, you can edit your tasks and reminders. All you have to do, is to type `edit` and some keywords to search for your task and provide the new details and Linenux will update your tasks and reminders.
+#### Edit
 
-##### Format:
-```
-edit KEYWORDS... [n/NEW_NAME] [st/START_TIME] [et/END_TIME]
-```
+Life would be a breeze if everything had gone according to plan. Unfortunately, things change all the time and we need to be able to respond accordingly. Thankfully, the one of the few things in life that is a breeze is the `edit` command. It uses the same fuzzy search mechanism as remind and it will update the respective fields of the task to their new values.
 
-##### Examples:
+*Format:*
+
+` edit KEYWORDS... [n/NEW_TASK_NAME...] [st/NEW_START_TIME] [et/NEW_END_TIME]`
+
+*Examples:*
+
 ```
-edit assignment et/2016-08-13
-```
-```
-edit this n/CS2103 st/2016-09-20 et/2016-05-09
+// Adding an event.
+> add play golf st/2016-10-16 7:00am et/2016-10-16 9:00am
+
+// Changing the name of the event from 'play golf' to 'play chess'.
+> edit play golf n/play chess
+
+// Changing the starting and ending time of the event 'play chess'.
+> edit play chess st/
+
 ```
 
 ##### Callouts:
