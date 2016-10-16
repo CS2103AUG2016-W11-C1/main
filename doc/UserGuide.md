@@ -2,6 +2,9 @@
 
 * [About](#about)
 * [Getting Started](#getting-started)
+	* [Downloading](#downloading)
+	* [Launching](#launching)
+	* [Walkthrough](#walkthrough)
 * [Commands Summary](#commands-summary)
 * [List of Commands](#list-of-commands)
     * [Notes](#some-notes-before-you-start)
@@ -27,12 +30,52 @@ Without further ado, let's get started!
 
 ## Getting Started
 
-1. Find the project in the `Project Explorer` or `Package Explorer` (usually located at the left side)
-2. Right click on the project
-3. Click `Run As` > `Java Application` and choose the `Main` class.
-4. The GUI should appear in a few seconds.
+#### Downloading
 
+1. Ensure that you have Java 8 installed on your computer.
+2. Download the latest linenux.jar from the [releases](https://github.com/CS2103AUG2016-W11-C1/main/releases) tab.
 
+<img src="images/releases.png">
+> Figure 1: Downloading linenux.jar
+
+3. Copy the file to the folder that you want to use as the home folder for Linenux.
+
+#### Launching
+
+Double-click on the file to launch Linenux. Wait for a few seconds for the main window to appear.  
+
+<img src="images/mainWindow.png">
+> Figure 2: Linenux's main window
+
+#### Walkthrough
+
+*This section is a scenario driven, step-by-step introduction on how to use Linenux. For a more in-depth coverage of the commands, refer to our [Commands](#commands) section in the user guide.*
+
+**Step 1: Adding a task.**
+
+The date is October 17, 2016. You have to buy groceries from the local supermarket but you are only free to do so on a weekend. You decide to remind youself with the aid of Linenux. Type the following line in the command box:
+
+`> add buy groceries et/2016-10-22`
+
+**Step 2: Setting a reminder.**
+
+You worry that you might not have enough cash to buy groceries and decide to draw money from a nearby ATM machine on the way home from work on Friday. Type the following line in the command box:
+
+`> remind buy groceries n/draw money et/2016-10-21 6:00pm`
+
+**Step 3: Listing tasks for the day.**
+
+Time flies and it is already Friday. You wonder what needs to be done for the day. Type the following line in the command box:
+
+`> list et/2016-10-21` or more simply, `> today`
+
+**Step 4: Marking a task as done.**
+
+You repeat step 3 on Saturday and realised that you needed to buy the groceries. You hastily went out to buy them, thus completing all of your work for the day. Type the following line in the command box:
+
+`> done buy groceries`
+
+This command will prevent the task from showing up in subsequent `list` or `today` commands.
 
 ## Commands Summary:
 | Description | Command | Format |
