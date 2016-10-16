@@ -112,7 +112,7 @@ This brings up the list of Linenux commands with their description and format. I
 | [`today`](#today)        | Listing tasks and reminders for today      | `today` 													     |
 | [`tomorrow`](#tomorrow)  | Listing tasks and reminders for tomorrow   | `tomorrow` 													 |
 | [`view`](#view)          | Viewing details around tasks and reminders | `view` KEYWORDS...        									 |
-| [`undo`](#undo) 		   | Undoing previous command          	        | `undo` 				   									     |
+| [`undo`](#undo) 		   | Undoing the previous command          	    | `undo` 				   									     |
 | [`help`](#help) 		   | Seeking help				  		        | `help` [COMMMAND_NAME]    									 |
 | [`alias`](#alias)        | Making aliases for the commands            | `alias` COMMMAND_NAME n/NEW_NAME                               |
 | [`exit`](#exit) 	   	   | Exiting Linenux 				  		    | `exit` 			       									     |
@@ -137,21 +137,11 @@ This brings up the list of Linenux commands with their description and format. I
 5. *Optional fields are enclosed in square brackets `[]`.*
 6. *The notation `...` means that multiple words can be used for that field. E.g. `> add assignment #/nus cs2103 assignments`.*
 
-\* Some of the commands in Linenux will ask for KEYWORDS of the task/reminder that you are doing the command for. In those cases, Linenux will search your schedule for the tasks/reminders that matches your KEYWORDS. There are 2 things that can happen when the Linenux finds something from your schedule:
-  1. Only one task/reminder was found:
-
-      Linenux will do the command on the found task.
-  2. More than one task/reminder was found:
-
-      Linenux will prompt you with a list of all the tasks and reminders found, which you will then need to tell Linenux which task/reminder to execute the command on.
-
-
-#### Adding a task: `add`
-Linenux’s goal is to help you organize and manage your tasks, so the most important feature will be to add said tasks into Linenux.
-To help organize your tasks, our add command allows you tag your task to help you easily search for them in the future. Furthermore, our team has looked into all possible tasks and discovered that tasks can be generally categorized into the following 3 groups:
-  1. Deadlines (Tasks with end times only)
-  2. Events (Tasks with start and end times)
-  3. To-Dos (Tasks without start and end times)
+#### Add
+Linenux supports 3 kinds of tasks:
+  1. **Deadlines** (Tasks with end times only)
+  2. **Events**    (Tasks with start and end times)
+  3. **To-Dos**    (Tasks without start and end times)
 
 As such, all tasks will be categorize under these 3 groups by default(no input from you required!) and will tagged under #deadlines, #events, #todos respectively.
 
