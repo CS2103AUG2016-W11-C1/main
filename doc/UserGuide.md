@@ -95,8 +95,8 @@ This brings up the list of Linenux commands with their description and format. I
 ## Commands Summary
 
 *Legend:*
-*1. Optional fields are enclosed in square brackets `[]`.*
-*2. `...` means that multiple words can be used for that field. E.g. `> add assignment #/nus cs2103 assignments`.*
+1. *Optional fields are enclosed in square brackets `[]`.*
+2. *`...` means that multiple words can be used for that field. E.g. `> add assignment #/nus cs2103 assignments`.*
 
 
 | Command                  | Description                                | Format                                                         |
