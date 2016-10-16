@@ -82,7 +82,7 @@ You repeat step 3 on Saturday and realised that you needed to buy the groceries.
 
 `> done buy groceries`
 
-This command will prevent the task from showing up in subsequent `list` or `today` commands.
+This command will prevent the task from showing up again in subsequent `list` or `today` commands.
 
 **Step 5: Becoming proficient**
 
@@ -94,23 +94,28 @@ This brings up the list of Linenux commands with their description and format. I
 
 ## Commands Summary
 
-| Description                                | Command                 | Format                                                         |
-|--------------------------------------------|-------------------------|----------------------------------------------------------------|
-| Adding a task.	   	     	  		     | [`add`](#add) 		   | `add` TASK_NAME [st/START_TIME] [et/END_TIME] [#/TAGS...]      |
-| Setting a reminder for a task  	         | [`remind`](#remind) 	   | `remind` KEYWORDS... t/TIME [n/NOTE]                           |
-| Editing a task or reminder   	  		     | [`edit`](#edit) 		   | `edit` KEYWORDS... [n/NEW_NAME] [st/START_TIME] [et/END_TIME]  |
-| Marking a task as done       	  		 	 | [`done`](#done) 	       | `done` KEYWORDS... 										    |
-| Deleting a task or reminder 	  		     | [`delete`](#delete) 	   | `delete` KEYWORDS... 										    |
-| Clearing a set of tasks					 | [`clear`](#clear)       | `clear [#/TAGS...]											    |
-| Finding a free timeslot   	  		 	 | [`freetime`](#freetime) | `freetime` [st/START_TIME] et/END_TIME 				        |
-| Listing tasks and reminders 		         | [`list`](#list) 		   | `list` [KEYWORDS...] [st/START_TIME] [et/END_TIME] [#/TAGS...] |
-| Discovering things to do for the day       | [`today`]               | `today` 													    |
-| Uncovering what lies ahead the next day    | [`tomorrow`]            | `tomorrow` 													|
-| Viewing details around tasks and reminders | [`view`](#view)         | `view` KEYWORDS...        									    |
-| Undoing previous command          	     | [`undo`](#undo) 		   | `undo` 				   									    |
-| Seeking help				  		         | [`help`](#help) 		   | `help` [COMMMAND_NAME]    									    |
-| Making aliases for the commands            | [`alias`](#alias)       | `alias` COMMMAND_NAME n/NEW_NAME                               |
-| Exiting Linenux 				  		     | [`exit`](#exit) 	   	   | `exit` 			       									    |
+*Legend:
+1. Optional fields are enclosed in square brackets `[]`.
+2. `...` means that multiple words can be used for that field. E.g. `> add assignment #/nus cs2103 assignments`.
+3. All commands and arguments are case-insensitive.* 
+
+| Command                  | Description                                | Format                                                         |
+|--------------------------|--------------------------------------------|----------------------------------------------------------------|
+| [`add`](#add) 		   | Adding a task.	   	     	  		        | `add` TASK_NAME... [st/START_TIME] [et/END_TIME] [#/TAGS...]   |
+| [`remind`](#remind) 	   | Setting a reminder for a task  	        | `remind` KEYWORDS... t/TIME [n/NOTE]                           |
+| [`edit`](#edit) 		   | Editing a task or reminder   	  		    | `edit` KEYWORDS... [n/NEW_NAME] [st/START_TIME] [et/END_TIME]  |
+| [`done`](#done) 	       | Marking a task as done       	  		 	| `done` KEYWORDS... 										     |
+| [`delete`](#delete) 	   | Deleting a task or reminder 	  		    | `delete` KEYWORDS... 										     |
+| [`clear`](#clear)        | Clearing a set of tasks					| `clear [#/TAGS...]											 |
+| [`freetime`](#freetime)  | Finding a free timeslot   	  		 	    | `freetime` [st/START_TIME] et/END_TIME 				         |
+| [`list`](#list) 		   | Listing tasks and reminders 		        | `list` [KEYWORDS...] [st/START_TIME] [et/END_TIME] [#/TAGS...] |
+| [`today`](#today)        | Discovering things to do for the day       | `today` 													     |
+| [`tomorrow`](#tomorrow)  | Uncovering what lies ahead the next day    | `tomorrow` 													 |
+| [`view`](#view)          | Viewing details around tasks and reminders | `view` KEYWORDS...        									 |
+| [`undo`](#undo) 		   | Undoing previous command          	        | `undo` 				   									     |
+| [`help`](#help) 		   | Seeking help				  		        | `help` [COMMMAND_NAME]    									 |
+| [`alias`](#alias)        | Making aliases for the commands            | `alias` COMMMAND_NAME n/NEW_NAME                               |
+| [`exit`](#exit) 	   	   | Exiting Linenux 				  		    | `exit` 			       									     |
 
 ## Supported Time Formats
 
@@ -123,6 +128,7 @@ This brings up the list of Linenux commands with their description and format. I
 | ddMMyyyy HHmm      | 16102016 1750          | 
 
 ## Commands
+
 #### Some notes before you start:
 ##### Command format:
   1. Any capitalized words, e.g TASK_NAME, is a field required by the command.
