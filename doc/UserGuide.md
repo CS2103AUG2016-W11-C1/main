@@ -141,30 +141,33 @@ This brings up the list of Linenux commands with their description and format. I
 Linenux supports 3 kinds of tasks:
   1. **Deadlines** (Tasks with end times only)
   2. **Events**    (Tasks with start and end times)
-  3. **To-Dos**    (Tasks without start and end times)
+  3. **To-dos**    (Tasks without start and end times)
 
-As such, all tasks will be categorize under these 3 groups by default(no input from you required!) and will tagged under #deadlines, #events, #todos respectively.
+Adding a task has never been this easy. Just indicate the appropriate fields and we will automatically assign the newly created task to one of the 3 categories above. Tags can be used to group similar tasks together.
 
-Thus, to add any type of task, all you need to do is to type `add`, followed by your task name. Depending on your needs, you may also include the optional fields specified in the format of the add command.
+*Format:*
 
-##### Format:
-```
-add TASK_NAME [st/START_TIME] [et/END_TIME] [#/TAG]...
-```
+`add TASK_NAME [st/START_TIME] [et/END_TIME] [#/TAGS...]`
 
-##### Examples:
+*Examples:*
+
 ```
 //Adding a deadline
-add Submit v0.0 deliverables et/2016-10-05 #quite_important
+> add pay utility bills et/2016-10-16 #/household bills
+
+//Adding an event
+> add house warming st/2016-10-16 5:00pm et/2016-10-16 9:00pm #/household
+
+//Adding a to-do
+> add watch videos on presidential election #/trump
 ```
-```
-//Adding an Event
-add Hackathon st/2016-10-01 et/2016-10-02 :D #really_important
-```
-```
-//Adding a To-Do
-add CS2103T tutorial :D #very_important
-```
+
+*Result:*
+
+1. Tasks "pay utility bills", "house warming" and "watch videos on presidential election" are automically assigned to their respective categories.
+2. Deadline "pay utility bills" belong to the group "household" and "bills".
+3. Event "house warming" belong to the group "household".
+4. To-do "watch videos on presidential election" belong to the group "trump*.
 
 
 #### Adding reminders to a task: `remind`
