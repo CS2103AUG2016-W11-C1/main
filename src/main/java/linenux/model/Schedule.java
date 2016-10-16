@@ -1,29 +1,29 @@
 package linenux.model;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 /**
  * Contains all outstanding tasks.
  */
 public class Schedule {
     public static final int MAX_STATES = 10;
-    private final LinkedList<State> states;
+    private final ObservableList<State> states = FXCollections.observableArrayList();
 
     /**
      * Constructs an empty schedule
      */
     public Schedule() {
-        this.states = new LinkedList<State>();
-        states.add(new State());
+        this(new ArrayList<>());
     }
 
     /**
      * Constructs the schedule with the given data.
      */
     public Schedule(ArrayList<Task> taskList) {
-        this.states = new LinkedList<State>();
-        states.add(new State(taskList));
+        this.states.add(new State(taskList));
     }
 
     /**
@@ -90,7 +90,7 @@ public class Schedule {
     /**
      * Returns the list of states.
      */
-    public LinkedList<State> getStates() {
+    public ObservableList<State> getStates() {
         return states;
     }
 
@@ -102,10 +102,22 @@ public class Schedule {
     }
 
     /**
+     * Remove the last state if there are more than one.
+     * @return {@code true} if and only if a state is removed.
+     */
+    public boolean popState() {
+        if (states.size() > 1) {
+            states.remove(states.size() - 1);
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Returns the most recent state of schedule
      */
     private State getMostRecentState() {
-        return states.getLast();
+        return states.get(states.size() - 1);
     }
 
     /**
@@ -114,8 +126,8 @@ public class Schedule {
      */
     private void addState(State state) {
         while (states.size() + 1 > MAX_STATES && states.size() > 1) {
-            states.removeFirst();
+            states.remove(0);
         }
-        states.addLast(state);
+        states.add(state);
     }
 }
