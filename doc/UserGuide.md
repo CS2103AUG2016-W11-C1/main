@@ -36,6 +36,7 @@ Without further ado, let's get started!
 2. Download the latest linenux.jar from the [releases](https://github.com/CS2103AUG2016-W11-C1/main/releases) tab.
 <img src="images/releases.png">
          > Figure 1: Downloading linenux.jar
+		 
 3. Copy the file to the folder that you want to use as the home folder for Linenux.
 
 #### Launching
