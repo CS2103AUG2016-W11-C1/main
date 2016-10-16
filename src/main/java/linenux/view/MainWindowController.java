@@ -7,6 +7,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import linenux.control.ControlUnit;
 
+import java.awt.*;
 import java.io.IOException;
 
 /**
@@ -62,6 +63,8 @@ public class MainWindowController {
             loader.setLocation(MainWindowController.class.getResource("/view/EventBox.fxml"));
             AnchorPane eventBox = loader.load();
             splitPane.getItems().add(eventBox);
+            EventBoxController controller = loader.getController();
+            controller.setControlUnit(this.controlUnit);
         } catch (IOException e) {
             e.printStackTrace();
         }
