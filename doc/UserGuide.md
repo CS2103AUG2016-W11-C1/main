@@ -53,11 +53,11 @@ Double-click on the file to launch Linenux. Wait for a few seconds for the main 
 
 <img src="images/mainWindowDiagram.png">
 
-1. Command Box - where you enter the command.
-2. To-do Panel - shows to-dos.
-3. Deadline Panel - shows deadlines.
-4. Event Panel - shows events.
-5. Display Panel - shows reminders and search results.
+1. **Command Box** - where you enter the command.
+2. **To-do Panel** - shows to-dos.
+3. **Deadline Panel** - shows deadlines.
+4. **Event Panel** - shows events.
+5. **Display Panel** - shows reminders and search results.
 
 #### Functional Walkthrough
 
@@ -108,7 +108,7 @@ This brings up the list of Linenux commands with their description and format. I
 *Legend:*
 
 1. *Optional fields are enclosed in square brackets `[]`.*
-2. *The notation `...` means that **multiple** words can be used for that field. E.g.* `> add assignment #/university life #/cs2103.`
+2. *The notation `...` means that **multiple** words can be used for that field.*
 
 | Command                  | Description                                | Format                                                            |
 |--------------------------|--------------------------------------------|-------------------------------------------------------------------|
@@ -146,15 +146,15 @@ This brings up the list of Linenux commands with their description and format. I
 2. *All commands and their respective fields are case-insensitive.*
 3. *The order of the fields do not matter.*
 5. *Optional fields are enclosed in square brackets `[]`.*
-6. *The notation `...` means that multiple words can be used for that field. E.g. `> add assignment #/nus cs2103 assignments`.*
+6. *The notation `...` means that multiple words can be used for that field.*
 
 #### Add
 
 Linenux supports 3 kinds of tasks:
 
-	1. **To-dos**    (Tasks without start and end times)
-	2. **Deadlines** (Tasks with end times only)
-	3. **Events**    (Tasks with start and end times)
+1. **To-dos**    (Tasks without start and end times)
+2. **Deadlines** (Tasks with end times only)
+3. **Events**    (Tasks with start and end times)
 
 Adding a task has never been this easy. Just indicate the appropriate fields and we will automatically assign the newly created task to one of the 3 categories above. Tags can be used to group similar tasks together.
 
