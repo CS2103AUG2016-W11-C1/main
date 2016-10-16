@@ -165,7 +165,7 @@ public class ViewCommandTest {
     public void testUserResponseInvalidResponse() {
         this.setupMultipleHelloTaskAndExecuteAmbiguousCommand();
         CommandResult result = this.viewCommand.userResponse("notindex");
-        String expectedResponse = "I don't understand \"notindex\".\n" + "Enter a number to indicate which task to delete.\n" +
+        String expectedResponse = "I don't understand \"notindex\".\n" + "Enter a number to indicate which task to view.\n" +
                 "1. hello it's me\n2. hello from the other side";
         assertEquals(expectedResponse, result.getFeedback());
         assertTrue(this.viewCommand.awaitingUserResponse());

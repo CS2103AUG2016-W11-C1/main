@@ -166,7 +166,7 @@ public class ViewCommand implements Command {
         return () -> {
             StringBuilder builder = new StringBuilder();
             builder.append("I don't understand \"" + userInput + "\".\n");
-            builder.append("Enter a number to indicate which task to delete.\n");
+            builder.append("Enter a number to indicate which task to view.\n");
             builder.append(TasksListUtil.display(this.foundTasks));
             return builder.toString();
         };
