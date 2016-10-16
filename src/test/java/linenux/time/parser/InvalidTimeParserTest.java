@@ -1,16 +1,21 @@
 package linenux.time.parser;
 
+import static org.junit.Assert.assertTrue;
+
 import java.time.LocalDateTime;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
+/**
+ *
+ * @author Charlton
+ *
+ */
 public class InvalidTimeParserTest {
     private InvalidTimeParser invalidTimeParser;
-    
-    @Before 
+
+    @Before
     public void setUpInvalidTimeParser() {
         this.invalidTimeParser = new InvalidTimeParser();
     }

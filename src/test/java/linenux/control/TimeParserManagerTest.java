@@ -1,17 +1,22 @@
 package linenux.control;
 
-import linenux.time.parser.TimeParser;
-import org.junit.Test;
-
-import java.time.LocalDateTime;
-
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.time.LocalDateTime;
+
+import org.junit.Test;
+
+import linenux.time.parser.TimeParser;
+
 /**
- * Created by yihangho on 10/7/16.
+ * JUnit test for time parser manager.
  */
 public class TimeParserManagerTest {
+
+    /**
+     * Test that parses can correctly parse.
+     */
     @Test
     public void testCanParse() {
         TimeParser trueParser = new TimeParser() {

@@ -12,6 +12,9 @@ import org.junit.Test;
 import linenux.model.Schedule;
 import linenux.model.Task;
 
+/**
+ * JUnit test for undo command.
+ */
 public class UndoCommandTest {
     private Schedule schedule;
     private UndoCommand undoCommand;

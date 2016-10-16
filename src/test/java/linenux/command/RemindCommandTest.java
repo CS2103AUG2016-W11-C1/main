@@ -23,7 +23,6 @@ import linenux.model.Task;
 public class RemindCommandTest {
     private Schedule schedule;
     private RemindCommand remindCommand;
-    private Task todo;
 
     @Before
     public void setupRemindCommand() {
@@ -89,7 +88,7 @@ public class RemindCommandTest {
 
     /**
      * Test that executing adding reminder without notes to a To-Do should
-     * return correct result
+     * return correct result.
      */
     @Test
     public void testExecuteAddReminderWithoutNotesToToDo() {
@@ -102,7 +101,7 @@ public class RemindCommandTest {
 
     /**
      * Test that executing adding reminder with notes to a To-Do should return
-     * correct result
+     * correct result.
      */
     @Test
     public void testExecuteAddReminderWithNotesToToDo() {
@@ -116,7 +115,7 @@ public class RemindCommandTest {
 
     /**
      * Test that executing adding reminder with notes in different order to a
-     * To-Do should return correct result
+     * To-Do should return correct result.
      */
     @Test
     public void testExecuteAddReminderWithDiffParamOrderToToDo() {
@@ -130,7 +129,7 @@ public class RemindCommandTest {
 
     /**
      * Test that executing adding reminder without notes to a Deadline should
-     * return correct result
+     * return correct result.
      */
     @Test
     public void testExecuteAddReminderWithoutNotesToDeadline() {
@@ -143,7 +142,7 @@ public class RemindCommandTest {
 
     /**
      * Test that executing adding reminder with notes to a Deadline should
-     * return correct result
+     * return correct result.
      */
     @Test
     public void testExecuteAddReminderWithNotesToDeadline() {
@@ -157,7 +156,7 @@ public class RemindCommandTest {
 
     /**
      * Test that executing adding reminder with notes in different order to a
-     * Deadline should return correct result
+     * Deadline should return correct result.
      */
     @Test
     public void testExecuteAddReminderWithDiffParamOrderToDeadline() {
@@ -171,7 +170,7 @@ public class RemindCommandTest {
 
     /**
      * Test that executing adding reminder without notes to a Event should
-     * return correct result
+     * return correct result.
      */
     @Test
     public void testExecuteAddReminderWithoutNotesToEvent() {
@@ -184,7 +183,7 @@ public class RemindCommandTest {
 
     /**
      * Test that executing adding reminder with notes to a Event should return
-     * correct result
+     * correct result.
      */
     @Test
     public void testExecuteAddReminderWithNotesToEvent() {
@@ -198,7 +197,7 @@ public class RemindCommandTest {
 
     /**
      * Test that executing adding reminder with notes in different order to a
-     * Event should return correct result
+     * Event should return correct result.
      */
     @Test
     public void testExecuteAddReminderWithDiffParamOrderToEvent() {
@@ -255,7 +254,7 @@ public class RemindCommandTest {
 
     /**
      * Test the result when no time is given for the reminder + not affected by
-     * optional field Notes
+     * optional field Notes.
      */
     @Test
     public void testTaskNameWithoutTimeWithNotesCommandResult() {
@@ -265,7 +264,7 @@ public class RemindCommandTest {
     }
 
     /**
-     * Test the result when time is invalid
+     * Test the result when time is invalid.
      */
     @Test
     public void testInvalidTimeCommandResult() {
@@ -274,6 +273,9 @@ public class RemindCommandTest {
         assertEquals("Cannot parse \"tomorrow\".", result.getFeedback());
     }
 
+    /**
+     * Test the result when no match is found.
+     */
     @Test
     public void testCommandResultWhenNoMatchFound() {
         ArrayList<Task> tasks = this.schedule.getTaskList();
@@ -287,6 +289,9 @@ public class RemindCommandTest {
         assertEquals("Cannot find task names with \"not task\".", result.getFeedback());
     }
 
+    /**
+     * Test the result when multiple matches are found.
+     */
     @Test
     public void testCommandResultWhenMultipleMatchesFound() {
         this.schedule.addTask(new Task("todo 2"));
@@ -301,6 +306,9 @@ public class RemindCommandTest {
         assertEquals("Which one? (1-2)\n1. Todo\n2. todo 2", result.getFeedback());
     }
 
+    /**
+     * Test that command is waiting user response.
+     */
     @Test
     public void testAwaitingUserResponse() {
         assertFalse(this.remindCommand.awaitingUserResponse());
@@ -308,6 +316,9 @@ public class RemindCommandTest {
         assertTrue(this.remindCommand.awaitingUserResponse());
     }
 
+    /**
+     * Test the result when user cancel response.
+     */
     @Test
     public void testUserResponseCancel() {
         ArrayList<Task> tasks = this.schedule.getTaskList();
@@ -323,14 +334,21 @@ public class RemindCommandTest {
         assertFalse(this.remindCommand.awaitingUserResponse());
     }
 
+    /**
+     * Test the result when user inputs valid index.
+     */
     @Test
     public void testUserResponseValidIndex() {
         this.setupTaskWithSameNameAndExecuteAmbiguousCommand();
         CommandResult result = assertChangeBy(() -> this.schedule.getTaskList().get(0).getReminders().size(), 1,
                 () -> this.remindCommand.userResponse("1"));
         assertEquals("Added reminder on 2016-01-01 5:00PM for Todo", result.getFeedback());
+        assertFalse(this.remindCommand.awaitingUserResponse());
     }
 
+    /**
+     * Test the result when user inputs invalid index.
+     */
     @Test
     public void testUserResponseInvalidIndex() {
         this.setupTaskWithSameNameAndExecuteAmbiguousCommand();
@@ -338,8 +356,12 @@ public class RemindCommandTest {
                 () -> this.remindCommand.userResponse("0"));
         assertEquals("That's not a valid index. Enter a number between 1 and 2:\n" + "1. Todo\n2. Todo 2",
                 result.getFeedback());
+        assertTrue(this.remindCommand.awaitingUserResponse());
     }
 
+    /**
+     * Test the result when user inputs invalid response.
+     */
     @Test
     public void testUserResponseInvalidUserResponse() {
         this.setupTaskWithSameNameAndExecuteAmbiguousCommand();
@@ -347,5 +369,6 @@ public class RemindCommandTest {
                 () -> this.remindCommand.userResponse("One"));
         assertEquals("I don't understand \"One\".\nEnter a number to indicate which task to add reminder to:\n"
                 + "1. Todo\n2. Todo 2", result.getFeedback());
+        assertTrue(this.remindCommand.awaitingUserResponse());
     }
 }
