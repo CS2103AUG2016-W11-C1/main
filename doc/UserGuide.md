@@ -2,9 +2,10 @@
 
 * [About](#about)
 * [Getting Started](#getting-started)
-	* [Downloading](#downloading)
-	* [Launching](#launching)
-	* [Walkthrough](#walkthrough)
+	* [Download](#download)
+	* [Launch](#launch)
+	* [Visual Walkthrough](#visual-walkthrough)
+	* [Functional Walkthrough](#functional-walkthrough)
 * [Commands Summary](#commands-summary)
 * [Supported Time Fomats](#supported-time-formats)
 * [Commands](#commands)
@@ -35,20 +36,30 @@ Without further ado, let's get started!
 
 ## Getting Started
 
-#### Downloading
+#### Download
 
 1. Ensure that you have Java 8 installed on your computer.
 2. Download the latest linenux.jar from the [releases](https://github.com/CS2103AUG2016-W11-C1/main/releases) tab.
 <img src="images/releases.png">
 3. Copy the file to the folder that you want to use as the home folder for Linenux.
 
-#### Launching
+#### Launch
 
 Double-click on the file to launch Linenux. Wait for a few seconds for the main window to appear.  
 
 <img src="images/mainWindow.png">
 
-#### Walkthrough
+#### Visual Walkthrough
+
+<img src="images/mainWindowDiagram.png">
+
+1) Command Box - where you enter the command.
+2) To-do Panel - shows to-dos.
+3) Deadline Panel - shows deadlines.
+4) Event Panel - shows events.
+5) Display Panel - shows reminders and search results.
+
+#### Functional Walkthrough
 
 *This section is a scenario driven, step-by-step introduction on how to use Linenux. For a more in-depth coverage of the commands, refer to our [Commands](#commands) section in the user guide.*
 
@@ -97,25 +108,25 @@ This brings up the list of Linenux commands with their description and format. I
 *Legend:*
 
 1. *Optional fields are enclosed in square brackets `[]`.*
-2. *The notation `...` means that **multiple** words can be used for that field. E.g. `> add assignment #/cs2103 assignments`.*
+2. *The notation `...` means that **multiple** words can be used for that field. E.g. `> add assignment #/university life #/cs2103.`*
 
-| Command                  | Description                                | Format                                                         |
-|--------------------------|--------------------------------------------|----------------------------------------------------------------|
-| [`add`](#add) 		   | Adding a task.	   	     	  		        | `add` TASK_NAME... [st/START_TIME] [et/END_TIME] [#/TAGS...]   |
-| [`remind`](#remind) 	   | Setting a reminder for a task  	        | `remind` KEYWORDS... t/TIME [n/NOTE]                           |
-| [`edit`](#edit) 		   | Editing a task or reminder   	  		    | `edit` KEYWORDS... [n/NEW_NAME] [st/START_TIME] [et/END_TIME]  |
-| [`done`](#done) 	       | Marking a task as done       	  		 	| `done` KEYWORDS... 										     |
-| [`delete`](#delete) 	   | Deleting a task or reminder 	  		    | `delete` KEYWORDS... 										     |
-| [`clear`](#clear)        | Clearing a set of tasks					| `clear [#/TAGS...]											 |
-| [`freetime`](#freetime)  | Finding a free timeslot   	  		 	    | `freetime` [st/START_TIME] et/END_TIME 				         |
-| [`list`](#list) 		   | Listing tasks and reminders 		        | `list` [KEYWORDS...] [st/START_TIME] [et/END_TIME] [#/TAGS...] |
-| [`today`](#today)        | Listing tasks and reminders for today      | `today` 													     |
-| [`tomorrow`](#tomorrow)  | Listing tasks and reminders for tomorrow   | `tomorrow` 													 |
-| [`view`](#view)          | Viewing details around tasks and reminders | `view` KEYWORDS...        									 |
-| [`undo`](#undo) 		   | Undoing the previous command          	    | `undo` 				   									     |
-| [`help`](#help) 		   | Seeking help				  		        | `help` [COMMMAND_NAME]    									 |
-| [`alias`](#alias)        | Making aliases for the commands            | `alias` COMMMAND_NAME n/NEW_NAME                               |
-| [`exit`](#exit) 	   	   | Exiting Linenux 				  		    | `exit` 			       									     |
+| Command                  | Description                                | Format                                                            |
+|--------------------------|--------------------------------------------|-------------------------------------------------------------------|
+| [`add`](#add) 		   | Adding a task.	   	     	  		        | `add` TASK_NAME... [st/START_TIME] [et/END_TIME] [#/TAGS...]...   |
+| [`remind`](#remind) 	   | Setting a reminder for a task  	        | `remind` KEYWORDS... t/TIME [n/NOTE...]                           |
+| [`edit`](#edit) 		   | Editing a task or reminder   	  		    | `edit` KEYWORDS... [n/NEW_NAME] [st/START_TIME] [et/END_TIME]     |
+| [`done`](#done) 	       | Marking a task as done       	  		 	| `done` KEYWORDS... 										        |
+| [`delete`](#delete) 	   | Deleting a task or reminder 	  		    | `delete` KEYWORDS... 										        |
+| [`clear`](#clear)        | Clearing a set of tasks					| `clear [#/TAGS...]											    |
+| [`freetime`](#freetime)  | Finding a free timeslot   	  		 	    | `freetime` [st/START_TIME] et/END_TIME 				            |
+| [`list`](#list) 		   | Listing tasks and reminders 		        | `list` [KEYWORDS...] [st/START_TIME] [et/END_TIME] [#/TAGS...]... |
+| [`today`](#today)        | Listing tasks and reminders for today      | `today` 													        |
+| [`tomorrow`](#tomorrow)  | Listing tasks and reminders for tomorrow   | `tomorrow` 													 	|
+| [`view`](#view)          | Viewing details around tasks and reminders | `view` KEYWORDS...        									 	|
+| [`undo`](#undo) 		   | Undoing the previous command          	    | `undo` 				   									     	|
+| [`help`](#help) 		   | Seeking help				  		        | `help` [COMMMAND_NAME]    									 	|
+| [`alias`](#alias)        | Making aliases for the commands            | `alias` COMMMAND_NAME n/NEW_NAME                               	|
+| [`exit`](#exit) 	   	   | Exiting Linenux 				  		    | `exit` 			       									     	|
 
 ## Supported Time Formats
 
@@ -138,59 +149,73 @@ This brings up the list of Linenux commands with their description and format. I
 6. *The notation `...` means that multiple words can be used for that field. E.g. `> add assignment #/nus cs2103 assignments`.*
 
 #### Add
+
 Linenux supports 3 kinds of tasks:
-  1. **Deadlines** (Tasks with end times only)
-  2. **Events**    (Tasks with start and end times)
-  3. **To-dos**    (Tasks without start and end times)
+
+	1. **To-dos**    (Tasks without start and end times)
+	2. **Deadlines** (Tasks with end times only)
+	3. **Events**    (Tasks with start and end times)
 
 Adding a task has never been this easy. Just indicate the appropriate fields and we will automatically assign the newly created task to one of the 3 categories above. Tags can be used to group similar tasks together.
 
 *Format:*
 
-`add TASK_NAME [st/START_TIME] [et/END_TIME] [#/TAGS...]`
+`add TASK_NAME [st/START_TIME] [et/END_TIME] [#/TAGS...]...`
 
 *Examples:*
 
 ```
-// Adding a deadline
-> add pay utility bills et/2016-10-16 #/household bills
-
-// Adding an event
-> add house warming st/2016-10-16 5:00pm et/2016-10-16 9:00pm #/household
-
-// Adding a to-do
+// Adding a to-do.
 > add watch videos on presidential election #/trump
+
+// Adding a deadline.
+> add pay utility bills et/2016-10-16 #/household #/bills and money
+
+// Adding an event.
+> add house warming st/2016-10-16 5:00pm et/2016-10-16 9:00pm #/household
 ```
 
-*Result:*
+*Results:*
 
 1. Tasks `pay utility bills`, `house warming` and `watch videos on presidential election` are automically assigned to their respective categories.
-2. Deadline "pay utility bills" belong to the group `household` and `bills`.
-3. Event `house warming` belong to the group `household`.
-4. To-do `watch videos on presidential election` belong to the group `trump`.
+2. Deadline `pay utility bills` belongs to the group `household` and `bills and money`.
+3. Event `house warming` belongs to the group `household`.
+4. To-do `watch videos on presidential election` belongs to the group `trump`.
 
+#### Remind
 
-#### Adding reminders to a task: `remind`
-Often enough, just having a deadline or knowing when an event will happen is not enough. For instance, knowing that you have a submission due on Friday, you might want to remind yourself about the submission on Wednesday. Fear not, for Linenux is here to help.
+Setting reminders are as simple as adding a task. Just indicate the name of task you want to add the reminder to, the time of the reminder, notes (if any) associated with that reminder and you are all set. Reminders will show up on the display panel upon launch or when the commands `list`, `today` and `tomorrow` are entered.
 
-To add a reminder, type `remind`, along with some keywords for Linenux to search for your task and Linenux will add the reminder onto the task. Also, you can add notes to your reminders, which will show up in addition to the task name when it is the day of the reminder.
+`Format:`
 
-##### Format:
+`remind KEYWORDS... t/TIME [n/NOTE]`
+
+`Examples:`
+
 ```
-remind KEYWORDS... t/TIME [n/NOTE]
+// Setting a reminder at 15 October 2016, 6pm without any notes.
+> remind pay utility bills t/2016-10-15 06:00pm 
+
+// Setting a reminder at 16 October 2016, 7am with the note buy groceries .
+> remind house warming t/2016-10-16 07:00am n/buy groceries
 ```
 
-##### Examples:
+`Results:`
+
+1) A reminder is added to the deadline `pay utility bills`.
+2) A reminder with a note `buy groceries` attached is added to the event `house warming`.
+
+`Fun Fact:`
+
+Ever wondered why we use the word `KEYWORDS` rather than `TASK_NAME`? This is because the `remind` command actually searches for task names containing those keywords behind the scene! For example, consider the scenario below :
+
 ```
-remind assignment t/2016-07-18 05:00PM
-```
-```
-remind project deadline t/2016-07-18 05:00PM n/Complete v0.0 document
+> add cs2101 assignment et/2016-10-16 11:59pm
+> add cs2103 assignment et/2016-10-18 11:59pm
+> remind assignment t/2016-10-16 10:00pm
 ```
 
-##### Callouts:
-> Upon starting up the application, all your reminders for the day will be shown.
-
+In this scenario, since there are multiple task names with the keyword `assignment`, both results are returned and you get to choose, via specifying an index, which task is the reminder for. This mechanism is known as fuzzy searching and it works for all commands with the field `KEYWORDS`. How cool is that?
 
 #### Edit a task/reminder: `edit`
 Things change all the time, and that applies to tasks too. To help facilitate these changes, you can edit your tasks and reminders. All you have to do, is to type `edit` and some keywords to search for your task and provide the new details and Linenux will update your tasks and reminders.
