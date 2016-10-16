@@ -202,8 +202,8 @@ Setting reminders are as simple as adding a task. Just indicate the name of task
 
 *Results:*
 
-1) A reminder is added to the deadline `pay utility bills`.
-2) A reminder with a note `buy groceries` attached is added to the event `house warming`.
+1. A reminder is added to the deadline `pay utility bills`.
+2. A reminder with a note `buy groceries` attached is added to the event `house warming`.
 
 *Fun Fact:*
 
