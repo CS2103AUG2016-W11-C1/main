@@ -6,6 +6,7 @@ import linenux.command.result.CommandResult;
  * All command types must support interface methods.
  */
 public interface Command {
+    public static final String CALLOUTS = "* Non-compulsory fields are in square brackets.\n* Arguments are case insensitive.";
 
     /**
      * Checks if the user input corresponds to the format of the respective
@@ -41,6 +42,9 @@ public interface Command {
         return null;
     }
 
+    /**
+     * Returns the command word.
+     */
     public String getTriggerWord();
 
     /**
@@ -48,4 +52,9 @@ public interface Command {
      * @return A string describing what the command is about.
      */
     public String getDescription();
+
+    /**
+     * Returns the command format.
+     */
+    public String getCommandFormat();
 }

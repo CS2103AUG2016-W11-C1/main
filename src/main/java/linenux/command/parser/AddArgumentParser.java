@@ -10,15 +10,18 @@ import linenux.model.Task;
 import linenux.util.Either;
 
 /**
- * Created by yihangho on 10/8/16.
+ * Parser for the argument portion of add command.
  */
-public class TaskArgumentParser {
-    public static final String ARGUMENT_FORMAT = "TASK_NAME [st/START_TIME] [et/END_TIME] [#/CATEGORY]...";
+public class AddArgumentParser {
+    public static String COMMAND_FORMAT;
+    public static String CALLOUTS;
 
     private TimeParserManager timeParserManager;
 
-    public TaskArgumentParser(TimeParserManager timeParserManager) {
+    public AddArgumentParser(TimeParserManager timeParserManager, String commandFormat, String callouts) {
         this.timeParserManager = timeParserManager;
+        AddArgumentParser.COMMAND_FORMAT = commandFormat;
+        AddArgumentParser.CALLOUTS = callouts;
     }
 
     public Either<Task, CommandResult> parse(String argument) {
@@ -93,7 +96,7 @@ public class TaskArgumentParser {
     }
 
     private CommandResult makeInvalidArgumentResult() {
-        return () -> "Invalid arguments.\n\n" + ARGUMENT_FORMAT;
+        return () -> "Invalid arguments.\n\n" + COMMAND_FORMAT + "\n\n" + CALLOUTS;
     }
 
     private CommandResult makeInvalidDateTimeResult(String dateTime) {

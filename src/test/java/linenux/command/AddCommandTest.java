@@ -1,22 +1,25 @@
 package linenux.command;
 
-import linenux.command.parser.TaskArgumentParser;
-import linenux.model.Task;
-import linenux.model.Schedule;
-import linenux.command.result.CommandResult;
-
-import org.junit.Before;
-import org.junit.Test;
+import static linenux.helpers.Assert.assertChangeBy;
+import static linenux.helpers.Assert.assertNoChange;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-import static linenux.helpers.Assert.assertChangeBy;
-import static linenux.helpers.Assert.assertNoChange;
-import static org.junit.Assert.*;
+import org.junit.Before;
+import org.junit.Test;
+
+import linenux.command.parser.AddArgumentParser;
+import linenux.command.result.CommandResult;
+import linenux.model.Schedule;
+import linenux.model.Task;
 
 /**
- * JUnit test for add command. 
+ * JUnit test for add command.
  */
 public class AddCommandTest {
     private Schedule schedule;
@@ -58,7 +61,7 @@ public class AddCommandTest {
     }
 
     /**
-     * Test that executing the add task command will correctly add new todo to the schedule.
+     * Test that executing the add task command will correctly add new to-do to the schedule.
      */
     @Test
     public void testExecuteAddTodo() {
@@ -96,7 +99,7 @@ public class AddCommandTest {
     }
 
     /**
-     * Test that executing the add task command will correctly add new event to the schedule
+     * Test that executing the add task command will correctly add new event to the schedule.
      */
     @Test
     public void testExecuteAddEvent() {
@@ -112,6 +115,9 @@ public class AddCommandTest {
         assertEquals(LocalDateTime.of(2016, 1, 2, 17, 0), addedTask.getEndTime());
     }
 
+    /**
+     * Test that order of times do not matter.
+     */
     @Test
     public void testExecuteAddEventIgnoringOrderOfTimes() {
         assertChangeBy(() -> this.schedule.getTaskList().size(),
@@ -127,7 +133,7 @@ public class AddCommandTest {
     }
 
     /**
-     * Test that executing an add task command should return the correct result
+     * Test that executing an add task command should return the correct result.
      */
     @Test
     public void testExecuteAddCommandResult() {
@@ -136,7 +142,7 @@ public class AddCommandTest {
     }
 
     /**
-     * Test that adding a new deadline should return the correct result
+     * Test that adding a new deadline should return the correct result.
      */
     @Test
     public void testExecuteAddDeadlineResult() {
@@ -145,7 +151,7 @@ public class AddCommandTest {
     }
 
     /**
-     * Test that adding a new event should return the correct result
+     * Test that adding a new event should return the correct result.
      */
     @Test
     public void testExecuteAddEventResult() {
@@ -154,7 +160,7 @@ public class AddCommandTest {
     }
 
     /**
-     * Test the result when running without a task name
+     * Test the result when running without a task name.
      */
     @Test
     public void testMissingTaskNameCommandResult() {
@@ -164,7 +170,7 @@ public class AddCommandTest {
     }
 
     /**
-     * Test the result when the task name consists of only empty spaces
+     * Test the result when the task name consists of only empty spaces.
      */
     @Test
     public void testTaskNameIsEmptyCommandResult() {
@@ -173,6 +179,9 @@ public class AddCommandTest {
         assertEquals(expectedInvalidArgumentMessage(), result.getFeedback());
     }
 
+    /**
+     * Test that task name cannot be empty.
+     */
     @Test
     public void testStartTimeWithoutTaskName() {
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
@@ -180,6 +189,9 @@ public class AddCommandTest {
         assertEquals(expectedInvalidArgumentMessage(), result.getFeedback());
     }
 
+    /**
+     * Test that task name cannot be empty.
+     */
     @Test
     public void testEndTimeWithoutTaskName() {
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
@@ -187,6 +199,9 @@ public class AddCommandTest {
         assertEquals(expectedInvalidArgumentMessage(), result.getFeedback());
     }
 
+    /**
+     * Test that invalid time formats are not accepted.
+     */
     @Test
     public void testInvalidStartTime() {
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
@@ -195,6 +210,9 @@ public class AddCommandTest {
         assertEquals("Cannot parse \"yesterday\".", result.getFeedback());
     }
 
+    /**
+     * Test that invalid time formats are not accepted.
+     */
     @Test
     public void testInvalidEndTime() {
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
@@ -203,6 +221,9 @@ public class AddCommandTest {
         assertEquals("Cannot parse \"tomorrow\".", result.getFeedback());
     }
 
+    /**
+     * Test that no tasks are created with start time only.
+     */
     @Test
     public void testStartTimeWithoutEndTime() {
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
@@ -211,6 +232,9 @@ public class AddCommandTest {
         assertEquals("Cannot create task with start time but without end time.", result.getFeedback());
     }
 
+    /**
+     * Test that end time cannot be before start time.
+     */
     @Test
     public void testEndTimeBeforeStartTime() {
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
@@ -220,6 +244,6 @@ public class AddCommandTest {
     }
 
     private String expectedInvalidArgumentMessage() {
-        return "Invalid arguments.\n\n" + TaskArgumentParser.ARGUMENT_FORMAT;
+        return "Invalid arguments.\n\n" + AddArgumentParser.COMMAND_FORMAT + "\n\n" + AddArgumentParser.CALLOUTS;
     }
 }

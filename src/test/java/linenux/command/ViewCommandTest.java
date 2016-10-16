@@ -1,8 +1,8 @@
 package linenux.command;
 
+import static junit.framework.TestCase.assertFalse;
+import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -47,28 +47,43 @@ public class ViewCommandTest {
         return this.viewCommand.execute("view hello");
     }
 
+    /**
+     * Test that command responds to the correct format.
+     */
     @Test
     public void testRespondToViewWithKeywords() {
         assertTrue(this.viewCommand.respondTo("view keyword"));
     }
 
+    /**
+     * Test that command is case insensitive.
+     */
     @Test
     public void testCaseInsensitiveRespondToView() {
         assertTrue(this.viewCommand.respondTo("ViEw keyword"));
     }
 
+    /**
+     * Test that command does not respons to other commands.
+     */
     @Test
     public void testDoesNotRespondToOtherCommands() {
         assertFalse(this.viewCommand.respondTo("notview"));
     }
 
+    /**
+     * Test the result when no match is found.
+     */
     @Test
     public void testCommandResultWhenNoMatchFound() {
         this.schedule.addTask(new Task("asdjkahsdkjhasjdkh"));
         CommandResult result = this.viewCommand.execute("view that nasty todo");
-        assertEquals("Cannot find \"that nasty todo\".", result.getFeedback());
+        assertEquals("Cannot find task names with \"that nasty todo\".", result.getFeedback());
     }
 
+    /**
+     * Test the result when only one match is found and tasks does not have reminders.
+     */
     @Test
     public void testCommandResultWhenExactlyOneTaskWithNoRemindersFound() {
         this.setupTaskWithAndWithoutReminders();
@@ -76,6 +91,9 @@ public class ViewCommandTest {
         assertEquals("Task1" + '\n' + "Reminders:" + '\n' + "You have not set any reminders for this task.", result.getFeedback());
     }
 
+    /**
+     * Test the result when only one match is found and task has reminders.
+     */
     @Test
     public void testCommandResultWhenExactlyOneTaskWithRemindersFound() {
         this.setupTaskWithAndWithoutReminders();
@@ -86,12 +104,18 @@ public class ViewCommandTest {
             + "3. Attend Workshop 3 (On 2016-03-01 5:00PM)", result.getFeedback());
     }
 
+    /**
+     * Test the result when multiple matches are found.
+     */
     @Test
     public void testCommandResultWhenMultipleMatchesFound() {
         CommandResult result = this.setupMultipleHelloTaskAndExecuteAmbiguousCommand();
         assertEquals("Which one? (1-2)\n1. hello it's me\n2. hello from the other side", result.getFeedback());
     }
 
+    /**
+     * Test that command is wating user response.
+     */
     @Test
     public void testAwaitingUserResponse() {
         assertFalse(this.viewCommand.awaitingUserResponse());
@@ -99,6 +123,9 @@ public class ViewCommandTest {
         assertTrue(this.viewCommand.awaitingUserResponse());
     }
 
+    /**
+     * Test that cancel works properly.
+     */
     @Test
     public void testUserResponseCancel() {
         this.setupMultipleHelloTaskAndExecuteAmbiguousCommand();
@@ -107,13 +134,20 @@ public class ViewCommandTest {
         assertFalse(this.viewCommand.awaitingUserResponse());
     }
 
+    /**
+     * Test that reminder is added if user selects a valid index.
+     */
     @Test
     public void testUserResponseValidIndex() {
         this.setupMultipleHelloTaskAndExecuteAmbiguousCommand();
         CommandResult result = this.viewCommand.userResponse("1");
         assertEquals("hello it's me\nReminders:\nYou have not set any reminders for this task.", result.getFeedback());
+        assertFalse(this.viewCommand.awaitingUserResponse());
     }
 
+    /**
+     * Test that reminder is not added if user selects an invalid index.
+     */
     @Test
     public void testUserResponseInvalidIndex() {
         this.setupMultipleHelloTaskAndExecuteAmbiguousCommand();
@@ -121,8 +155,12 @@ public class ViewCommandTest {
         String expectedResponse = "That's not a valid index. Enter a number between 1 and 2:\n" +
                 "1. hello it's me\n2. hello from the other side";
         assertEquals(expectedResponse, result.getFeedback());
+        assertTrue(this.viewCommand.awaitingUserResponse());
     }
 
+    /**
+     * Test that reminder is not added if user puts an invalid response.
+     */
     @Test
     public void testUserResponseInvalidResponse() {
         this.setupMultipleHelloTaskAndExecuteAmbiguousCommand();
@@ -130,5 +168,6 @@ public class ViewCommandTest {
         String expectedResponse = "I don't understand \"notindex\".\n" + "Enter a number to indicate which task to delete.\n" +
                 "1. hello it's me\n2. hello from the other side";
         assertEquals(expectedResponse, result.getFeedback());
+        assertTrue(this.viewCommand.awaitingUserResponse());
     }
 }

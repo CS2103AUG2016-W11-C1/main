@@ -7,7 +7,7 @@ import java.util.LinkedList;
  * Contains all outstanding tasks.
  */
 public class Schedule {
-    private static final int MAX_STATES = 10;
+    public static final int MAX_STATES = 10;
     private final LinkedList<State> states;
 
     /**
@@ -34,25 +34,38 @@ public class Schedule {
     }
 
     /**
+     * Edits the specified task.
+     *
+     * @param originalTask The original version of the specified task.
+     * @param newTask The edited version of the specified task.
+     */
+    public void editTask(Task originalTask, Task newTask) {
+        addState(getMostRecentState().editTask(originalTask, newTask));
+    }
+
+    /**
      * Delete the specified task.
      *
-     * @param task
-     *            The task to delete.
+     * @param task The task to delete.
      */
     public void deleteTask(Task task) {
         addState(getMostRecentState().deleteTask(task));
     }
 
     /**
-     * Edits the specified task.
+     * Marks specified task as done.
      *
-     * @param originalTask
-     *            The original version of the specified task.
-     * @param newTask
-     *            The edited version of the specified task.
+     * @param task The task to mark as done.
      */
-    public void editTask(Task originalTask, Task newTask) {
-        this.getTaskList().set(this.getTaskList().indexOf(originalTask), newTask);
+    public void doneTask(Task task) {
+        addState(getMostRecentState().doneTask(task));
+    }
+
+    /**
+     * Adds a reminder to a task.
+     */
+    public void addReminder(Task task, Reminder reminder) {
+        addState(getMostRecentState().addReminder(task, reminder));
     }
 
     /**

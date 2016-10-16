@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import linenux.command.parser.SearchKeywordParser;
 import linenux.command.result.CommandResult;
 import linenux.model.Reminder;
 import linenux.model.Schedule;
 import linenux.model.Task;
+import linenux.util.Either;
 import linenux.util.RemindersListUtil;
 import linenux.util.TasksListUtil;
 
@@ -17,17 +19,79 @@ import linenux.util.TasksListUtil;
 public class ViewCommand implements Command {
     private static final String TRIGGER_WORD = "view";
     private static final String DESCRIPTION = "Views details of specific task.";
-    private static final String VIEW_PATTERN = "(?i)^view (?<keywords>.*)$";
+    private static final String COMMAND_FORMAT = "view KEYWORDS";
+
+    private static final String VIEW_PATTERN = "(?i)^view(\\s+(?<keywords>.*))?$";
     private static final String NUMBER_PATTERN = "^\\d+$";
     private static final String CANCEL_PATTERN = "^cancel$";
 
     private Schedule schedule;
     private boolean requiresUserResponse;
     private ArrayList<Task> foundTasks;
+    private SearchKeywordParser searchKeywordParser;
 
     public ViewCommand(Schedule schedule) {
         this.schedule = schedule;
-        this.requiresUserResponse = false;
+        this.searchKeywordParser = new SearchKeywordParser(this.schedule);
+    }
+
+    @Override
+    public boolean respondTo(String userInput) {
+        return userInput.matches(VIEW_PATTERN);
+    }
+
+    @Override
+    public CommandResult execute(String userInput) {
+        assert userInput.matches(VIEW_PATTERN);
+        assert this.schedule != null;
+
+        String keywords = extractKeywords(userInput);
+
+        if (keywords.trim().isEmpty()) {
+            return makeNoKeywordsResult();
+        }
+
+        Either<ArrayList<Task>, CommandResult> tasks = this.searchKeywordParser.parse(keywords);
+
+        if (tasks.isLeft()) {
+            if (tasks.getLeft().size() == 1) {
+                return makeResult(tasks.getLeft().get(0));
+            } else {
+                setResponse(true, tasks.getLeft());
+                return makePromptResult(this.foundTasks);
+            }
+        } else {
+            return tasks.getRight();
+        }
+    }
+
+    @Override
+    public boolean awaitingUserResponse() {
+        return requiresUserResponse;
+    }
+
+    @Override
+    public CommandResult userResponse(String userInput) {
+        assert this.foundTasks != null;
+        assert this.schedule != null;
+
+        if (userInput.matches(NUMBER_PATTERN)) {
+            int index = Integer.parseInt(userInput);
+
+            if (1 <= index && index <= this.foundTasks.size()) {
+                Task task = this.foundTasks.get(index - 1);
+
+                setResponse(false, null);
+                return makeResult(task);
+            } else {
+                return makeInvalidIndexResult();
+            }
+        } else if (userInput.matches(CANCEL_PATTERN)) {
+            setResponse(false, null);
+            return makeCancelledResult();
+        } else {
+            return makeInvalidUserResponse(userInput);
+        }
     }
 
     @Override
@@ -41,65 +105,27 @@ public class ViewCommand implements Command {
     }
 
     @Override
-    public boolean respondTo(String userInput) {
-        return userInput.matches(VIEW_PATTERN);
+    public String getCommandFormat() {
+        return COMMAND_FORMAT;
     }
 
-    @Override
-    public CommandResult execute(String userInput) {
+    private String extractKeywords(String userInput) {
         Matcher matcher = Pattern.compile(VIEW_PATTERN).matcher(userInput);
 
-        if (matcher.matches()) {
-            assert (this.schedule != null);
-
-            String keywords = matcher.group("keywords");
-            String[] keywordsArr = keywords.split("\\s+");
-            ArrayList<Task> tasks = this.schedule.search(keywordsArr);
-
-            if (tasks.size() == 0) {
-                return makeNotFoundResult(keywords);
-            } else if (tasks.size() == 1) {
-                return makeResult(tasks.get(0));
-            } else {
-                this.requiresUserResponse = true;
-                this.foundTasks = tasks;
-                return makePromptResult(tasks);
-            }
-        }
-
-        return null;
-    }
-
-    @Override
-    public boolean awaitingUserResponse() {
-        return requiresUserResponse;
-    }
-
-    @Override
-    public CommandResult userResponse(String userInput) {
-        if (userInput.matches(NUMBER_PATTERN)) {
-            int index = Integer.parseInt(userInput);
-
-            if (1 <= index && index <= this.foundTasks.size()) {
-                Task task = this.foundTasks.get(index - 1);
-
-                this.requiresUserResponse = false;
-                this.foundTasks = null;
-                return makeResult(task);
-            } else {
-                return makeInvalidIndexResult();
-            }
-        } else if (userInput.matches(CANCEL_PATTERN)) {
-            this.requiresUserResponse = false;
-            this.foundTasks = null;
-            return makeCancelledResult();
+        if (matcher.matches() && matcher.group("keywords") != null) {
+            return matcher.group("keywords");
         } else {
-            return makeInvalidUserResponse(userInput);
+            return "";
         }
     }
 
-    private CommandResult makeNotFoundResult(String keywords) {
-        return () -> "Cannot find \"" + keywords + "\".";
+    private void setResponse(boolean requiresUserResponse, ArrayList<Task> foundTasks) {
+        this.requiresUserResponse = requiresUserResponse;
+        this.foundTasks = foundTasks;
+    }
+
+    private CommandResult makeNoKeywordsResult() {
+        return () -> "Invalid arguments.\n\n" + COMMAND_FORMAT + "\n\n" + CALLOUTS;
     }
 
     private CommandResult makeResult(Task task) {

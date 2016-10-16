@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
-import linenux.command.parser.EditTaskArgumentParser;
 import linenux.command.result.CommandResult;
 import linenux.model.Schedule;
 import linenux.model.Task;
@@ -305,37 +304,11 @@ public class EditCommandTest {
     }
 
     @Test
-    public void testCommandString() {
-        this.schedule.addTask(new Task("hello"));
-        assertNull(this.editCommand.getCommandString());
-
-        assertNoChange(() -> this.schedule.getTaskList().size(),
-                () -> this.editCommand.execute("edit hello n/new name"));
-
-        assertNull(this.editCommand.getCommandString());
-    }
-
-    @Test
-    public void testCommandStringAmbiguous() {
-        assertNull(this.editCommand.getCommandString());
-        this.setupMultipleHelloTasksAndExecuteAmbiguousCommand();
-        assertEquals("edit hello n/CS2103T Tutorial", this.editCommand.getCommandString());
-
-        assertNoChange(() -> this.schedule.getTaskList().size(),
-                () -> this.editCommand.userResponse("1"));
-        assertNull(this.editCommand.getCommandString());
-    }
-
-    @Test
     public void testUserResponseCancel() {
         this.setupMultipleHelloTasksAndExecuteAmbiguousCommand();
-        assertEquals("edit hello n/CS2103T Tutorial", this.editCommand.getCommandString());
-
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
                 () -> this.editCommand.userResponse("cancel"));
         assertEquals("OK! Not editing anything.", result.getFeedback());
-
-        assertNull(this.editCommand.getCommandString());
         assertFalse(this.editCommand.awaitingUserResponse());
     }
 
@@ -435,7 +408,7 @@ public class EditCommandTest {
     public void testCommandResultWhenNoKeywords() {
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
                 () -> this.editCommand.execute("edit "));
-        assertEquals("No keywords entered!", result.getFeedback());
+        assertEquals(expectedInvalidArgumentMessage() , result.getFeedback());
     }
 
     /**
@@ -471,10 +444,10 @@ public class EditCommandTest {
         this.schedule.addTask(new Task("flkasdjfaklsdfjaldf"));
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
                 () -> this.editCommand.execute("edit that nasty todo n/new name"));
-        assertEquals("Cannot find \"that nasty todo\".", result.getFeedback());
+        assertEquals("Cannot find task names with \"that nasty todo\".", result.getFeedback());
     }
 
     private String expectedInvalidArgumentMessage() {
-        return "Invalid arguments.\n\n" + EditTaskArgumentParser.ARGUMENT_FORMAT;
+        return "Invalid arguments.\n\n" + this.editCommand.getCommandFormat() + "\n\n" + Command.CALLOUTS;
     }
 }

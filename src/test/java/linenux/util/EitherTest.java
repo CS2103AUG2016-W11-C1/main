@@ -2,6 +2,8 @@ package linenux.util;
 
 import org.junit.Test;
 
+import java.util.NoSuchElementException;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -24,5 +26,15 @@ public class EitherTest {
         assertFalse(either.isLeft());
         assertTrue(either.isRight());
         assertEquals("hello", either.getRight());
+    }
+
+    @Test(expected=NoSuchElementException.class)
+    public void testGetLeftShouldThrow() {
+        Either.right("hello").getLeft();
+    }
+
+    @Test(expected=NoSuchElementException.class)
+    public void testGetRightShouldThrow() {
+        Either.left("hello").getRight();
     }
 }

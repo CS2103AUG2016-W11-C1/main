@@ -12,6 +12,9 @@ import org.junit.Test;
 import linenux.model.Schedule;
 import linenux.model.Task;
 
+/**
+ * JUnit test for undo command.
+ */
 public class UndoCommandTest {
     private Schedule schedule;
     private UndoCommand undoCommand;
@@ -28,7 +31,8 @@ public class UndoCommandTest {
     @Test
     public void testRespondToUndoCommand() {
         assertTrue(undoCommand.respondTo("undo"));
-        assertFalse(undoCommand.respondTo("undo "));
+        assertTrue(undoCommand.respondTo("undo "));
+        assertTrue(undoCommand.respondTo(" undo"));
     }
 
     /**

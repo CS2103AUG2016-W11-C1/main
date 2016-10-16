@@ -1,9 +1,9 @@
 package linenux.command;
 
+import java.util.ArrayList;
+
 import linenux.command.result.CommandResult;
 import linenux.util.StringsSimilarity;
-
-import java.util.ArrayList;
 
 /**
  * Act as a fail-safe for invalid or unrecognized commands.
@@ -13,16 +13,6 @@ public class InvalidCommand implements Command {
 
     public InvalidCommand(ArrayList<Command> commands) {
         this.commands = commands;
-    }
-
-    @Override
-    public String getTriggerWord() {
-        return null;
-    }
-
-    @Override
-    public String getDescription() {
-        return null;
     }
 
     /**
@@ -52,6 +42,21 @@ public class InvalidCommand implements Command {
         } else {
             return this.makeResponseWithSuggestion(closestCommand.getTriggerWord());
         }
+    }
+
+    @Override
+    public String getTriggerWord() {
+        return null;
+    }
+
+    @Override
+    public String getDescription() {
+        return null;
+    }
+
+    @Override
+    public String getCommandFormat() {
+        return null;
     }
 
     private String extractCommand(String userInput) {
