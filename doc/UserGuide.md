@@ -35,7 +35,7 @@ Without further ado, let's get started!
 1. Ensure that you have Java 8 installed on your computer.
 2. Download the latest linenux.jar from the [releases](https://github.com/CS2103AUG2016-W11-C1/main/releases) tab.
 <img src="images/releases.png">
-> Figure 1: Downloading linenux.jar
+ > Figure 1: Downloading linenux.jar
 3. Copy the file to the folder that you want to use as the home folder for Linenux.
 
 #### Launching
@@ -65,7 +65,13 @@ You worry that you might not have enough cash to buy groceries and decide to dra
 
 Time flies and it is already Friday. You wonder what needs to be done for the day. Type the following line in the command box:
 
-`> list et/2016-10-21` or more simply, `> today`
+`> list et/2016-10-21` 
+
+or more simply, 
+
+`> today`
+
+This will show you the list of tasks and reminders to be done for the day.
 
 **Step 4: Marking a task as done.**
 
@@ -74,6 +80,14 @@ You repeat step 3 on Saturday and realised that you needed to buy the groceries.
 `> done buy groceries`
 
 This command will prevent the task from showing up in subsequent `list` or `today` commands.
+
+**Step 5: Becoming proficient**
+
+You are very impressed with what you have seen thus far and want to learn more about the amazing things you can do with Linenux. Type the following line in the command box:
+
+`> help`
+
+
 
 ## Commands Summary:
 | Description | Command | Format |
