@@ -1,6 +1,7 @@
 package linenux.model;
 
 import static junit.framework.TestCase.assertEquals;
+import static linenux.helpers.Assert.assertNoChange;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -62,9 +63,6 @@ public class ScheduleTest {
             this.schedule.addTask(new Task("task" + Integer.toString(i)));
         }
         assertEquals(Schedule.MAX_STATES, this.schedule.getStates().size());
-        int beforeSize = this.schedule.getStates().size();
-        this.schedule.addTask(new Task("Hi"));
-        int afterSize = this.schedule.getStates().size();
-        assertEquals(beforeSize, afterSize);
+        assertNoChange(() -> this.schedule.getStates().size(), () -> { this.schedule.addTask(new Task("Hi")); return 0; });
     }
 }
