@@ -6,6 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import linenux.command.parser.ReminderArgumentParser;
+import linenux.command.parser.SearchKeywordParser;
 import linenux.command.result.CommandResult;
 import linenux.control.TimeParserManager;
 import linenux.model.Reminder;
@@ -19,89 +20,117 @@ import linenux.util.TasksListUtil;
  * Adds a reminder to a task in the schedule
  */
 public class RemindCommand implements Command {
-	public static final String ARGUMENT_FORMAT = "KEYWORDS... t/TIME [n/NOTE]";
-	public static final String COMMAND_FORMAT = "remind " + ARGUMENT_FORMAT;
+    private static final String TRIGGER_WORD = "remind";
+    private static final String DESCRIPTION = "Adds a reminder to a task in the schedule.";
+    public static final String COMMAND_FORMAT = "remind KEYWORDS t/TIME [n/NOTE]";
 
-	private static final String TRIGGER_WORD = "remind";
-	private static final String DESCRIPTION = "Adds a reminder to a task in the schedule.";
-
-	private static final String REMIND_PATTERN = "(?i)^remind(\\s+(?<arguments>.*))?$";
+    private static final String REMIND_PATTERN = "(?i)^remind((?<keywords>.*?)(?<arguments>((n|t)/)+?.*)??)";
     private static final String NUMBER_PATTERN = "^\\d+$";
     private static final String CANCEL_PATTERN = "^cancel$";
 
-	private Schedule schedule;
-	private boolean requiresUserResponse;
-	private ArrayList<Task> foundTasks;
-	private Reminder reminderForPrompt;
-	private TimeParserManager timeParserManager;
-	private ReminderArgumentParser reminderArgumentParser;
+    private Schedule schedule;
+    private boolean requiresUserResponse;
+    private String argument;
+    private ArrayList<Task> foundTasks;
+    private SearchKeywordParser searchKeywordParser;
+    private TimeParserManager timeParserManager;
+    private ReminderArgumentParser reminderArgumentParser;
 
-	public RemindCommand(Schedule schedule) {
-		this.schedule = schedule;
-		this.requiresUserResponse = false;
-		this.timeParserManager = new TimeParserManager(new ISODateWithTimeParser());
-		this.reminderArgumentParser = new ReminderArgumentParser(this.timeParserManager);
-	}
+    public RemindCommand(Schedule schedule) {
+        this.schedule = schedule;
+        this.searchKeywordParser = new SearchKeywordParser(this.schedule);
+        this.timeParserManager = new TimeParserManager(new ISODateWithTimeParser());
+        this.reminderArgumentParser = new ReminderArgumentParser(this.timeParserManager, COMMAND_FORMAT, CALLOUTS);
+    }
 
-	@Override
-	public String getTriggerWord() {
-		return TRIGGER_WORD;
-	}
+    @Override
+    public boolean respondTo(String userInput) {
+        return userInput.matches(REMIND_PATTERN);
+    }
 
-	@Override
-	public String getDescription() {
-		return DESCRIPTION;
-	}
+    @Override
+    public CommandResult execute(String userInput) {
+        assert userInput.matches(REMIND_PATTERN);
+        assert this.schedule != null;
 
-	@Override
+        String keywords = extractKeywords(userInput);
+
+        if (keywords.trim().isEmpty()) {
+            return makeNoKeywordsResult();
+        }
+
+        Either<ArrayList<Task>, CommandResult> tasks = this.searchKeywordParser.parse(keywords);
+
+        if (tasks.getLeft() != null) {
+            String argument = extractArgument(userInput);
+
+            if (tasks.getLeft().size() == 1) {
+                return implementRemind(tasks.getLeft().get(0), argument);
+            } else {
+                setResponse(true, tasks.getLeft(), argument);
+                return makePromptResult(this.foundTasks);
+            }
+        } else {
+            return tasks.getRight();
+        }
+
+    }
+
+    @Override
+    public boolean awaitingUserResponse() {
+        return requiresUserResponse;
+    }
+
+    @Override
+    public CommandResult userResponse(String userInput) {
+        //TODO
+        assert this.foundTasks != null;
+
+        if (userInput.matches(NUMBER_PATTERN)) {
+            int index = Integer.parseInt(userInput);
+
+            if (1 <= index && index <= this.foundTasks.size()) {
+                Task task = this.foundTasks.get(index - 1);
+                CommandResult result = implementRemind(task, this.argument);
+                setResponse(false, null, null);
+                return result;
+            } else {
+                return makeInvalidIndexResult();
+            }
+        } else if (userInput.matches(CANCEL_PATTERN)) {
+            setResponse(false, null, null);
+            return makeCancelledResult();
+        } else {
+            return makeInvalidUserResponse(userInput);
+        }
+    }
+
+    @Override
+    public String getTriggerWord() {
+        return TRIGGER_WORD;
+    }
+
+    @Override
+    public String getDescription() {
+        return DESCRIPTION;
+    }
+
+    @Override
     public String getCommandFormat() {
         return COMMAND_FORMAT;
     }
 
-	@Override
-	public boolean respondTo(String userInput) {
-		return userInput.matches(REMIND_PATTERN);
-	}
+    private String extractKeywords(String userInput) {
+        Matcher matcher = Pattern.compile(REMIND_PATTERN).matcher(userInput);
 
-	@Override
-	public CommandResult execute(String userInput) {
-		assert userInput.matches(REMIND_PATTERN);
-		assert this.schedule != null;
-
-		String argument = extractArgument(userInput);
-
-		Either<String, CommandResult> keywords = extractKeywords(argument);
-
-        if (keywords.isRight()) {
-            return keywords.getRight();
-        }
-
-        Either<Reminder, CommandResult> reminder = this.reminderArgumentParser.parse(argument);
-
-        if (reminder.isRight()) {
-        	return reminder.getRight();
-        }
-
-        String actualKeywords = keywords.getLeft();
-        String[] keywordsArr = actualKeywords.split("\\s+");
-        ArrayList<Task> tasks = this.schedule.search(keywordsArr);
-        Reminder actualReminder = reminder.getLeft();
-
-        if (tasks.size() == 0) {
-        	return makeNotFoundResult(actualKeywords);
-        } else if (tasks.size() == 1) {
-        	Task task = tasks.get(0);
-        	task.addReminder(actualReminder);
-        	return makeResult(task, actualReminder);
+        if (matcher.matches() && matcher.group("keywords") != null) {
+            return matcher.group("keywords").trim(); // TODO
         } else {
-        	this.requiresUserResponse = true;
-        	this.foundTasks = tasks;
-        	this.reminderForPrompt = actualReminder;
-        	return makePromptResult(tasks);
+            return "";
         }
-	}
+    }
 
-	private String extractArgument(String userInput) {
+    private String extractArgument(String userInput) {
         Matcher matcher = Pattern.compile(REMIND_PATTERN).matcher(userInput);
 
         if (matcher.matches() && matcher.group("arguments") != null) {
@@ -111,69 +140,37 @@ public class RemindCommand implements Command {
         }
     }
 
-    private Either<String, CommandResult> extractKeywords(String argument) {
- 	    String[] parts = argument.split("(^| )(t|n)/");
+    private CommandResult implementRemind(Task original, String argument) {
+        Either<Reminder, CommandResult> result = reminderArgumentParser.parse(argument);
 
- 	    if (parts.length > 0 && parts[0].trim().length() > 0) {
-            return Either.left(parts[0].trim());
+        if (result.isLeft()) {
+            this.schedule.addReminder(original, result.getLeft());
+            return makeResult(original, result.getLeft());
         } else {
-            return Either.right(makeInvalidArgumentResult());
+            return result.getRight();
         }
     }
 
-    @Override
-	public boolean awaitingUserResponse() {
-		return requiresUserResponse;
-	}
-
-	@Override
-	public CommandResult userResponse(String userInput) {
-		assert this.foundTasks != null;
-
-		Reminder reminder = this.reminderForPrompt;
-
-		if (userInput.matches(NUMBER_PATTERN)) {
-			int index = Integer.parseInt(userInput);
-
-			if (1 <= index && index <= this.foundTasks.size()) {
-				Task task = this.foundTasks.get(index - 1);
-				task.addReminder(reminder);
-
-				this.requiresUserResponse = false;
-				this.foundTasks = null;
-				this.reminderForPrompt = null;
-
-				return makeResult(task, reminder);
-			} else {
-				return makeInvalidIndexResult();
-			}
-		} else if (userInput.matches(CANCEL_PATTERN)) {
-			this.requiresUserResponse = false;
-			this.foundTasks = null;
-			this.reminderForPrompt = null;
-			return makeCancelledResult();
-		} else {
-			return makeInvalidUserResponse(userInput);
-		}
-	}
-
-	private CommandResult makeInvalidArgumentResult() {
-        return () -> "Invalid arguments.\n\n" + ARGUMENT_FORMAT;
+    private void setResponse(boolean requiresUserResponse, ArrayList<Task> foundTasks, String argument) {
+        this.requiresUserResponse = requiresUserResponse;
+        this.foundTasks = foundTasks;
+        this.argument = argument;
     }
 
-    private CommandResult makeNotFoundResult(String keywords) {
-    	return () -> "Cannot find \"" + keywords + "\".";
+    private CommandResult makeNoKeywordsResult() {
+        return () -> "Invalid arguments.\n\n" + COMMAND_FORMAT + "\n\n" + CALLOUTS;
     }
 
     private CommandResult makeResult(Task task, Reminder reminder) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd h:mma");
 
-    	return () -> "Added reminder on " + reminder.getTimeOfReminder().format(formatter) + " for " + task.getTaskName();
+        return () -> "Added reminder on " + reminder.getTimeOfReminder().format(formatter) + " for "
+                + task.getTaskName();
     }
 
     private CommandResult makePromptResult(ArrayList<Task> tasks) {
-    	return () -> {
-    		StringBuilder builder = new StringBuilder();
+        return () -> {
+            StringBuilder builder = new StringBuilder();
             builder.append("Which one? (1-");
             builder.append(tasks.size());
             builder.append(")\n");
@@ -181,12 +178,12 @@ public class RemindCommand implements Command {
             builder.append(TasksListUtil.display(tasks));
 
             return builder.toString();
-    	};
+        };
     }
 
-	private CommandResult makeCancelledResult() {
-		return () -> "OK! Not adding new reminder.";
-	}
+    private CommandResult makeCancelledResult() {
+        return () -> "OK! Not adding new reminder.";
+    }
 
     private CommandResult makeInvalidUserResponse(String userInput) {
         return () -> {

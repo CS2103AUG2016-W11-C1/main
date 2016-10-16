@@ -34,6 +34,16 @@ public class Schedule {
     }
 
     /**
+     * Edits the specified task.
+     *
+     * @param originalTask The original version of the specified task.
+     * @param newTask The edited version of the specified task.
+     */
+    public void editTask(Task originalTask, Task newTask) {
+        addState(getMostRecentState().editTask(originalTask, newTask));
+    }
+
+    /**
      * Delete the specified task.
      *
      * @param task The task to delete.
@@ -52,13 +62,10 @@ public class Schedule {
     }
 
     /**
-     * Edits the specified task.
-     *
-     * @param originalTask The original version of the specified task.
-     * @param newTask The edited version of the specified task.
+     * Adds a reminder to a task.
      */
-    public void editTask(Task originalTask, Task newTask) {
-        this.getTaskList().set(this.getTaskList().indexOf(originalTask), newTask);
+    public void addReminder(Task task, Reminder reminder) {
+        addState(getMostRecentState().addReminder(task, reminder));
     }
 
     /**

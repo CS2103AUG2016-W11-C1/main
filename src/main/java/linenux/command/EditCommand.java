@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import linenux.command.parser.EditTaskArgumentParser;
+import linenux.command.parser.EditArgumentParser;
 import linenux.command.parser.SearchKeywordParser;
 import linenux.command.result.CommandResult;
 import linenux.control.TimeParserManager;
@@ -32,13 +32,13 @@ public class EditCommand implements Command {
     private ArrayList<Task> foundTasks;
     private SearchKeywordParser searchKeywordParser;
     private TimeParserManager timeParserManager;
-    private EditTaskArgumentParser editTaskArgumentParser;
+    private EditArgumentParser editArgumentParser;
 
     public EditCommand(Schedule schedule) {
         this.schedule = schedule;
         this.searchKeywordParser = new SearchKeywordParser(this.schedule);
         this.timeParserManager = new TimeParserManager(new ISODateWithTimeParser());
-        this.editTaskArgumentParser = new EditTaskArgumentParser(this.timeParserManager, COMMAND_FORMAT, CALLOUTS);
+        this.editArgumentParser = new EditArgumentParser(this.timeParserManager, COMMAND_FORMAT, CALLOUTS);
     }
 
     @Override
@@ -135,7 +135,7 @@ public class EditCommand implements Command {
     }
 
     private CommandResult implementEdit(Task original, String argument) {
-        Either<Task, CommandResult> result = editTaskArgumentParser.parse(original, argument);
+        Either<Task, CommandResult> result = editArgumentParser.parse(original, argument);
 
         if (result.isLeft()) {
             this.schedule.editTask(original, result.getLeft());

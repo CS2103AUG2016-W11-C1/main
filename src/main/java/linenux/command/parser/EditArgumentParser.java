@@ -12,16 +12,16 @@ import linenux.util.Either;
 /**
  * Parses new details of task to be edited.
  */
-public class EditTaskArgumentParser {
+public class EditArgumentParser {
     public static String COMMAND_FORMAT;
     public static String CALLOUTS;
 
     private TimeParserManager timeParserManager;
 
-    public EditTaskArgumentParser(TimeParserManager timeParserManager, String commandFormat, String callouts) {
+    public EditArgumentParser(TimeParserManager timeParserManager, String commandFormat, String callouts) {
         this.timeParserManager = timeParserManager;
-        EditTaskArgumentParser.COMMAND_FORMAT = commandFormat;
-        EditTaskArgumentParser.CALLOUTS = callouts;
+        EditArgumentParser.COMMAND_FORMAT = commandFormat;
+        EditArgumentParser.CALLOUTS = callouts;
     }
 
     public Either<Task, CommandResult> parse(Task original, String argument) {
