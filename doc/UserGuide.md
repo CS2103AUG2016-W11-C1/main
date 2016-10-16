@@ -35,8 +35,6 @@ Without further ado, let's get started!
 1. Ensure that you have Java 8 installed on your computer.
 2. Download the latest linenux.jar from the [releases](https://github.com/CS2103AUG2016-W11-C1/main/releases) tab.
 <img src="images/releases.png">
-         > Figure 1: Downloading linenux.jar
-		 
 3. Copy the file to the folder that you want to use as the home folder for Linenux.
 
 #### Launching
@@ -44,7 +42,6 @@ Without further ado, let's get started!
 Double-click on the file to launch Linenux. Wait for a few seconds for the main window to appear.  
 
 <img src="images/mainWindow.png">
-> Figure 2: Linenux's main window
 
 #### Walkthrough
 
@@ -88,7 +85,7 @@ You are very impressed with what you have seen thus far and want to learn more a
 
 `> help`
 
-
+This brings up the list of Linenux commands with their description and format. It is meant for a quick look-up. Continue to read the next section if you want a complete explanation of the commands.
 
 ## Commands Summary:
 | Description | Command | Format |
@@ -104,8 +101,6 @@ You are very impressed with what you have seen thus far and want to learn more a
 | Viewing details of tasks and reminders | [`view`](#viewing-details-of-task-or-reminder-view) | `view` KEYWORDS… |
 | Help for commands | [`help`](#viewing-help--help) | `help` [KEYWORD] |
 | Exiting Linenux | [`exit`](#exiting-linenux-exit) | `exit` |
-
-
 
 ## List of Commands
 #### Some notes before you start:
