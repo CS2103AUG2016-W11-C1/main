@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import linenux.control.ControlUnit;
 
 import java.io.IOException;
 
@@ -16,6 +17,8 @@ public class MainWindowController {
     private SplitPane splitPane;
     @FXML
     private AnchorPane commandBoxContainer;
+
+    private ControlUnit controlUnit = new ControlUnit();
 
     @FXML
     private void initialize() {
@@ -33,6 +36,8 @@ public class MainWindowController {
             loader.setLocation(MainWindowController.class.getResource("/view/TodoBox.fxml"));
             AnchorPane todoBox = loader.load();
             splitPane.getItems().add(todoBox);
+            TodoBoxController controller = loader.getController();
+            controller.setControlUnit(this.controlUnit);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -81,6 +86,9 @@ public class MainWindowController {
             AnchorPane.setBottomAnchor(field, 0.0);
             AnchorPane.setLeftAnchor(field, 0.0);
             commandBoxContainer.getChildren().add(field);
+
+            CommandBoxController controller = loader.getController();
+            controller.setControlUnit(this.controlUnit);
         } catch (IOException e) {
             e.printStackTrace();
         }

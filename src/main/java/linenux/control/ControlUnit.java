@@ -29,4 +29,8 @@ public class ControlUnit {
     private Schedule getExistingSchedule() {
         return null;
     }
+
+    public Schedule getSchedule() {
+        return this.schedule;
+    }
 }
