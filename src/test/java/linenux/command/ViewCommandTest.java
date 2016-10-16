@@ -66,7 +66,7 @@ public class ViewCommandTest {
     public void testCommandResultWhenNoMatchFound() {
         this.schedule.addTask(new Task("asdjkahsdkjhasjdkh"));
         CommandResult result = this.viewCommand.execute("view that nasty todo");
-        assertEquals("Cannot find \"that nasty todo\".", result.getFeedback());
+        assertEquals("Cannot find task names with \"that nasty todo\".", result.getFeedback());
     }
 
     @Test
