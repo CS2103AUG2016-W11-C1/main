@@ -96,8 +96,8 @@ This brings up the list of Linenux commands with their description and format. I
 
 *Legend:*
 
-1. *Fields that are enclosed in square brackets `[]` are **optional**.*
-2. *`...` means that **multiple** words can be used for that field. E.g. `> add assignment #/nus cs2103 assignments`.*
+1. *Optional fields are enclosed in square brackets `[]`.*
+2. *The notation `...` means that **multiple** words can be used for that field. E.g. `> add assignment #/nus cs2103 assignments`.*
 
 | Command                  | Description                                | Format                                                         |
 |--------------------------|--------------------------------------------|----------------------------------------------------------------|
@@ -131,11 +131,11 @@ This brings up the list of Linenux commands with their description and format. I
 
 *Things to note:*
 
-1. *The `command` word **must** be the first word in the sentence.*
-2. *All commands and their respective fields are **case-insensitive**.*
-3. *The order of the fields **do not matter**.*
-5. *Fields that are enclosed in square brackets `[]` are **optional**.*
-6. *`...` means that **multiple** words can be used for that field. E.g. `> add assignment #/nus cs2103 assignments`.*
+1. *The `command` word must be the first word in the sentence.*
+2. *All commands and their respective fields are case-insensitive.*
+3. *The order of the fields do not matter.*
+5. *Optional fields are enclosed in square brackets `[]`.*
+6. *The notation `...` means that multiple words can be used for that field. E.g. `> add assignment #/nus cs2103 assignments`.*
 
 \* Some of the commands in Linenux will ask for KEYWORDS of the task/reminder that you are doing the command for. In those cases, Linenux will search your schedule for the tasks/reminders that matches your KEYWORDS. There are 2 things that can happen when the Linenux finds something from your schedule:
   1. Only one task/reminder was found:
