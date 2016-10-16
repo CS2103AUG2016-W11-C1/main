@@ -96,8 +96,8 @@ This brings up the list of Linenux commands with their description and format. I
 
 *Legend:*
 
-1. *Optional fields are enclosed in square brackets `[]`.*
-2. *`...` means that multiple words can be used for that field. E.g. `> add assignment #/nus cs2103 assignments`.*
+1. *Fields that are enclosed in square brackets `[]` are **optional**.*
+2. *`...` means that **multiple** words can be used for that field. E.g. `> add assignment #/nus cs2103 assignments`.*
 
 | Command                  | Description                                | Format                                                         |
 |--------------------------|--------------------------------------------|----------------------------------------------------------------|
@@ -109,8 +109,8 @@ This brings up the list of Linenux commands with their description and format. I
 | [`clear`](#clear)        | Clearing a set of tasks					| `clear [#/TAGS...]											 |
 | [`freetime`](#freetime)  | Finding a free timeslot   	  		 	    | `freetime` [st/START_TIME] et/END_TIME 				         |
 | [`list`](#list) 		   | Listing tasks and reminders 		        | `list` [KEYWORDS...] [st/START_TIME] [et/END_TIME] [#/TAGS...] |
-| [`today`](#today)        | Discovering things to do for the day       | `today` 													     |
-| [`tomorrow`](#tomorrow)  | Uncovering what lies ahead the next day    | `tomorrow` 													 |
+| [`today`](#today)        | Listing tasks and reminders for today      | `today` 													     |
+| [`tomorrow`](#tomorrow)  | Listing tasks and reminders for tomorrow   | `tomorrow` 													 |
 | [`view`](#view)          | Viewing details around tasks and reminders | `view` KEYWORDS...        									 |
 | [`undo`](#undo) 		   | Undoing previous command          	        | `undo` 				   									     |
 | [`help`](#help) 		   | Seeking help				  		        | `help` [COMMMAND_NAME]    									 |
@@ -129,14 +129,13 @@ This brings up the list of Linenux commands with their description and format. I
 
 ## Commands
 
-#### Some notes before you start:
-##### Command format:
-  1. Any capitalized words, e.g TASK_NAME, is a field required by the command.
-  2. All time fields are in the format of YYYY-MM-DD.
-  3. Any field surrounded by square brackets, '[ ]', are optional.
-  4. Each field represents one word, and fields are seperated by spaces.
-  5. The only exception to (4) is when you see '...' after a field, indicating that you can key in multiple words for that particular field.
-  6. case insensitive
+*Things to note:*
+
+1. *The `command` word **must** be the first word in the sentence.*
+2. *All commands and their respective fields are **case-insensitive**.*
+3. *The order of the fields **do not matter**.*
+5. *Fields that are enclosed in square brackets `[]` are **optional**.*
+6. *`...` means that **multiple** words can be used for that field. E.g. `> add assignment #/nus cs2103 assignments`.*
 
 \* Some of the commands in Linenux will ask for KEYWORDS of the task/reminder that you are doing the command for. In those cases, Linenux will search your schedule for the tasks/reminders that matches your KEYWORDS. There are 2 things that can happen when the Linenux finds something from your schedule:
   1. Only one task/reminder was found:
