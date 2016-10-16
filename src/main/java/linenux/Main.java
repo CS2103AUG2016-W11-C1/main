@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.fxml.FXMLLoader;
+import linenux.view.MainWindowController;
 
 /**
  * Main program for Linenux.
@@ -33,10 +34,11 @@ public class Main extends Application implements Stoppable {
     @Override
     public void start(Stage primaryStage) throws Exception {
         try {
-            consoleController = setUpConsole(primaryStage);
-            consoleController.setControlUnit(new ControlUnit());
-            consoleController.setActiveControl();
-            consoleController.displayWelcomeMessage(VERSION);
+//            consoleController = setUpConsole(primaryStage);
+//            consoleController.setControlUnit(new ControlUnit());
+//            consoleController.setActiveControl();
+//            consoleController.displayWelcomeMessage(VERSION);
+            setupMainWindow(primaryStage);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -57,5 +59,22 @@ public class Main extends Application implements Stoppable {
         primaryStage.setScene(new Scene(loader.load(), INITIAL_CONSOLE_WIDTH, INITIAL_CONSOLE_HEIGHT));
         primaryStage.show();
         return loader.getController();
+    }
+
+    private MainWindowController setupMainWindow(Stage primaryStage) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("/view/MainWindow.fxml"));
+            primaryStage.setTitle(APP_NAME);
+            primaryStage.getIcons().add(new Image("/images/terminal.png"));
+            Scene scene = new Scene(loader.load(), INITIAL_CONSOLE_WIDTH, INITIAL_CONSOLE_HEIGHT);
+            primaryStage.setScene(scene);
+            primaryStage.show();
+            MainWindowController controller = loader.getController();
+            return controller;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }
