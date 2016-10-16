@@ -53,11 +53,11 @@ Double-click on the file to launch Linenux. Wait for a few seconds for the main 
 
 <img src="images/mainWindowDiagram.png">
 
-1) Command Box - where you enter the command.
-2) To-do Panel - shows to-dos.
-3) Deadline Panel - shows deadlines.
-4) Event Panel - shows events.
-5) Display Panel - shows reminders and search results.
+1. Command Box - where you enter the command.
+2. To-do Panel - shows to-dos.
+3. Deadline Panel - shows deadlines.
+4. Event Panel - shows events.
+5. Display Panel - shows reminders and search results.
 
 #### Functional Walkthrough
 
@@ -108,7 +108,7 @@ This brings up the list of Linenux commands with their description and format. I
 *Legend:*
 
 1. *Optional fields are enclosed in square brackets `[]`.*
-2. *The notation `...` means that **multiple** words can be used for that field. E.g. `> add assignment #/university life #/cs2103.`*
+2. *The notation `...` means that **multiple** words can be used for that field. E.g.* `> add assignment #/university life #/cs2103.`
 
 | Command                  | Description                                | Format                                                            |
 |--------------------------|--------------------------------------------|-------------------------------------------------------------------|
@@ -186,11 +186,11 @@ Adding a task has never been this easy. Just indicate the appropriate fields and
 
 Setting reminders are as simple as adding a task. Just indicate the name of task you want to add the reminder to, the time of the reminder, notes (if any) associated with that reminder and you are all set. Reminders will show up on the display panel upon launch or when the commands `list`, `today` and `tomorrow` are entered.
 
-`Format:`
+*Format:*
 
 `remind KEYWORDS... t/TIME [n/NOTE]`
 
-`Examples:`
+*Examples:*
 
 ```
 // Setting a reminder at 15 October 2016, 6pm without any notes.
@@ -200,12 +200,12 @@ Setting reminders are as simple as adding a task. Just indicate the name of task
 > remind house warming t/2016-10-16 07:00am n/buy groceries
 ```
 
-`Results:`
+*Results:*
 
 1) A reminder is added to the deadline `pay utility bills`.
 2) A reminder with a note `buy groceries` attached is added to the event `house warming`.
 
-`Fun Fact:`
+*Fun Fact:*
 
 Ever wondered why we use the word `KEYWORDS` rather than `TASK_NAME`? This is because the `remind` command actually searches for task names containing those keywords behind the scene! For example, consider the scenario below :
 
