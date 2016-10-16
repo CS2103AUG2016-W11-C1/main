@@ -97,7 +97,7 @@ This brings up the list of Linenux commands with their description and format. I
 *Legend:*
 
 1. *Optional fields are enclosed in square brackets `[]`.*
-2. *The notation `...` means that **multiple** words can be used for that field. E.g. `> add assignment #/nus cs2103 assignments`.*
+2. *The notation `...` means that **multiple** words can be used for that field. E.g. `> add assignment #/cs2103 assignments`.*
 
 | Command                  | Description                                | Format                                                         |
 |--------------------------|--------------------------------------------|----------------------------------------------------------------|
@@ -152,22 +152,22 @@ Adding a task has never been this easy. Just indicate the appropriate fields and
 *Examples:*
 
 ```
-//Adding a deadline
+// Adding a deadline
 > add pay utility bills et/2016-10-16 #/household bills
 
-//Adding an event
+// Adding an event
 > add house warming st/2016-10-16 5:00pm et/2016-10-16 9:00pm #/household
 
-//Adding a to-do
+// Adding a to-do
 > add watch videos on presidential election #/trump
 ```
 
 *Result:*
 
-1. Tasks "pay utility bills", "house warming" and "watch videos on presidential election" are automically assigned to their respective categories.
-2. Deadline "pay utility bills" belong to the group "household" and "bills".
-3. Event "house warming" belong to the group "household".
-4. To-do "watch videos on presidential election" belong to the group "trump*.
+1. Tasks `pay utility bills`, `house warming` and `watch videos on presidential election` are automically assigned to their respective categories.
+2. Deadline "pay utility bills" belong to the group `household` and `bills`.
+3. Event `house warming` belong to the group `household`.
+4. To-do `watch videos on presidential election` belong to the group `trump`.
 
 
 #### Adding reminders to a task: `remind`
