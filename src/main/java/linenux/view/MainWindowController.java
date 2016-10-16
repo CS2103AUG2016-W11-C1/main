@@ -49,6 +49,8 @@ public class MainWindowController {
             loader.setLocation(MainWindowController.class.getResource("/view/DeadlineBox.fxml"));
             AnchorPane deadlineBox = loader.load();
             splitPane.getItems().add(deadlineBox);
+            DeadlineBoxController controller = loader.getController();
+            controller.setControlUnit(this.controlUnit);
         } catch (IOException e) {
             e.printStackTrace();
         }
