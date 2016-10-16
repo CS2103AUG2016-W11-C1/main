@@ -1,7 +1,7 @@
 # User Guide
 
-* [Introduction](#introduction)
-* [Quick Start](#quick-start)
+* [About](#about)
+* [Getting Started](#getting-started)
 * [Commands Summary](#commands-summary)
 * [List of Commands](#list-of-commands)
     * [Notes](#some-notes-before-you-start)
@@ -17,14 +17,15 @@
     * [Viewing help: `help`](#viewing-help-help)
     * [Exiting the Program: `exit`](#exiting-the-program-exit)
 
+## About
 
+Everyone of us will face, at some point in our lives, the feeling of being overwhelmed by the amount of things to do: meeting project deadlines, attending a friend's wedding ceremony, paying the bills and the list goes on. This hectic pace of life is the new normal, but it doesn't mean we have to suffer in silence. We believe that everyone should have control over their own lives and Linenux is the key to achieving just that.
 
-## Introduction
-We understand that in everyone’s daily lives, we will be thrown many tasks, for example, to attend meetings, preparing documents by a certain deadline etc. Our application, Linenux, aims to help you effectively organize and manage all your different tasks with a simple type on your keyboard.
+Linenux is essentially a task organiser. It helps you to prioritise your tasks by urgency and importance, so that you can better make use of your time by focussing on things that matter. What sets Linenux apart from other task managers is its simplicity and efficiency. It requires only a single line of command. No mouse clicks needed and no gimmicks. Linenux works only as fast as you can type, making it a perfect fit for those with an affinity for typing.
 
+Without further ado, let's get started!
 
-
-## Quick Start
+## Getting Started
 
 1. Find the project in the `Project Explorer` or `Package Explorer` (usually located at the left side)
 2. Right click on the project
