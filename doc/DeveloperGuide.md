@@ -197,265 +197,132 @@ Priority | As a ...  | I want to ...                             | So that I can
 
 #### Appendix B : Use Cases
 
->Use Case: Add task
-MSS
+##### Use Case: Add task
+**MSS**
 1. User requests to add task.
-2. TaskManager categorizes task under one of the 3 default tasks.
-3. TaskManager adds task into schedule.
-4. TaskManager shows message indicating successful add, including details of added task.
-5. Use Case ends.
+2. Linenux adds task into schedule and shows message indicating successful add, including details of added task.
+Use Case ends.
 
-Extensions
-<div class="indent">
-  1a. User provides start time without end time.
-    <div class="indent">
-      1a1. TaskManager shows error message to indicate that task is not a valid task.
-    </div>
-    <div class="indent">
-      1a2. Use Case ends.
-    </div>
-</div>
+**Extensions**
+1a. User provides start time without end time.
+> 1a1. TaskManager shows error message to indicate that task is not a valid task.
+> Use Case ends.
 
-<div class="indent mb16">
-  1b. User requests to add an event with overlapping timeslot with an existing event.
-    <div class="indent">
-      1b1. TaskManager shows list of overlapping events.
-    </div>
-    <div class="indent">
-      1b2. TaskManager will show filtered tasks instead.
-    </div>
-    <div class="indent">
-      1b3. Use Case ends.
-    </div>
-</div>
+1b. User provides no start time and end time.
+> 1b1. Linenux will categorize task as a To-Do.
+> Use Case resumes at step 2.
 
->Use Case: List tasks
-MSS
-1. User requests to list all tasks.
-2. TaskManager shows a list of task.
-3. Use Case ends.
+1c. User provides end time without start time.
+> 1c1. Linenux will categorize task as a Deadline.
+> Use Case resumes at step 2.
 
-Extensions
-<div class="indent mb16">
-  1a. User provides search parameters.
-    <div class="indent">
-      1a1. TaskManager will perform fuzzy search and filter tasks based on search parameters.
-    </div>
-    <div class="indent">
-      1a2. TaskManager will show filtered tasks instead.
-    </div>
-    <div class="indent">
-      1a3. Use Case ends.
-    </div>
-</div>
+1d. User provides start time and end time.
+> 1d1. Linenux will categorize task as an Event.
+> Use Case resumes at step 2.
 
->Use Case: Add reminder to tasks
-MSS
-1. User requests to add reminder to task by providing search parameters for task.
-2. TaskManager adds reminder to task.
-3. TaskManager shows message indicating successful add, including details of reminder and task that reminder was added to.
-4. Use Case ends.
+1e. User requests to add an event with an overlapping timeslot with an existing event.
+> 1e1. Linenux will show the list of overlapping events and prompts user for confirmation to add the event.
+> 1e2. User confirms to add task.
+> Use Case resumes at step 2.
 
-Extensions
-<div class="indent">
-  1a. More than one task found when with the given parameters.
-    <div class="indent">
-      1a1. TaskManager shows the list of tasks found.
-    </div>
-    <div class="indent">
-      1a2. User select task from given list.
-    </div>
-    <div class="indent">
-      1a3. Use Case resumes at step 2.
-    </div>
-</div>
-<div class="indent">
-  1b. No task found from given parameters.
-    <div class="indent">
-      1b1. TaskManager shows error indicating no task found.
-    </div>
-    <div class="indent">
-      1b2. Use Case ends.
-    </div>
-</div>
-<div class="indent mb16">
-  1c. Specified index is invalid
-    <div class="indent">
-      1c1. TaskManager shows error message indicating invalid index.
-    </div>
-    <div class="indent">
-      1c2. Use Case resumes at step 1a1.
-    </div>
-</div>
+1e1a. User cancels the add.
+> 1e1a1. Linenux shows that task is not added.
+> Use Case ends.
 
->Use Case: Delete task
-MSS
-1. User requests to delete task by giving search parameters.
-2. TaskManager deletes specific task from schedule.
-3. TaskManager shows message indicating successful delete, including details of task deleted.
-4. Use Case ends.
+##### Use Case: List tasks
+**MSS**
+1. User requests to list tasks giving certain parameters.
+2. Linenux filters all the tasks based given parameters and shows the filtered list of tasks to the User.
+Use Case ends.
 
-Extensions:
-<div class="indent">
-  1a. No tasks found.
-    <div class="indent">
-      1a1. TaskManager shows error message indicating no task found.
-    </div>
-    <div class="indent">
-      1a2. Use Case ends
-    </div>
-</div>
-<div class="indent">
-  1b. More than one task found.
-    <div class="indent">
-      1b1. TaskManager show list of tasks found.
-    </div>
-    <div class="indent">
-      1b2. User specify index of task to delete.
-    </div>
-    <div class="indent">
-      1b3. Use Case resumes at step 2.
-    </div>
-</div>
-<div class="indent mb16">
-  1c. Specified index is invalid.
-    <div class="indent">
-      1c1. TaskManager shows error message indicating invalid index.
-    </div>
-    <div class="indent">
-      1c2. Use Case resumes at step 1b1.
-    </div>
-</div>
+**Extensions**
+1a. User provides no parameters.
+> 1a1. Linenux will show all tasks and reminders for the next 7 days to the User.
+> Use Case ends.
 
->Use Case: Mark task as done.
-MSS
-1. User requests to mark task as done by giving search parameters.
-2. TaskManager marks specific task as done
-3. TaskManager shows message indicating task is marked as done, including details of task
-4. Use Case ends
+##### Use Case: Using commands which has a search parameter.
+**MSS**
+1. User uses a command which has a search parameter(e.g remind, edit, view etc).
+2. Linenux will search all task names and perform the command on the found task.
+Use Case ends.
 
-Extensions:
-<div class="indent">
-  1a. No tasks found
-  <div class="indent">
-    1a1. TaskManager shows error message indicating no task found
-  </div>
-  <div class="indent">
-    1a2. Use Case ends
-  </div>
-</div>
-<div class="indent">
-  1b. More than one task found
-    <div class="indent">
-      1b1. TaskManager show list of tasks found
-    </div>
-    <div class="indent">
-      1b2. User specify index of task to mark as done
-    </div>
-    <div class="indent">
-      1b3. Use Case resumes at step 2
-    </div>
-</div>
-<div class="indent mb16">
-  1b2a. Specified index is invalid
-    <div class="indent">
-      1b2a1. TaskManager shows error message indicating invalid index
-    </div>
-    <div class="indent">
-      1b2a2. Use Case resumes at step 1b1
-    </div>
-</div>
+**Extensions**
+2a. More than one task found with the given search parameter.
+> 2a1. Linenux will show the list of tasks, each with their index, found to the user and prompt the user for the index of the task to perform the command on.
+> 2a2. User provides the index of the task to perform the command on.
+> 2a3. Linenux performs the command on the requested task.
+> Use Case ends
 
->Use Case: Undo
-MSS
-1. User requests to undo to previous state
-2. TaskManager undos to previous state
-3. Use case ends
+2a2a. User provides invalid index(not a number or number out of range).
+> 2a2a1. Linenux will show an error message and prompt the User with the list of found tasks again.
+> Use Case resumes at step 2a2.
 
-Extensions:
-<div class="indent mb16">
-  1a. No previous state to undo to
-    <div class="indent">
-      1a1. TaskManager shows error indicating unable to undo
-    </div>
-    <div class="indent">
-      1a2. Use Case ends
-    </div>
-</div>
+2a2b. User requests to cancel command.
+> 2a2b1. Linenux shows that the requested command is not performed.
+> Use Case ends.
 
->Use Case: Exit
-MSS:
+2b. No tasks were found with the given search parameters.
+> 2b1. Linenux shows error that no tasks were found.
+> Use Case ends.
+
+##### Use Case: Add reminder to task
+**MSS**
+1. User requests to add reminder to task, providing search parameters for task.
+2. Linenux searches for the task (See Use Case for commands with search).
+3. Linenux adds reminder to the found task and shows message indicating successful add, including details of reminder and task that reminder was added to.
+Use Case ends.
+
+##### Use Case: Delete task
+**MSS**
+1. User requests to delete task, providing search parameters for task.
+2. Linenux searches for the task (See Use Case for commands with search)l
+3. TaskManager deletes specific task from schedule and shows message indicating successful delete, including details of task deleted.
+Use Case ends.
+
+##### Use Case: Mark task as done.
+**MSS**
+1. User requests to mark task as done, providing search parameters for task.
+2. Linenux marks found task as done, and shows message indicating task is marked as done, including details of task.
+Use Case ends.
+
+##### Use Case: Undo
+**MSS**
+1. User requests to undo to previous state.
+2. Linenux undos to previous state.
+Use case ends.
+
+**Extensions**
+1a. No previous state to undo to.
+> 1a1. Linenux shows error indicating unable to undo.
+> Use Case ends
+
+##### Use Case: Edit
+**MSS**
+1. User requests to edit task, providing search parameters and changes to be made.
+2. Linenux searches for the task (See Use Case for commands with search).
+3. Linenux processes changes and shows changes made.
+Use Case ends.
+
+**Extensions**
+1a. Specified changes are invalid.
+> 1c1. Linenux shows error message indicating invalid changes.
+> Use case ends.
+
+##### Use Case: Exit
+**MSS**
 1. User requests to exit application.
-2. TaskManager prompts user to confirm application exit.
-3. TaskManager closes.
-4. Use case ends
+2. Linenux prompts user to confirm application exit.
+3. User confirms exit.
+4. Linenux closes.
+Use case ends.
 
-Extensions:
-<div class="indent">
-  2a. User confirms exit while TaskManager is still processing information (e.g. reading/ saving a file).
-    <div class="indent">
-      2a1. TaskManager blocks input until process is done.
-    </div>
-    <div class="indent">
-      2a2. TaskManager closes.
-    </div>
-    <div class="indent">
-      2a3. Use case ends.
-    </div>
-</div>
-<div class="indent mb16">
-  2b. User cancels exit operation.
-    <div class="indent">
-      2b1. Use case ends.
-    </div>
-</div>
+**Extensions**
+2a. User cancels exit operation.
+> Use Case ends.
 
->Use Case: Edit
-MSS:
-1. User requests to edit task by giving search parameters and changes to be made.
-2. TaskManager processes changes.
-3. TaskManager shows changes made.
-
-Extensions:
-<div class="indent">
-  1a. No tasks found.
-    <div class="indent">
-      1a1. TaskManager shows error message indicating no task found.
-    </div>
-    <div class="indent">
-      1a2. Use case ends.
-    </div>
-</div>
-<div class="indent">
-  1b. More than 1 task found.
-    <div class="indent">
-      1b1. TaskManager shows list of tasks found.
-    </div>
-    <div class="indent">
-      1b2. User specifies index of task to edit.
-    </div>
-    <div class="indent">
-      1b3. Use case resumes at step 2.
-    </div>
-</div>
-<div class="indent">
-  1b2a. Specified index is invalid.
-    <div class="indent">
-      1b2a1. TaskManager shows error message indicating invalid index.
-    </div>
-    <div class="indent">
-      1b2a2. Use case resumes at step 1b1.
-    </div>
-</div>
-<div class="indent mb16">
-  1c. Specified changes are invalid.
-    <div class="indent">
-      1c1. TaskManager shows error message indicating invalid changes.
-    </div>
-    <div class="indent">
-      1c2. Use case ends.
-    </div>
-</div>
+3a. User confirms exit while Linenux is still processing information (e.g. reading/ saving a file).
+> 3a1. Linenux blocks input and closes after process is done.
+> Use Case ends.
 
 #### Appendix C : Non Functional Requirements
 
@@ -466,7 +333,6 @@ Extensions:
 5. **Quality** - Code is peer-reviewed before merging the pull requests.
 6. **Reliability** - Code is in accordance to the official Java coding style.
 7. **Testability** - Use of Travis Continuous Integration.
-8. **Backup** - Should be easy for user to backup their data.
 
 #### Appendix D : Glossary
 
