@@ -8,6 +8,8 @@ import javafx.scene.layout.AnchorPane;
 import linenux.control.ControlUnit;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Created by yihangho on 10/16/16.
@@ -22,6 +24,16 @@ public class MainWindowController {
 
     @FXML
     private void initialize() {
+        // For testing purposes
+//        LocalDateTime now = LocalDateTime.now();
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-M-d h:mma");
+//        String todayString = now.format(formatter);
+//        this.controlUnit.execute("add important task");
+//        this.controlUnit.execute("remind important t/" + todayString);
+//        this.controlUnit.execute("add this should not appear on the reminder pane");
+//        this.controlUnit.execute("add do stuff");
+//        this.controlUnit.execute("remind stuff n/walalala t/" + todayString);
+
         setupTodoBox();
         setupDeadlineBox();
         setupEventBox();
@@ -77,6 +89,7 @@ public class MainWindowController {
             splitPane.getItems().add(resultBox);
             ResultBoxController controller = loader.getController();
             controller.setControlUnit(this.controlUnit);
+            controller.displayReminder();
         } catch (IOException e) {
             e.printStackTrace();
         }
