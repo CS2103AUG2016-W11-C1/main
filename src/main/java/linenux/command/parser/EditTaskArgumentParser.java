@@ -96,7 +96,7 @@ public class EditTaskArgumentParser {
 
     private Either<ArrayList<String>, CommandResult> extractTags(Task original, String argument) {
         Matcher matcher = Pattern.compile("(?=(^|.*? )#/(?<tags>.*?)(\\s+(n|st|et|#)/.*)?$)").matcher(argument);
-        ArrayList<String> tagList = original.getTags();
+        ArrayList<String> tagList = new ArrayList<String>();
         String input;
 
         while (matcher.find() && matcher.group("tags") != null) {
@@ -112,7 +112,11 @@ public class EditTaskArgumentParser {
             }
         }
 
-        return Either.left(tagList);
+        if (tagList.size() == 0) {
+            return Either.left(original.getTags());
+        } else {
+            return Either.left(tagList);
+        }
     }
 
     private Either<LocalDateTime, CommandResult> parseDateTime(String string) {

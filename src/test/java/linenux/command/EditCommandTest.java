@@ -44,23 +44,47 @@ public class EditCommandTest {
     @Test
     public void testRespondToEditTaskCommand() {
         assertTrue(this.editCommand.respondTo("edit"));
+        assertTrue(this.editCommand.respondTo("edit #/"));
         assertTrue(this.editCommand.respondTo("edit #/tag"));
+        assertTrue(this.editCommand.respondTo("edit #/tag #/"));
+        assertTrue(this.editCommand.respondTo("edit #/tag #/anothertag"));
 
         assertTrue(this.editCommand.respondTo("edit CS2103T Tutorial"));
+        assertTrue(this.editCommand.respondTo("edit CS2103T Tutorial #/"));
         assertTrue(this.editCommand.respondTo("edit CS2103T Tutorial #/tag"));
+        assertTrue(this.editCommand.respondTo("edit CS2103T Tutorial #/tag #/"));
+        assertTrue(this.editCommand.respondTo("edit CS2103T Tutorial #/tag #/anothertag"));
 
         assertTrue(this.editCommand.respondTo("edit CS2103T Tutorial n/CS2103T Project"));
+        assertTrue(this.editCommand.respondTo("edit CS2103T Tutorial n/CS2103T Project #/"));
         assertTrue(this.editCommand.respondTo("edit CS2103T Tutorial n/CS2103T Project #/tag"));
+        assertTrue(this.editCommand.respondTo("edit CS2103T Tutorial n/CS2103T Project #/tag #/"));
+        assertTrue(this.editCommand.respondTo("edit CS2103T Tutorial n/CS2103T Project #/tag #/anothertag"));
 
         assertTrue(this.editCommand.respondTo("edit CS2103T Tutorial st/2016-01-01"));
+        assertTrue(this.editCommand.respondTo("edit CS2103T Tutorial st/2016-01-01 #/"));
         assertTrue(this.editCommand.respondTo("edit CS2103T Tutorial st/2016-01-01 #/tag"));
+        assertTrue(this.editCommand.respondTo("edit CS2103T Tutorial st/2016-01-01 #/tag #/"));
+        assertTrue(this.editCommand.respondTo("edit CS2103T Tutorial st/2016-01-01 #/tag #/anothertag"));
+
         assertTrue(this.editCommand.respondTo("edit CS2103T Tutorial et/2016-01-01"));
+        assertTrue(this.editCommand.respondTo("edit CS2103T Tutorial et/2016-01-01 #/"));
         assertTrue(this.editCommand.respondTo("edit CS2103T Tutorial et/2016-01-01 #/tag"));
+        assertTrue(this.editCommand.respondTo("edit CS2103T Tutorial et/2016-01-01 #/tag #/"));
+        assertTrue(this.editCommand.respondTo("edit CS2103T Tutorial et/2016-01-01 #/tag #/anothertag"));
 
         assertTrue(this.editCommand.respondTo("edit CS2103T Tutorial n/CS2103T Project st/2016-01-01"));
+        assertTrue(this.editCommand.respondTo("edit CS2103T Tutorial n/CS2103T Project st/2016-01-01 #/"));
         assertTrue(this.editCommand.respondTo("edit CS2103T Tutorial n/CS2013T Project st/2016-01-01 #/tag"));
+        assertTrue(this.editCommand.respondTo("edit CS2103T Tutorial n/CS2103T Project st/2016-01-01 #/tag #/"));
+        assertTrue(
+                this.editCommand.respondTo("edit CS2103T Tutorial n/CS2103T Project st/2016-01-01 #/tag #/anothertag"));
+
         assertTrue(this.editCommand.respondTo("edit CS2103T Tutorial n/CS2103T Project et/2016-01-01"));
+        assertTrue(this.editCommand.respondTo("edit CS2103T Tutorial n/CS2103T Project et/2016-01-01 #/"));
         assertTrue(this.editCommand.respondTo("edit CS2103T Tutorial n/CS2103T Project et/2016-01-01 #/tag"));
+        assertTrue(this.editCommand.respondTo("edit CS2103T Tutorial n/CS2103T Project et/2016-01-01 #/tag #/"));
+        assertTrue(this.editCommand.respondTo("edit CS2103T Tutorial n/CS2103T Project et/2016-01-01 #/tag #/tag"));
 
         assertTrue(this.editCommand.respondTo("edit CS2103T Tutorial n/CS2103T Project st/2016-01-01 et/2016-01-01"));
         assertTrue(this.editCommand
@@ -320,17 +344,36 @@ public class EditCommandTest {
     }
 
     /**
-     * Tests that edit command successfully overwrites tags of existing tagged
-     * tasks.
+     * Tests that edit command successfully removes tags.
      *
      */
     @Test
-    public void testEditModifyTag() {
+    public void testEditRemoveTags() {
         this.schedule.clear();
         ArrayList<String> existingCatList = new ArrayList<String>();
         existingCatList.add("blah");
         this.schedule.addTask(new Task("hello", existingCatList));
-        assertNoChange(() -> this.schedule.getTaskList().size(),
+        assertChangeBy(() -> this.schedule.getTaskList().get(0).getTags().size(), -1,
+                () -> this.editCommand.execute("edit hello #/-"));
+
+        // Test that the edited task has the correct categories.
+        ArrayList<Task> tasks = this.schedule.getTaskList();
+        Task editedTask = tasks.get(0);
+        assertEquals(0, editedTask.getTags().size());
+    }
+
+    /**
+     * Tests that edit command successfully overwrites tags of existing tagged
+     * tasks with a single tag.
+     *
+     */
+    @Test
+    public void testEditModifySingleTag() {
+        this.schedule.clear();
+        ArrayList<String> existingCatList = new ArrayList<String>();
+        existingCatList.add("blah");
+        this.schedule.addTask(new Task("hello", existingCatList));
+        assertNoChange(() -> this.schedule.getTaskList().get(0).getTags().size(),
                 () -> this.editCommand.execute("edit hello #/tag"));
 
         // Test that the edited task has the correct categories.
@@ -341,13 +384,56 @@ public class EditCommandTest {
     }
 
     /**
+     * Tests that edit command successfully overwrites tags of existing tagged
+     * tasks with multiple tags.
+     *
+     */
+    @Test
+    public void testEditModifyMultipleTags() {
+        this.schedule.clear();
+        ArrayList<String> existingCatList = new ArrayList<String>();
+        existingCatList.add("blah");
+        this.schedule.addTask(new Task("hello", existingCatList));
+        assertChangeBy(() -> this.schedule.getTaskList().get(0).getTags().size(), 1,
+                () -> this.editCommand.execute("edit hello #/tag1 #/tag2"));
+
+        // Test that the edited task has the correct categories.
+        ArrayList<Task> tasks = this.schedule.getTaskList();
+        Task editedTask = tasks.get(0);
+        assertEquals(2, editedTask.getTags().size());
+        assertEquals("tag1", editedTask.getTags().get(0));
+        assertEquals("tag2", editedTask.getTags().get(1));
+    }
+
+    /**
+     * Tests that edit command leaves tags untouched when no modification to
+     * tags is made.
+     *
+     */
+    @Test
+    public void testEditUnchangedTags() {
+        this.schedule.clear();
+        ArrayList<String> existingCatList = new ArrayList<String>();
+        existingCatList.add("blah");
+        this.schedule.addTask(new Task("hello", existingCatList));
+        assertNoChange(() -> this.schedule.getTaskList().get(0).getTags().size(),
+                () -> this.editCommand.execute("edit hello n/blah"));
+
+        // Test that the edited task has the correct categories.
+        ArrayList<Task> tasks = this.schedule.getTaskList();
+        Task editedTask = tasks.get(0);
+        assertEquals(1, editedTask.getTags().size());
+        assertEquals("blah", editedTask.getTags().get(0));
+    }
+
+    /**
      * Tests that editing tags of existing tagged tasks returns correct message.
      *
      */
     @Test
     public void testEditTagModificationMessage() {
         ArrayList<String> existingCatList = new ArrayList<String>();
-        existingCatList.add("blah");
+        existingCatList.add("tag");
         this.schedule.addTask(new Task("hello", existingCatList));
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
                 () -> this.editCommand.execute("edit hello #/tag"));
@@ -449,7 +535,7 @@ public class EditCommandTest {
         this.schedule.addTask(new Task("hello"));
         assertChangeBy(() -> this.schedule.getTaskList().size(), 0, () -> this.editCommand
                 .execute(
-                        "edit hello et/2016-01-02 5:00PM n/CS2103T Tutorial #/tag1 tag2 st/2016-01-01 5:00PM"));
+                        "edit hello et/2016-01-02 5:00PM n/CS2103T Tutorial #/tag1 tag2 st/2016-01-01 5:00PM #/tag3"));
 
         // The new event has the correct name, start time, and end time
         ArrayList<Task> tasks = this.schedule.getTaskList();
@@ -460,8 +546,8 @@ public class EditCommandTest {
         assertEquals(LocalDateTime.of(2016, 1, 2, 17, 0), editedTask.getEndTime());
 
         assertEquals(2, editedTask.getTags().size());
-        assertEquals("tag1", editedTask.getTags().get(0));
-        assertEquals("tag2", editedTask.getTags().get(1));
+        assertEquals("tag1 tag2", editedTask.getTags().get(0));
+        assertEquals("tag3", editedTask.getTags().get(1));
     }
 
     @Test

@@ -35,17 +35,36 @@ public class AddCommandTest {
     @Test
     public void testRespondToAddTaskCommand() {
         assertTrue(this.addCommand.respondTo("add"));
+        assertTrue(this.addCommand.respondTo("add #/"));
         assertTrue(this.addCommand.respondTo("add #/category"));
+        assertTrue(this.addCommand.respondTo("add #/category #/"));
+        assertTrue(this.addCommand.respondTo("add #/category #/tag"));
+
         assertTrue(this.addCommand.respondTo("add CS2103T Tutorial"));
+        assertTrue(this.addCommand.respondTo("add CS2103T Tutorial #/"));
         assertTrue(this.addCommand.respondTo("add CS2103T Tutorial #/category"));
+        assertTrue(this.addCommand.respondTo("add CS2103T Tutorial #/category #/"));
+        assertTrue(this.addCommand.respondTo("add CS2103T Tutorial #/category #/tag"));
 
         assertTrue(this.addCommand.respondTo("add CS2103T Tutorial st/2016-01-01"));
+        assertTrue(this.addCommand.respondTo("add CS2103T Tutorial st/2016-01-01 #/"));
         assertTrue(this.addCommand.respondTo("add CS2103T Tutorial st/2016-01-01 #/category"));
+        assertTrue(this.addCommand.respondTo("add CS2103T Tutorial st/2016-01-01 #/category #/"));
+        assertTrue(this.addCommand.respondTo("add CS2103T Tutorial st/2016-01-01 #/category #/tag"));
+
         assertTrue(this.addCommand.respondTo("add CS2103T Tutorial et/2016-01-01"));
+        assertTrue(this.addCommand.respondTo("add CS2103T Tutorial et/2016-01-01 #/"));
         assertTrue(this.addCommand.respondTo("add CS2103T Tutorial et/2016-01-01 #/category"));
+        assertTrue(this.addCommand.respondTo("add CS2103T Tutorial et/2016-01-01 #/category #/"));
+        assertTrue(this.addCommand.respondTo("add CS2103T Tutorial et/2016-01-01 #/category #/tag"));
 
         assertTrue(this.addCommand.respondTo("add CS2103T Tutorial st/2016-01-01 et/2016-01-01"));
+        assertTrue(this.addCommand.respondTo("add CS2103T Tutorial st/2016-01-01 et/2016-01-01 #/"));
         assertTrue(this.addCommand.respondTo("add CS2103T Tutorial st/2016-01-01 et/2016-01-01 #/category"));
+        assertTrue(this.addCommand.respondTo("add CS2103T Tutorial st/2016-01-01 et/2016-01-01 #/category #/"));
+        assertTrue(this.addCommand.respondTo("add CS2103T Tutorial st/2016-01-01 et/2016-01-01 #/category #/tag"));
+
+        assertTrue(this.addCommand.respondTo("add CS2103T Tutorial st2016-01-01 et2016-01-01 #category #tag"));
     }
 
     /**
@@ -121,10 +140,10 @@ public class AddCommandTest {
 
     /**
      * Test that executing the add task command will correctly add a tagged Todo
-     * to schedule
+     * with a single tag to schedule.
      */
     @Test
-    public void testExecuteAddTaggedTask() {
+    public void testExecuteAddTaskSingleTag() {
         this.schedule.clear();
         assertChangeBy(() -> this.schedule.getTaskList().size(), 1,
                 () -> this.addCommand.execute("add CS2103T Tutorial #/tag1 tag2"));
@@ -133,23 +152,66 @@ public class AddCommandTest {
         Task addedTask = tasks.get(0);
 
         assertEquals("CS2103T Tutorial", addedTask.getTaskName());
+        assertEquals(1, addedTask.getTags().size());
+        assertEquals("tag1 tag2", addedTask.getTags().get(0));
+    }
+
+    /**
+     * Test that executing the add task command will correctly add a tagged Todo
+     * with multiple tags to schedule.
+     */
+    @Test
+    public void testExecuteAddTaskMultipleTag() {
+        this.schedule.clear();
+        assertChangeBy(() -> this.schedule.getTaskList().size(), 1,
+                () -> this.addCommand.execute("add CS2103T Tutorial #/tag1 tag2 #/tag3"));
+
+        ArrayList<Task> tasks = this.schedule.getTaskList();
+        Task addedTask = tasks.get(0);
+
+        assertEquals("CS2103T Tutorial", addedTask.getTaskName());
         assertEquals(2, addedTask.getTags().size());
-        assertEquals("tag1", addedTask.getTags().get(0));
-        assertEquals("tag2", addedTask.getTags().get(1));
+        assertEquals("tag1 tag2", addedTask.getTags().get(0));
+        assertEquals("tag3", addedTask.getTags().get(1));
+    }
+
+    /**
+     * Test that executing the add task command will ignore repeating tags.
+     *
+     */
+    @Test
+    public void testExecuteAddTaskRepeatedTag() {
+        this.schedule.clear();
+        assertChangeBy(() -> this.schedule.getTaskList().size(), 1,
+                () -> this.addCommand.execute("add CS2103T Tutorial #/tag #/tag"));
+
+        ArrayList<Task> tasks = this.schedule.getTaskList();
+        Task addedTask = tasks.get(0);
+
+        assertEquals("CS2103T Tutorial", addedTask.getTaskName());
+        assertEquals(1, addedTask.getTags().size());
+        assertEquals("tag", addedTask.getTags().get(0));
     }
 
     @Test
-    public void testExecuteAddEventIgnoringOrderOfTimes() {
+    public void testExecuteAddTaggedEventIgnoringOrderOfTimes() {
         assertChangeBy(() -> this.schedule.getTaskList().size(),
                 1,
-                () -> this.addCommand.execute("add CS2103T Tutorial et/2016-01-02 5:00PM st/2016-01-01 5:00PM"));
+                () -> this.addCommand
+                        .execute("add CS2103T Tutorial #/tag 1 et/2016-01-02 5:00PM #/tag 2 st/2016-01-01 5:00PM"));
 
         // The new event has the correct name, start time, and end time
         ArrayList<Task> tasks = this.schedule.getTaskList();
         Task addedTask = tasks.get(tasks.size() - 1);
+        ArrayList<String> tagList = addedTask.getTags();
+
         assertEquals("CS2103T Tutorial", addedTask.getTaskName());
         assertEquals(LocalDateTime.of(2016, 1, 1, 17, 0), addedTask.getStartTime());
         assertEquals(LocalDateTime.of(2016, 1, 2, 17, 0), addedTask.getEndTime());
+
+        assertEquals(2, tagList.size());
+        assertEquals("tag 1", tagList.get(0));
+        assertEquals("tag 2", tagList.get(1));
     }
 
     /**
@@ -180,13 +242,14 @@ public class AddCommandTest {
     }
 
     /**
-     * Test that adding a new categorized Todo should return the correct result
+     * Test that adding a new Todo with a single tag returns the correct result
+     * message.
      *
      */
     @Test
-    public void testExecuteAddCategorizedTaskResult() {
+    public void testExecuteAddTaskTagResult() {
         CommandResult result = this.addCommand.execute("add CS2103T Tutorial #/tag1 tag2");
-        assertEquals("Added CS2103T Tutorial [Tags: \"tag1\" \"tag2\" ]", result.getFeedback());
+        assertEquals("Added CS2103T Tutorial [Tags: \"tag1 tag2\" ]", result.getFeedback());
     }
 
     /**
