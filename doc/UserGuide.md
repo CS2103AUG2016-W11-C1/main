@@ -214,7 +214,7 @@ Life would be a breeze if everything had gone according to plan. Unfortunately, 
 
 *Examples:*
 
-``` 
+``` ruby
 // Adding an event with tags 'hobby' and 'rest day'.
 > add play golf st/2016-10-16 7:00am et/2016-10-16 9:00am #/hobby #/rest day
 
@@ -263,7 +263,7 @@ Renaming a tag will change all tasks associated with that tag to the new tag.
 *Examples:*
 
 ```
-// Rename tag `assignments` to `nus assignments`.
+// Rename tag 'assignments' to 'nus assignments'.
 > rename assignments #/nus assignments
 ```
 
