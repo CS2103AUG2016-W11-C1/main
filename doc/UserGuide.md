@@ -12,6 +12,8 @@
     * [Add](#add)
     * [Remind](#remind)
     * [Edit](#edit)
+	* [Editr](#editr)
+	* [Rename](#rename)
 	* [Done](#done)
     * [Delete](#delete)
 	* [Clear](#clear)
@@ -24,7 +26,7 @@
     * [Help](#help)
 	* [Alias](#alias)
     * [Exit](#exit)
-* [Miscellaneous](#miscellaneous)
+* [Shortcut Keys](#shortcut-keys)
 	
 ## About
 
@@ -269,7 +271,7 @@ Renaming a tag will change all tasks associated with that tag to the new tag.
 
 #### Done
 
-Yes! You’ve just completed a task. Since it’s completed, you wouldn’t want to see it popping up as a task that is incomplete, would you? Thus, type done, along with the task name to mark it as completed. Tasks marked as done are automatically categorised as #/done.
+Yes! You’ve just completed a task. Since it’s completed, you wouldn’t want to see it popping up as a task that is incomplete, would you? Thus, type done, along with the task name to mark it as completed. Tasks marked as done are automatically categorised as `#/done`.
 
 *Format:*
 
@@ -494,6 +496,11 @@ Although we are sad to see you go,if you have got to go, we believe you should g
 ```
 // Exits the program. It is the equivalent of closing the window by clicking the 'X'.
 > exit
-``
+```
 
-## Miscellaneous
+## Shortcut Keys
+
+| Key        | Function                                                                                |
+|------------|-----------------------------------------------------------------------------------------|
+| `up arrow` | Cycle through your most recently used commands without having to type everything again. |
+| `tab`      | Autocomplete the command word for you. 												   |
