@@ -14,7 +14,7 @@ import linenux.util.Either;
  * Created by yihangho on 10/8/16.
  */
 public class TaskArgumentParser {
-    public static final String ARGUMENT_FORMAT = "TASK_NAME [st/START_TIME] [et/END_TIME] [#/TAGS...]";
+    public static final String ARGUMENT_FORMAT = "TASK_NAME [st/START_TIME] [et/END_TIME] [#/TAGS...]...";
 
     private TimeParserManager timeParserManager;
 
@@ -91,14 +91,21 @@ public class TaskArgumentParser {
     }
 
     private Either<ArrayList<String>, CommandResult> extractTags(String argument) {
-        Matcher matcher = Pattern.compile("(^|.*? )#/(?<tags>.*?)(\\s+(n|st|et)/.*)?$").matcher(argument);
+        Matcher matcher = Pattern.compile("(?=(^|.*? )#/(?<tags>.*?)(\\s+(n|st|et|#)/.*)?$)").matcher(argument);
+        ArrayList<String> tagList = new ArrayList<String>();
+        String input;
 
-        if (matcher.matches() && matcher.group("tags") != null) {
-            String[] tags = matcher.group("tags").split(" ");
-            return getTagArray(tags);
-        } else {
-            return Either.left(new ArrayList<String>());
+        while (matcher.find() && matcher.group("tags") != null) {
+            input = matcher.group("tags").trim();
+            if (input.isEmpty()) {
+                return Either.right(makeInvalidArgumentResult());
+            }
+            if (!tagList.contains(input)) {
+                tagList.add(input);
+            }
         }
+
+        return Either.left(tagList);
     }
 
     private Either<LocalDateTime, CommandResult> parseDateTime(String string) {
@@ -123,24 +130,5 @@ public class TaskArgumentParser {
 
     private CommandResult makeEndTimeBeforeStartTimeResult() {
         return () -> "End time cannot come before start time.";
-    }
-
-    private Either<ArrayList<String>, CommandResult> getTagArray(String[] tags) {
-        if (tags.length == 0) {
-            return Either.right(makeInvalidArgumentResult());
-        }
-
-        ArrayList<String> tagList = new ArrayList<String>();
-
-        for (String s : tags) {
-            if (s.trim().isEmpty()) {
-                return Either.right(makeInvalidArgumentResult());
-            }
-            if (!tagList.contains(s)) {
-                tagList.add(s.trim());
-            }
-        }
-
-        return Either.left(tagList);
     }
 }

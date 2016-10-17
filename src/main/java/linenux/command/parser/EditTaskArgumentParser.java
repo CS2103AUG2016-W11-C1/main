@@ -14,7 +14,7 @@ import linenux.util.Either;
  * Parses new details of task to be edited.
  */
 public class EditTaskArgumentParser {
-    public static final String ARGUMENT_FORMAT = "TASK_NAME [n/NEW_TASK_NAME] [st/START_TIME] [et/END_TIME] [#/TAG...]";
+    public static final String ARGUMENT_FORMAT = "TASK_NAME [n/NEW_TASK_NAME] [st/START_TIME] [et/END_TIME] [#/TAG...]...";
 
     private TimeParserManager timeParserManager;
 
@@ -95,14 +95,24 @@ public class EditTaskArgumentParser {
     }
 
     private Either<ArrayList<String>, CommandResult> extractTags(Task original, String argument) {
-        Matcher matcher = Pattern.compile("(^|.*? )#/(?<tags>.*?)(\\s+(n|st|et)/.*)?$").matcher(argument);
+        Matcher matcher = Pattern.compile("(?=(^|.*? )#/(?<tags>.*?)(\\s+(n|st|et|#)/.*)?$)").matcher(argument);
+        ArrayList<String> tagList = original.getTags();
+        String input;
 
-        if (matcher.matches() && matcher.group("tags") != null) {
-            String[] tags = matcher.group("tags").split(" ");
-            return getTagArray(tags);
-        } else {
-            return Either.left(original.getTags());
+        while (matcher.find() && matcher.group("tags") != null) {
+            input = matcher.group("tags").trim();
+            if (input.isEmpty()) {
+                return Either.right(makeInvalidArgumentResult());
+            }
+            if (input.matches("\\s*-\\s*")) {
+                return Either.left(new ArrayList<String>());
+            }
+            if (!tagList.contains(input)) {
+                tagList.add(input);
+            }
         }
+
+        return Either.left(tagList);
     }
 
     private Either<LocalDateTime, CommandResult> parseDateTime(String string) {
@@ -129,22 +139,5 @@ public class EditTaskArgumentParser {
 
     private CommandResult makeEndTimeBeforeStartTimeResult() {
         return () -> "End time cannot come before start time.";
-    }
-
-    private Either<ArrayList<String>, CommandResult> getTagArray(String[] tags) {
-        if (tags.length == 0) {
-            return Either.right(makeInvalidArgumentResult());
-        }
-
-        ArrayList<String> tagList = new ArrayList<String>();
-
-        for (String s : tags) {
-            if (s.trim().isEmpty()) {
-                return Either.right(makeInvalidArgumentResult());
-            }
-            tagList.add(s.trim());
-        }
-
-        return Either.left(tagList);
     }
 }
