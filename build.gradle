@@ -5,6 +5,9 @@ apply plugin: 'application'
 dependencies {
     testCompile 'junit:junit:4.12'
     testCompile 'com.github.stefanbirkner:system-rules:1.16.0'
+    testCompile(group: "org.testfx", name: "testfx-core", version: "4.0.4-alpha")
+    testCompile(group: "org.testfx", name: "testfx-junit", version: "4.0.4-alpha")
+    testCompile 'org.testfx:openjfx-monocle:1.8.0_20'
 }
 
 repositories {
@@ -32,6 +35,10 @@ sourceSets {
 javadoc {
     classpath += sourceSets.test.compileClasspath
     source += sourceSets.test.allJava
+}
+
+test {
+    jvmArgs = ['-Djava.awt.headless=true', '-Dtestfx.robot=glass', '-Dtestfx.headless=true', '-Dprism.order=sw', '-Dprism.text=t2k']
 }
 
 mainClassName = 'linenux.Main'
