@@ -27,6 +27,7 @@
 	* [Alias](#alias)
     * [Exit](#exit)
 * [Shortcut Keys](#shortcut-keys)
+* [Conclusion](#conclusion)
 	
 ## About
 
@@ -500,7 +501,13 @@ Although we are sad to see you go,if you have got to go, we believe you should g
 
 ## Shortcut Keys
 
+*These keyboard shortcuts are not actual commands, but rather help speed up navigation in Linenux. We hope that you find these shortcut helpful.* 
+
 | Key        | Function                                                                                |
 |------------|-----------------------------------------------------------------------------------------|
 | `up arrow` | Cycle through your most recently used commands without having to type everything again. |
 | `tab`      | Autocomplete the command word for you. 												   |
+
+## Conclusion
+
+Thank you for taking the time to read our user guide. Please feel free to post in our [issue tracker](https://github.com/CS2103AUG2016-W11-C1/linenux/issues) if you noticed any bugs or have any suggestions on how to improve. We will be extremely happy to hear from you so we can make Linenux even better. With that, have fun organising your tasks!
