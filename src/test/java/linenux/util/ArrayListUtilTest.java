@@ -40,4 +40,10 @@ public class ArrayListUtilTest {
         assertEquals(1, filtered.size());
         assertEquals("2", filtered.get(0));
     }
+
+    @Test
+    public void testReduce() {
+        String output = ArrayListUtil.foldr(String::concat, "", this.list);
+        assertEquals("123", output);
+    }
 }

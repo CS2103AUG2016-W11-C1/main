@@ -69,4 +69,26 @@ public class ChainableArrayListUtil {
         assertEquals("apple", sortedStrings.get(1));
         assertEquals("walala", sortedStrings.get(2));
     }
+
+    @Test
+    public void testFoldr() {
+        String output = new ArrayListUtil.ChainableArrayListUtil<>(new String[] {"1", "2", "3"})
+                .foldr(String::concat, "");
+        assertEquals("123", output);
+    }
+
+    @Test
+    public void testSpecialFoldr() {
+        ArrayList<String> strings = new ArrayListUtil.ChainableArrayListUtil<>(new String[] {"1", "2", "3"})
+                .foldr((x, xs) -> {
+                    xs.add(x);
+                    return xs;
+                }, new ArrayList<String>())
+                .value();
+
+        assertEquals(3, strings.size());
+        assertEquals("3", strings.get(0));
+        assertEquals("2", strings.get(1));
+        assertEquals("1", strings.get(2));
+    }
 }

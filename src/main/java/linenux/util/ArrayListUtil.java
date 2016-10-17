@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -92,6 +93,31 @@ public class ArrayListUtil {
         }
 
         /**
+         * Performs right fold on the current list. Notice that this method breaks the chain as it does not return
+         * another instance of {@code ChainableArrayListUtil}.
+         * @param reducer The reducer function.
+         * @param initialValue The initial value fed into {@code reducer}.
+         * @param <R> The output type.
+         * @return The fold result.
+         */
+        public <R> R foldr(BiFunction<T, R, R> reducer, R initialValue) {
+            return ArrayListUtil.foldr(reducer, initialValue, this.list);
+        }
+
+        /**
+         * A special case of {@code foldr}, that is, when the output is also an {@code ArrayList}. We can wrap the
+         * output in a {@code ChainableArrayListUtil}.
+         * @param reducer The reducer function.
+         * @param initialList The initial value fed into {@code reducer}. In this case, it must be an {@code ArrayList}.
+         * @param <R> The type of the output list.
+         * @return A {@code ChainableArrayListUtil} wrapping the fold result.
+         */
+        public <R> ChainableArrayListUtil<R> foldr(BiFunction<T, ArrayList<R>, ArrayList<R>> reducer, ArrayList<R> initialList) {
+            ArrayList<R> result = ArrayListUtil.foldr(reducer, initialList, this.list);
+            return new ChainableArrayListUtil<>(result);
+        }
+
+        /**
          * Returns the underlying {@code ArrayList}.
          * @return The underlying {@code ArrayList}.
          */
@@ -121,6 +147,25 @@ public class ArrayListUtil {
      */
     public static <T> ArrayList<T> filter(Predicate<T> fn, ArrayList<T> list) {
         return list.stream().filter(fn).collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
+    }
+
+    /**
+     * Performs right fold on {@code list}.
+     * @param reducer The reducer function.
+     * @param initialValue The initial value fed to {@code reducer}. If {@code list} is empty, this value is returned.
+     * @param list The {@code ArrayList} to fold.
+     * @param <T> The type of the {@code ArrayList}.
+     * @param <R> The output type.
+     * @return The result of the fold.
+     */
+    public static <T, R> R foldr(BiFunction<T, R, R> reducer, R initialValue, ArrayList<T> list) {
+        R output = initialValue;
+
+        for (int i = list.size() - 1; i >= 0; i--) {
+            output = reducer.apply(list.get(i), output);
+        }
+
+        return output;
     }
 
     /**
