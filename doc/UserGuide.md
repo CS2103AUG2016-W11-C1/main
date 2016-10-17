@@ -108,7 +108,7 @@ This brings up the list of Linenux commands with their description and format. I
 *Legend:*
 
 1. *Optional fields are enclosed in square brackets `[]`.*
-2. *The notation `...` means that **multiple** words can be used for that field.*
+2. *The notation `...` means that multiple words can be used for that field.*
 
 | Command                  | Description                                 | Format                                                            	 		  	|
 |--------------------------|---------------------------------------------|----------------------------------------------------------------------------------|
@@ -119,7 +119,7 @@ This brings up the list of Linenux commands with their description and format. I
 | [`rename`](#rename)	   | Rename a tag.								 | `rename` KEYWORDS... #/TAG...													|
 | [`done`](#done) 	       | Marking a task as done.       	  		 	 | `done` KEYWORDS... 										             		 	|
 | [`delete`](#delete) 	   | Deleting a task or reminder. 	  		     | `delete` KEYWORDS... 										         		 	|
-| [`clear`](#clear)        | Clearing a set of tasks.					 | `clear [#/TAG...]											         		 	|
+| [`clear`](#clear)        | Clearing a set of tasks.					 | `clear` [#/TAG...]											         		 	|
 | [`freetime`](#freetime)  | Finding a free timeslot.   	  		 	 | `freetime` [st/START_TIME] et/END_TIME 				                 		 	|	 
 | [`list`](#list) 		   | Listing tasks and reminders. 		         | `list` [KEYWORDS...] [st/START_TIME] [et/END_TIME] [#/TAG...]        		 	|
 | [`today`](#today)        | Listing tasks and reminders for today.      | `today` 													        	 		 	|
@@ -214,7 +214,7 @@ Life would be a breeze if everything had gone according to plan. Unfortunately, 
 
 *Examples:*
 
-```
+``` java
 // Adding an event with tags 'hobby' and 'rest day'.
 > add play golf st/2016-10-16 7:00am et/2016-10-16 9:00am #/hobby #/rest day
 
