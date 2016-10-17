@@ -26,21 +26,33 @@ public class ListCommandTest {
         this.listCommand = new ListCommand(this.schedule);
     }
 
+    /**
+     * Test list all.
+     */
     @Test
     public void testRespondToListWithoutParams() {
         assertTrue(this.listCommand.respondTo("list"));
     }
 
+    /**
+     * Test search function in list.
+     */
     @Test
     public void testRespondToListWithKeywords() {
         assertTrue(this.listCommand.respondTo("list bla"));
     }
 
+    /**
+     * Test that list command is case insenstive.
+     */
     @Test
     public void testCaseInsensitiveRespondToList() {
         assertTrue(this.listCommand.respondTo("LiSt"));
     }
 
+    /**
+     * Test that list command does not respons to other commands.
+     */
     @Test
     public void testDoesNotRespondToOtherCommands() {
         assertFalse(this.listCommand.respondTo("whaddup"));
@@ -65,6 +77,9 @@ public class ListCommandTest {
         assertEquals(expectedFeedback, result.getFeedback());
     }
 
+    /**
+     * Test that list command displays multiple tasks correctly.
+     */
     @Test
     public void testDisplayTasksMatchingKeywords() {
         this.schedule.addTask(new Task("hello"));

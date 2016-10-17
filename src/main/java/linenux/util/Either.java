@@ -39,6 +39,10 @@ public class Either<L, R> {
         }
 
         public T get() {
+            if (!this.isPresent()) {
+                throw new NoSuchElementException();
+            }
+
             return this.value;
         }
     }

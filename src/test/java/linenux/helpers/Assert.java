@@ -1,9 +1,9 @@
 package linenux.helpers;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.function.IntSupplier;
 import java.util.function.Supplier;
-
-import static org.junit.Assert.assertEquals;
 
 /**
  * More assertions to make life (testing) easier.

@@ -11,39 +11,42 @@ import linenux.model.Task;
 import linenux.util.Either;
 
 /**
- * Parses new details of task to be edited.
- */
-public class EditTaskArgumentParser {
-    public static final String ARGUMENT_FORMAT = "TASK_NAME [n/NEW_TASK_NAME] [st/START_TIME] [et/END_TIME] [#/TAG...]...";
+ * Parser for the argument portion of add command.
+ **/
+public class AddArgumentParser {
+    public static String COMMAND_FORMAT;
+    public static String CALLOUTS;
 
     private TimeParserManager timeParserManager;
 
-    public EditTaskArgumentParser(TimeParserManager timeParserManager) {
+    public AddArgumentParser(TimeParserManager timeParserManager, String commandFormat, String callouts) {
         this.timeParserManager = timeParserManager;
+        AddArgumentParser.COMMAND_FORMAT = commandFormat;
+        AddArgumentParser.CALLOUTS = callouts;
     }
 
-    public Either<Task, CommandResult> parse(Task original, String argument) {
-        Either<String, CommandResult> newTaskName = extractNewTaskName(original, argument);
-        if (newTaskName.isRight()) {
-            return Either.right(newTaskName.getRight());
+    public Either<Task, CommandResult> parse(String argument) {
+        Either<String, CommandResult> taskName = extractTaskName(argument);
+        if (taskName.isRight()) {
+            return Either.right(taskName.getRight());
         }
 
-        Either<LocalDateTime, CommandResult> startTime = extractStartTime(original, argument);
+        Either<LocalDateTime, CommandResult> startTime = extractStartTime(argument);
         if (startTime.isRight()) {
             return Either.right(startTime.getRight());
         }
 
-        Either<LocalDateTime, CommandResult> endTime = extractEndTime(original, argument);
+        Either<LocalDateTime, CommandResult> endTime = extractEndTime(argument);
         if (endTime.isRight()) {
             return Either.right(endTime.getRight());
         }
 
-        Either<ArrayList<String>, CommandResult> tags = extractTags(original, argument);
+        Either<ArrayList<String>, CommandResult> tags = extractTags(argument);
         if (tags.isRight()) {
             return Either.right(tags.getRight());
         }
 
-        String actualTaskName = newTaskName.getLeft();
+        String actualTaskName = taskName.getLeft();
         LocalDateTime actualStartTime = startTime.getLeft();
         LocalDateTime actualEndTime = endTime.getLeft();
         ArrayList<String> actualTags = tags.getLeft();
@@ -51,50 +54,46 @@ public class EditTaskArgumentParser {
         if (actualStartTime != null && actualEndTime == null) {
             return Either.right(makeStartTimeWithoutEndTimeResult());
         }
+
         if (actualStartTime != null && actualEndTime != null && actualEndTime.compareTo(actualStartTime) < 0) {
             return Either.right(makeEndTimeBeforeStartTimeResult());
         }
 
         Task task = new Task(actualTaskName, actualStartTime, actualEndTime, actualTags);
-
         return Either.left(task);
     }
 
-    private Either<String, CommandResult> extractNewTaskName(Task original, String argument) {
-        Matcher matcher = Pattern.compile("(^|.*?)n/(?<name>.*?)((n|st|et|#)/.*)?$").matcher(argument);
+    private Either<String, CommandResult> extractTaskName(String argument) {
+        String[] parts = argument.split("(^| )(#|st|et)/");
 
-        if (matcher.matches() && matcher.group("name") != null) {
-            if (matcher.group("name").trim().length() > 0) {
-                return Either.left(matcher.group("name").trim());
-            } else {
-                return Either.right(makeInvalidArgumentResult());
-            }
+        if (parts.length > 0 && parts[0].trim().length() > 0) {
+            return Either.left(parts[0].trim());
         } else {
-            return Either.left(original.getTaskName());
+            return Either.right(makeInvalidArgumentResult());
         }
     }
 
-    private Either<LocalDateTime, CommandResult> extractStartTime(Task original, String argument) {
-        Matcher matcher = Pattern.compile("(^|.*? )st/(?<startTime>.*?)(\\s+(n|et|#)/.*)?").matcher(argument);
+    private Either<LocalDateTime, CommandResult> extractStartTime(String argument) {
+        Matcher matcher = Pattern.compile("(^|.*? )st/(?<startTime>.*?)(\\s+(#|et)/.*)?").matcher(argument);
 
         if (matcher.matches() && matcher.group("startTime") != null) {
             return parseDateTime(matcher.group("startTime").trim());
         } else {
-            return Either.left(original.getStartTime());
+            return Either.left(null);
         }
     }
 
-    private Either<LocalDateTime, CommandResult> extractEndTime(Task original, String argument) {
-        Matcher matcher = Pattern.compile("(^|.*? )et/(?<endTime>.*?)(\\s+(n|st|#)/.*)?$").matcher(argument);
+    private Either<LocalDateTime, CommandResult> extractEndTime(String argument) {
+        Matcher matcher = Pattern.compile("(^|.*? )et/(?<endTime>.*?)(\\s+(#|st)/.*)?$").matcher(argument);
 
         if (matcher.matches() && matcher.group("endTime") != null) {
             return parseDateTime(matcher.group("endTime").trim());
         } else {
-            return Either.left(original.getEndTime());
+            return Either.left(null);
         }
     }
 
-    private Either<ArrayList<String>, CommandResult> extractTags(Task original, String argument) {
+    private Either<ArrayList<String>, CommandResult> extractTags(String argument) {
         Matcher matcher = Pattern.compile("(?=(^|.*? )#/(?<tags>.*?)(\\s+(n|st|et|#)/.*)?$)").matcher(argument);
         ArrayList<String> tagList = new ArrayList<String>();
         String input;
@@ -104,33 +103,24 @@ public class EditTaskArgumentParser {
             if (input.isEmpty()) {
                 return Either.right(makeInvalidArgumentResult());
             }
-            if (input.matches("\\s*-\\s*")) {
-                return Either.left(new ArrayList<String>());
-            }
             if (!tagList.contains(input)) {
                 tagList.add(input);
             }
         }
 
-        if (tagList.size() == 0) {
-            return Either.left(original.getTags());
-        } else {
-            return Either.left(tagList);
-        }
+        return Either.left(tagList);
     }
 
     private Either<LocalDateTime, CommandResult> parseDateTime(String string) {
         if (this.timeParserManager.canParse(string)) {
             return Either.left(this.timeParserManager.delegateTimeParser(string));
-        } else if (string.matches("rm")) {
-            return Either.left(null);
         } else {
             return Either.right(makeInvalidDateTimeResult(string));
         }
     }
 
     private CommandResult makeInvalidArgumentResult() {
-        return () -> "Invalid arguments.\n\n" + ARGUMENT_FORMAT;
+        return () -> "Invalid arguments.\n\n" + COMMAND_FORMAT + "\n\n" + CALLOUTS;
     }
 
     private CommandResult makeInvalidDateTimeResult(String dateTime) {

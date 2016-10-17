@@ -13,12 +13,15 @@ import linenux.util.Either;
  * Created by yihangho on 10/8/16.
  */
 public class ReminderArgumentParser {
-    public static final String ARGUMENT_FORMAT = "KEYWORDS... t/TIME [n/NOTE]";
+    public static String COMMAND_FORMAT;
+    public static String CALLOUTS;
 
     private TimeParserManager timeParserManager;
 
-    public ReminderArgumentParser(TimeParserManager timeParserManager) {
+    public ReminderArgumentParser(TimeParserManager timeParserManager, String commandFormat, String callouts) {
         this.timeParserManager = timeParserManager;
+        ReminderArgumentParser.COMMAND_FORMAT = commandFormat;
+        ReminderArgumentParser.CALLOUTS = callouts;
     }
 
     public Either<Reminder, CommandResult> parse(String argument) {

@@ -1,15 +1,16 @@
 package linenux.command;
 
-import linenux.command.result.CommandResult;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.Before;
+import org.junit.Test;
+
+import linenux.command.result.CommandResult;
 
 /**
- * Created by yihangho on 10/8/16.
+ * JUnit test for invalid command.
  */
 public class InvalidCommandTest {
     private Command invalidCommand;
@@ -22,12 +23,18 @@ public class InvalidCommandTest {
         this.invalidCommand = new InvalidCommand(commands);
     }
 
+    /**
+     * Test correct response with suggestions.
+     */
     @Test
     public void testResponseWithSuggestion() {
         CommandResult result = this.invalidCommand.execute("eit");
         assertEquals("Invalid command. Did you mean exit?", result.getFeedback());
     }
 
+    /**
+     * Test correct response without any suggestions.
+     */
     @Test
     public void testResponseWithoutSuggestions() {
         this.invalidCommand = new InvalidCommand(new ArrayList<>());
@@ -43,6 +50,11 @@ public class InvalidCommandTest {
 
         @Override
         public String getDescription() {
+            return null;
+        }
+
+        @Override
+        public String getCommandFormat() {
             return null;
         }
 
