@@ -214,7 +214,7 @@ Life would be a breeze if everything had gone according to plan. Unfortunately, 
 
 *Examples:*
 
-``` scala
+``` php
 // Adding an event with tags 'hobby' and 'rest day'.
 > add play golf st/2016-10-16 7:00am et/2016-10-16 9:00am #/hobby #/rest day
 
