@@ -118,6 +118,15 @@ public class ArrayListUtil {
         }
 
         /**
+         * Reverse the list.
+         * @return The reversed list wrapped in {@ChainableArrayListUtil}.
+         */
+        public ChainableArrayListUtil<T> reverse() {
+            ArrayList<T> reversed = ArrayListUtil.reverse(this.list);
+            return new ChainableArrayListUtil<>(reversed);
+        }
+
+        /**
          * Returns the underlying {@code ArrayList}.
          * @return The underlying {@code ArrayList}.
          */
@@ -166,6 +175,19 @@ public class ArrayListUtil {
         }
 
         return output;
+    }
+
+    /**
+     * Reverse a list.
+     * @param list The {@code ArrayList} to reverse.
+     * @param <T> The type of the {@code ArrayList}.
+     * @return The reversed list.
+     */
+    public static <T> ArrayList<T> reverse(ArrayList<T> list) {
+        return foldr((x, xs) -> {
+            xs.add(x);
+            return xs;
+        }, new ArrayList<T>(), list);
     }
 
     /**

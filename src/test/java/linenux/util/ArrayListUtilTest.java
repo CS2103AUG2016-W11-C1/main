@@ -46,4 +46,12 @@ public class ArrayListUtilTest {
         String output = ArrayListUtil.foldr(String::concat, "", this.list);
         assertEquals("123", output);
     }
+
+    @Test
+    public void testReverse() {
+        ArrayList<String> strings = ArrayListUtil.reverse(this.list);
+        assertEquals("3", strings.get(0));
+        assertEquals("2", strings.get(1));
+        assertEquals("1", strings.get(2));
+    }
 }

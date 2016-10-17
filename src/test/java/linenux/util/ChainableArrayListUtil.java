@@ -91,4 +91,16 @@ public class ChainableArrayListUtil {
         assertEquals("2", strings.get(1));
         assertEquals("1", strings.get(2));
     }
+
+    @Test
+    public void testReverse() {
+        ArrayList<String> strings = new ArrayListUtil.ChainableArrayListUtil<>(new String[] {"1", "2", "3"})
+                .reverse()
+                .value();
+
+        assertEquals(3, strings.size());
+        assertEquals("3", strings.get(0));
+        assertEquals("2", strings.get(1));
+        assertEquals("1", strings.get(2));
+    }
 }
