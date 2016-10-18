@@ -1,13 +1,6 @@
 package linenux.gui;
 
-import javafx.scene.control.ListCell;
-import linenux.Main;
-import linenux.model.Task;
-import linenux.view.MainWindowController;
-import org.junit.Before;
 import org.junit.Test;
-import org.testfx.api.FxRobot;
-import org.testfx.api.FxToolkit;
 
 import static linenux.helpers.GuiMatchers.hasCellLabelled;
 import static org.testfx.api.FxAssert.verifyThat;
@@ -17,17 +10,7 @@ import static org.testfx.matcher.control.ListViewMatchers.isEmpty;
 /**
  * Created by yihangho on 10/17/16.
  */
-public class AddTaskTest {
-    private FxRobot robot;
-
-    @Before
-    public void setup() throws Exception {
-        FxToolkit.registerPrimaryStage();
-        FxToolkit.setupApplication(Main.class);
-        FxToolkit.showStage();
-        this.robot = new FxRobot();
-    }
-
+public class AddTaskTest extends GuiTest {
     @Test
     public void testAddTodo() {
         verifyThat("#todosList", isEmpty());
