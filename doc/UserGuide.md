@@ -505,8 +505,8 @@ Although we are sad to see you go,if you have got to go, we believe you should g
 
 | Key        | Function                                                                                |
 |------------|-----------------------------------------------------------------------------------------|
-| `up arrow` | Cycle through your most recently used commands without having to type everything again. |
-| `tab`      | Autocomplete the command word for you. 												   |
+| <kbd>↑</kbd> / <kbd>↓</kbd> | Cycle through your most recently used commands without having to type everything again. |
+| <kbd>Tab</kbd>| Autocomplete the command word for you. 												   |
 
 ## Conclusion
 

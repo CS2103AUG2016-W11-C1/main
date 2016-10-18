@@ -4,6 +4,7 @@
 * [Setting Up](#setting-up)
     * [Prerequisites](#prerequisites)
     * [Importing project into Eclipse](#importing-project-into-eclipse)
+    * [Coding Standards](#coding-standards)
     * [Troubleshooting](#troubleshooting)
 * [Design](#design)
     * [Architecture](#architecture)
