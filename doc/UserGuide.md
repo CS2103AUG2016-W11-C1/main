@@ -25,7 +25,7 @@
 	* [Alias](#alias)
     * [Exit](#exit)
 * [Miscellaneous](#miscellaneous)
-	
+
 ## About
 
 Everyone of us will face, at some point in our lives, the feeling of being overwhelmed by the amount of things to do: meeting project deadlines, attending a friend's wedding ceremony, paying the bills and the list goes on. This hectic pace of life is the new normal, but it doesn't mean we have to suffer in silence. We believe that everyone should have control over their own lives and Linenux is the key to achieving just that.
@@ -45,7 +45,7 @@ Without further ado, let's get started!
 
 #### Launch
 
-Double-click on the file to launch Linenux. Wait for a few seconds for the main window to appear.  
+Double-click on the file to launch Linenux. Wait for a few seconds for the main window to appear.
 
 <img src="images/mainWindow.png">
 
@@ -79,9 +79,9 @@ You worry that you might not have enough cash to buy groceries and decide to dra
 
 Time flies and it is already Friday. You wonder what needs to be done for the day. Type the following line in the command box:
 
-`> list et/2016-10-21` 
+`> list et/2016-10-21`
 
-or more simply, 
+or more simply,
 
 `> today`
 
@@ -119,7 +119,7 @@ This brings up the list of Linenux commands with their description and format. I
 | [`done`](#done) 	       | Marking a task as done.       	  		 	 | `done` KEYWORDS... 										             		 |
 | [`delete`](#delete) 	   | Deleting a task or reminder. 	  		     | `delete` KEYWORDS... 										         		 |
 | [`clear`](#clear)        | Clearing a set of tasks.					 | `clear [#/TAGS...]											         		 |
-| [`freetime`](#freetime)  | Finding a free timeslot.   	  		 	 | `freetime` [st/START_TIME] et/END_TIME 				                 		 | 
+| [`freetime`](#freetime)  | Finding a free timeslot.   	  		 	 | `freetime` [st/START_TIME] et/END_TIME 				                 		 |
 | [`list`](#list) 		   | Listing tasks and reminders. 		         | `list` [KEYWORDS...] [st/START_TIME] [et/END_TIME] [#/TAGS...]...     		 |
 | [`today`](#today)        | Listing tasks and reminders for today.      | `today` 													        	 		 |
 | [`tomorrow`](#tomorrow)  | Listing tasks and reminders for tomorrow.   | `tomorrow` 													 		 		 |
@@ -133,11 +133,11 @@ This brings up the list of Linenux commands with their description and format. I
 
 *All of the examples below have the equivalent meaning to the time 26 October 2016, 5.50pm*
 
-| Format             | Example                | 
+| Format             | Example                |
 |--------------------|------------------------|
 | dd month yy hh.mma | 26 October 2016 5.50pm |
 | yyyy-MM-dd hh:mma  | 2016-10-16 5:50pm      |
-| ddMMyyyy HHmm      | 16102016 1750          | 
+| ddMMyyyy HHmm      | 16102016 1750          |
 
 ## Commands
 
@@ -188,7 +188,7 @@ Setting reminders are as simple as adding a task. Just specify the appropriate f
 
 ```
 // Setting a reminder for the deadline 'pay utility bills' without any notes.
-> remind pay utility bills t/2016-10-15 06:00pm 
+> remind pay utility bills t/2016-10-15 06:00pm
 
 // Setting a reminder for the event 'house warming' with the note 'buy groceries'.
 > remind house warming t/2016-10-16 07:00am n/buy groceries

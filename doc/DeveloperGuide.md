@@ -346,3 +346,34 @@ Tasks are split into 3 different sub-categories:
 **Tasks cannot be created with start dates only.**
 
 #### Appendix E : Product Survey
+##### Pros of Products Surveyed
+> Figure 5 Pros of Products Surveyed
+
+##### Cons of Products Surveyed:
+**Google Calendar**
+* Keyboard shortcuts needs to be discovered.
+* CLI commands is only for the addition of tasks.
+* Unable to add to-dos/floating tasks.
+* Inability to mark tasks as completed.
+* Only has limited color tags to categorize tasks.
+
+**Todoist**
+* Non-intuitive control.
+    * Can only view all tasks (in all categories) in 1 page when you select filters → all.
+* Cannot show all tasks as 1 single list.
+    * Even when showing all tasks, categorized tasks are segregated.
+* Many functions only accessible in paid version
+    * Exporting, comments, labels, etc.
+* No flexibility in setting duration of tasks shown.
+    * Can only show tasks due today or within 7 days.
+* Navigation can only be done by GLI.
+* Only supports To-Dos.
+
+**Wunderlist**
+* Only supports To-Dos.
+* Only has today and weekly view.
+* Only able to add 1 reminder to each task.
+
+**Fantastical**
+* Only available on Mac.
+* Not free and the paid version is expensive.
