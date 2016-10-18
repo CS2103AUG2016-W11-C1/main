@@ -3,6 +3,7 @@ package linenux.helpers;
 import javafx.scene.Node;
 import javafx.scene.control.Cell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import org.hamcrest.Matcher;
 import org.testfx.api.FxAssert;
 import org.testfx.service.finder.NodeFinder;
@@ -30,5 +31,9 @@ public class GuiMatchers {
 
     public static Matcher<Node> isFocused() {
         return baseMatcher("is focused", node -> node.focusedProperty().get());
+    }
+
+    public static Matcher<Node> textFieldHasText(String text) {
+        return typeSafeMatcher(TextField.class, text, node -> node.getText().equals(text));
     }
 }
