@@ -47,6 +47,24 @@ Linenux is a command-line, task manager application designed for consumers who a
 6. Run `gradle eclipse` in your terminal to set up the folders in Linenx.
 7. Run `gradle run` in your terminal to ensure that everything is working properly.
 
+#### Coding Standards
+Our coding standards can be found [here](https://oss-generic.github.io/process/codingstandards/coding-standards-java.html)
+
+To ensure code readablity on Github, please follow the following instructions to set up your Code Formatter Profile on Eclipse:
+
+1. Click `Window` > `Preferences`.
+2. Expand `Java` > `Code Style` and select `Formatter`.
+3. Click the `Edit` button.
+
+<img src="images/eclipseEdit.png"/>
+> What you should be seeing at step 3
+
+4. In the `Indentation` tab, under `General settings`, change `Tab Policy` to Spaces Only and check that `Indentation Size` and `Tab Size` are both set to 4.
+5. Click `OK` to save the profile.
+
+<img src="images/eclipseIndent.png"/>
+> Where you can find the settings to be changed
+
 #### Troubleshooting
 
 1. **Eclipse reports that some of the required libraries are missing.**
@@ -387,6 +405,7 @@ Tasks **cannot** be created with start dates only.
 | dd month yy hh.mma | 26 October 2016 5.50pm |
 | yyyy-MM-dd hh:mma  | 2016-10-16 5:50pm      |
 | ddMMyyyy HHmm      | 16102016 1750          |
+
 #### Appendix E : Product Survey
 ##### Pros of Products Surveyed
 <img src="images/ProductSurveyPros.jpeg"/>
