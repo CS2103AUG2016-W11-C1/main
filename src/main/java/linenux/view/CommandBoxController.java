@@ -1,5 +1,6 @@
 package linenux.view;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import linenux.control.ControlUnit;
@@ -12,6 +13,11 @@ public class CommandBoxController {
     private TextField textField;
 
     private ControlUnit controlUnit;
+
+    @FXML
+    private void initialize() {
+        Platform.runLater(() -> textField.requestFocus());
+    }
 
     @FXML
     private void onCommand() {

@@ -8,6 +8,7 @@ import org.testfx.api.FxAssert;
 import org.testfx.service.finder.NodeFinder;
 import org.testfx.service.query.NodeQuery;
 
+import static org.testfx.matcher.base.GeneralMatchers.baseMatcher;
 import static org.testfx.matcher.base.GeneralMatchers.typeSafeMatcher;
 
 /**
@@ -25,5 +26,9 @@ public class GuiMatchers {
                 .<Cell>match(cell -> !cell.isEmpty() && cell.getText().equals(label))
                 .tryQuery()
                 .isPresent();
+    }
+
+    public static Matcher<Node> isFocused() {
+        return baseMatcher("is focused", node -> node.focusedProperty().get());
     }
 }
