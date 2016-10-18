@@ -129,7 +129,7 @@ public class EditArgumentParser {
     private Either<LocalDateTime, CommandResult> parseDateTime(String string) {
         if (this.timeParserManager.canParse(string)) {
             return Either.left(this.timeParserManager.delegateTimeParser(string));
-        } else if (string.matches("rm")) {
+        } else if (string.matches("\\s*-\\s*")) {
             return Either.left(null);
         } else {
             return Either.right(makeInvalidDateTimeResult(string));
