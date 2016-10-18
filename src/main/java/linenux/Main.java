@@ -1,8 +1,5 @@
 package linenux;
 
-import linenux.control.ControlUnit;
-import linenux.view.ConsoleController;
-
 import java.io.IOException;
 
 import javafx.application.Application;
@@ -23,8 +20,6 @@ public class Main extends Application implements Stoppable {
     public static final int INITIAL_CONSOLE_WIDTH = 800;
     public static final int INITIAL_CONSOLE_HEIGHT = 500;
 
-    private ConsoleController consoleController;
-
     public static void main(String args) {
         launch(args);
     }
@@ -32,14 +27,7 @@ public class Main extends Application implements Stoppable {
     // TODO: Handle general exception & make TextArea keyboard insensitive.
     @Override
     public void start(Stage primaryStage) throws Exception {
-        try {
-            consoleController = setUpConsole(primaryStage);
-            consoleController.setControlUnit(new ControlUnit());
-            consoleController.setActiveControl();
-            consoleController.displayWelcomeMessage(VERSION);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        setupMainWindow(primaryStage);
     }
 
     @Override
@@ -49,13 +37,17 @@ public class Main extends Application implements Stoppable {
         System.exit(0);
     }
 
-    private ConsoleController setUpConsole(Stage primaryStage) throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(Main.class.getResource("/view/Console.fxml"));
-        primaryStage.setTitle(APP_NAME);
-        primaryStage.getIcons().add(new Image("/images/terminal.png"));
-        primaryStage.setScene(new Scene(loader.load(), INITIAL_CONSOLE_WIDTH, INITIAL_CONSOLE_HEIGHT));
-        primaryStage.show();
-        return loader.getController();
+    private void setupMainWindow(Stage primaryStage) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("/view/MainWindow.fxml"));
+            primaryStage.setTitle(APP_NAME);
+            primaryStage.getIcons().add(new Image("/images/terminal.png"));
+            Scene scene = new Scene(loader.load(), INITIAL_CONSOLE_WIDTH, INITIAL_CONSOLE_HEIGHT);
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

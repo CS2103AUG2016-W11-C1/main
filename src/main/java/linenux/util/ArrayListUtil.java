@@ -2,7 +2,10 @@ package linenux.util;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -69,6 +72,61 @@ public class ArrayListUtil {
         }
 
         /**
+         * Sort the {@code ArrayList} by the {@code comparator}.
+         * @param comparator The comparator used to determine the weak ordering of the elements.
+         * @return A new {@code ChainableArrayListUtil} wrapping the new {@code ArrayList}.
+         */
+        public ChainableArrayListUtil<T> sort(Comparator<T> comparator) {
+            ArrayList<T> copy = new ArrayList<>(this.list);
+            Collections.sort(copy, comparator);
+            return new ChainableArrayListUtil<>(copy);
+        }
+
+        /**
+         * Sort the {@code ArrayList} according to the value given by the specified function.
+         * @param fn A pure function taking in elements of the array list and returning some {@code Comparable}.
+         * @param <R> Any type implementing {@code Comparable}.
+         * @return A new {@code ChainableArrayListUtil} wrapping the new {@code ArrayList}.
+         */
+        public <R extends Comparable<R>> ChainableArrayListUtil<T> sortBy(Function<T, R> fn) {
+            return this.sort((a, b) -> fn.apply(a).compareTo(fn.apply(b)));
+        }
+
+        /**
+         * Performs right fold on the current list. Notice that this method breaks the chain as it does not return
+         * another instance of {@code ChainableArrayListUtil}.
+         * @param reducer The reducer function.
+         * @param initialValue The initial value fed into {@code reducer}.
+         * @param <R> The output type.
+         * @return The fold result.
+         */
+        public <R> R foldr(BiFunction<T, R, R> reducer, R initialValue) {
+            return ArrayListUtil.foldr(reducer, initialValue, this.list);
+        }
+
+        /**
+         * A special case of {@code foldr}, that is, when the output is also an {@code ArrayList}. We can wrap the
+         * output in a {@code ChainableArrayListUtil}.
+         * @param reducer The reducer function.
+         * @param initialList The initial value fed into {@code reducer}. In this case, it must be an {@code ArrayList}.
+         * @param <R> The type of the output list.
+         * @return A {@code ChainableArrayListUtil} wrapping the fold result.
+         */
+        public <R> ChainableArrayListUtil<R> foldr(BiFunction<T, ArrayList<R>, ArrayList<R>> reducer, ArrayList<R> initialList) {
+            ArrayList<R> result = ArrayListUtil.foldr(reducer, initialList, this.list);
+            return new ChainableArrayListUtil<>(result);
+        }
+
+        /**
+         * Reverse the list.
+         * @return The reversed list wrapped in {@ChainableArrayListUtil}.
+         */
+        public ChainableArrayListUtil<T> reverse() {
+            ArrayList<T> reversed = ArrayListUtil.reverse(this.list);
+            return new ChainableArrayListUtil<>(reversed);
+        }
+
+        /**
          * Returns the underlying {@code ArrayList}.
          * @return The underlying {@code ArrayList}.
          */
@@ -98,6 +156,38 @@ public class ArrayListUtil {
      */
     public static <T> ArrayList<T> filter(Predicate<T> fn, ArrayList<T> list) {
         return list.stream().filter(fn).collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
+    }
+
+    /**
+     * Performs right fold on {@code list}.
+     * @param reducer The reducer function.
+     * @param initialValue The initial value fed to {@code reducer}. If {@code list} is empty, this value is returned.
+     * @param list The {@code ArrayList} to fold.
+     * @param <T> The type of the {@code ArrayList}.
+     * @param <R> The output type.
+     * @return The result of the fold.
+     */
+    public static <T, R> R foldr(BiFunction<T, R, R> reducer, R initialValue, ArrayList<T> list) {
+        R output = initialValue;
+
+        for (int i = list.size() - 1; i >= 0; i--) {
+            output = reducer.apply(list.get(i), output);
+        }
+
+        return output;
+    }
+
+    /**
+     * Reverse a list.
+     * @param list The {@code ArrayList} to reverse.
+     * @param <T> The type of the {@code ArrayList}.
+     * @return The reversed list.
+     */
+    public static <T> ArrayList<T> reverse(ArrayList<T> list) {
+        return foldr((x, xs) -> {
+            xs.add(x);
+            return xs;
+        }, new ArrayList<T>(), list);
     }
 
     /**

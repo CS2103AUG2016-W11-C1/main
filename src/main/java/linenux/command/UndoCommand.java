@@ -33,11 +33,10 @@ public class UndoCommand implements Command {
         assert userInput.matches(UNDO_PATTERN);
         assert this.schedule != null;
 
-        Either<CommandResult, CommandResult> outcome = tryUndo();
-        if (outcome.isLeft()) {
-            return outcome.getLeft();
+        if (this.schedule.popState()) {
+            return makeUndoSuccessfulMessage();
         } else {
-            return outcome.getRight();
+            return makeUndoUnsuccessfulMessage();
         }
     }
 
@@ -54,16 +53,6 @@ public class UndoCommand implements Command {
     @Override
     public String getCommandFormat() {
         return COMMAND_FORMAT;
-    }
-
-    private Either<CommandResult, CommandResult> tryUndo() {
-        LinkedList<State> states = schedule.getStates();
-        if (states.size() == 1) {
-            return Either.right(makeUndoUnsuccessfulMessage());
-        } else {
-            states.removeLast();
-            return Either.left(makeUndoSuccessfulMessage());
-        }
     }
 
     private CommandResult makeUndoSuccessfulMessage() {

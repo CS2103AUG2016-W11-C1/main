@@ -40,4 +40,18 @@ public class ArrayListUtilTest {
         assertEquals(1, filtered.size());
         assertEquals("2", filtered.get(0));
     }
+
+    @Test
+    public void testReduce() {
+        String output = ArrayListUtil.foldr(String::concat, "", this.list);
+        assertEquals("123", output);
+    }
+
+    @Test
+    public void testReverse() {
+        ArrayList<String> strings = ArrayListUtil.reverse(this.list);
+        assertEquals("3", strings.get(0));
+        assertEquals("2", strings.get(1));
+        assertEquals("1", strings.get(2));
+    }
 }
