@@ -181,14 +181,19 @@ Priority | As a ...  | I want to ...                             | So that I can
 `* * *`  | user      | add a new task                            |
 `* * *`  | user      | edit a task                               | update the deadlines or other details regarding the task.
 `* * *`  | user      | delete a task                             | remove tasks that I no longer need.
-`* * *`  | user      | search a task                             | check the details of the task.
+`* * *`  | user      | view a task                               | check the details of the task.
+`* * *`  | user      | filter list of tasks shown                | see only tasks that are of interest.
+`* * *`  | user      | mark a task as done                       | indicate that a task is done so that it doesn't show up as a to-do.
 `* * *`  | user      | list tasks by day or deadlines            | plan ahead.
 `* * *`  | user      | undo previous commands                    | correct any erroneous actions.
+`* *`    | user      | rename a tag                              | update the tags that are used for tasks.
 `* *`    | user      | set reminders for tasks                   | make preperations before their stipulated deadlines.
+`* *`    | user      | edit a reminder                           | update the details regarding the reminder.
 `* *`    | user      | have multiple language support            | choose my preferred working language.
 `* *`    | user      | find free time slots                      | make appointments with others.
 `* *`    | user      | have a day/week/month view                | more easily digest the information.
 `* *`    | user      | print the schedule for the day/week/month | have a hard copy of my schedule.
+`* *`    | user      | create personalized alias for commands    | effectively use the commands available.
 `* *`    | user      | sync with Google Calendar                 | have the option to view on any devices with access to the Internet.
 `*`      | user      | see syntax highlighting                   | more easily discern special keywords and commands.
 `*`      | user      | see notifications                         | be constantly reminded without having to open the App.
@@ -339,12 +344,49 @@ Use case ends.
 Users are able to create 2 objects, Tasks and Reminders.
 
 Tasks are split into 3 different sub-categories:
+
 1. Deadline: Tasks created with end dates only.
 2. Event: Tasks created with both start and end dates.
 3. To-do: Tasks created with no start and end dates.
 
-**Tasks cannot be created with start dates only.**
+Tasks **cannot** be created with start dates only.
 
+##### Commands Summary
+
+*Legend:*
+
+1. *Optional fields are enclosed in square brackets `[]`.*
+2. *The notation `...` means that multiple words can be used for that field.*
+
+| Command    | Description                               | Format                                                                          |
+|------------|-------------------------------------------|---------------------------------------------------------------------------------|
+| `add`      | Adding a task.                            | `add` TASK_NAME... [st/START_TIME] [et/END_TIME] [#/TAG...]...                  |
+| `remind`   | Setting a reminder for a task.            | `remind` KEYWORDS... t/TIME n/NOTE...                                           |
+| `edit`     | Editing a task.                           | `edit` KEYWORDS... [n/TASK_NAME...] [st/START_TIME] [et/END_TIME] [#/TAG...]... |
+| `editr`    | Editing a reminder.                       | `editr` KEYWORDS... [t/TIME] [n/NOTE...]                                        |
+| `rename`   | Rename a tag.                             | `rename` KEYWORDS... #/TAG...                                                   |
+| `done`     | Marking a task as done.                   | `done` KEYWORDS...                                                              |
+| `delete`   | Deleting a task or reminder.              | `delete` KEYWORDS...                                                            |
+| `clear`    | Clearing a set of tasks.                  | `clear` [#/TAG...]                                                              |
+| `freetime` | Finding a free timeslot.                  | `freetime` [st/START_TIME] et/END_TIME                                          |
+| `list`     | Listing tasks and reminders.              | `list` [KEYWORDS...] [st/START_TIME] [et/END_TIME] [#/TAG...]                   |
+| `today`    | Listing tasks and reminders for today.    | `today`                                                                         |
+| `tomorrow` | Listing tasks and reminders for tomorrow. | `tomorrow`                                                                      |
+| `view`     | Viewing details around a task.            | `view` KEYWORDS...                                                              |
+| `undo`     | Undoing the previous command.             | `undo`                                                                          |
+| `help`     | Seeking help.                             | `help` [COMMMAND_NAME]                                                          |
+| `alias`    | Making aliases for the commands.          | `alias` COMMMAND_NAME n/NEW_NAME                                                |
+| `exit`     | Exiting Linenux.                          | `exit`                                                                          |
+
+##### Supported Time Formats
+
+*All of the examples below have the equivalent meaning to the time 26 October 2016, 5.50pm*
+
+| Format             | Example                |
+|--------------------|------------------------|
+| dd month yy hh.mma | 26 October 2016 5.50pm |
+| yyyy-MM-dd hh:mma  | 2016-10-16 5:50pm      |
+| ddMMyyyy HHmm      | 16102016 1750          |
 #### Appendix E : Product Survey
 ##### Pros of Products Surveyed
 <img src="images/ProductSurveyPros.jpeg"/>
