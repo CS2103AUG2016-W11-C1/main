@@ -174,18 +174,18 @@ The gradle configuration for this project is defined in the build script `build.
 
 #### Continuous Integration
 
-Travis CI is a Continuous Integration platform for GitHub projects. It runs the projects' tests automaticaally whenever new code is pushed to the repo. This ensures that existing functionality and features  have not been broken by the changes.
+Travis CI is a Continuous Integration platform for GitHub projects. It runs the projects' tests automatically whenever new code is pushed to the repo. This ensures that existing functionality and features  have not been broken by the changes.
 
 The current Travis CI set up performs the following things whenever someone push code to the repo:
 * Runs the `./gradlew test` command.
 
 #### Making a Release
 
-Linenux automatically creates a new release by using Travis.
+Linenux automatically creates a new release by using Travis. This can be done by pushing tagged commits to GitHub.
 
 #### Managing Dependecies
 
-A project often depends on third-party libraries. Linenux manages and automates these dependencies using Gradle.
+A project often depends on third-party libraries. Linenux manages these dependencies using Gradle. Gradle will automatically download all the required dependencies when any Gradle command is invoked.
 
 ## Appendices
 
