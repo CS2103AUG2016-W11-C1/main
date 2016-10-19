@@ -15,8 +15,8 @@ import linenux.util.ArrayListUtil;
          this.taskList = new ArrayList<Task>();
      }
 
-     public State(ArrayList<Task> taskList) {
-         this.taskList = taskList;
+     public State(State other) {
+         this.taskList = new ArrayList<>(other.taskList);
      }
 
      /**
@@ -25,9 +25,9 @@ import linenux.util.ArrayListUtil;
       * @return The new State of the schedule.
       */
      public State addTask(Task task) {
-         ArrayList<Task> newTaskList = new ArrayList<>(taskList);
-         newTaskList.add(task);
-         return new State(newTaskList);
+         State output = new State(this);
+         output.taskList.add(task);
+         return output;
      }
 
      /**
@@ -38,9 +38,9 @@ import linenux.util.ArrayListUtil;
       */
      public State updateTask(Task originalTask, Task newTask) {
          int taskIndex = taskList.indexOf(originalTask);
-         ArrayList<Task> newTaskList = new ArrayList<>(taskList);
-         newTaskList.set(taskIndex, newTask);
-         return new State(newTaskList);
+         State output = new State(this);
+         output.taskList.set(taskIndex, newTask);
+         return output;
      }
 
      /**
@@ -50,9 +50,9 @@ import linenux.util.ArrayListUtil;
       */
      public State deleteTask(Task task) {
          int taskIndex = taskList.indexOf(task);
-         ArrayList<Task> newTaskList = new ArrayList<>(taskList);
-         newTaskList.remove(taskIndex);
-         return new State(newTaskList);
+         State output = new State(this);
+         output.taskList.remove(taskIndex);
+         return output;
      }
 
      /**

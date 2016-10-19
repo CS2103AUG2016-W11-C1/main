@@ -16,14 +16,7 @@ public class Schedule {
      * Constructs an empty schedule
      */
     public Schedule() {
-        this(new ArrayList<>());
-    }
-
-    /**
-     * Constructs the schedule with the given data.
-     */
-    public Schedule(ArrayList<Task> taskList) {
-        this.states.add(new State(taskList));
+        this.states.add(new State());
     }
 
     /**
