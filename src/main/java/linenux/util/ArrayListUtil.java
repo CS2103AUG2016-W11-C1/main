@@ -199,4 +199,16 @@ public class ArrayListUtil {
     public static <T> ArrayList<T> fromArray(T[] arr) {
         return new ArrayList<T>(Arrays.asList(arr));
     }
+
+    /**
+     * Make an {@code ArrayList} with only one element.
+     * @param elem The only element in the array list.
+     * @param <T> The type of the element.
+     * @return An {@code ArrayList} containing only {@code elem}.
+     */
+    public static <T> ArrayList<T> fromSingleton(T elem) {
+        ArrayList<T> output = new ArrayList<>();
+        output.add(elem);
+        return output;
+    }
 }
