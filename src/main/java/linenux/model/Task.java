@@ -4,8 +4,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-import linenux.util.ArrayListUtil;
-
 /**
  * Represents a task in the schedule. Only taskName is a required field and
  * cannot be an empty string.
@@ -96,9 +94,7 @@ public class Task {
         this.startTime = other.startTime;
         this.endTime = other.endTime;
         this.tags = new ArrayList<>(other.tags);
-        this.reminders = new ArrayListUtil.ChainableArrayListUtil<>(other.reminders)
-                .map(Reminder::new)
-                .value();
+        this.reminders = new ArrayList<>(other.reminders);
     }
 
     @Override

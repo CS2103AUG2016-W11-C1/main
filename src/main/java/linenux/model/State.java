@@ -25,7 +25,7 @@ import linenux.util.ArrayListUtil;
       * @return The new State of the schedule.
       */
      public State addTask(Task task) {
-         ArrayList<Task> newTaskList = copyTaskList(taskList);
+         ArrayList<Task> newTaskList = new ArrayList<>(taskList);
          newTaskList.add(task);
          return new State(newTaskList);
      }
@@ -38,7 +38,7 @@ import linenux.util.ArrayListUtil;
       */
      public State editTask(Task originalTask, Task newTask) {
          int taskIndex = taskList.indexOf(originalTask);
-         ArrayList<Task> newTaskList = copyTaskList(taskList);
+         ArrayList<Task> newTaskList = new ArrayList<>(taskList);
          newTaskList.set(taskIndex, newTask);
          return new State(newTaskList);
      }
@@ -50,7 +50,7 @@ import linenux.util.ArrayListUtil;
       */
      public State deleteTask(Task task) {
          int taskIndex = taskList.indexOf(task);
-         ArrayList<Task> newTaskList = copyTaskList(taskList);
+         ArrayList<Task> newTaskList = new ArrayList<>(taskList);
          newTaskList.remove(taskIndex);
          return new State(newTaskList);
      }
@@ -62,7 +62,7 @@ import linenux.util.ArrayListUtil;
       */
      public State doneTask(Task task) {
          int taskIndex = taskList.indexOf(task);
-         ArrayList<Task> newTaskList = copyTaskList(taskList);
+         ArrayList<Task> newTaskList = new ArrayList<>(taskList);
          newTaskList.set(taskIndex, task.markAsDone());
          return new State(newTaskList);
      }
@@ -72,7 +72,7 @@ import linenux.util.ArrayListUtil;
       */
      public State addReminder(Task task, Reminder reminder) {
          int taskIndex = taskList.indexOf(task);
-         ArrayList<Task> newTaskList = copyTaskList(taskList);
+         ArrayList<Task> newTaskList = new ArrayList<>(taskList);
          newTaskList.set(taskIndex, task.addReminder(reminder));
          return new State(newTaskList);
      }
@@ -101,17 +101,6 @@ import linenux.util.ArrayListUtil;
                                                                       .value();
                                                    return !Collections.disjoint(keywordsList, taskKeywords);
                                                    })
-                                 .value();
-     }
-
-     /**
-      * Creates a deep copy of the task list.
-      * @param taskList
-      * @return
-      */
-     private ArrayList<Task> copyTaskList(ArrayList<Task> taskList) {
-         return new ArrayListUtil.ChainableArrayListUtil<>(taskList)
-                                 .map(Task::new)
                                  .value();
      }
 }
