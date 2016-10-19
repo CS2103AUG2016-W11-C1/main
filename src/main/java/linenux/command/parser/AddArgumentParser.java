@@ -1,6 +1,7 @@
 package linenux.command.parser;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -11,7 +12,7 @@ import linenux.util.Either;
 
 /**
  * Parser for the argument portion of add command.
- */
+ **/
 public class AddArgumentParser {
     public static String COMMAND_FORMAT;
     public static String CALLOUTS;
@@ -40,9 +41,15 @@ public class AddArgumentParser {
             return Either.right(endTime.getRight());
         }
 
+        Either<ArrayList<String>, CommandResult> tags = extractTags(argument);
+        if (tags.isRight()) {
+            return Either.right(tags.getRight());
+        }
+
         String actualTaskName = taskName.getLeft();
         LocalDateTime actualStartTime = startTime.getLeft();
         LocalDateTime actualEndTime = endTime.getLeft();
+        ArrayList<String> actualTags = tags.getLeft();
 
         if (actualStartTime != null && actualEndTime == null) {
             return Either.right(makeStartTimeWithoutEndTimeResult());
@@ -52,13 +59,12 @@ public class AddArgumentParser {
             return Either.right(makeEndTimeBeforeStartTimeResult());
         }
 
-        Task task = new Task(actualTaskName, actualStartTime, actualEndTime);
-
+        Task task = new Task(actualTaskName, actualStartTime, actualEndTime, actualTags);
         return Either.left(task);
     }
 
     private Either<String, CommandResult> extractTaskName(String argument) {
-        String[] parts = argument.split("(^| )(n|st|et)/");
+        String[] parts = argument.split("(^| )(#|st|et)/");
 
         if (parts.length > 0 && parts[0].trim().length() > 0) {
             return Either.left(parts[0].trim());
@@ -68,7 +74,7 @@ public class AddArgumentParser {
     }
 
     private Either<LocalDateTime, CommandResult> extractStartTime(String argument) {
-        Matcher matcher = Pattern.compile("(^|.*? )st/(?<startTime>.*?)(\\s+et/.*)?").matcher(argument);
+        Matcher matcher = Pattern.compile("(^|.*? )st/(?<startTime>.*?)(\\s+(#|et)/.*)?").matcher(argument);
 
         if (matcher.matches() && matcher.group("startTime") != null) {
             return parseDateTime(matcher.group("startTime").trim());
@@ -78,13 +84,31 @@ public class AddArgumentParser {
     }
 
     private Either<LocalDateTime, CommandResult> extractEndTime(String argument) {
-        Matcher matcher = Pattern.compile("(^|.*? )et/(?<endTime>.*?)(\\s+st/.*)?$").matcher(argument);
+        Matcher matcher = Pattern.compile("(^|.*? )et/(?<endTime>.*?)(\\s+(#|st)/.*)?$").matcher(argument);
 
         if (matcher.matches() && matcher.group("endTime") != null) {
             return parseDateTime(matcher.group("endTime").trim());
         } else {
             return Either.left(null);
         }
+    }
+
+    private Either<ArrayList<String>, CommandResult> extractTags(String argument) {
+        Matcher matcher = Pattern.compile("(?=(^|.*? )#/(?<tags>.*?)(\\s+(n|st|et|#)/.*)?$)").matcher(argument);
+        ArrayList<String> tagList = new ArrayList<String>();
+        String input;
+
+        while (matcher.find() && matcher.group("tags") != null) {
+            input = matcher.group("tags").trim();
+            if (input.isEmpty()) {
+                return Either.right(makeInvalidArgumentResult());
+            }
+            if (!tagList.contains(input)) {
+                tagList.add(input);
+            }
+        }
+
+        return Either.left(tagList);
     }
 
     private Either<LocalDateTime, CommandResult> parseDateTime(String string) {
