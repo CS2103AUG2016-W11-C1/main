@@ -4,6 +4,7 @@
 * [Setting Up](#setting-up)
     * [Prerequisites](#prerequisites)
     * [Importing project into Eclipse](#importing-project-into-eclipse)
+    * [Coding Standards](#coding-standards)
     * [Troubleshooting](#troubleshooting)
 * [Design](#design)
     * [Architecture](#architecture)
@@ -46,6 +47,24 @@ Linenux is a command-line, task manager application designed for consumers who a
 5. Click `Finish`.
 6. Run `gradle eclipse` in your terminal to set up the folders in Linenx.
 7. Run `gradle run` in your terminal to ensure that everything is working properly.
+
+#### Coding Standards
+Our coding standards can be found [here](https://oss-generic.github.io/process/codingstandards/coding-standards-java.html)
+
+To ensure code readablity on Github, please follow the following instructions to set up your Code Formatter Profile on Eclipse:
+
+1. Click `Window` > `Preferences`.
+2. Expand `Java` > `Code Style` and select `Formatter`.
+3. Click the `Edit` button.
+
+<img src="images/eclipseEdit.png"/>
+> What you should be seeing at step 3
+
+4. In the `Indentation` tab, under `General settings`, change `Tab Policy` to Spaces Only and check that `Indentation Size` and `Tab Size` are both set to 4.
+5. Click `OK` to save the profile.
+
+<img src="images/eclipseIndent.png"/>
+> Where you can find the settings to be changed
 
 #### Troubleshooting
 
@@ -155,18 +174,18 @@ The gradle configuration for this project is defined in the build script `build.
 
 #### Continuous Integration
 
-Travis CI is a Continuous Integration platform for GitHub projects. It runs the projects' tests automaticaally whenever new code is pushed to the repo. This ensures that existing functionality and features  have not been broken by the changes.
+Travis CI is a Continuous Integration platform for GitHub projects. It runs the projects' tests automatically whenever new code is pushed to the repo. This ensures that existing functionality and features  have not been broken by the changes.
 
 The current Travis CI set up performs the following things whenever someone push code to the repo:
 * Runs the `./gradlew test` command.
 
 #### Making a Release
 
-Linenux automatically creates a new release by using Travis.
+Linenux automatically creates a new release by using Travis. This can be done by pushing tagged commits to GitHub.
 
 #### Managing Dependecies
 
-A project often depends on third-party libraries. Linenux manages and automates these dependencies using Gradle.
+A project often depends on third-party libraries. Linenux manages these dependencies using Gradle. Gradle will automatically download all the required dependencies when any Gradle command is invoked.
 
 ## Appendices
 
@@ -181,14 +200,19 @@ Priority | As a ...  | I want to ...                             | So that I can
 `* * *`  | user      | add a new task                            |
 `* * *`  | user      | edit a task                               | update the deadlines or other details regarding the task.
 `* * *`  | user      | delete a task                             | remove tasks that I no longer need.
-`* * *`  | user      | search a task                             | check the details of the task.
+`* * *`  | user      | view a task                               | check the details of the task.
+`* * *`  | user      | filter list of tasks shown                | see only tasks that are of interest.
+`* * *`  | user      | mark a task as done                       | indicate that a task is done so that it doesn't show up as a to-do.
 `* * *`  | user      | list tasks by day or deadlines            | plan ahead.
 `* * *`  | user      | undo previous commands                    | correct any erroneous actions.
+`* *`    | user      | rename a tag                              | update the tags that are used for tasks.
 `* *`    | user      | set reminders for tasks                   | make preperations before their stipulated deadlines.
+`* *`    | user      | edit a reminder                           | update the details regarding the reminder.
 `* *`    | user      | have multiple language support            | choose my preferred working language.
 `* *`    | user      | find free time slots                      | make appointments with others.
 `* *`    | user      | have a day/week/month view                | more easily digest the information.
 `* *`    | user      | print the schedule for the day/week/month | have a hard copy of my schedule.
+`* *`    | user      | create personalized alias for commands    | effectively use the commands available.
 `* *`    | user      | sync with Google Calendar                 | have the option to view on any devices with access to the Internet.
 `*`      | user      | see syntax highlighting                   | more easily discern special keywords and commands.
 `*`      | user      | see notifications                         | be constantly reminded without having to open the App.
@@ -197,265 +221,132 @@ Priority | As a ...  | I want to ...                             | So that I can
 
 #### Appendix B : Use Cases
 
->Use Case: Add task
-MSS
+##### Use Case: Add task
+*MSS*
 1. User requests to add task.
-2. TaskManager categorizes task under one of the 3 default tasks.
-3. TaskManager adds task into schedule.
-4. TaskManager shows message indicating successful add, including details of added task.
-5. Use Case ends.
+2. Linenux adds task into schedule and shows message indicating successful add, including details of added task.
+Use Case ends.
 
-Extensions
-<div class="indent">
-  1a. User provides start time without end time.
-    <div class="indent">
-      1a1. TaskManager shows error message to indicate that task is not a valid task.
-    </div>
-    <div class="indent">
-      1a2. Use Case ends.
-    </div>
-</div>
+*Extensions*
+1a. User provides start time without end time.
+> 1a1. TaskManager shows error message to indicate that task is not a valid task.
+> Use Case ends.
 
-<div class="indent mb16">
-  1b. User requests to add an event with overlapping timeslot with an existing event.
-    <div class="indent">
-      1b1. TaskManager shows list of overlapping events.
-    </div>
-    <div class="indent">
-      1b2. TaskManager will show filtered tasks instead.
-    </div>
-    <div class="indent">
-      1b3. Use Case ends.
-    </div>
-</div>
+1b. User provides no start time and end time.
+> 1b1. Linenux will categorize task as a To-Do.
+> Use Case resumes at step 2.
 
->Use Case: List tasks
-MSS
-1. User requests to list all tasks.
-2. TaskManager shows a list of task.
-3. Use Case ends.
+1c. User provides end time without start time.
+> 1c1. Linenux will categorize task as a Deadline.
+> Use Case resumes at step 2.
 
-Extensions
-<div class="indent mb16">
-  1a. User provides search parameters.
-    <div class="indent">
-      1a1. TaskManager will perform fuzzy search and filter tasks based on search parameters.
-    </div>
-    <div class="indent">
-      1a2. TaskManager will show filtered tasks instead.
-    </div>
-    <div class="indent">
-      1a3. Use Case ends.
-    </div>
-</div>
+1d. User provides start time and end time.
+> 1d1. Linenux will categorize task as an Event.
+> Use Case resumes at step 2.
 
->Use Case: Add reminder to tasks
-MSS
-1. User requests to add reminder to task by providing search parameters for task.
-2. TaskManager adds reminder to task.
-3. TaskManager shows message indicating successful add, including details of reminder and task that reminder was added to.
-4. Use Case ends.
+1e. User requests to add an event with an overlapping timeslot with an existing event.
+> 1e1. Linenux will show the list of overlapping events and prompts user for confirmation to add the event.
+> 1e2. User confirms to add task.
+> Use Case resumes at step 2.
 
-Extensions
-<div class="indent">
-  1a. More than one task found when with the given parameters.
-    <div class="indent">
-      1a1. TaskManager shows the list of tasks found.
-    </div>
-    <div class="indent">
-      1a2. User select task from given list.
-    </div>
-    <div class="indent">
-      1a3. Use Case resumes at step 2.
-    </div>
-</div>
-<div class="indent">
-  1b. No task found from given parameters.
-    <div class="indent">
-      1b1. TaskManager shows error indicating no task found.
-    </div>
-    <div class="indent">
-      1b2. Use Case ends.
-    </div>
-</div>
-<div class="indent mb16">
-  1c. Specified index is invalid
-    <div class="indent">
-      1c1. TaskManager shows error message indicating invalid index.
-    </div>
-    <div class="indent">
-      1c2. Use Case resumes at step 1a1.
-    </div>
-</div>
+1e1a. User cancels the add.
+> 1e1a1. Linenux shows that task is not added.
+> Use Case ends.
 
->Use Case: Delete task
-MSS
-1. User requests to delete task by giving search parameters.
-2. TaskManager deletes specific task from schedule.
-3. TaskManager shows message indicating successful delete, including details of task deleted.
-4. Use Case ends.
+##### Use Case: List tasks
+*MSS*
+1. User requests to list tasks giving certain parameters.
+2. Linenux filters all the tasks based given parameters and shows the filtered list of tasks to the User.
+Use Case ends.
 
-Extensions:
-<div class="indent">
-  1a. No tasks found.
-    <div class="indent">
-      1a1. TaskManager shows error message indicating no task found.
-    </div>
-    <div class="indent">
-      1a2. Use Case ends
-    </div>
-</div>
-<div class="indent">
-  1b. More than one task found.
-    <div class="indent">
-      1b1. TaskManager show list of tasks found.
-    </div>
-    <div class="indent">
-      1b2. User specify index of task to delete.
-    </div>
-    <div class="indent">
-      1b3. Use Case resumes at step 2.
-    </div>
-</div>
-<div class="indent mb16">
-  1c. Specified index is invalid.
-    <div class="indent">
-      1c1. TaskManager shows error message indicating invalid index.
-    </div>
-    <div class="indent">
-      1c2. Use Case resumes at step 1b1.
-    </div>
-</div>
+*Extensions*
+1a. User provides no parameters.
+> 1a1. Linenux will show all tasks and reminders for the next 7 days to the User.
+> Use Case ends.
 
->Use Case: Mark task as done.
-MSS
-1. User requests to mark task as done by giving search parameters.
-2. TaskManager marks specific task as done
-3. TaskManager shows message indicating task is marked as done, including details of task
-4. Use Case ends
+##### Use Case: Using commands which has a search parameter.
+*MSS*
+1. User uses a command which has a search parameter(e.g remind, edit, view etc).
+2. Linenux will search all task names and perform the command on the found task.
+Use Case ends.
 
-Extensions:
-<div class="indent">
-  1a. No tasks found
-  <div class="indent">
-    1a1. TaskManager shows error message indicating no task found
-  </div>
-  <div class="indent">
-    1a2. Use Case ends
-  </div>
-</div>
-<div class="indent">
-  1b. More than one task found
-    <div class="indent">
-      1b1. TaskManager show list of tasks found
-    </div>
-    <div class="indent">
-      1b2. User specify index of task to mark as done
-    </div>
-    <div class="indent">
-      1b3. Use Case resumes at step 2
-    </div>
-</div>
-<div class="indent mb16">
-  1b2a. Specified index is invalid
-    <div class="indent">
-      1b2a1. TaskManager shows error message indicating invalid index
-    </div>
-    <div class="indent">
-      1b2a2. Use Case resumes at step 1b1
-    </div>
-</div>
+*Extensions*
+2a. More than one task found with the given search parameter.
+> 2a1. Linenux will show the list of tasks, each with their index, found to the user and prompt the user for the index of the task to perform the command on.
+> 2a2. User provides the index of the task to perform the command on.
+> 2a3. Linenux performs the command on the requested task.
+> Use Case ends
 
->Use Case: Undo
-MSS
-1. User requests to undo to previous state
-2. TaskManager undos to previous state
-3. Use case ends
+2a2a. User provides invalid index(not a number or number out of range).
+> 2a2a1. Linenux will show an error message and prompt the User with the list of found tasks again.
+> Use Case resumes at step 2a2.
 
-Extensions:
-<div class="indent mb16">
-  1a. No previous state to undo to
-    <div class="indent">
-      1a1. TaskManager shows error indicating unable to undo
-    </div>
-    <div class="indent">
-      1a2. Use Case ends
-    </div>
-</div>
+2a2b. User requests to cancel command.
+> 2a2b1. Linenux shows that the requested command is not performed.
+> Use Case ends.
 
->Use Case: Exit
-MSS:
+2b. No tasks were found with the given search parameters.
+> 2b1. Linenux shows error that no tasks were found.
+> Use Case ends.
+
+##### Use Case: Add reminder to task
+*MSS*
+1. User requests to add reminder to task, providing search parameters for task.
+2. Linenux searches for the task (See Use Case for commands with search).
+3. Linenux adds reminder to the found task and shows message indicating successful add, including details of reminder and task that reminder was added to.
+Use Case ends.
+
+##### Use Case: Delete task
+*MSS*
+1. User requests to delete task, providing search parameters for task.
+2. Linenux searches for the task (See Use Case for commands with search)l
+3. TaskManager deletes specific task from schedule and shows message indicating successful delete, including details of task deleted.
+Use Case ends.
+
+##### Use Case: Mark task as done.
+*MSS*
+1. User requests to mark task as done, providing search parameters for task.
+2. Linenux marks found task as done, and shows message indicating task is marked as done, including details of task.
+Use Case ends.
+
+##### Use Case: Undo
+*MSS*
+1. User requests to undo to previous state.
+2. Linenux undos to previous state.
+Use case ends.
+
+*Extensions*
+1a. No previous state to undo to.
+> 1a1. Linenux shows error indicating unable to undo.
+> Use Case ends
+
+##### Use Case: Edit
+*MSS*
+1. User requests to edit task, providing search parameters and changes to be made.
+2. Linenux searches for the task (See Use Case for commands with search).
+3. Linenux processes changes and shows changes made.
+Use Case ends.
+
+*Extensions*
+1a. Specified changes are invalid.
+> 1c1. Linenux shows error message indicating invalid changes.
+> Use case ends.
+
+##### Use Case: Exit
+*MSS*
 1. User requests to exit application.
-2. TaskManager prompts user to confirm application exit.
-3. TaskManager closes.
-4. Use case ends
+2. Linenux prompts user to confirm application exit.
+3. User confirms exit.
+4. Linenux closes.
+Use case ends.
 
-Extensions:
-<div class="indent">
-  2a. User confirms exit while TaskManager is still processing information (e.g. reading/ saving a file).
-    <div class="indent">
-      2a1. TaskManager blocks input until process is done.
-    </div>
-    <div class="indent">
-      2a2. TaskManager closes.
-    </div>
-    <div class="indent">
-      2a3. Use case ends.
-    </div>
-</div>
-<div class="indent mb16">
-  2b. User cancels exit operation.
-    <div class="indent">
-      2b1. Use case ends.
-    </div>
-</div>
+*Extensions*
+2a. User cancels exit operation.
+> Use Case ends.
 
->Use Case: Edit
-MSS:
-1. User requests to edit task by giving search parameters and changes to be made.
-2. TaskManager processes changes.
-3. TaskManager shows changes made.
-
-Extensions:
-<div class="indent">
-  1a. No tasks found.
-    <div class="indent">
-      1a1. TaskManager shows error message indicating no task found.
-    </div>
-    <div class="indent">
-      1a2. Use case ends.
-    </div>
-</div>
-<div class="indent">
-  1b. More than 1 task found.
-    <div class="indent">
-      1b1. TaskManager shows list of tasks found.
-    </div>
-    <div class="indent">
-      1b2. User specifies index of task to edit.
-    </div>
-    <div class="indent">
-      1b3. Use case resumes at step 2.
-    </div>
-</div>
-<div class="indent">
-  1b2a. Specified index is invalid.
-    <div class="indent">
-      1b2a1. TaskManager shows error message indicating invalid index.
-    </div>
-    <div class="indent">
-      1b2a2. Use case resumes at step 1b1.
-    </div>
-</div>
-<div class="indent mb16">
-  1c. Specified changes are invalid.
-    <div class="indent">
-      1c1. TaskManager shows error message indicating invalid changes.
-    </div>
-    <div class="indent">
-      1c2. Use case ends.
-    </div>
-</div>
+3a. User confirms exit while Linenux is still processing information (e.g. reading/ saving a file).
+> 3a1. Linenux blocks input and closes after process is done.
+> Use Case ends.
 
 #### Appendix C : Non Functional Requirements
 
@@ -466,17 +357,86 @@ Extensions:
 5. **Quality** - Code is peer-reviewed before merging the pull requests.
 6. **Reliability** - Code is in accordance to the official Java coding style.
 7. **Testability** - Use of Travis Continuous Integration.
-8. **Backup** - Should be easy for user to backup their data.
 
 #### Appendix D : Glossary
 
 Users are able to create 2 objects, Tasks and Reminders.
 
 Tasks are split into 3 different sub-categories:
+
 1. Deadline: Tasks created with end dates only.
 2. Event: Tasks created with both start and end dates.
 3. To-do: Tasks created with no start and end dates.
 
-**Tasks cannot be created with start dates only.**
+Tasks **cannot** be created with start dates only.
+
+##### Commands Summary
+
+*Legend:*
+
+1. *Optional fields are enclosed in square brackets `[]`.*
+2. *The notation `...` means that multiple words can be used for that field.*
+
+| Command    | Description                               | Format                                                                          |
+|------------|-------------------------------------------|---------------------------------------------------------------------------------|
+| `add`      | Adding a task.                            | `add` TASK_NAME... [st/START_TIME] [et/END_TIME] [#/TAG...]...                  |
+| `remind`   | Setting a reminder for a task.            | `remind` KEYWORDS... t/TIME n/NOTE...                                           |
+| `edit`     | Editing a task.                           | `edit` KEYWORDS... [n/TASK_NAME...] [st/START_TIME] [et/END_TIME] [#/TAG...]... |
+| `editr`    | Editing a reminder.                       | `editr` KEYWORDS... [t/TIME] [n/NOTE...]                                        |
+| `rename`   | Rename a tag.                             | `rename` KEYWORDS... #/TAG...                                                   |
+| `done`     | Marking a task as done.                   | `done` KEYWORDS...                                                              |
+| `delete`   | Deleting a task or reminder.              | `delete` KEYWORDS...                                                            |
+| `clear`    | Clearing a set of tasks.                  | `clear` [#/TAG...]                                                              |
+| `freetime` | Finding a free timeslot.                  | `freetime` [st/START_TIME] et/END_TIME                                          |
+| `list`     | Listing tasks and reminders.              | `list` [KEYWORDS...] [st/START_TIME] [et/END_TIME] [#/TAG...]                   |
+| `today`    | Listing tasks and reminders for today.    | `today`                                                                         |
+| `tomorrow` | Listing tasks and reminders for tomorrow. | `tomorrow`                                                                      |
+| `view`     | Viewing details around a task.            | `view` KEYWORDS...                                                              |
+| `undo`     | Undoing the previous command.             | `undo`                                                                          |
+| `help`     | Seeking help.                             | `help` [COMMMAND_NAME]                                                          |
+| `alias`    | Making aliases for the commands.          | `alias` COMMMAND_NAME n/NEW_NAME                                                |
+| `exit`     | Exiting Linenux.                          | `exit`                                                                          |
+
+##### Supported Time Formats
+
+*All of the examples below have the equivalent meaning to the time 26 October 2016, 5.50pm*
+
+| Format             | Example                |
+|--------------------|------------------------|
+| dd month yy hh.mma | 26 October 2016 5.50pm |
+| yyyy-MM-dd hh:mma  | 2016-10-16 5:50pm      |
+| ddMMyyyy HHmm      | 16102016 1750          |
 
 #### Appendix E : Product Survey
+##### Pros of Products Surveyed
+<img src="images/ProductSurveyPros.jpeg"/>
+> Figure 5 Pros of Products Surveyed
+
+##### Cons of Products Surveyed:
+*Google Calendar*
+* Keyboard shortcuts needs to be discovered.
+* CLI commands is only for the addition of tasks.
+* Unable to add to-dos/floating tasks.
+* Inability to mark tasks as completed.
+* Only has limited color tags to categorize tasks.
+
+*Todoist*
+* Non-intuitive control.
+    * Can only view all tasks (in all categories) in 1 page when you select filters → all.
+* Cannot show all tasks as 1 single list.
+    * Even when showing all tasks, categorized tasks are segregated.
+* Many functions only accessible in paid version
+    * Exporting, comments, labels, etc.
+* No flexibility in setting duration of tasks shown.
+    * Can only show tasks due today or within 7 days.
+* Navigation can only be done by GLI.
+* Only supports To-Dos.
+
+*Wunderlist*
+* Only supports To-Dos.
+* Only has today and weekly view.
+* Only able to add 1 reminder to each task.
+
+*Fantastical*
+* Only available on Mac.
+* Not free and the paid version is expensive.

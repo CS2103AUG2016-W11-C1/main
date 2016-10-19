@@ -1,277 +1,519 @@
 # User Guide
 
-* [Introduction](#introduction)
-* [Quick Start](#quick-start)
+* [About](#about)
+* [Getting Started](#getting-started)
+    * [Download](#download)
+    * [Launch](#launch)
+    * [Visual Walkthrough](#visual-walkthrough)
+    * [Functional Walkthrough](#functional-walkthrough)
 * [Commands Summary](#commands-summary)
-* [List of Commands](#list-of-commands)
-    * [Notes](#some-notes-before-you-start)
-    * [Adding a task: `add`](#adding-a-task-add)
-    * [Adding reminders to a task: `remind`](#adding-reminders-to-a-task-remind)
-    * [Edit a task/reminder: `edit`](#edit-a-taskreminder-edit)
-    * [Deleting tasks: `delete`](#deleting-tasks-delete)
-    * [Marking tasks as done: `done`](#marking-tasks-as-done-done)
-    * [Undo an action: `undo`](#undo-an-action-undo)
-    * [Finding a free timeslot - `freetime`](#finding-a-free-timeslot---freetime)
-    * [Listing all tasks: `list`](#listing-all-tasks-list)
-    * [Viewing details of task or reminder: `view`](#viewing-details-of-task-or-reminder-view)
-    * [Viewing help: `help`](#viewing-help-help)
-    * [Exiting the Program: `exit`](#exiting-the-program-exit)
+* [Supported Time Fomats](#supported-time-formats)
+* [Commands](#commands)
+    * [Add](#add)
+    * [Remind](#remind)
+    * [Edit](#edit)
+    * [Editr](#editr)
+    * [Rename](#rename)
+    * [Done](#done)
+    * [Delete](#delete)
+    * [Clear](#clear)
+    * [Freetime](#freetime)
+    * [List](#list)
+    * [Today](#today)
+    * [Tomorrow](#tomorrow)
+    * [View](#view)
+    * [Undo](#undo)
+    * [Help](#help)
+    * [Alias](#alias)
+    * [Exit](#exit)
+* [Shortcut Keys](#shortcut-keys)
+* [Conclusion](#conclusion)
 
+## About
 
+Everyone of us will face, at some point in our lives, the feeling of being overwhelmed by the amount of things to do: meeting project deadlines, attending a friend's wedding ceremony, paying the bills and the list goes on. This hectic pace of life is the new normal, but it doesn't mean we have to suffer alone in silence. We believe that everyone should have control over their own lives and Linenux is the key to achieving just that.
 
-## Introduction
-We understand that in everyone’s daily lives, we will be thrown many tasks, for example, to attend meetings, preparing documents by a certain deadline etc. Our application, Linenux, aims to help you effectively organize and manage all your different tasks with a simple type on your keyboard.
+Linenux is essentially a task organiser. It helps you to prioritise your tasks by urgency and importance, so that you can better make use of your time by focussing on things that matter. What sets Linenux apart from other task managers is its simplicity and efficiency. It requires only a single line of command. No mouse clicks needed and no gimmicks. Linenux works only as fast as you can type, making it a perfect fit for those with an affinity for typing.
 
+Without further ado, let's get started!
 
+## Getting Started
 
-## Quick Start
+#### Download
 
-1. Find the project in the `Project Explorer` or `Package Explorer` (usually located at the left side)
-2. Right click on the project
-3. Click `Run As` > `Java Application` and choose the `Main` class.
-4. The GUI should appear in a few seconds.
+1. Ensure that you have Java 8 installed on your computer.
+2. Download the latest linenux.jar from the [releases](https://github.com/CS2103AUG2016-W11-C1/main/releases) tab.
+<img src="images/releases.png">
+3. Copy the file to the folder that you want to use as the home folder for Linenux.
 
+#### Launch
 
+Double-click on the file to launch Linenux. Wait for a few seconds for the main window to appear.
 
-## Commands Summary:
-| Description | Command | Format |
-|---|---|---|
-| Add a task to Linenux | [`add`](#adding-a-task-add) | `add` TASK_NAME [st/START_TIME] [et/END_TIME] [#/TAGS]... |
-| Add a reminder to a task | [`remind`](#adding-reminders-to-a-task-remind) | `remind` KEYWORDS... t/TIME [n/NOTE] |
-| Edit a task or reminder | [`edit`](#edit-a-taskreminder-edit) | `edit` KEYWORDS... [n/NEW_NAME] [st/START_TIME] [et/END_TIME] |
-| Delete a task or reminder | [`delete`](#deleting-tasks-delete) | `delete` KEYWORDS… |
-| Mark a task as done | [`done`](#marking-tasks-as-done-done) | `done` KEYWORDS… |
-| Undo | [`undo`](#undo-an-action-undo) | `undo` |
-| Finding a free timeslot | [`freetime`](#finding-a-free-timeslot---freetime) | `freetime` [st/START_TIME] et/END_TIME |
-| Listing all tasks and reminders | [`list`](#listing-all-tasks-list) | `list` [KEYWORDS]... [st/START_TIME] [et/END_TIME] [#/TAG] |
-| Viewing details of tasks and reminders | [`view`](#viewing-details-of-task-or-reminder-view) | `view` KEYWORDS… |
-| Help for commands | [`help`](#viewing-help--help) | `help` [KEYWORD] |
-| Exiting Linenux | [`exit`](#exiting-linenux-exit) | `exit` |
+<img src="images/mainWindow.png">
 
+#### Visual Walkthrough
 
+<img src="images/mainWindowDiagram.png">
 
-## List of Commands
-#### Some notes before you start:
-##### Command format:
-  1. Any capitalized words, e.g TASK_NAME, is a field required by the command.
-  2. All time fields are in the format of YYYY-MM-DD.
-  3. Any field surrounded by square brackets, '[ ]', are optional.
-  4. Each field represents one word, and fields are seperated by spaces.
-  5. The only exception to (4) is when you see '...' after a field, indicating that you can key in multiple words for that particular field.
+1. **Command Box** - where you enter the command.
+2. **To-do Panel** - shows to-dos.
+3. **Deadline Panel** - shows deadlines.
+4. **Event Panel** - shows events.
+5. **Display Panel** - shows reminders and search results.
 
-\* Some of the commands in Linenux will ask for KEYWORDS of the task/reminder that you are doing the command for. In those cases, Linenux will search your schedule for the tasks/reminders that matches your KEYWORDS. There are 2 things that can happen when the Linenux finds something from your schedule:
-  1. Only one task/reminder was found:
+*The list of deadlines, events and reminders are always ordered according to their urgency.*
 
-      Linenux will do the command on the found task.
-  2. More than one task/reminder was found:
+#### Functional Walkthrough
 
-      Linenux will prompt you with a list of all the tasks and reminders found, which you will then need to tell Linenux which task/reminder to execute the command on.
+*This section is a scenario driven, step-by-step introduction on how to use Linenux. For a more in-depth coverage of the commands, refer to our [Commands](#commands) section in the user guide.*
 
+*Step 1: Adding a task.*
 
-#### Adding a task: `add`
-Linenux’s goal is to help you organize and manage your tasks, so the most important feature will be to add said tasks into Linenux.
-To help organize your tasks, our add command allows you tag your task to help you easily search for them in the future. Furthermore, our team has looked into all possible tasks and discovered that tasks can be generally categorized into the following 3 groups:
-  1. Deadlines (Tasks with end times only)
-  2. Events (Tasks with start and end times)
-  3. To-Dos (Tasks without start and end times)
+The date is October 17, 2016. You have to buy groceries from the local supermarket but you are only free to do so on a weekend. You decide to remind youself with the aid of Linenux. Type the following line in the command box:
 
-As such, all tasks will be categorize under these 3 groups by default(no input from you required!) and will tagged under #deadlines, #events, #todos respectively.
+`> add buy groceries et/2016-10-22 8:00AM`
 
-Thus, to add any type of task, all you need to do is to type `add`, followed by your task name. Depending on your needs, you may also include the optional fields specified in the format of the add command.
+*Step 2: Setting a reminder.*
 
-##### Format:
+You worry that you might not have enough cash to buy groceries and decide to withdraw money from a nearby ATM machine on the way home from work on Friday. Type the following line in the command box:
+
+`> remind buy groceries n/withdraw money et/2016-10-21 6:00pm`
+
+*Step 3: Listing tasks for the day.*
+
+Time flies and it is already Friday. You wonder what needs to be done for the day. Type the following line in the command box:
+
+`> list et/2016-10-21 11:59PM`
+
+or more simply,
+
+`> today`
+
+This will show you the list of tasks and reminders to be done for the day.
+
+*Step 4: Marking a task as done.*
+
+You repeat step 3 on Saturday and realised that you needed to buy the groceries. You hastily went out to buy them, thus completing all of your work for the day. Type the following line in the command box:
+
+`> done buy groceries`
+
+This command will prevent the task from showing up again in subsequent `list` or `today` commands.
+
+*Step 5: Becoming proficient*
+
+You are very impressed with what you have seen thus far and want to learn more about the amazing things you can do with Linenux. Type the following line in the command box:
+
+`> help`
+
+This brings up the list of Linenux commands with their description and format. It is for a quick in-app look-up. Continue to the next section if you want a complete rundown of the details of commands.
+
+## Commands Summary
+
+*Legend:*
+
+1. *Optional fields are enclosed in square brackets `[]`.*
+2. *The notation `...` means that multiple words can be used for that field.*
+
+| Command                 | Description                               | Format                                                            	 		  	    |
+|-------------------------|-------------------------------------------|---------------------------------------------------------------------------------|
+| [`add`](#add) 		      | Adding a task.	   	     	  		          | `add` TASK_NAME... [st/START_TIME] [et/END_TIME] [#/TAG...]...   	 		  	      |
+| [`remind`](#remind) 	  | Setting a reminder for a task.  	        | `remind` KEYWORDS... t/TIME n/NOTE...                        	 		              |
+| [`edit`](#edit) 		    | Editing a task.   	  		                | `edit` KEYWORDS... [n/TASK_NAME...] [st/START_TIME] [et/END_TIME] [#/TAG...]... |
+| [`editr`](#editr)       | Editing a reminder.                       | `editr` KEYWORDS... [t/TIME] [n/NOTE...]                      	 	 			        |
+| [`rename`](#rename)	    | Renaming a tag.								              | `rename` KEYWORDS... #/TAG...													                          |
+| [`done`](#done) 	      | Marking a task as done.       	  		 	  | `done` KEYWORDS... 										             		 	                        |
+| [`delete`](#delete) 	  | Deleting a task or reminder. 	  		      | `delete` KEYWORDS... 										         		 	                          |
+| [`clear`](#clear)       | Clearing a set of tasks.					        | `clear` [#/TAG...]											         		 	                          |
+| [`freetime`](#freetime) | Finding a free timeslot.   	  		 	      | `freetime` [st/START_TIME] et/END_TIME 				                 		 	            |
+| [`list`](#list) 		    | Listing tasks and reminders. 		          | `list` [KEYWORDS...] [st/START_TIME] [et/END_TIME] [#/TAG...]        		 	      |
+| [`today`](#today)       | Listing tasks and reminders for today.    | `today` 													        	 		 	                              |
+| [`tomorrow`](#tomorrow) | Listing tasks and reminders for tomorrow. | `tomorrow` 													 		 		 	                                  |
+| [`view`](#view)         | Viewing details around a task.            | `view` KEYWORDS...        									 		 		 	                          |
+| [`undo`](#undo) 		    | Undoing the previous command.          	  | `undo` 				   									     		 		 	                                |
+| [`help`](#help) 		    | Seeking help.				  		                | `help` [COMMMAND_NAME]    									 		 		 	                          |
+| [`alias`](#alias)       | Making aliases for the commands.          | `alias` COMMMAND_NAME n/NEW_NAME                               		 		 	        |
+| [`exit`](#exit) 	   	  | Exiting Linenux. 				  		            | `exit` 			       									     		 		 	                              |
+
+## Supported Time Formats
+
+*All of the examples below are equivalent to 16 October 2016, 5.50pm*
+
+| Format             | Example                |
+|--------------------|------------------------|
+| dd month yy hh.mma | 16 October 2016 5.50pm |
+| yyyy-MM-dd hh:mma  | 2016-10-16 5:50pm      |
+| ddMMyyyy HHmm      | 16102016 1750          |
+
+## Commands
+
+*Things to note:*
+
+1. *The `command` word must be the first word in the sentence.*
+2. *All commands and their respective fields are case-insensitive.*
+3. *The order of the fields do not matter.*
+5. *Optional fields are enclosed in square brackets `[]`.*
+6. *The notation `...` means that multiple words can be used for that field.*
+
+#### Add
+
+Linenux supports 3 kinds of tasks:
+
+1. **To-dos**    (Tasks without start and end times)
+2. **Deadlines** (Tasks with end times only)
+3. **Events**    (Tasks with start and end times)
+
+Adding a task has never been this easy. Just indicate the appropriate fields and we will automatically assign the newly created task to one of the three categories above. Tags can be used to group similar tasks together.
+
+*Format:*
+
+`add TASK_NAME [st/START_TIME] [et/END_TIME] [#/TAG...]...`
+
+*Examples:*
+
 ```
-add TASK_NAME [st/START_TIME] [et/END_TIME] [#/TAG]...
+// Adding a to-do with tag 'trump'.
+> add watch videos on presidential election #/trump
+
+// Adding a deadline with tags 'household' and 'bills and money'.
+> add pay utility bills et/2016-10-16 5:00PM #/household #/bills and money
+
+// Adding an event with tag 'household'.
+> add house warming st/2016-10-16 5:00pm et/2016-10-16 9:00pm #/household
 ```
 
-##### Examples:
+#### Remind
+
+Setting reminders is as simple as adding a task. Just specify the appropriate fields and we will assign the reminder to the task that you want. Reminders will show up on the display panel upon launch or when the commands `list`, `today` and `tomorrow` are entered.
+
+*Format:*
+
+`remind KEYWORDS... t/TIME n/NOTE...`
+
+*Examples:*
+
 ```
-//Adding a deadline
-add Submit v0.0 deliverables et/2016-10-05 #quite_important
-```
-```
-//Adding an Event
-add Hackathon st/2016-10-01 et/2016-10-02 :D #really_important
-```
-```
-//Adding a To-Do
-add CS2103T tutorial :D #very_important
+// Setting a reminder for the event 'house warming' with the note 'buy groceries'.
+> remind house warming t/2016-10-16 07:00am n/buy groceries
 ```
 
+*Fun Fact:*
 
-#### Adding reminders to a task: `remind`
-Often enough, just having a deadline or knowing when an event will happen is not enough. For instance, knowing that you have a submission due on Friday, you might want to remind yourself about the submission on Wednesday. Fear not, for Linenux is here to help.
+Ever wondered why we use the word `KEYWORDS` rather than `TASK_NAME`? This is because the `remind` command actually searches for task names containing those keywords behind the scene! For example, consider the scenario below :
 
-To add a reminder, type `remind`, along with some keywords for Linenux to search for your task and Linenux will add the reminder onto the task. Also, you can add notes to your reminders, which will show up in addition to the task name when it is the day of the reminder.
-
-##### Format:
 ```
-remind KEYWORDS... t/TIME [n/NOTE]
-```
-
-##### Examples:
-```
-remind assignment t/2016-07-18 05:00PM
-```
-```
-remind project deadline t/2016-07-18 05:00PM n/Complete v0.0 document
+> add cs2101 assignment et/2016-10-16 11:59pm
+> add cs2103 assignment et/2016-10-18 11:59pm
+> remind assignment t/2016-10-16 10:00pm
 ```
 
-##### Callouts:
-> Upon starting up the application, all your reminders for the day will be shown.
+In this scenario, since there are multiple task names with the keyword `assignment`, both results are returned and you get to choose, via specifying an index, which task is the reminder for. This mechanism is known as fuzzy searching and it is implemented for all commands with the field `KEYWORDS`. How cool is that?
 
+#### Edit
 
-#### Edit a task/reminder: `edit`
-Things change all the time, and that applies to tasks too. To help facilitate these changes, you can edit your tasks and reminders. All you have to do, is to type `edit` and some keywords to search for your task and provide the new details and Linenux will update your tasks and reminders.
+Life would be a breeze if everything had gone according to plan. Unfortunately, things change all the time and we need to be able to respond accordingly. Thankfully, one of the few things in life that is a breeze is the `edit` command. It uses the same fuzzy searching mechanism as `remind` and it will update the respective fields of the task to their new values. However, do take note that for the field tag, it will replace all existing tags of the task. Also, to remove fields, we will use a dash as shown in the examples below. All fields can be removed except `n/TASK_NAME...`.
 
-##### Format:
+*Format:*
+
+` edit KEYWORDS... [n/TASK_NAME...] [st/START_TIME] [et/END_TIME] [#/TAG...]...`
+
+*Examples:*
+
 ```
-edit KEYWORDS... [n/NEW_NAME] [st/START_TIME] [et/END_TIME]
+// Adding an event with tags 'hobby' and 'rest day'.
+> add play golf st/2016-10-16 7:00am et/2016-10-16 9:00am #/hobby #/rest day
+
+// Changing the name of the event from 'play golf' to 'play chess'.
+> edit play golf n/play chess
+
+// Changing the starting and ending time of the event 'play chess'.
+> edit play chess st/2016-10-16 7:00pm et/2016-10-16 9:00pm
+
+// Replacing both tags 'hobby' and 'rest day' with the tag 'fun'.
+> edit play chess #/fun
+
+// Changing 'play chess' from an event to a to-do.
+> edit play chess st/- et/-
+
+// Removing all tags associated with the to-do 'play chess'.
+> edit play chess #/-
 ```
 
-##### Examples:
+#### Editr
+
+This is a variant of the `edit` command but for reminders. It works similar to the `edit` command, with the same fuzzy searching mechanism which searches for a reminder by its note.
+
+*Format:*
+
+`editr KEYWORDS... [t/TIME] [n/NOTE...]`
+
+*Examples:*
+
 ```
-edit assignment et/2016-08-13
-```
-```
-edit this n/CS2103 st/2016-09-20 et/2016-05-09
+// Setting a reminder for the event 'house warming' with the note 'buy groceries'.
+> remind house warming t/2016-10-16 07:00am n/buy groceries
+
+// Changing the time of a reminder with note.
+> editr buy groceries t/2016-10-16 06:00am
 ```
 
-##### Callouts:
-> Linenux will overwrite the fields of the old task with all the details of the new task, so you will be required to provide all the fields for your new task. We, the developers, aim to find a user-friendly way for you to edit each field separately, so stay tuned for more updates!
+#### Rename
 
+Renaming a tag will change all tasks with that tag to the new tag.
 
-#### Deleting tasks: `delete`
-At times, tasks or reminders might become redundant. For example, a scheduled meeting might be cancelled due to unforeseen circumstances. So, you would need a way to delete these redundant tasks and reminders from your schedule as it is not longer required. Thus, to update your schedule, type `delete`, followed by some keywords of your task/reminder and Linenux will remove the task/reminder from your schedule.
+*Format:*
 
-##### Format:
+`rename KEYWORDS... #/TAG...`
+
+*Examples:*
+
+```
+// Rename tag 'assignments' to 'nus assignments'.
+> rename assignments #/nus assignments
+```
+
+#### Done
+
+Yes! You’ve just completed a task. Since it’s completed, you wouldn’t want to see it popping up as a task that is incomplete, would you? Thus, type `done`, along with the task name to mark it as completed.
+
+*Format:*
+
+`done KEYWORDS...`
+
+*Examples:*
+
+```
+// Mark to-do 'write user guide' as done.
+> done write user guide.
+```
+
+#### Delete
+
+At times, tasks or reminders might become redundant. For example, a scheduled meeting might be cancelled due to unforeseen circumstances. The fuzzy searching mechanism for `delete` differs from what we have seen so far because it searches for both tasks as well as reminders. Deleting a task will remove all its reminders, while deleting a reminder will not affect its task.
+
+*Format:*
+
 ```
 delete KEYWORDS...
 ```
 
-##### Callouts:
-> Deleting task is a dangerous thing, especially when you can accidentally delete an important task unintentionally. Thus, Linenux will show you the details of the task that you have just deleted so please check that the correct task is deleted. If the wrong task is deleted, worry not, just type [`undo`](#undo-an-action-undo)!
-
-> Also, when you delete a task, you don't have to manually delete all the remainders attached to it, as Linenux will automatically do so for you!
-
-
-#### Marking tasks as done: `done`
-Yes! You’ve just completed a task. Since it’s completed, you wouldn’t want to see it popping up as a task that is incomplete, would you? Thus, type done, along with some keywords to search to the task to tell Linenux that the task has been completed.
-
-##### Format:
-```
-done KEYWORDS...
-```
-```
-done CS2103 tutorial
-```
-
-
-#### Undo an action: `undo`
-Nobody’s perfect, and we would make mistakes. Thankfully, Linenux is here to help with one of our favourite feature, `undo`. Type `undo` and Linenux will restore your schedule to the last time you made changes to your tasks.
-
-##### Format:
-```
-undo
-```
-
-##### Callouts:
-> Undo will only affect commands that have made changes to your schedule, such as add and delete. Commands that don’t make changes like list and view, will not be affected.
-
-
-#### Finding a free timeslot - `freetime`
-With all your events in the schedule, Linenux can help you find all your available time slots. Just type `freetime` and give the time period for Linenux to search and Linenux will list down all your free time slots in the period!
-
-##### Format:
-```
-freetime [st/START_TIME] et/END_TIME
-```
-
-##### Examples:
-```
-freetime et/2016-07-24
-```
-```
-freetime st/2016-07-18 et/2016-07-24
-```
-
-##### Callouts:
-> If you do specify a start time, Linenux would assume that the start time will be today, the day you call this command.
-
-#### Listing all tasks: `list`
-As you start getting overwhelmed by the overwhelming number of tasks that you have to do, it is understandable that you start to forget some of them. Thankfully, Linenux will never forget. Just type `list` and Linenux will show you the list of tasks.
-
-Just want to view a particular group of tasks and reminders? Linenux will also allow you to filter all the tasks to your own needs! Simply provide Linenux with more details on some of the fields(or all, if you'd like) and let Linenux do all the filtering for you!
-
-##### Format:
-```
-list [KEYWORDS]... [st/START_TIME] [et/END_TIME] [#/TAG]
-```
-
-##### Examples:
+*Example:*
 
 ```
-list
-```
-```
-list st/2016-06-01 et/2016-07-01
-```
-```
-list st/2016-06-01 et/2016-07-01 #Hobbies
-```
-```
-list assignment st/2016-06-01 et/2016-07-01
-```
-##### Callouts
->
-* To help organize and manage your tasks, Linenux will group your tasks under the 3 default categories (Deadlines, Events, To-Dos) and before listing them.
+// Delete an event 'cs2103 meeting'.
+> delete cs2103 meeting
 
->
-* Your deadlines, events and reminders will be listed in a sorted manner as follows:
-     * Deadlines - by earliest end time
-     * Events, reminders -  by earliest start time
->
-* When a time field is provided, Linenux will still show all to-dos task, since they are not bounded by anytime. For deadline, events and reminders, if you provided Linenux with a:
-    * Start time:
-      All deadlines, events and reminders that ends after your given start time will be shown.
-    * End time:
-      All events, deadlines and reminders that start before given end time will be shown.
-
-
-#### Viewing details of task or reminder: `view`
-Sometimes, listing down all the tasks and reminders is simply not enough, as we might want to check all the reminders that we have created for a particular task.
-
-Just type `view`, followed by some keywords to search for your task and Linenux will show all the details of the task that you searched for.
-
-##### Format:
-```
-view KEYWORDS...
+// Delete a reminder 'buy groceries'.
+> delete buy groceries
 ```
 
-##### Example:
+#### Clear
+
+To delete multiple tasks in the same category, the `clear` command can be used. When used on its own, it will delete all tasks marked as done. You can also delete a set of tasks with the same tag by specifying the tag name.
+
+*Format:*
+
+`clear [#/TAG...]`
+
+*Example:*
+
 ```
-view assignment
+// Clears all tasks marked as done.
+> clear
+
+// Clears all tasks with tag 'assignment'.
+> clear #/assignment
 ```
 
+#### Freetime
 
-#### Viewing help : `help`
-We understand that there may be too many commands to remember and it might be a hassle to refer to the user guide to refer to the list of commands. Thus, to get a brief overview of the list of commands available immediately, you can type the command, `help`.
+Sometimes we might need to know when we are free. The `freetime` command shows you all the time slots that are not occupied by events.
 
-Furthermore, are you just searching for how a particular command work and finding it difficult to look through the whole list? Well, include the command as a keyword for the help function and Linenux will show you only what you need.
+*Format:*
 
-##### Format:
+`freetime [st/START_TIME] et/END_TIME`
+
+*Examples:*
+
 ```
-help [KEYWORD]
+// Finding all free time slots from now to 25 December 2016, 11.59pm.
+// (Assuming now is some time before 25 Decemeber 2016.)
+> freetime et/2016-12-25 11:59pm
+
+// Finding all free time slots on 16 October 2016 between 7am to 9pm.
+> freetime st/2016-10-16 7:00am et/2016-10-16 9:00pm
 ```
 
-##### Callouts:
-> When Linenux is unable to understand your command, it will also show you the `help` section.
+#### List
 
+The default behaviour of the `list` command returns the list of all incomplete tasks and reminders. This may not be particularly helpful as you may have a lot of outstanding tasks. Luckily, you are able to narrow the search space down by specifying the various fields. You can chain multiple and separate fields together.
 
-#### Exiting Linenux: `exit`
-Although we are sad to see you goTo exit the program, apart from clicking the ‘x’ button, we too have catered to your love of typing. Simply type `exit` and you’re done!
+*Format:*
 
-Format:
+`list [KEYWORDS...] [st/START_TIME] [et/END_TIME] [#/TAG...]`
+
+*Examples:*
+
 ```
-exit
+// Lists all incomplete tasks and reminders.
+> list
+
+// Lists all incomplete tasks and reminders containing the word `assignment`.
+> list assignment
+
+// List all incomplete tasks and reminders from now to 25 December 2016, 11.59pm.
+// (Assuming now is some time before 25 Decemeber 2016.)
+> list et/2016-12-25 11:59pm
+
+// List all incomplete tasks and reminders from 16 October 2016, 12.00am to 25 December 2016, 11.59pm.
+> list st/2016-10-16 12:00am et/2016-12-25 11:59pm
+
+// List all completed tasks.
+> list #/done
+
+// List all incomplete tasks with tag 'assignment'.
+> list #/assignment
+
+// List all incomplete tasks from 16 October 2016, 12.00am to 25 December 2016, 11.59pm and with tags 'assignment'.
+> list st/2016-10-16 12:00am et/2016-12-25 11:59pm #/assignment
 ```
+
+#### Today
+
+Seeing as how you might want to know today's tasks frequently, instead of typing `list et/2016-10-16 11:59pm` (assuming today's date is 16 October 2016), we made it into a command itself! If you have events that span from today to the next day, it will be shown as well.
+
+*Format:*
+
+`today`
+
+*Example:*
+
+```
+// List all tasks from now to 11.59pm that same day.
+> today
+```
+
+#### Tomorrow
+
+Similar as the command `today`, this is a syntactic sugar which is equivalent to `list st/2016-10-16 12:00am et/2016-10-16 11:59pm`, assuming that the date tomorrow is 16 October 2016. If you have events that span from tomorrow to the day after tomorrow, it will be shown as well.
+
+*Format:*
+
+`tomorrow`
+
+*Example:*
+
+```
+// List all tasks the next day.
+> tomorrow
+```
+
+#### View
+
+The command `list` only provides the general details surrounding a task. To see all the reminders associated with a task, use `view`.
+
+*Format:*
+
+`view KEYWORDS...`
+
+*Example:*
+
+```
+// View details regarding the deadline.
+> view cs2101 assignment
+```
+
+#### Undo
+
+We all make mistakes in life, but we believe in second chances. After all, we are mere mortals. With the `undo` command, we will turn a blind eye to your previous commands. However, do note that not all mistakes can be forgiven. Only the following command can be undone:
+
+*Undo-able Commands:*
+
+1. `add`
+2. `remind`
+3. `edit`
+4. `editr`
+5. `rename`
+6. `done`
+7. `delete`
+8. `clear`
+
+You can undo up to ten such commands.
+
+*Format:*
+
+`undo`
+
+*Example:*
+
+```
+// Undo previous undo-able commands, if any.
+> undo
+```
+
+#### Help
+
+We all need a helping hand every once in a while. Lucky for you, we are with you every step of the way. If you have forgotten how to use a command, or want to know more about what Linenux can do, just type `help` and we will tell you all that you need to know. You no longer need to refer to this user guide every now and then, or carry a heavy user manual everywhere you go. How convenient is that?
+
+*Format:*
+
+`help [COMMMAND_NAME]`
+
+*Example:*
+
+```
+// Help for all commands.
+> help
+
+// Help for add command.
+> help add
+```
+
+#### Alias
+
+Ever felt that the command `tomorrow` is too long to type? Or if you have a better name for a command? Well, the `alias` command allows you to create aliases for commands. Do note that creating aliases does not remove the original command word, but rather you can alternate between both. Note that the alias has to be a single word consisting of only alphabets and numbers.
+
+*Format:*
+
+`alias COMMAND_NAME NEW_NAME`
+
+*Example:*
+
+```
+// Adding an alias for tomorrow.
+> alias tomorrow tmr
+
+// Listing all incomplete tasks and reminders for the next day.
+> tmr
+
+// Original command tomorrow should still work.
+> tomorrow
+```
+
+#### Exit
+
+Although we are sad to see you go, if you have got to go, we believe you should go happy.
+
+*Format:*
+
+`exit`
+
+*Example:*
+
+```
+// Exits the program. It is the equivalent to closing the window by clicking the 'X'.
+> exit
+```
+
+## Shortcut Keys
+
+*These keyboard shortcuts are not commands, but they help speed up navigation in Linenux. We hope that you find these shortcuts helpful.*
+
+| Key        | Function                                                                                |
+|------------|-----------------------------------------------------------------------------------------|
+| <kbd>↑</kbd> / <kbd>↓</kbd> | Cycles through your most recently used commands without having to type everything again. |
+| <kbd>Tab</kbd>| Autocompletes the command word for you. 												   |
+
+## Conclusion
+
+Thank you for taking the time to read our user guide. Please feel free to post in our [issue tracker](https://github.com/CS2103AUG2016-W11-C1/linenux/issues) if you notice any bugs or have any suggestions on how to improve. We will be extremely happy to hear from you so we can make Linenux even better. With that, have fun organising your tasks!
