@@ -16,6 +16,11 @@ public class Reminder {
         this.timeOfReminder = timeOfReminder;
     }
 
+    public Reminder(Reminder other) {
+        this.note = other.note;
+        this.timeOfReminder = other.timeOfReminder;
+    }
+
     /**
      * Creates a copy of the reminder.
      * @return

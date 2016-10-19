@@ -79,7 +79,7 @@ public class DoneCommand implements Command {
 
             if (1 <= index && index <= this.foundTasks.size()) {
                 Task task = this.foundTasks.get(index - 1);
-                task.markAsDone();
+                this.schedule.doneTask(task);
 
                 setResponse(false, null);
                 return makeDoneTask(task);

@@ -86,15 +86,19 @@ public class Task {
         this.reminders = new ArrayList<Reminder>();
     }
 
-    public Task copyTask() {
-        Task copyTask = new Task(taskName, startTime, endTime, tags);
-        copyTask.setIsDone(isDone);
-        copyTask.setCategories(
-                new ArrayListUtil.ChainableArrayListUtil<String>(tags)
-                        .map(tag -> tag.toString()).value());
-        copyTask.setReminders(new ArrayListUtil.ChainableArrayListUtil<Reminder>(reminders)
-                .map(reminder -> reminder.copyReminder()).value());
-        return copyTask;
+    /**
+     * Copy constructor.
+     * @param other The other {@code Task} to copy from.
+     */
+    public Task(Task other) {
+        this.taskName = other.taskName;
+        this.isDone = other.isDone;
+        this.startTime = other.startTime;
+        this.endTime = other.endTime;
+        this.tags = new ArrayList<>(other.tags);
+        this.reminders = new ArrayListUtil.ChainableArrayListUtil<>(other.reminders)
+                .map(Reminder::new)
+                .value();
     }
 
     @Override
@@ -155,36 +159,16 @@ public class Task {
 
     /* Setters */
 
-    public void setTaskName(String taskName) {
-        this.taskName = taskName;
+    public Task markAsDone() {
+        Task output = new Task(this);
+        output.isDone = true;
+        return output;
     }
 
-    public void markAsDone() {
-        this.isDone = true;
-    }
-
-    public void setIsDone(boolean isDone) {
-        this.isDone = isDone;
-    }
-
-    public void setStartTime(LocalDateTime startTime) {
-        this.startTime = startTime;
-    }
-
-    public void setEndTime(LocalDateTime endTime) {
-        this.endTime = endTime;
-    }
-
-    public void setCategories(ArrayList<String> tags) {
-        this.tags = tags;
-    }
-
-    public void addReminder(Reminder reminder) {
-        this.reminders.add(reminder);
-    }
-
-    public void setReminders(ArrayList<Reminder> reminders) {
-        this.reminders = reminders;
+    public Task addReminder(Reminder reminder) {
+        Task output = new Task(this);
+        output.reminders.add(reminder);
+        return output;
     }
 
     private String tagsToString() {

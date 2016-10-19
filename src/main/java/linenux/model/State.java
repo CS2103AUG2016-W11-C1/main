@@ -63,7 +63,7 @@ import linenux.util.ArrayListUtil;
      public State doneTask(Task task) {
          int taskIndex = taskList.indexOf(task);
          ArrayList<Task> newTaskList = copyTaskList(taskList);
-         newTaskList.get(taskIndex).markAsDone();;
+         newTaskList.set(taskIndex, task.markAsDone());
          return new State(newTaskList);
      }
 
@@ -73,7 +73,7 @@ import linenux.util.ArrayListUtil;
      public State addReminder(Task task, Reminder reminder) {
          int taskIndex = taskList.indexOf(task);
          ArrayList<Task> newTaskList = copyTaskList(taskList);
-         newTaskList.get(taskIndex).addReminder(reminder);
+         newTaskList.set(taskIndex, task.addReminder(reminder));
          return new State(newTaskList);
      }
 
@@ -110,8 +110,8 @@ import linenux.util.ArrayListUtil;
       * @return
       */
      private ArrayList<Task> copyTaskList(ArrayList<Task> taskList) {
-         return new ArrayListUtil.ChainableArrayListUtil<Task>(taskList)
-                                 .map(task -> task.copyTask())
+         return new ArrayListUtil.ChainableArrayListUtil<>(taskList)
+                                 .map(Task::new)
                                  .value();
      }
 }
