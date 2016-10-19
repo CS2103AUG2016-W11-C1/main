@@ -15,6 +15,7 @@
     * [Editr](#editr)
     * [Rename](#rename)
     * [Done](#done)
+    * [Undone](#undone)
     * [Delete](#delete)
     * [Clear](#clear)
     * [Freetime](#freetime)
@@ -124,6 +125,7 @@ This brings up the list of Linenux commands with their description and format. I
 | [`editr`](#editr)       | Editing a reminder.                       | `editr` KEYWORD... [t/TIME] [n/NOTE...]                      	 	 			|
 | [`rename`](#rename)	  | Renaming a tag.						      | `rename` KEYWORD... #/TAG...													|
 | [`done`](#done) 	      | Marking a task as done.       	  	 	  | `done` KEYWORD... 										             		 	|
+| [`undone`](#undone)     | Marking a task as undone.                 | `undone` KEYWORD...                                                             |
 | [`delete`](#delete) 	  | Deleting a task or reminder. 	          | `delete` KEYWORD... 										         		 	|
 | [`clear`](#clear)       | Clearing a set of tasks.		          | `clear` [#/TAG...]											         		 	|
 | [`freetime`](#freetime) | Finding a free timeslot.   	  	 	      | `freetime` [st/START_TIME] et/END_TIME 				                 		 	|
@@ -287,6 +289,21 @@ Yes! You’ve just completed a task. Since it’s completed, you wouldn’t want
 ```
 // Mark to-do 'write user guide' as done.
 > done write user guide.
+```
+
+#### Undone
+
+The `undone` command is the reverse of the `done` command.
+
+*Format:*
+
+`undone KEYWORD...`
+
+*Examples:*
+
+```
+// Mark to-do `write user guide` as undone.
+> undone write user guide
 ```
 
 #### Delete
