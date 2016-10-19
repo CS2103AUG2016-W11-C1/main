@@ -187,9 +187,9 @@ public class EditCommandTest {
     @Test
     public void testEditDeadlineToTodoWhenSingleDeadlineFound() {
         this.schedule.clear();
-        this.schedule.addTask(new Task("hello et/2016-01-01 5:00PM"));
+        this.schedule.addTask(new Task("hello", null, LocalDateTime.of(2016, 1, 1, 17, 0)));
         assertChangeBy(() -> this.schedule.getTaskList().size(), 0,
-                () -> this.editCommand.execute("edit hello n/CS2103T Tutorial et/rm"));
+                () -> this.editCommand.execute("edit hello n/CS2103T Tutorial et/-"));
 
         // The edited task has correct name
         ArrayList<Task> tasks = this.schedule.getTaskList();
@@ -211,7 +211,7 @@ public class EditCommandTest {
     @Test
     public void testEditDeadlineToDeadlineWhenSingleDeadlineFound() {
         this.schedule.clear();
-        this.schedule.addTask(new Task("hello et/2016-01-01 5:00PM"));
+        this.schedule.addTask(new Task("hello", null, LocalDateTime.of(2016, 1, 1, 17, 0)));
         assertChangeBy(() -> this.schedule.getTaskList().size(), 0,
                 () -> this.editCommand.execute("edit hello n/CS2103T Tutorial et/2016-01-01 7:00PM"));
 
@@ -235,7 +235,7 @@ public class EditCommandTest {
     @Test
     public void testEditDeadlineToEventWhenSingleDeadlineFound() {
         this.schedule.clear();
-        this.schedule.addTask(new Task("hello et/2016-01-01 5:00PM"));
+        this.schedule.addTask(new Task("hello", null, LocalDateTime.of(2016, 1, 1, 17, 0)));
         assertChangeBy(() -> this.schedule.getTaskList().size(), 0, () -> this.editCommand
                 .execute("edit hello n/CS2103T Tutorial st/2016-01-01 5:00PM et/2016-01-01 7:00PM"));
 
@@ -259,9 +259,10 @@ public class EditCommandTest {
     @Test
     public void testEditEventToTodoWhenSingleEventFound() {
         this.schedule.clear();
-        this.schedule.addTask(new Task("hello st/2016-01-01 3:00PM et/2016-01-01 5:00PM"));
+        this.schedule
+                .addTask(new Task("hello", LocalDateTime.of(2016, 1, 1, 15, 0), LocalDateTime.of(2016, 1, 1, 17, 0)));
         assertChangeBy(() -> this.schedule.getTaskList().size(), 0,
-                () -> this.editCommand.execute("edit hello n/CS2103T Tutorial st/rm et/rm"));
+                () -> this.editCommand.execute("edit hello n/CS2103T Tutorial st/- et/-"));
 
         // The edited task has correct name
         ArrayList<Task> tasks = this.schedule.getTaskList();
@@ -283,9 +284,10 @@ public class EditCommandTest {
     @Test
     public void testEditEventToDeadlineWhenSingleEventFound() {
         this.schedule.clear();
-        this.schedule.addTask(new Task("hello st/2016-01-01 3:00PM et/2016-01-01 5:00PM"));
+        this.schedule
+                .addTask(new Task("hello", LocalDateTime.of(2016, 1, 1, 15, 0), LocalDateTime.of(2016, 1, 1, 17, 0)));
         assertChangeBy(() -> this.schedule.getTaskList().size(), 0,
-                () -> this.editCommand.execute("edit hello n/CS2103T Tutorial st/rm et/2016-01-01 7:00PM"));
+                () -> this.editCommand.execute("edit hello n/CS2103T Tutorial st/- et/2016-01-01 7:00PM"));
 
         // The edited task has correct name
         ArrayList<Task> tasks = this.schedule.getTaskList();
@@ -307,7 +309,8 @@ public class EditCommandTest {
     @Test
     public void testEditEventToEventWhenSingleEventFound() {
         this.schedule.clear();
-        this.schedule.addTask(new Task("hello st/2016-01-01 3:00PM et/2016-01-01 5:00PM"));
+        this.schedule
+                .addTask(new Task("hello", LocalDateTime.of(2016, 1, 1, 15, 0), LocalDateTime.of(2016, 1, 1, 17, 0)));
         assertChangeBy(() -> this.schedule.getTaskList().size(), 0, () -> this.editCommand
                 .execute("edit hello n/CS2103T Tutorial st/2016-01-01 5:00PM et/2016-01-01 7:00PM"));
 
