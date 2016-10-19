@@ -20,7 +20,7 @@ import linenux.util.TasksListUtil;
 public class EditCommand implements Command {
     private static final String TRIGGER_WORD = "edit";
     private static final String DESCRIPTION = "Edits a task in the schedule.";
-    public static final String COMMAND_FORMAT = "edit KEYWORDS... [n/NEW_NAME][st/START_TIME][et/END_TIME]";
+    public static final String COMMAND_FORMAT = "edit KEYWORDS... [n/NEW_NAME][st/START_TIME][et/END_TIME][#/TAG...]...";
 
     private static final String EDIT_PATTERN = "(?i)^edit((?<keywords>.*?)(?<arguments>((n|st|et|#)/)+?.*)??)";
     private static final String NUMBER_PATTERN = "^\\d+$";
