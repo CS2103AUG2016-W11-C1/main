@@ -25,6 +25,7 @@ public class FreeTimeCommand implements Command {
     private static final String TRIGGER_WORD = "freetime";
     private static final String DESCRIPTION = "Find a free time slot.";
     private static final String COMMAND_PATTERN = "(?i)^\\s*freetime(\\s(?<argument>.*))?$";
+    private static final String COMMAND_FORMAT = "freetime [st/START_TIME] et/END_TIME";
 
     private Schedule schedule;
     private TimeParserManager timeParserManager;
@@ -72,6 +73,11 @@ public class FreeTimeCommand implements Command {
     @Override
     public String getDescription() {
         return DESCRIPTION;
+    }
+
+    @Override
+    public String getCommandFormat() {
+        return COMMAND_FORMAT;
     }
 
     private String extractArgument(String userInput) {
