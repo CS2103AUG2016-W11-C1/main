@@ -142,7 +142,7 @@ public class EditCommand implements Command {
         Either<Task, CommandResult> result = editArgumentParser.parse(original, argument);
 
         if (result.isLeft()) {
-            this.schedule.editTask(original, result.getLeft());
+            this.schedule.updateTask(original, result.getLeft());
             return makeEditedTask(original, result.getLeft());
         } else {
             return result.getRight();

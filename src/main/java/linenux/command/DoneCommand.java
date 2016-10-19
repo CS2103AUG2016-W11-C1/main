@@ -53,7 +53,8 @@ public class DoneCommand implements Command {
 
         if (tasks.isLeft()) {
             if (tasks.getLeft().size() == 1) {
-                this.schedule.doneTask(tasks.getLeft().get(0));
+                Task task = tasks.getLeft().get(0);
+                this.schedule.updateTask(task, task.markAsDone());
                 return makeDoneTask(tasks.getLeft().get(0));
             } else {
                 setResponse(true, tasks.getLeft());
@@ -79,7 +80,7 @@ public class DoneCommand implements Command {
 
             if (1 <= index && index <= this.foundTasks.size()) {
                 Task task = this.foundTasks.get(index - 1);
-                this.schedule.doneTask(task);
+                this.schedule.updateTask(task, task.markAsDone());
 
                 setResponse(false, null);
                 return makeDoneTask(task);

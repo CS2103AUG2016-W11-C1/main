@@ -31,12 +31,12 @@ import linenux.util.ArrayListUtil;
      }
 
      /**
-      * Edits the specified task.
+      * Updates the specified task.
       *
       * @param originalTask The original version of the specified task.
       * @param newTask The edited version of the specified task.
       */
-     public State editTask(Task originalTask, Task newTask) {
+     public State updateTask(Task originalTask, Task newTask) {
          int taskIndex = taskList.indexOf(originalTask);
          ArrayList<Task> newTaskList = new ArrayList<>(taskList);
          newTaskList.set(taskIndex, newTask);
@@ -52,28 +52,6 @@ import linenux.util.ArrayListUtil;
          int taskIndex = taskList.indexOf(task);
          ArrayList<Task> newTaskList = new ArrayList<>(taskList);
          newTaskList.remove(taskIndex);
-         return new State(newTaskList);
-     }
-
-     /**
-      * Marks the specified task as done.
-      * @param task The task to mark as done.
-      * @return The new State of the schedule.
-      */
-     public State doneTask(Task task) {
-         int taskIndex = taskList.indexOf(task);
-         ArrayList<Task> newTaskList = new ArrayList<>(taskList);
-         newTaskList.set(taskIndex, task.markAsDone());
-         return new State(newTaskList);
-     }
-
-     /**
-      * Adds a reminder to a task.
-      */
-     public State addReminder(Task task, Reminder reminder) {
-         int taskIndex = taskList.indexOf(task);
-         ArrayList<Task> newTaskList = new ArrayList<>(taskList);
-         newTaskList.set(taskIndex, task.addReminder(reminder));
          return new State(newTaskList);
      }
 

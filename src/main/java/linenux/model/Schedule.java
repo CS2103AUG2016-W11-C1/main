@@ -34,13 +34,12 @@ public class Schedule {
     }
 
     /**
-     * Edits the specified task.
-     *
-     * @param originalTask The original version of the specified task.
-     * @param newTask The edited version of the specified task.
+     * Replace {@code originalTask} with {@code newTask}.
+     * @param originalTask The original task.
+     * @param newTask The new ask.
      */
-    public void editTask(Task originalTask, Task newTask) {
-        addState(getMostRecentState().editTask(originalTask, newTask));
+    public void updateTask(Task originalTask, Task newTask) {
+        addState(getMostRecentState().updateTask(originalTask, newTask));
     }
 
     /**
@@ -50,22 +49,6 @@ public class Schedule {
      */
     public void deleteTask(Task task) {
         addState(getMostRecentState().deleteTask(task));
-    }
-
-    /**
-     * Marks specified task as done.
-     *
-     * @param task The task to mark as done.
-     */
-    public void doneTask(Task task) {
-        addState(getMostRecentState().doneTask(task));
-    }
-
-    /**
-     * Adds a reminder to a task.
-     */
-    public void addReminder(Task task, Reminder reminder) {
-        addState(getMostRecentState().addReminder(task, reminder));
     }
 
     /**
