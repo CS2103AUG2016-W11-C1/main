@@ -10,25 +10,25 @@ import linenux.model.Task;
 
 @XmlRootElement(name = "State")
 public class AdaptedState {
-    @XmlElement(name = "taskList")
-    private ArrayList<AdaptedTask> taskList;
+    @XmlElement(name = "tasks")
+    private ArrayList<AdaptedTask> tasks;
 
     public AdaptedState() {
     }
 
     public AdaptedState convertToXml(State s) {
-        this.taskList = new ArrayList<>();
+        this.tasks = new ArrayList<>();
         for (Task t : s.getTaskList()) {
-            taskList.add(new AdaptedTask().convertToXml(t));
+            tasks.add(new AdaptedTask().convertToXml(t));
         }
         return this;
     }
 
     public State convertToModel() {
-        ArrayList<Task> newTaskList = new ArrayList<>();
-        for (AdaptedTask t : taskList) {
-            newTaskList.add(t.convertToModel());
+        ArrayList<Task> newTasks = new ArrayList<>();
+        for (AdaptedTask t : tasks) {
+            newTasks.add(t.convertToModel());
         }
-        return new State(newTaskList);
+        return new State(newTasks);
     }
 }
