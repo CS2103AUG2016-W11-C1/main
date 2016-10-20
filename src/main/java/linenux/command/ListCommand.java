@@ -16,8 +16,8 @@ import linenux.util.TasksListUtil;
  */
 public class ListCommand implements Command {
     private static final String TRIGGER_WORD = "list";
-    private static final String DESCRIPTION = "Lists all tasks.";
-    private static final String COMMAND_FORMAT = "list KEYWORDS";
+    private static final String DESCRIPTION = "Lists tasks and reminders.";
+    private static final String COMMAND_FORMAT = "list [KEYWORDS...] [st/START_TIME] [et/END_TIME]";
 
     private static final String LIST_PATTERN = "(?i)^list(\\s+(?<keywords>.*))?$";
 
