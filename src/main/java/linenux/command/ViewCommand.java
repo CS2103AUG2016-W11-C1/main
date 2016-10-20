@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 
 import linenux.command.parser.SearchKeywordParser;
 import linenux.command.result.CommandResult;
+import linenux.command.result.PromptResults;
 import linenux.model.Reminder;
 import linenux.model.Schedule;
 import linenux.model.Task;
@@ -58,7 +59,7 @@ public class ViewCommand implements Command {
                 return makeResult(tasks.getLeft().get(0));
             } else {
                 setResponse(true, tasks.getLeft());
-                return makePromptResult(this.foundTasks);
+                return PromptResults.makePromptIndexResult(tasks.getLeft());
             }
         } else {
             return tasks.getRight();
@@ -84,7 +85,7 @@ public class ViewCommand implements Command {
                 setResponse(false, null);
                 return makeResult(task);
             } else {
-                return makeInvalidIndexResult();
+                return PromptResults.makeInvalidIndexResult(this.foundTasks);
             }
         } else if (userInput.matches(CANCEL_PATTERN)) {
             setResponse(false, null);
@@ -145,19 +146,6 @@ public class ViewCommand implements Command {
 
     }
 
-    private CommandResult makePromptResult(ArrayList<Task> tasks) {
-        return () -> {
-            StringBuilder builder = new StringBuilder();
-            builder.append("Which one? (1-");
-            builder.append(tasks.size());
-            builder.append(")\n");
-
-            builder.append(TasksListUtil.display(tasks));
-
-            return builder.toString();
-        };
-    }
-
     private CommandResult makeCancelledResult() {
         return () -> "OK! Not viewing any task.";
     }
@@ -167,17 +155,6 @@ public class ViewCommand implements Command {
             StringBuilder builder = new StringBuilder();
             builder.append("I don't understand \"" + userInput + "\".\n");
             builder.append("Enter a number to indicate which task to view.\n");
-            builder.append(TasksListUtil.display(this.foundTasks));
-            return builder.toString();
-        };
-    }
-
-    private CommandResult makeInvalidIndexResult() {
-        return () -> {
-            StringBuilder builder = new StringBuilder();
-            builder.append("That's not a valid index. Enter a number between 1 and ");
-            builder.append(this.foundTasks.size());
-            builder.append(":\n");
             builder.append(TasksListUtil.display(this.foundTasks));
             return builder.toString();
         };
