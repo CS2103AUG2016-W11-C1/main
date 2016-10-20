@@ -26,16 +26,14 @@ public class RemindCommandTest {
 
     @Before
     public void setupRemindCommand() {
-        ArrayList<Task> tasks = new ArrayList<>();
         Task todo = new Task("Todo");
         Task deadline = new Task("Deadline", LocalDateTime.of(2016, 1, 1, 1, 0));
         Task event = new Task("Event", LocalDateTime.of(2016, 1, 1, 1, 0), LocalDateTime.of(2016, 1, 1, 13, 0));
 
-        tasks.add(todo);
-        tasks.add(deadline);
-        tasks.add(event);
-
-        this.schedule = new Schedule(tasks);
+        this.schedule = new Schedule();
+        this.schedule.addTask(todo);
+        this.schedule.addTask(deadline);
+        this.schedule.addTask(event);
         this.remindCommand = new RemindCommand(this.schedule);
     }
 

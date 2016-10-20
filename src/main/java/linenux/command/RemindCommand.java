@@ -145,7 +145,7 @@ public class RemindCommand implements Command {
         Either<Reminder, CommandResult> result = reminderArgumentParser.parse(argument);
 
         if (result.isLeft()) {
-            this.schedule.addReminder(original, result.getLeft());
+            this.schedule.updateTask(original, original.addReminder(result.getLeft()));
             return makeResult(original, result.getLeft());
         } else {
             return result.getRight();

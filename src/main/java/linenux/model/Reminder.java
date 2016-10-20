@@ -16,12 +16,9 @@ public class Reminder {
         this.timeOfReminder = timeOfReminder;
     }
 
-    /**
-     * Creates a copy of the reminder.
-     * @return
-     */
-    public Reminder copyReminder() {
-        return new Reminder(this.getNote(), this.getTimeOfReminder());
+    public Reminder(Reminder other) {
+        this.note = other.note;
+        this.timeOfReminder = other.timeOfReminder;
     }
 
     @Override
@@ -47,11 +44,15 @@ public class Reminder {
 
     /* Setters */
 
-    public void setNote(String newNote) {
-        this.note = newNote;
+    public Reminder setNote(String newNote) {
+        Reminder output = new Reminder(this);
+        output.note = newNote;
+        return output;
     }
 
-    public void setTimeOfReminder(LocalDateTime newTimeOfReminder) {
-        this.timeOfReminder = newTimeOfReminder;
+    public Reminder setTimeOfReminder(LocalDateTime newTimeOfReminder) {
+        Reminder output = new Reminder(this);
+        output.timeOfReminder = newTimeOfReminder;
+        return output;
     }
 }
