@@ -9,6 +9,7 @@ import linenux.command.result.PromptResults;
 import linenux.command.result.SearchResults;
 import linenux.model.Schedule;
 import linenux.model.Task;
+import linenux.util.ArrayListUtil;
 import linenux.util.TasksListUtil;
 
 /**
@@ -47,7 +48,9 @@ public class DoneCommand implements Command {
             return makeNoKeywordsResult();
         }
 
-        ArrayList<Task> tasks = this.schedule.search(keywords);
+        ArrayList<Task> tasks = new ArrayListUtil.ChainableArrayListUtil<>(this.schedule.search(keywords))
+                .filter(Task::isNotDone)
+                .value();
 
         if (tasks.size() == 0) {
             return SearchResults.makeNotFoundResult(keywords);
