@@ -10,13 +10,13 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import linenux.model.Reminder;
 import linenux.storage.LocalDateTimeAdapter;
 
-@XmlRootElement( name = "Reminder" )
-@XmlType( propOrder = {"note", "timeOfReminder"} )
+@XmlRootElement(name = "Reminder")
+@XmlType(propOrder = { "note", "timeOfReminder" })
 public class AdaptedReminder {
-    @XmlElement( name = "note" )
+    @XmlElement(name = "note")
     private String note;
 
-    @XmlElement( name = "timeOfReminder" )
+    @XmlElement(name = "timeOfReminder")
     @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
     private LocalDateTime timeOfReminder;
 

@@ -19,6 +19,10 @@ import linenux.util.ArrayListUtil;
          this.taskList = new ArrayList<>(other.taskList);
      }
 
+     public State(ArrayList<Task> taskList) {
+         this.taskList = taskList;
+     }
+
      /**
       * Adds a task to the schedule
       * @param task The task to add.
