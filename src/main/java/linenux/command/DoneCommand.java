@@ -4,12 +4,11 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import linenux.command.parser.SearchKeywordParser;
 import linenux.command.result.CommandResult;
 import linenux.command.result.PromptResults;
+import linenux.command.result.SearchResults;
 import linenux.model.Schedule;
 import linenux.model.Task;
-import linenux.util.Either;
 import linenux.util.TasksListUtil;
 
 /**
@@ -27,11 +26,9 @@ public class DoneCommand implements Command {
     private Schedule schedule;
     private boolean requiresUserResponse;
     private ArrayList<Task> foundTasks;
-    private SearchKeywordParser searchKeywordParser;
 
     public DoneCommand(Schedule schedule) {
         this.schedule = schedule;
-        this.searchKeywordParser = new SearchKeywordParser(this.schedule);
     }
 
     @Override
@@ -50,19 +47,17 @@ public class DoneCommand implements Command {
             return makeNoKeywordsResult();
         }
 
-        Either<ArrayList<Task>, CommandResult> tasks = this.searchKeywordParser.parse(keywords);
+        ArrayList<Task> tasks = this.schedule.search(keywords);
 
-        if (tasks.isLeft()) {
-            if (tasks.getLeft().size() == 1) {
-                Task task = tasks.getLeft().get(0);
-                this.schedule.updateTask(task, task.markAsDone());
-                return makeDoneTask(tasks.getLeft().get(0));
-            } else {
-                setResponse(true, tasks.getLeft());
-                return PromptResults.makePromptIndexResult(tasks.getLeft());
-            }
+        if (tasks.size() == 0) {
+            return SearchResults.makeNotFoundResult(keywords);
+        } else if (tasks.size() == 1) {
+            Task task = tasks.get(0);
+            this.schedule.updateTask(task, task.markAsDone());
+            return makeDoneTask(task);
         } else {
-            return tasks.getRight();
+            setResponse(true, tasks);
+            return PromptResults.makePromptIndexResult(tasks);
         }
     }
 

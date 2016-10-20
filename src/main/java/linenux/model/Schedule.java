@@ -52,6 +52,10 @@ public class Schedule {
         addState(newState);
     }
 
+    public ArrayList<Task> search(String keywords) {
+        return search(keywords.split("\\s+"));
+    }
+
     /**
      * Performs case-insensitive search using keywords.
      *
