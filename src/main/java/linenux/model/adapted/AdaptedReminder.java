@@ -13,21 +13,23 @@ import linenux.storage.LocalDateTimeAdapter;
 @XmlRootElement( name = "Reminder" )
 @XmlType( propOrder = {"note", "timeOfReminder"} )
 public class AdaptedReminder {
-    @XmlElement( name = "note", required = true )
+    @XmlElement( name = "note" )
     private String note;
 
-    @XmlElement( name = "timeOfReminder", required = true )
+    @XmlElement( name = "timeOfReminder" )
     @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
     private LocalDateTime timeOfReminder;
 
-    public AdaptedReminder() {}
+    public AdaptedReminder() {
+    }
 
-    public void convertToXml(Reminder r) {
+    public AdaptedReminder convertToXml(Reminder r) {
         this.note = r.getNote();
         this.timeOfReminder = r.getTimeOfReminder();
+        return this;
     }
 
     public Reminder convertToModel() {
-        return new Reminder(this.note, this.timeOfReminder);
+        return new Reminder(note, timeOfReminder);
     }
 }
