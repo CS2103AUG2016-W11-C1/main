@@ -58,13 +58,13 @@ To ensure code readablity on Github, please follow the following instructions to
 3. Click the `Edit` button.
 
 <img src="images/eclipseEdit.png"/>
-> What you should be seeing at step 3
+> Figure 1: What you should be seeing at step 3
 
 4. In the `Indentation` tab, under `General settings`, change `Tab Policy` to Spaces Only and check that `Indentation Size` and `Tab Size` are both set to 4.
 5. Click `OK` to save the profile.
 
 <img src="images/eclipseIndent.png"/>
-> Where you can find the settings to be changed
+> Figure 2: Where you can find the settings to be changed
 
 #### Troubleshooting
 
@@ -80,7 +80,7 @@ To ensure code readablity on Github, please follow the following instructions to
 #### Architecture
 
 <img src="images/architectureDiagram.png"/>
-> Figure 1: Architecture Diagram
+> Figure 3: Architecture Diagram
 
 Linenux follows the Model-View-Controller (MVC) pattern which is made up of 3 main components.
 
@@ -91,7 +91,7 @@ Linenux follows the Model-View-Controller (MVC) pattern which is made up of 3 ma
 #### Model Component
 
 <img src="images/modelDiagram.png">
-> Figure 2: Model Diagram
+> Figure 4: Model Diagram
 
 The **Schedule** class stores a collection of states. A **State** is an immutable class that is created whenever a task or reminder is added or deleted from the **Schedule**. This design allows users to `undo` their previous command.
 
@@ -106,13 +106,13 @@ The **Storage** class allows the in-memory data to persist after the application
 
 #### View Component
 <img src="images/viewDiagram.png">
-> Figure 3: View Diagram
+> Figure 5: View Diagram
 
 The **View Component** follows the JavaFx UI framework. Each of the classes (**MainWindow**, **CommandBox** etc) has their own respective `.fxml` file stored in `src/main/resources/view`.
 
 #### Controller Component
 <img src="images/controllerDiagram.png">
-> Figure 4: Controller Diagram
+> Figure 6: Controller Diagram
 
 The **ConsoleController** takes the user input and sends it to the "brain" of Linenux, the "ControlUnit" class. The "ControlUnit" class is in charge of retrieving the appropriate schedule from storage and passing it over to the **CommandManager** class. The **CommandManager** class then delegates the right command based on the user input.
 
@@ -410,7 +410,7 @@ Tasks **cannot** be created with start dates only.
 #### Appendix E : Product Survey
 ##### Pros of Products Surveyed
 <img src="images/ProductSurveyPros.jpeg"/>
-> Figure 5 Pros of Products Surveyed
+> Figure 7 Pros of Products Surveyed
 
 ##### Cons of Products Surveyed:
 *Google Calendar*
