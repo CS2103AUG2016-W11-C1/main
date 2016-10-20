@@ -6,8 +6,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import linenux.command.parser.ReminderArgumentParser;
-import linenux.command.parser.SearchKeywordParser;
 import linenux.command.result.CommandResult;
+import linenux.command.result.PromptResults;
+import linenux.command.result.SearchResults;
 import linenux.control.TimeParserManager;
 import linenux.model.Reminder;
 import linenux.model.Schedule;
@@ -32,13 +33,11 @@ public class RemindCommand implements Command {
     private boolean requiresUserResponse;
     private String argument;
     private ArrayList<Task> foundTasks;
-    private SearchKeywordParser searchKeywordParser;
     private TimeParserManager timeParserManager;
     private ReminderArgumentParser reminderArgumentParser;
 
     public RemindCommand(Schedule schedule) {
         this.schedule = schedule;
-        this.searchKeywordParser = new SearchKeywordParser(this.schedule);
         this.timeParserManager = new TimeParserManager(new ISODateWithTimeParser());
         this.reminderArgumentParser = new ReminderArgumentParser(this.timeParserManager, COMMAND_FORMAT, CALLOUTS);
     }
@@ -54,26 +53,23 @@ public class RemindCommand implements Command {
         assert this.schedule != null;
 
         String keywords = extractKeywords(userInput);
+        String argument = extractArgument(userInput);
 
         if (keywords.trim().isEmpty()) {
             return makeNoKeywordsResult();
         }
 
-        Either<ArrayList<Task>, CommandResult> tasks = this.searchKeywordParser.parse(keywords);
+        ArrayList<Task> tasks = this.schedule.search(keywords);
 
-        if (tasks.isLeft()) {
-            String argument = extractArgument(userInput);
-
-            if (tasks.getLeft().size() == 1) {
-                return implementRemind(tasks.getLeft().get(0), argument);
-            } else {
-                setResponse(true, tasks.getLeft(), argument);
-                return makePromptResult(this.foundTasks);
-            }
+        if (tasks.size() == 0) {
+            return SearchResults.makeNotFoundResult(keywords);
+        } else if (tasks.size() == 1) {
+            Task task = tasks.get(0);
+            return implementRemind(task, argument);
         } else {
-            return tasks.getRight();
+            setResponse(true, tasks, argument);
+            return PromptResults.makePromptIndexResult(tasks);
         }
-
     }
 
     @Override
@@ -96,7 +92,7 @@ public class RemindCommand implements Command {
                 setResponse(false, null, null);
                 return result;
             } else {
-                return makeInvalidIndexResult();
+                return PromptResults.makeInvalidIndexResult(this.foundTasks);
             }
         } else if (userInput.matches(CANCEL_PATTERN)) {
             setResponse(false, null, null);
@@ -169,19 +165,6 @@ public class RemindCommand implements Command {
                 + task.getTaskName();
     }
 
-    private CommandResult makePromptResult(ArrayList<Task> tasks) {
-        return () -> {
-            StringBuilder builder = new StringBuilder();
-            builder.append("Which one? (1-");
-            builder.append(tasks.size());
-            builder.append(")\n");
-
-            builder.append(TasksListUtil.display(tasks));
-
-            return builder.toString();
-        };
-    }
-
     private CommandResult makeCancelledResult() {
         return () -> "OK! Not adding new reminder.";
     }
@@ -195,16 +178,4 @@ public class RemindCommand implements Command {
             return builder.toString();
         };
     }
-
-    private CommandResult makeInvalidIndexResult() {
-        return () -> {
-            StringBuilder builder = new StringBuilder();
-            builder.append("That's not a valid index. Enter a number between 1 and ");
-            builder.append(this.foundTasks.size());
-            builder.append(":\n");
-            builder.append(TasksListUtil.display(this.foundTasks));
-            return builder.toString();
-        };
-    }
-
 }

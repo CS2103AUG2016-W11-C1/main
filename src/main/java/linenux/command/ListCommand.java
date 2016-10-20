@@ -4,11 +4,10 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import linenux.command.parser.SearchKeywordParser;
 import linenux.command.result.CommandResult;
+import linenux.command.result.SearchResults;
 import linenux.model.Schedule;
 import linenux.model.Task;
-import linenux.util.Either;
 import linenux.util.TasksListUtil;
 
 /**
@@ -22,11 +21,9 @@ public class ListCommand implements Command {
     private static final String LIST_PATTERN = "(?i)^list(\\s+(?<keywords>.*))?$";
 
     private Schedule schedule;
-    private SearchKeywordParser searchKeywordParser;
 
     public ListCommand(Schedule schedule) {
         this.schedule = schedule;
-        this.searchKeywordParser = new SearchKeywordParser(this.schedule);
     }
 
     @Override
@@ -45,12 +42,12 @@ public class ListCommand implements Command {
             return makeResult(this.schedule.getTaskList());
         }
 
-        Either<ArrayList<Task>, CommandResult> tasks = this.searchKeywordParser.parse(keywords);
+        ArrayList<Task> tasks = this.schedule.search(keywords);
 
-        if (tasks.getLeft() != null) {
-            return makeResult(tasks.getLeft());
+        if (tasks.size() == 0) {
+            return SearchResults.makeNotFoundResult(keywords);
         } else {
-            return tasks.getRight();
+            return makeResult(tasks);
         }
     }
 

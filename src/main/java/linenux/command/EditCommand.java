@@ -5,8 +5,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import linenux.command.parser.EditArgumentParser;
-import linenux.command.parser.SearchKeywordParser;
 import linenux.command.result.CommandResult;
+import linenux.command.result.PromptResults;
+import linenux.command.result.SearchResults;
 import linenux.control.TimeParserManager;
 import linenux.model.Schedule;
 import linenux.model.Task;
@@ -30,13 +31,11 @@ public class EditCommand implements Command {
     private boolean requiresUserResponse;
     private String argument;
     private ArrayList<Task> foundTasks;
-    private SearchKeywordParser searchKeywordParser;
     private TimeParserManager timeParserManager;
     private EditArgumentParser editArgumentParser;
 
     public EditCommand(Schedule schedule) {
         this.schedule = schedule;
-        this.searchKeywordParser = new SearchKeywordParser(this.schedule);
         this.timeParserManager = new TimeParserManager(new ISODateWithTimeParser());
         this.editArgumentParser = new EditArgumentParser(this.timeParserManager, COMMAND_FORMAT, CALLOUTS);
     }
@@ -52,24 +51,22 @@ public class EditCommand implements Command {
         assert this.schedule != null;
 
         String keywords = extractKeywords(userInput);
+        String argument = extractArgument(userInput);
 
         if (keywords.trim().isEmpty()) {
             return makeNoKeywordsResult();
         }
 
-        Either<ArrayList<Task>, CommandResult> tasks = this.searchKeywordParser.parse(keywords);
+        ArrayList<Task> tasks = this.schedule.search(keywords);
 
-        if (tasks.isLeft()) {
-            String argument = extractArgument(userInput);
-
-            if (tasks.getLeft().size() == 1) {
-                return implementEdit(tasks.getLeft().get(0), argument);
-            } else {
-                setResponse(true, tasks.getLeft(), argument);
-                return makePromptResult(this.foundTasks);
-            }
+        if (tasks.size() == 0) {
+            return SearchResults.makeNotFoundResult(keywords);
+        } else if (tasks.size() == 1) {
+            Task task = tasks.get(0);
+            return implementEdit(task, argument);
         } else {
-            return tasks.getRight();
+            setResponse(true, tasks, argument);
+            return PromptResults.makePromptIndexResult(tasks);
         }
     }
 
@@ -93,7 +90,7 @@ public class EditCommand implements Command {
                 setResponse(false, null, null);
                 return result;
             } else {
-                return makeInvalidIndexResult();
+                return PromptResults.makeInvalidIndexResult(this.foundTasks);
             }
         } else if (userInput.matches(CANCEL_PATTERN)) {
             setResponse(false, null, null);
@@ -163,19 +160,6 @@ public class EditCommand implements Command {
         return () -> "Edited \"" + original.getTaskName() + "\".\nNew task details: " + task.toString();
     }
 
-    private CommandResult makePromptResult(ArrayList<Task> tasks) {
-        return () -> {
-            StringBuilder builder = new StringBuilder();
-            builder.append("Which one? (1-");
-            builder.append(tasks.size());
-            builder.append(")\n");
-
-            builder.append(TasksListUtil.display(tasks));
-
-            return builder.toString();
-        };
-    }
-
     private CommandResult makeCancelledResult() {
         return () -> "OK! Not editing anything.";
     }
@@ -185,17 +169,6 @@ public class EditCommand implements Command {
             StringBuilder builder = new StringBuilder();
             builder.append("I don't understand \"" + userInput + "\".\n");
             builder.append("Enter a number to indicate which task to edit.\n");
-            builder.append(TasksListUtil.display(this.foundTasks));
-            return builder.toString();
-        };
-    }
-
-    private CommandResult makeInvalidIndexResult() {
-        return () -> {
-            StringBuilder builder = new StringBuilder();
-            builder.append("That's not a valid index. Enter a number between 1 and ");
-            builder.append(this.foundTasks.size());
-            builder.append(":\n");
             builder.append(TasksListUtil.display(this.foundTasks));
             return builder.toString();
         };
