@@ -20,8 +20,8 @@ public class Schedule {
         this.states.add(new State());
     }
 
-    public Schedule(ArrayList<State> states) {
-        this.states.addAll(states);
+    public Schedule(State s) {
+        this.states.add(s);
     }
 
     /**
