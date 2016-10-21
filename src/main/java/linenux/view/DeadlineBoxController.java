@@ -1,5 +1,8 @@
 package linenux.view;
 
+import java.util.ArrayList;
+import java.util.function.Predicate;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -9,9 +12,6 @@ import linenux.control.ControlUnit;
 import linenux.model.State;
 import linenux.model.Task;
 import linenux.util.ArrayListUtil;
-
-import java.util.ArrayList;
-import java.util.function.Predicate;
 
 /**
  * Created by yihangho on 10/16/16.
@@ -34,15 +34,31 @@ public class DeadlineBoxController {
         this.controlUnit.getSchedule().getStates().addListener((ListChangeListener<? super State>) c -> {
             updateDeadlines();
         });
+        this.controlUnit.getSchedule().getFilteredTaskList().addListener((ListChangeListener<? super ArrayList<Task>>) c -> {
+            updateFilteredDeadlines();
+        });
     }
 
     private void updateDeadlines() {
         ArrayList<Task> tasks = this.controlUnit.getSchedule().getTaskList();
+        ArrayList<Task> deadlines = filterDeadlines(tasks);
+        this.deadlines.setAll(deadlines);
+    }
+
+    private void updateFilteredDeadlines() {
+        ArrayList<Task> filteredTasks = this.controlUnit.getSchedule().getFilteredTasks();
+        ArrayList<Task> deadlines = filterDeadlines(filteredTasks);
+        this.deadlines.setAll(deadlines);
+    }
+
+    private ArrayList<Task> filterDeadlines(ArrayList<Task> tasks) {
         ArrayList<Task> deadlines = new ArrayListUtil.ChainableArrayListUtil<>(tasks)
                 .filter(Task::isDeadline)
                 .filter(((Predicate<Task>) Task::isDone).negate())
+                .sortBy(Task::getTaskName)
                 .sortBy(Task::getEndTime)
                 .value();
-        this.deadlines.setAll(deadlines);
+
+        return deadlines;
     }
 }

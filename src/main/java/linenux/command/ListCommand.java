@@ -38,6 +38,10 @@ public class ListCommand implements Command {
 
         String keywords = extractKeywords(userInput);
 
+        if (this.schedule.getTaskList().isEmpty()) {
+            return makeEmptyTaskListResult();
+        }
+
         if (keywords.trim().isEmpty()) {
             return makeResult(this.schedule.getTaskList());
         }
@@ -76,7 +80,12 @@ public class ListCommand implements Command {
         }
     }
 
+    private CommandResult makeEmptyTaskListResult() {
+        return () -> "You have no tasks to list!";
+    }
+
     private CommandResult makeResult(ArrayList<Task> tasks) {
-        return () -> TasksListUtil.display(tasks);
+        this.schedule.addFilterTasks(tasks);
+        return () -> "Listing tasks!";
     }
 }
