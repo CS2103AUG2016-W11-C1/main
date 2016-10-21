@@ -4,11 +4,14 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import linenux.command.filter.ListArgumentFilter;
 import linenux.command.result.CommandResult;
 import linenux.command.result.SearchResults;
+import linenux.control.TimeParserManager;
 import linenux.model.Schedule;
 import linenux.model.Task;
-import linenux.util.TasksListUtil;
+import linenux.time.parser.ISODateWithTimeParser;
+import linenux.util.Either;
 
 /**
  * Generates a list of tasks based on userInput.
@@ -16,14 +19,18 @@ import linenux.util.TasksListUtil;
 public class ListCommand implements Command {
     private static final String TRIGGER_WORD = "list";
     private static final String DESCRIPTION = "Lists tasks and reminders.";
-    private static final String COMMAND_FORMAT = "list [KEYWORDS...] [st/START_TIME] [et/END_TIME]";
+    private static final String COMMAND_FORMAT = "list [KEYWORDS...] [st/START_TIME] [et/END_TIME] [#/TAG]";
 
-    private static final String LIST_PATTERN = "(?i)^list(\\s+(?<keywords>.*))?$";
+    private static final String LIST_PATTERN = "(?i)^list((?<keywords>.*?)(?<arguments>((st|et|#)/)+?.*)??)";
 
     private Schedule schedule;
+    private TimeParserManager timeParserManager;
+    private ListArgumentFilter listArgumentFilter;
 
     public ListCommand(Schedule schedule) {
         this.schedule = schedule;
+        this.timeParserManager = new TimeParserManager(new ISODateWithTimeParser());
+        this.listArgumentFilter = new ListArgumentFilter(this.timeParserManager, COMMAND_FORMAT, CALLOUTS);
     }
 
     @Override
@@ -36,22 +43,32 @@ public class ListCommand implements Command {
         assert userInput.matches(LIST_PATTERN);
         assert this.schedule != null;
 
-        String keywords = extractKeywords(userInput);
+        ArrayList<Task> tasks;
 
         if (this.schedule.getTaskList().isEmpty()) {
             return makeEmptyTaskListResult();
         }
 
+        String keywords = extractKeywords(userInput);
+        String arguments = extractArgument(userInput);
+
         if (keywords.trim().isEmpty()) {
-            return makeResult(this.schedule.getTaskList());
+            tasks = this.schedule.getTaskList();
+        } else {
+            tasks = this.schedule.search(keywords);
         }
 
-        ArrayList<Task> tasks = this.schedule.search(keywords);
+        Either<ArrayList<Task>, CommandResult> filterTasks = this.listArgumentFilter.filter(arguments, tasks);
 
-        if (tasks.size() == 0) {
+        if (filterTasks.isRight()) {
+            return filterTasks.getRight();
+        }
+
+        ArrayList<Task> actualFilterTasks = filterTasks.getLeft();
+        if (actualFilterTasks.size() == 0) {
             return SearchResults.makeNotFoundResult(keywords);
         } else {
-            return makeResult(tasks);
+            return makeResult(actualFilterTasks);
         }
     }
 
@@ -75,6 +92,16 @@ public class ListCommand implements Command {
 
         if (matcher.matches() && matcher.group("keywords") != null) {
             return matcher.group("keywords");
+        } else {
+            return "";
+        }
+    }
+
+    private String extractArgument(String userInput) {
+        Matcher matcher = Pattern.compile(LIST_PATTERN).matcher(userInput);
+
+        if (matcher.matches() && matcher.group("arguments") != null) {
+            return matcher.group("arguments");
         } else {
             return "";
         }
