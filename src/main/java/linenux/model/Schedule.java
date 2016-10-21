@@ -20,6 +20,10 @@ public class Schedule {
         this.states.add(new State());
     }
 
+    public Schedule(ArrayList<State> states) {
+        this.states.addAll(states);
+    }
+
     /**
      * Adds a task to the schedule
      */
