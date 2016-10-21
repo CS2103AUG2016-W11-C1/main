@@ -39,7 +39,7 @@ public class RemindCommandTest {
 
     private void setupTaskWithSameNameAndExecuteAmbiguousCommand() {
         this.schedule.addTask(new Task("Todo 2"));
-        this.remindCommand.execute("remind Todo t/2016-01-01 05:00PM");
+        this.remindCommand.execute("remind Todo t/2016-01-01 05:00PM n/Hey");
     }
 
     private String expectedInvalidArgumentMessage() {
@@ -85,24 +85,11 @@ public class RemindCommandTest {
     }
 
     /**
-     * Test that executing adding reminder without notes to a To-Do should
-     * return correct result.
+     * Test that executing adding reminder to a To-Do should return correct
+     * result.
      */
     @Test
-    public void testExecuteAddReminderWithoutNotesToToDo() {
-        assertChangeBy(() -> getSearchResult("Todo").get(0).getReminders().size(), 1,
-                () -> this.remindCommand.execute("remind Todo t/2000-01-01 05:00PM"));
-        ArrayList<Reminder> reminders = getSearchResult("Todo").get(0).getReminders();
-        Reminder addedReminder = reminders.get(reminders.size() - 1);
-        assertEquals(LocalDateTime.of(2000, 1, 1, 17, 0), addedReminder.getTimeOfReminder());
-    }
-
-    /**
-     * Test that executing adding reminder with notes to a To-Do should return
-     * correct result.
-     */
-    @Test
-    public void testExecuteAddReminderWithNotesToToDo() {
+    public void testExecuteAddReminderToDo() {
         assertChangeBy(() -> getSearchResult("Todo").get(0).getReminders().size(), 1,
                 () -> this.remindCommand.execute("remind Todo t/2000-01-01 05:00PM n/Attend Workshop"));
         ArrayList<Reminder> reminders = getSearchResult("Todo").get(0).getReminders();
@@ -112,8 +99,8 @@ public class RemindCommandTest {
     }
 
     /**
-     * Test that executing adding reminder with notes in different order to a
-     * To-Do should return correct result.
+     * Test that executing adding reminder in different order to a To-Do should
+     * return correct result.
      */
     @Test
     public void testExecuteAddReminderWithDiffParamOrderToToDo() {
@@ -126,24 +113,11 @@ public class RemindCommandTest {
     }
 
     /**
-     * Test that executing adding reminder without notes to a Deadline should
-     * return correct result.
+     * Test that executing adding reminder to a Deadline should return correct
+     * result.
      */
     @Test
-    public void testExecuteAddReminderWithoutNotesToDeadline() {
-        assertChangeBy(() -> getSearchResult("Deadline").get(0).getReminders().size(), 1,
-                () -> this.remindCommand.execute("remind Deadline t/2000-01-01 05:00PM"));
-        ArrayList<Reminder> reminders = getSearchResult("Deadline").get(0).getReminders();
-        Reminder addedReminder = reminders.get(reminders.size() - 1);
-        assertEquals(LocalDateTime.of(2000, 1, 1, 17, 0), addedReminder.getTimeOfReminder());
-    }
-
-    /**
-     * Test that executing adding reminder with notes to a Deadline should
-     * return correct result.
-     */
-    @Test
-    public void testExecuteAddReminderWithNotesToDeadline() {
+    public void testExecuteAddReminderToDeadline() {
         assertChangeBy(() -> getSearchResult("Deadline").get(0).getReminders().size(), 1,
                 () -> this.remindCommand.execute("remind deadline t/2000-01-01 05:00PM n/Attend Workshop"));
         ArrayList<Reminder> reminders = getSearchResult("Deadline").get(0).getReminders();
@@ -153,8 +127,8 @@ public class RemindCommandTest {
     }
 
     /**
-     * Test that executing adding reminder with notes in different order to a
-     * Deadline should return correct result.
+     * Test that executing adding reminder in different order to a Deadline
+     * should return correct result.
      */
     @Test
     public void testExecuteAddReminderWithDiffParamOrderToDeadline() {
@@ -167,24 +141,11 @@ public class RemindCommandTest {
     }
 
     /**
-     * Test that executing adding reminder without notes to a Event should
-     * return correct result.
+     * Test that executing adding reminder to a Event should return correct
+     * result.
      */
     @Test
-    public void testExecuteAddReminderWithoutNotesToEvent() {
-        assertChangeBy(() -> getSearchResult("Event").get(0).getReminders().size(), 1,
-                () -> this.remindCommand.execute("remind event t/2000-01-01 05:00PM"));
-        ArrayList<Reminder> reminders = getSearchResult("Event").get(0).getReminders();
-        Reminder addedReminder = reminders.get(reminders.size() - 1);
-        assertEquals(LocalDateTime.of(2000, 1, 1, 17, 0), addedReminder.getTimeOfReminder());
-    }
-
-    /**
-     * Test that executing adding reminder with notes to a Event should return
-     * correct result.
-     */
-    @Test
-    public void testExecuteAddReminderWithNotesToEvent() {
+    public void testExecuteAddReminderToEvent() {
         assertChangeBy(() -> getSearchResult("Event").get(0).getReminders().size(), 1,
                 () -> this.remindCommand.execute("remind Event t/2000-01-01 05:00PM n/Attend Workshop"));
         ArrayList<Reminder> reminders = getSearchResult("Event").get(0).getReminders();
@@ -194,8 +155,8 @@ public class RemindCommandTest {
     }
 
     /**
-     * Test that executing adding reminder with notes in different order to a
-     * Event should return correct result.
+     * Test that executing adding reminder in different order to a Event should
+     * return correct result.
      */
     @Test
     public void testExecuteAddReminderWithDiffParamOrderToEvent() {
@@ -211,7 +172,7 @@ public class RemindCommandTest {
      * Test the result when no task name is given to search.
      */
     @Test
-    public void testTimeWithoutTaskNameCommandResult() {
+    public void testWithoutTaskNameCommandResult() {
         ArrayList<Task> tasks = this.schedule.getTaskList();
         CommandResult result = assertNoChange(() -> {
             int size = 0;
@@ -219,16 +180,15 @@ public class RemindCommandTest {
                 size += tasks.get(i).getReminders().size();
             }
             return size;
-        }, () -> this.remindCommand.execute("remind t/2011-01-01 05:00PM"));
+        }, () -> this.remindCommand.execute("remind t/2011-01-01 05:00PM n/hey"));
         assertEquals(expectedInvalidArgumentMessage(), result.getFeedback());
     }
 
     /**
-     * Test the result when no task name is given to search + not affected by
-     * optional field notes.
+     * Test the result when no task name is given to search.
      */
     @Test
-    public void testTimeWithoutTaskNameWithNotesCommandResult() {
+    public void testWithoutNotesCommandResult() {
         ArrayList<Task> tasks = this.schedule.getTaskList();
         CommandResult result = assertNoChange(() -> {
             int size = 0;
@@ -236,28 +196,17 @@ public class RemindCommandTest {
                 size += tasks.get(i).getReminders().size();
             }
             return size;
-        }, () -> this.remindCommand.execute("remind t/2011-01-01 05:00PM n/Attend Workshop"));
-        assertEquals(expectedInvalidArgumentMessage(), result.getFeedback());
+        }, () -> this.remindCommand.execute("remind Todo t/2011-01-01 05:00PM"));
+        assertEquals("Cannot create reminder without note.", result.getFeedback());
     }
 
     /**
      * Test the result when no time is given for the reminder.
      */
     @Test
-    public void testTaskNameWithoutTimeCommandResult() {
+    public void testWithoutTimeCommandResult() {
         CommandResult result = assertNoChange(() -> getSearchResult("Todo").get(0).getReminders().size(),
-                () -> this.remindCommand.execute("remind todo"));
-        assertEquals("Cannot create reminder without date.", result.getFeedback());
-    }
-
-    /**
-     * Test the result when no time is given for the reminder + not affected by
-     * optional field Notes.
-     */
-    @Test
-    public void testTaskNameWithoutTimeWithNotesCommandResult() {
-        CommandResult result = assertNoChange(() -> getSearchResult("Todo").get(0).getReminders().size(),
-                () -> this.remindCommand.execute("remind todo n/Attend Workshop"));
+                () -> this.remindCommand.execute("remind todo n/hey"));
         assertEquals("Cannot create reminder without date.", result.getFeedback());
     }
 
