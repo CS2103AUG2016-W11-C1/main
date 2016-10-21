@@ -8,7 +8,6 @@ import linenux.model.Schedule;
 /**
  * Controls data flow for the entire application.
  */
-
 public class ControlUnit {
     private Schedule schedule;
     private CommandManager commandManager;
