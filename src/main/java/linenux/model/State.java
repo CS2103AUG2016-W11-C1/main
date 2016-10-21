@@ -101,7 +101,7 @@ import linenux.util.ArrayListUtil;
 
         ArrayList<Reminder> result = new ArrayList<Reminder>();
 
-        for (Task t : this.taskList) {
+        for (Task t : this.tasks) {
             result.addAll(new ArrayListUtil.ChainableArrayListUtil<Reminder>(t.getReminders()).filter(reminder -> {
                 ArrayList<String> reminderKeywords = new ArrayListUtil.ChainableArrayListUtil<String>(
                         reminder.getNote().split("\\s+")).map(String::toLowerCase).value();
