@@ -5,6 +5,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import linenux.command.result.CommandResult;
+import linenux.util.AliasUtil;
 import linenux.util.StringsSimilarity;
 
 /**
@@ -15,8 +16,6 @@ public class HelpCommand implements Command {
     private static final String DESCRIPTION = "Shows this help message.";
     private static final String COMMAND_FORMAT = "help";
 
-    private static final String HELP_PATTERN = "(?i)^help(\\s+(?<keywords>.*))?$";
-
     private ArrayList<Command> commands;
 
     public HelpCommand(ArrayList<Command> commands) {
@@ -25,11 +24,13 @@ public class HelpCommand implements Command {
 
     @Override
     public boolean respondTo(String userInput) {
-        return userInput.matches(HELP_PATTERN);
+        return userInput.matches(getPattern());
     }
 
     @Override
     public CommandResult execute(String userInput) {
+        assert userInput.matches(getPattern());
+
         String keywords = extractKeywords(userInput);
         Command commandRequested = null;
 
@@ -77,6 +78,11 @@ public class HelpCommand implements Command {
         return COMMAND_FORMAT;
     }
 
+    @Override
+    public String getPattern() {
+        return "(?i)^(" + TRIGGER_WORD + "|" + AliasUtil.ALIASMAP.get(TRIGGER_WORD) + ")(\\s+(?<keywords>.*))?$";
+    }
+
     private String displayAllHelp() {
         int maxLength = 0;
         for (Command command: this.commands) {
@@ -89,6 +95,8 @@ public class HelpCommand implements Command {
         for (Command command: this.commands) {
             builder.append(makeHelpDescriptionForCommand(command, maxLength));
         }
+
+        builder.append(CALLOUTS);
 
         return builder.toString();
     }
@@ -146,7 +154,7 @@ public class HelpCommand implements Command {
     }
 
     private String extractKeywords(String userInput) {
-        Matcher matcher = Pattern.compile(HELP_PATTERN).matcher(userInput);
+        Matcher matcher = Pattern.compile(getPattern()).matcher(userInput);
 
         if (matcher.matches() && matcher.group("keywords") != null) {
             return matcher.group("keywords").trim();

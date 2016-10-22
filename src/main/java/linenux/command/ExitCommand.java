@@ -1,9 +1,7 @@
 package linenux.command;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import linenux.command.result.CommandResult;
+import linenux.util.AliasUtil;
 
 /**
  * Exits the program.
@@ -13,23 +11,17 @@ public class ExitCommand implements Command {
     private static final String DESCRIPTION = "Exits the program.";
     public static final String COMMAND_FORMAT = "exit";
 
-    private static final String EXIT_PATTERN = "(?i)^\\s*exit\\s*$";
-
     @Override
     public boolean respondTo(String userInput) {
-        return userInput.matches(EXIT_PATTERN);
+        return userInput.matches(getPattern());
     }
 
     @Override
     public CommandResult execute(String userInput) {
-        assert userInput.matches(EXIT_PATTERN);
+        assert userInput.matches(getPattern());
 
-        Matcher matcher = Pattern.compile(EXIT_PATTERN).matcher(userInput);
-
-        if (matcher.matches()) {
-            // TODO: Platform.exit();
-            System.exit(0);
-        }
+        // TODO: Platform.exit();
+        System.exit(0);
         return null;
     }
 
@@ -46,5 +38,10 @@ public class ExitCommand implements Command {
     @Override
     public String getCommandFormat() {
         return COMMAND_FORMAT;
+    }
+
+    @Override
+    public String getPattern() {
+        return "(?i)^\\s*(" + TRIGGER_WORD + "|" + AliasUtil.ALIASMAP.get(TRIGGER_WORD) + ")\\s*$";
     }
 }

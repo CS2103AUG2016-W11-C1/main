@@ -9,6 +9,7 @@ import linenux.command.result.PromptResults;
 import linenux.command.result.SearchResults;
 import linenux.model.Schedule;
 import linenux.model.Task;
+import linenux.util.AliasUtil;
 import linenux.util.TasksListUtil;
 
 /**
@@ -19,7 +20,6 @@ public class DeleteCommand implements Command {
     private static final String DESCRIPTION = "Deletes a task from the schedule.";
     private static final String COMMAND_FORMAT = "delete KEYWORDS";
 
-    private static final String DELETE_PATTERN = "(?i)^delete(\\s+(?<keywords>.*))?$";
     private static final String NUMBER_PATTERN = "^\\d+$";
     private static final String CANCEL_PATTERN = "^cancel$";
 
@@ -33,12 +33,12 @@ public class DeleteCommand implements Command {
 
     @Override
     public boolean respondTo(String userInput) {
-        return userInput.matches(DELETE_PATTERN);
+        return userInput.matches(getPattern());
     }
 
     @Override
     public CommandResult execute(String userInput) {
-        assert userInput.matches(DELETE_PATTERN);
+        assert userInput.matches(getPattern());
         assert this.schedule != null;
 
         String keywords = extractKeywords(userInput);
@@ -106,8 +106,13 @@ public class DeleteCommand implements Command {
         return COMMAND_FORMAT;
     }
 
+    @Override
+    public String getPattern() {
+        return "(?i)^(" + TRIGGER_WORD + "|" + AliasUtil.ALIASMAP.get(TRIGGER_WORD) + ")(\\s+(?<keywords>.*))?$";
+    }
+
     private String extractKeywords(String userInput) {
-        Matcher matcher = Pattern.compile(DELETE_PATTERN).matcher(userInput);
+        Matcher matcher = Pattern.compile(getPattern()).matcher(userInput);
 
         if (matcher.matches() && matcher.group("keywords") != null) {
             return matcher.group("keywords");

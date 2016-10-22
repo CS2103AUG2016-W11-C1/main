@@ -1,11 +1,8 @@
 package linenux.command;
 
-import java.util.LinkedList;
-
 import linenux.command.result.CommandResult;
 import linenux.model.Schedule;
-import linenux.model.State;
-import linenux.util.Either;
+import linenux.util.AliasUtil;
 
 /**
  * Undo the previous command that mutated the state of the schedule.
@@ -15,8 +12,6 @@ public class UndoCommand implements Command {
     private static final String DESCRIPTION = "Undo the previous command.";
     private static final String COMMAND_FORMAT = "undo";
 
-    private static final String UNDO_PATTERN = "(?i)^\\s*undo\\s*$";
-
     private Schedule schedule;
 
     public UndoCommand(Schedule schedule) {
@@ -25,12 +20,12 @@ public class UndoCommand implements Command {
 
     @Override
     public boolean respondTo(String userInput) {
-        return userInput.matches(UNDO_PATTERN);
+        return userInput.matches(getPattern());
     }
 
     @Override
     public CommandResult execute(String userInput) {
-        assert userInput.matches(UNDO_PATTERN);
+        assert userInput.matches(getPattern());
         assert this.schedule != null;
 
         if (this.schedule.popState()) {
@@ -53,6 +48,11 @@ public class UndoCommand implements Command {
     @Override
     public String getCommandFormat() {
         return COMMAND_FORMAT;
+    }
+
+    @Override
+    public String getPattern() {
+        return "(?i)^\\s*(" + TRIGGER_WORD + "|" + AliasUtil.ALIASMAP.get(TRIGGER_WORD) + ")\\s+*$";
     }
 
     private CommandResult makeUndoSuccessfulMessage() {

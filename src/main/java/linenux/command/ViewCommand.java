@@ -10,6 +10,7 @@ import linenux.command.result.SearchResults;
 import linenux.model.Reminder;
 import linenux.model.Schedule;
 import linenux.model.Task;
+import linenux.util.AliasUtil;
 import linenux.util.RemindersListUtil;
 import linenux.util.TasksListUtil;
 
@@ -21,7 +22,6 @@ public class ViewCommand implements Command {
     private static final String DESCRIPTION = "Views details of specific task.";
     private static final String COMMAND_FORMAT = "view KEYWORDS";
 
-    private static final String VIEW_PATTERN = "(?i)^view(\\s+(?<keywords>.*))?$";
     private static final String NUMBER_PATTERN = "^\\d+$";
     private static final String CANCEL_PATTERN = "^cancel$";
 
@@ -35,12 +35,12 @@ public class ViewCommand implements Command {
 
     @Override
     public boolean respondTo(String userInput) {
-        return userInput.matches(VIEW_PATTERN);
+        return userInput.matches(getPattern());
     }
 
     @Override
     public CommandResult execute(String userInput) {
-        assert userInput.matches(VIEW_PATTERN);
+        assert userInput.matches(getPattern());
         assert this.schedule != null;
 
         String keywords = extractKeywords(userInput);
@@ -106,8 +106,13 @@ public class ViewCommand implements Command {
         return COMMAND_FORMAT;
     }
 
+    @Override
+    public String getPattern() {
+        return "(?i)^(" + TRIGGER_WORD + "|" + AliasUtil.ALIASMAP.get(TRIGGER_WORD) + ")(\\s+(?<keywords>.*))?$";
+    }
+
     private String extractKeywords(String userInput) {
-        Matcher matcher = Pattern.compile(VIEW_PATTERN).matcher(userInput);
+        Matcher matcher = Pattern.compile(getPattern()).matcher(userInput);
 
         if (matcher.matches() && matcher.group("keywords") != null) {
             return matcher.group("keywords");

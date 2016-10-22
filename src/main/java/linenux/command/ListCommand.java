@@ -8,6 +8,7 @@ import linenux.command.result.CommandResult;
 import linenux.command.result.SearchResults;
 import linenux.model.Schedule;
 import linenux.model.Task;
+import linenux.util.AliasUtil;
 import linenux.util.TasksListUtil;
 
 /**
@@ -18,8 +19,6 @@ public class ListCommand implements Command {
     private static final String DESCRIPTION = "Lists tasks and reminders.";
     private static final String COMMAND_FORMAT = "list [KEYWORDS...] [st/START_TIME] [et/END_TIME]";
 
-    private static final String LIST_PATTERN = "(?i)^list(\\s+(?<keywords>.*))?$";
-
     private Schedule schedule;
 
     public ListCommand(Schedule schedule) {
@@ -28,12 +27,12 @@ public class ListCommand implements Command {
 
     @Override
     public boolean respondTo(String userInput) {
-        return userInput.matches(LIST_PATTERN);
+        return userInput.matches(getPattern());
     }
 
     @Override
     public CommandResult execute(String userInput) {
-        assert userInput.matches(LIST_PATTERN);
+        assert userInput.matches(getPattern());
         assert this.schedule != null;
 
         String keywords = extractKeywords(userInput);
@@ -66,8 +65,13 @@ public class ListCommand implements Command {
         return COMMAND_FORMAT;
     }
 
+    @Override
+    public String getPattern() {
+        return "(?i)^(" + TRIGGER_WORD + "|" + AliasUtil.ALIASMAP.get(TRIGGER_WORD) + ")(\\s+(?<keywords>.*))?$";
+    }
+
     private String extractKeywords(String userInput) {
-        Matcher matcher = Pattern.compile(LIST_PATTERN).matcher(userInput);
+        Matcher matcher = Pattern.compile(getPattern()).matcher(userInput);
 
         if (matcher.matches() && matcher.group("keywords") != null) {
             return matcher.group("keywords");

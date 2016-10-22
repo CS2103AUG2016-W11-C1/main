@@ -9,6 +9,7 @@ import linenux.command.result.PromptResults;
 import linenux.command.result.SearchResults;
 import linenux.model.Schedule;
 import linenux.model.Task;
+import linenux.util.AliasUtil;
 import linenux.util.ArrayListUtil;
 import linenux.util.TasksListUtil;
 
@@ -20,7 +21,6 @@ public class DoneCommand implements Command {
     private static final String DESCRIPTION = "Marks a task as done.";
     private static final String COMMAND_FORMAT = "done KEYWORDS";
 
-    private static final String DONE_PATTERN = "(?i)^done(\\s+(?<keywords>.*))?$";
     private static final String NUMBER_PATTERN = "^\\d+$";
     private static final String CANCEL_PATTERN = "^cancel$";
 
@@ -34,12 +34,12 @@ public class DoneCommand implements Command {
 
     @Override
     public boolean respondTo(String userInput) {
-        return userInput.matches(DONE_PATTERN);
+        return userInput.matches(getPattern());
     }
 
     @Override
     public CommandResult execute(String userInput) {
-        assert userInput.matches(DONE_PATTERN);
+        assert userInput.matches(getPattern());
         assert this.schedule != null;
 
         String keywords = extractKeywords(userInput);
@@ -109,8 +109,13 @@ public class DoneCommand implements Command {
         return COMMAND_FORMAT;
     }
 
+    @Override
+    public String getPattern() {
+        return "(?i)^(" + TRIGGER_WORD + "|" + AliasUtil.ALIASMAP.get(TRIGGER_WORD) + ")(\\s+(?<keywords>.*))?$";
+    }
+
     private String extractKeywords(String userInput) {
-        Matcher matcher = Pattern.compile(DONE_PATTERN).matcher(userInput);
+        Matcher matcher = Pattern.compile(getPattern()).matcher(userInput);
 
         if (matcher.matches() && matcher.group("keywords") != null) {
             return matcher.group("keywords");

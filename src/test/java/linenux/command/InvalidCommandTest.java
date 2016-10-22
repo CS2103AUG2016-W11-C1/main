@@ -67,6 +67,12 @@ public class InvalidCommandTest {
         public CommandResult execute(String input) {
             return null;
         }
+
+        @Override
+        public String getPattern() {
+            return null;
+        }
+
     }
 
     private static class ListCommand extends BaseMockCommand {

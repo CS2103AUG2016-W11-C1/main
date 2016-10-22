@@ -59,6 +59,11 @@ public class InvalidCommand implements Command {
         return null;
     }
 
+    @Override
+    public String getPattern() {
+        return null;
+    }
+
     private String extractCommand(String userInput) {
         String[] parts = userInput.split(" ");
 
