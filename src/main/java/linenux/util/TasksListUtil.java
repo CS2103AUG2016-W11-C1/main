@@ -21,7 +21,6 @@ public class TasksListUtil {
     public static String display(ArrayList<Task> tasks) {
         StringBuilder builder = new StringBuilder();
 
-        builder.append("Tasks: ");
         for (int i = 0; i < tasks.size(); i++) {
             builder.append(i + 1);
             builder.append(". ");

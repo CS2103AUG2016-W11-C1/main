@@ -70,7 +70,7 @@ public class ListCommandTest {
 
         CommandResult result = this.listCommand.execute("list");
 
-        String expectedFeedback = "1. First Task\n" +
+        String expectedFeedback = "Tasks:\n1. First Task\n" +
                 "2. Second Task\n" +
                 "3. Deadline (Due 2016-01-01 5:00PM)\n" +
                 "4. Event (2016-01-01 5:00PM - 2016-01-01 6:00PM)";
@@ -88,7 +88,7 @@ public class ListCommandTest {
 
         CommandResult result = this.listCommand.execute("list world");
 
-        String expectedFeedback = "1. world\n2. hello world";
+        String expectedFeedback = "Tasks:\n1. world\n2. hello world";
         assertEquals(expectedFeedback, result.getFeedback());
     }
 }

@@ -65,7 +65,7 @@ public class ScheduleTest {
         Task originalTask = new Task("hello");
         this.schedule.addTask(originalTask);
         Task editedTask = new Task("new task");
-        this.schedule.editTask(originalTask, editedTask);
+        this.schedule.updateTask(originalTask, editedTask);
 
         assertEquals(this.schedule.getTaskList().get(0), editedTask);
     }

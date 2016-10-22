@@ -36,24 +36,6 @@ public class ListCommand extends AbstractCommand {
         if (keywords.trim().isEmpty()) {
             return makeResult(this.schedule.getTaskList(), this.schedule.getReminderList());
         }
-
-/**
-        Either<ArrayList<Task>, CommandResult> tasks = this.searchKeywordParser.parse(keywords);
-        Either<ArrayList<Reminder>, CommandResult> reminders = this.searchKeywordParser.parseReminder(keywords);
-
-        if (tasks.isLeft()) {
-            if (reminders.isLeft()) {
-                return makeResult(tasks.getLeft(), reminders.getLeft());
-            } else {
-                return makeResult(tasks.getLeft(), null);
-            }
-        } else {
-            if (reminders.isLeft()) {
-                return makeResult(null, reminders.getLeft());
-            } else {
-                return tasks.getRight();
-            }
-**/
         ArrayList<Task> tasks = this.schedule.search(keywords);
         ArrayList<Reminder> reminders = this.schedule.searchReminder(keywords);
 
