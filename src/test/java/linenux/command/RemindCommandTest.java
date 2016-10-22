@@ -9,6 +9,7 @@ import static org.junit.Assert.assertTrue;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+import linenux.util.ArrayListUtil;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -242,14 +243,8 @@ public class RemindCommandTest {
     @Test
     public void testCommandResultWhenMultipleMatchesFound() {
         this.schedule.addTask(new Task("todo 2"));
-        ArrayList<Task> tasks = this.schedule.getTaskList();
-        CommandResult result = assertNoChange(() -> {
-            int size = 0;
-            for (int i = 0; i < tasks.size(); i++) {
-                size += tasks.get(i).getReminders().size();
-            }
-            return size;
-        }, () -> this.remindCommand.execute("remind todo t/2016-01-01 05:00PM"));
+        CommandResult result = assertNoChange(() -> this.totalNumberOfReminders(),
+                () -> this.remindCommand.execute("remind todo t/2016-01-01 05:00PM"));
         assertEquals("Which one? (1-2)\n1. Todo\n2. todo 2", result.getFeedback());
     }
 
@@ -268,15 +263,9 @@ public class RemindCommandTest {
      */
     @Test
     public void testUserResponseCancel() {
-        ArrayList<Task> tasks = this.schedule.getTaskList();
         this.setupTaskWithSameNameAndExecuteAmbiguousCommand();
-        CommandResult result = assertNoChange(() -> {
-            int size = 0;
-            for (int i = 0; i < tasks.size(); i++) {
-                size += tasks.get(i).getReminders().size();
-            }
-            return size;
-        }, () -> this.remindCommand.userResponse("cancel"));
+        CommandResult result = assertNoChange(() -> this.totalNumberOfReminders(),
+                () -> this.remindCommand.userResponse("cancel"));
         assertEquals("OK! Not adding new reminder.", result.getFeedback());
         assertFalse(this.remindCommand.awaitingUserResponse());
     }
@@ -317,5 +306,12 @@ public class RemindCommandTest {
         assertEquals("I don't understand \"One\".\nEnter a number to indicate which task to add reminder to:\n"
                 + "1. Todo\n2. Todo 2", result.getFeedback());
         assertTrue(this.remindCommand.awaitingUserResponse());
+    }
+
+    private int totalNumberOfReminders() {
+        return new ArrayListUtil.ChainableArrayListUtil<>(this.schedule.getTaskList())
+                .map(Task::getReminders)
+                .map(ArrayList::size)
+                .foldr(Integer::sum, 0);
     }
 }
