@@ -19,7 +19,13 @@ public class ControlUnit {
 
     public ControlUnit() {
         this.scheduleStorage = new XmlScheduleStorage(getDefaultFilePath());
-        this.schedule = (hasExistingSchedule()) ? getExistingSchedule() : new Schedule();
+
+        if (this.hasExistingSchedule() && getSchedule() != null) {
+            this.schedule = getSchedule();
+        } else {
+            this.schedule = new Schedule();
+        }
+
         this.commandManager = new CommandManager(schedule);
     }
 
