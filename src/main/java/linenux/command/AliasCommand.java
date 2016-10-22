@@ -6,10 +6,13 @@ import java.util.regex.Pattern;
 import linenux.command.result.CommandResult;
 import linenux.util.AliasUtil;
 
+/**
+ * Creates an alias for commands.
+ */
 public class AliasCommand implements Command {
-    private static final String TRIGGER_WORD = "add";
-    private static final String DESCRIPTION = "Adds a task to the schedule.";
-    private static final String COMMAND_FORMAT = "add TASK_NAME [st/START_TIME] [et/END_TIME] [#/TAGS]";
+    private static final String TRIGGER_WORD = "alias";
+    private static final String DESCRIPTION = "Creates an alias for commands.";
+    private static final String COMMAND_FORMAT = "alias COMMAND_NAME NEW_NAME";
 
     private static final String ALPHANUMERIC = "^[a-zA-Z0-9]*$";
 

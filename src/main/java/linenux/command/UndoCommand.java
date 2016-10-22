@@ -52,7 +52,7 @@ public class UndoCommand implements Command {
 
     @Override
     public String getPattern() {
-        return "(?i)^\\s*(" + TRIGGER_WORD + "|" + AliasUtil.ALIASMAP.get(TRIGGER_WORD) + ")\\s+*$";
+        return "(?i)^\\s*(" + TRIGGER_WORD + "|" + AliasUtil.ALIASMAP.get(TRIGGER_WORD) + ")\\s*$";
     }
 
     private CommandResult makeUndoSuccessfulMessage() {
