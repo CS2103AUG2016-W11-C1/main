@@ -23,7 +23,7 @@ import linenux.util.TasksListUtil;
 public class RemindCommand implements Command {
     private static final String TRIGGER_WORD = "remind";
     private static final String DESCRIPTION = "Adds a reminder to a task in the schedule.";
-    public static final String COMMAND_FORMAT = "remind KEYWORDS t/TIME [n/NOTE]";
+    public static final String COMMAND_FORMAT = "remind KEYWORDS t/TIME n/NOTE";
 
     private static final String REMIND_PATTERN = "(?i)^remind((?<keywords>.*?)(?<arguments>((n|t)/)+?.*)??)";
     private static final String NUMBER_PATTERN = "^\\d+$";

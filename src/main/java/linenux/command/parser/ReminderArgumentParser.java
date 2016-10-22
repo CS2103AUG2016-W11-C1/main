@@ -59,7 +59,7 @@ public class ReminderArgumentParser {
         if (matcher.matches() && matcher.group("note") != null) {
             return Either.left(matcher.group("note").trim());
         } else {
-            return Either.left(null);
+            return Either.right(makeWithoutNoteResult());
         }
     }
 
@@ -77,5 +77,9 @@ public class ReminderArgumentParser {
 
     private CommandResult makeWithoutDateResult() {
         return () -> "Cannot create reminder without date.";
+    }
+
+    private CommandResult makeWithoutNoteResult() {
+        return () -> "Cannot create reminder without note.";
     }
 }
