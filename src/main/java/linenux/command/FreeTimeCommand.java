@@ -1,5 +1,12 @@
 package linenux.command;
 
+import java.time.Clock;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import linenux.command.parser.FreeTimeArgumentParser;
 import linenux.command.result.CommandResult;
 import linenux.control.TimeParserManager;
@@ -11,20 +18,12 @@ import linenux.util.Either;
 import linenux.util.LocalDateTimeUtil;
 import linenux.util.TimeInterval;
 
-import java.time.Clock;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 /**
  * Created by yihangho on 10/15/16.
  */
-public class FreeTimeCommand implements Command {
+public class FreeTimeCommand extends AbstractCommand {
     private static final String TRIGGER_WORD = "freetime";
     private static final String DESCRIPTION = "Find a free time slot.";
-    private static final String COMMAND_PATTERN = "(?i)^\\s*freetime(\\s(?<argument>.*))?$";
     private static final String COMMAND_FORMAT = "freetime [st/START_TIME] et/END_TIME";
 
     private Schedule schedule;
@@ -41,16 +40,12 @@ public class FreeTimeCommand implements Command {
         this.timeParserManager = new TimeParserManager(new ISODateWithTimeParser());
         this.argumentParser = new FreeTimeArgumentParser(this.timeParserManager, clock);
         this.clock = clock;
-    }
-
-    @Override
-    public boolean respondTo(String userInput) {
-        return userInput.matches(COMMAND_PATTERN);
+        this.TRIGGER_WORDS.add(TRIGGER_WORD);
     }
 
     @Override
     public CommandResult execute(String userInput) {
-        assert userInput.matches(COMMAND_PATTERN);
+        assert userInput.matches(getPattern());
         assert this.schedule != null;
 
         String argument = extractArgument(userInput);
@@ -81,10 +76,10 @@ public class FreeTimeCommand implements Command {
     }
 
     private String extractArgument(String userInput) {
-        Matcher matcher = Pattern.compile(COMMAND_PATTERN).matcher(userInput);
+        Matcher matcher = Pattern.compile(getPattern()).matcher(userInput);
 
-        if (matcher.matches() && matcher.group("argument") != null) {
-            return matcher.group("argument");
+        if (matcher.matches() && matcher.group("keywords") != null) {
+            return matcher.group("keywords");
         } else {
             return "";
         }

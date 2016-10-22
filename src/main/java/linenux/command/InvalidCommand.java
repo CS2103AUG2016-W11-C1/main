@@ -8,7 +8,7 @@ import linenux.util.StringsSimilarity;
 /**
  * Act as a fail-safe for invalid or unrecognized commands.
  */
-public class InvalidCommand implements Command {
+public class InvalidCommand extends AbstractCommand {
     private ArrayList<Command> commands;
 
     public InvalidCommand(ArrayList<Command> commands) {
@@ -56,6 +56,11 @@ public class InvalidCommand implements Command {
 
     @Override
     public String getCommandFormat() {
+        return null;
+    }
+
+    @Override
+    public String getPattern() {
         return null;
     }
 

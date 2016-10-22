@@ -13,27 +13,21 @@ import linenux.util.TasksListUtil;
 /**
  * Generates a list of tasks based on userInput.
  */
-public class ListCommand implements Command {
+public class ListCommand extends AbstractCommand {
     private static final String TRIGGER_WORD = "list";
     private static final String DESCRIPTION = "Lists tasks and reminders.";
     private static final String COMMAND_FORMAT = "list [KEYWORDS...] [st/START_TIME] [et/END_TIME]";
-
-    private static final String LIST_PATTERN = "(?i)^list(\\s+(?<keywords>.*))?$";
 
     private Schedule schedule;
 
     public ListCommand(Schedule schedule) {
         this.schedule = schedule;
-    }
-
-    @Override
-    public boolean respondTo(String userInput) {
-        return userInput.matches(LIST_PATTERN);
+        this.TRIGGER_WORDS.add(TRIGGER_WORD);
     }
 
     @Override
     public CommandResult execute(String userInput) {
-        assert userInput.matches(LIST_PATTERN);
+        assert userInput.matches(getPattern());
         assert this.schedule != null;
 
         String keywords = extractKeywords(userInput);
@@ -67,7 +61,7 @@ public class ListCommand implements Command {
     }
 
     private String extractKeywords(String userInput) {
-        Matcher matcher = Pattern.compile(LIST_PATTERN).matcher(userInput);
+        Matcher matcher = Pattern.compile(getPattern()).matcher(userInput);
 
         if (matcher.matches() && matcher.group("keywords") != null) {
             return matcher.group("keywords");

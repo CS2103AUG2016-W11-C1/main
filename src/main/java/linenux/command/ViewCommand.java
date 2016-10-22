@@ -16,12 +16,11 @@ import linenux.util.TasksListUtil;
 /**
  * Generates details of tasks and reminders attached to task based on userInput.
  */
-public class ViewCommand implements Command {
+public class ViewCommand extends AbstractCommand {
     private static final String TRIGGER_WORD = "view";
     private static final String DESCRIPTION = "Views details of specific task.";
     private static final String COMMAND_FORMAT = "view KEYWORDS";
 
-    private static final String VIEW_PATTERN = "(?i)^view(\\s+(?<keywords>.*))?$";
     private static final String NUMBER_PATTERN = "^\\d+$";
     private static final String CANCEL_PATTERN = "^cancel$";
 
@@ -31,16 +30,12 @@ public class ViewCommand implements Command {
 
     public ViewCommand(Schedule schedule) {
         this.schedule = schedule;
-    }
-
-    @Override
-    public boolean respondTo(String userInput) {
-        return userInput.matches(VIEW_PATTERN);
+        this.TRIGGER_WORDS.add(TRIGGER_WORD);
     }
 
     @Override
     public CommandResult execute(String userInput) {
-        assert userInput.matches(VIEW_PATTERN);
+        assert userInput.matches(getPattern());
         assert this.schedule != null;
 
         String keywords = extractKeywords(userInput);
@@ -107,7 +102,7 @@ public class ViewCommand implements Command {
     }
 
     private String extractKeywords(String userInput) {
-        Matcher matcher = Pattern.compile(VIEW_PATTERN).matcher(userInput);
+        Matcher matcher = Pattern.compile(getPattern()).matcher(userInput);
 
         if (matcher.matches() && matcher.group("keywords") != null) {
             return matcher.group("keywords");

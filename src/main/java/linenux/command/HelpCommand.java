@@ -10,26 +10,22 @@ import linenux.util.StringsSimilarity;
 /**
  * Displays available command and their formats.
  */
-public class HelpCommand implements Command {
+public class HelpCommand extends AbstractCommand {
     private static final String TRIGGER_WORD = "help";
     private static final String DESCRIPTION = "Shows this help message.";
     private static final String COMMAND_FORMAT = "help";
-
-    private static final String HELP_PATTERN = "(?i)^help(\\s+(?<keywords>.*))?$";
 
     private ArrayList<Command> commands;
 
     public HelpCommand(ArrayList<Command> commands) {
         this.commands = commands;
-    }
-
-    @Override
-    public boolean respondTo(String userInput) {
-        return userInput.matches(HELP_PATTERN);
+        this.TRIGGER_WORDS.add(TRIGGER_WORD);
     }
 
     @Override
     public CommandResult execute(String userInput) {
+        assert userInput.matches(getPattern());
+
         String keywords = extractKeywords(userInput);
         Command commandRequested = null;
 
@@ -90,6 +86,8 @@ public class HelpCommand implements Command {
             builder.append(makeHelpDescriptionForCommand(command, maxLength));
         }
 
+        builder.append(CALLOUTS);
+
         return builder.toString();
     }
 
@@ -146,7 +144,7 @@ public class HelpCommand implements Command {
     }
 
     private String extractKeywords(String userInput) {
-        Matcher matcher = Pattern.compile(HELP_PATTERN).matcher(userInput);
+        Matcher matcher = Pattern.compile(getPattern()).matcher(userInput);
 
         if (matcher.matches() && matcher.group("keywords") != null) {
             return matcher.group("keywords").trim();
