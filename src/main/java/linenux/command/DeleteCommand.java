@@ -9,13 +9,12 @@ import linenux.command.result.PromptResults;
 import linenux.command.result.SearchResults;
 import linenux.model.Schedule;
 import linenux.model.Task;
-import linenux.util.AliasUtil;
 import linenux.util.TasksListUtil;
 
 /**
  * Deletes a task from the schedule.
  */
-public class DeleteCommand implements Command {
+public class DeleteCommand extends AbstractCommand {
     private static final String TRIGGER_WORD = "delete";
     private static final String DESCRIPTION = "Deletes a task from the schedule.";
     private static final String COMMAND_FORMAT = "delete KEYWORDS";
@@ -29,11 +28,7 @@ public class DeleteCommand implements Command {
 
     public DeleteCommand(Schedule schedule) {
         this.schedule = schedule;
-    }
-
-    @Override
-    public boolean respondTo(String userInput) {
-        return userInput.matches(getPattern());
+        this.TRIGGER_WORDS.add(TRIGGER_WORD);
     }
 
     @Override
@@ -104,11 +99,6 @@ public class DeleteCommand implements Command {
     @Override
     public String getCommandFormat() {
         return COMMAND_FORMAT;
-    }
-
-    @Override
-    public String getPattern() {
-        return "(?i)^(" + TRIGGER_WORD + "|" + AliasUtil.ALIASMAP.get(TRIGGER_WORD) + ")(\\s+(?<keywords>.*))?$";
     }
 
     private String extractKeywords(String userInput) {

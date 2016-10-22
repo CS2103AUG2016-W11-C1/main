@@ -10,14 +10,13 @@ import linenux.command.result.SearchResults;
 import linenux.model.Reminder;
 import linenux.model.Schedule;
 import linenux.model.Task;
-import linenux.util.AliasUtil;
 import linenux.util.RemindersListUtil;
 import linenux.util.TasksListUtil;
 
 /**
  * Generates details of tasks and reminders attached to task based on userInput.
  */
-public class ViewCommand implements Command {
+public class ViewCommand extends AbstractCommand {
     private static final String TRIGGER_WORD = "view";
     private static final String DESCRIPTION = "Views details of specific task.";
     private static final String COMMAND_FORMAT = "view KEYWORDS";
@@ -31,11 +30,7 @@ public class ViewCommand implements Command {
 
     public ViewCommand(Schedule schedule) {
         this.schedule = schedule;
-    }
-
-    @Override
-    public boolean respondTo(String userInput) {
-        return userInput.matches(getPattern());
+        this.TRIGGER_WORDS.add(TRIGGER_WORD);
     }
 
     @Override
@@ -104,11 +99,6 @@ public class ViewCommand implements Command {
     @Override
     public String getCommandFormat() {
         return COMMAND_FORMAT;
-    }
-
-    @Override
-    public String getPattern() {
-        return "(?i)^(" + TRIGGER_WORD + "|" + AliasUtil.ALIASMAP.get(TRIGGER_WORD) + ")(\\s+(?<keywords>.*))?$";
     }
 
     private String extractKeywords(String userInput) {

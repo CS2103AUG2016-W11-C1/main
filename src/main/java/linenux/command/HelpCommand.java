@@ -5,13 +5,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import linenux.command.result.CommandResult;
-import linenux.util.AliasUtil;
 import linenux.util.StringsSimilarity;
 
 /**
  * Displays available command and their formats.
  */
-public class HelpCommand implements Command {
+public class HelpCommand extends AbstractCommand {
     private static final String TRIGGER_WORD = "help";
     private static final String DESCRIPTION = "Shows this help message.";
     private static final String COMMAND_FORMAT = "help";
@@ -20,11 +19,7 @@ public class HelpCommand implements Command {
 
     public HelpCommand(ArrayList<Command> commands) {
         this.commands = commands;
-    }
-
-    @Override
-    public boolean respondTo(String userInput) {
-        return userInput.matches(getPattern());
+        this.TRIGGER_WORDS.add(TRIGGER_WORD);
     }
 
     @Override
@@ -76,11 +71,6 @@ public class HelpCommand implements Command {
     @Override
     public String getCommandFormat() {
         return COMMAND_FORMAT;
-    }
-
-    @Override
-    public String getPattern() {
-        return "(?i)^(" + TRIGGER_WORD + "|" + AliasUtil.ALIASMAP.get(TRIGGER_WORD) + ")(\\s+(?<keywords>.*))?$";
     }
 
     private String displayAllHelp() {

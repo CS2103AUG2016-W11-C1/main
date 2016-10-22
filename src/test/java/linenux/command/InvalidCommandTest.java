@@ -42,7 +42,7 @@ public class InvalidCommandTest {
         assertEquals("Invalid command.", result.getFeedback());
     }
 
-    private static class BaseMockCommand implements Command {
+    private static class BaseMockCommand extends AbstractCommand {
         @Override
         public String getTriggerWord() {
             return null;

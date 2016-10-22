@@ -9,14 +9,13 @@ import linenux.command.result.PromptResults;
 import linenux.command.result.SearchResults;
 import linenux.model.Schedule;
 import linenux.model.Task;
-import linenux.util.AliasUtil;
 import linenux.util.ArrayListUtil;
 import linenux.util.TasksListUtil;
 
 /**
  * Marks task as done.
  */
-public class DoneCommand implements Command {
+public class DoneCommand extends AbstractCommand {
     private static final String TRIGGER_WORD = "done";
     private static final String DESCRIPTION = "Marks a task as done.";
     private static final String COMMAND_FORMAT = "done KEYWORDS";
@@ -30,11 +29,7 @@ public class DoneCommand implements Command {
 
     public DoneCommand(Schedule schedule) {
         this.schedule = schedule;
-    }
-
-    @Override
-    public boolean respondTo(String userInput) {
-        return userInput.matches(getPattern());
+        this.TRIGGER_WORDS.add(TRIGGER_WORD);
     }
 
     @Override
@@ -107,11 +102,6 @@ public class DoneCommand implements Command {
     @Override
     public String getCommandFormat() {
         return COMMAND_FORMAT;
-    }
-
-    @Override
-    public String getPattern() {
-        return "(?i)^(" + TRIGGER_WORD + "|" + AliasUtil.ALIASMAP.get(TRIGGER_WORD) + ")(\\s+(?<keywords>.*))?$";
     }
 
     private String extractKeywords(String userInput) {

@@ -2,12 +2,11 @@ package linenux.command;
 
 import linenux.command.result.CommandResult;
 import linenux.model.Schedule;
-import linenux.util.AliasUtil;
 
 /**
  * Undo the previous command that mutated the state of the schedule.
  */
-public class UndoCommand implements Command {
+public class UndoCommand extends AbstractCommand {
     private static final String TRIGGER_WORD = "undo";
     private static final String DESCRIPTION = "Undo the previous command.";
     private static final String COMMAND_FORMAT = "undo";
@@ -16,11 +15,7 @@ public class UndoCommand implements Command {
 
     public UndoCommand(Schedule schedule) {
         this.schedule = schedule;
-    }
-
-    @Override
-    public boolean respondTo(String userInput) {
-        return userInput.matches(getPattern());
+        this.TRIGGER_WORDS.add(TRIGGER_WORD);
     }
 
     @Override
@@ -48,11 +43,6 @@ public class UndoCommand implements Command {
     @Override
     public String getCommandFormat() {
         return COMMAND_FORMAT;
-    }
-
-    @Override
-    public String getPattern() {
-        return "(?i)^\\s*(" + TRIGGER_WORD + "|" + AliasUtil.ALIASMAP.get(TRIGGER_WORD) + ")\\s*$";
     }
 
     private CommandResult makeUndoSuccessfulMessage() {

@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import linenux.util.ArrayListUtil;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,10 +17,14 @@ import linenux.model.Schedule;
  */
 public class AliasCommandTest {
     private AliasCommand aliasCommand;
+    private AddCommand addCommand;
+    private Schedule schedule;
 
     @Before
     public void setupAliasCommand() {
-        this.aliasCommand = new AliasCommand();
+        this.schedule = new Schedule();
+        this.addCommand = new AddCommand(this.schedule);
+        this.aliasCommand = new AliasCommand(ArrayListUtil.fromSingleton(this.addCommand));
     }
 
     /**
@@ -82,12 +87,10 @@ public class AliasCommandTest {
     /**
      * Test alias creates an alias.
      */
+    @Test
     public void testAliasFunctionality() {
-        Schedule schedule = new Schedule();
-        AddCommand addCommand = new AddCommand(schedule);
-
-        this.aliasCommand.execute("add add addi");
-        assertChangeBy(() -> schedule.getTaskList().size(), 1,
-                () -> addCommand.execute("addi CS2103T Tutorial #/tag1 tag2"));
+        this.aliasCommand.execute("alias add addi");
+        assertChangeBy(() -> this.schedule.getTaskList().size(), 1,
+                () -> this.addCommand.execute("addi CS2103T Tutorial #/tag1 tag2"));
     }
 }

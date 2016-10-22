@@ -8,13 +8,12 @@ import linenux.command.result.CommandResult;
 import linenux.command.result.SearchResults;
 import linenux.model.Schedule;
 import linenux.model.Task;
-import linenux.util.AliasUtil;
 import linenux.util.TasksListUtil;
 
 /**
  * Generates a list of tasks based on userInput.
  */
-public class ListCommand implements Command {
+public class ListCommand extends AbstractCommand {
     private static final String TRIGGER_WORD = "list";
     private static final String DESCRIPTION = "Lists tasks and reminders.";
     private static final String COMMAND_FORMAT = "list [KEYWORDS...] [st/START_TIME] [et/END_TIME]";
@@ -23,11 +22,7 @@ public class ListCommand implements Command {
 
     public ListCommand(Schedule schedule) {
         this.schedule = schedule;
-    }
-
-    @Override
-    public boolean respondTo(String userInput) {
-        return userInput.matches(getPattern());
+        this.TRIGGER_WORDS.add(TRIGGER_WORD);
     }
 
     @Override
@@ -63,11 +58,6 @@ public class ListCommand implements Command {
     @Override
     public String getCommandFormat() {
         return COMMAND_FORMAT;
-    }
-
-    @Override
-    public String getPattern() {
-        return "(?i)^(" + TRIGGER_WORD + "|" + AliasUtil.ALIASMAP.get(TRIGGER_WORD) + ")(\\s+(?<keywords>.*))?$";
     }
 
     private String extractKeywords(String userInput) {

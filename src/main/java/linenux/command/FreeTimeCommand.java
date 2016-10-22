@@ -13,7 +13,6 @@ import linenux.control.TimeParserManager;
 import linenux.model.Schedule;
 import linenux.model.Task;
 import linenux.time.parser.ISODateWithTimeParser;
-import linenux.util.AliasUtil;
 import linenux.util.ArrayListUtil;
 import linenux.util.Either;
 import linenux.util.LocalDateTimeUtil;
@@ -22,7 +21,7 @@ import linenux.util.TimeInterval;
 /**
  * Created by yihangho on 10/15/16.
  */
-public class FreeTimeCommand implements Command {
+public class FreeTimeCommand extends AbstractCommand {
     private static final String TRIGGER_WORD = "freetime";
     private static final String DESCRIPTION = "Find a free time slot.";
     private static final String COMMAND_FORMAT = "freetime [st/START_TIME] et/END_TIME";
@@ -41,11 +40,7 @@ public class FreeTimeCommand implements Command {
         this.timeParserManager = new TimeParserManager(new ISODateWithTimeParser());
         this.argumentParser = new FreeTimeArgumentParser(this.timeParserManager, clock);
         this.clock = clock;
-    }
-
-    @Override
-    public boolean respondTo(String userInput) {
-        return userInput.matches(getPattern());
+        this.TRIGGER_WORDS.add(TRIGGER_WORD);
     }
 
     @Override
@@ -80,17 +75,11 @@ public class FreeTimeCommand implements Command {
         return COMMAND_FORMAT;
     }
 
-    @Override
-    public String getPattern() {
-        return "(?i)^\\s*(" + TRIGGER_WORD + "|" + AliasUtil.ALIASMAP.get(TRIGGER_WORD) + ")(\\s(?<argument>.*))?$";
-    }
-
-
     private String extractArgument(String userInput) {
         Matcher matcher = Pattern.compile(getPattern()).matcher(userInput);
 
-        if (matcher.matches() && matcher.group("argument") != null) {
-            return matcher.group("argument");
+        if (matcher.matches() && matcher.group("keywords") != null) {
+            return matcher.group("keywords");
         } else {
             return "";
         }
