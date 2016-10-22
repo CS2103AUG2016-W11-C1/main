@@ -33,11 +33,6 @@ public class DoneCommand extends AbstractCommand {
     }
 
     @Override
-    public boolean respondTo(String userInput) {
-        return userInput.matches(getPattern());
-    }
-
-    @Override
     public CommandResult execute(String userInput) {
         assert userInput.matches(getPattern());
         assert this.schedule != null;
