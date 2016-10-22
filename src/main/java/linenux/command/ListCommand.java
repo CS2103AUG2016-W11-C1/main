@@ -40,7 +40,7 @@ public class ListCommand extends AbstractCommand {
         ArrayList<Reminder> reminders = this.schedule.searchReminder(keywords);
 
         if (tasks.size() == 0 && reminders.size() == 0) {
-            return SearchResults.makeNotFoundResult(keywords);
+            return SearchResults.makeListNotFoundResult(keywords);
         } else {
             return makeResult(tasks, reminders);
         }
