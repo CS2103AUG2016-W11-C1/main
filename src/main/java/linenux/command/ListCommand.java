@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 
 import linenux.command.parser.SearchKeywordParser;
 import linenux.command.result.CommandResult;
+import linenux.model.Reminder;
 import linenux.model.Schedule;
 import linenux.model.Task;
 import linenux.util.Either;
@@ -42,15 +43,24 @@ public class ListCommand implements Command {
         String keywords = extractKeywords(userInput);
 
         if (keywords.trim().isEmpty()) {
-            return makeResult(this.schedule.getTaskList());
+            return makeResult(this.schedule.getTaskList(), this.schedule.getReminderList());
         }
 
         Either<ArrayList<Task>, CommandResult> tasks = this.searchKeywordParser.parse(keywords);
+        Either<ArrayList<Reminder>, CommandResult> reminders = this.searchKeywordParser.parseReminder(keywords);
 
-        if (tasks.getLeft() != null) {
-            return makeResult(tasks.getLeft());
+        if (tasks.isLeft()) {
+            if (reminders.isLeft()) {
+                return makeResult(tasks.getLeft(), reminders.getLeft());
+            } else {
+                return makeResult(tasks.getLeft(), null);
+            }
         } else {
-            return tasks.getRight();
+            if (reminders.isLeft()) {
+                return makeResult(null, reminders.getLeft());
+            } else {
+                return tasks.getRight();
+            }
         }
     }
 
@@ -79,7 +89,7 @@ public class ListCommand implements Command {
         }
     }
 
-    private CommandResult makeResult(ArrayList<Task> tasks) {
-        return () -> TasksListUtil.display(tasks);
+    private CommandResult makeResult(ArrayList<Task> tasks, ArrayList<Reminder> reminders) {
+        return () -> TasksListUtil.display(tasks, reminders);
     }
 }
