@@ -21,6 +21,10 @@ public class XmlScheduleStorage implements ScheduleStorage {
         this.filePath = Paths.get(DEFAULT_FILE_PATH + FILENAME);
     }
 
+    public XmlScheduleStorage(String filePath) {
+        this.filePath = Paths.get(filePath);
+    }
+
     @Override
     public Schedule loadScheduleFromFile() {
         try {

@@ -126,4 +126,5 @@ gradle-app.setting
 # macOS
 .DS_Store
 
-Schedule.xml
+.Schedule.xml
+.Config.json

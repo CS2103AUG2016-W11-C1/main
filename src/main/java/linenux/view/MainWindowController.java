@@ -1,15 +1,13 @@
 package linenux.view;
 
+import java.io.IOException;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import linenux.control.ControlUnit;
-
-import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 /**
  * Created by yihangho on 10/16/16.
@@ -20,7 +18,7 @@ public class MainWindowController {
     @FXML
     private AnchorPane commandBoxContainer;
 
-    private ControlUnit controlUnit = new ControlUnit();
+    private ControlUnit controlUnit = new ControlUnit(ControlUnit.Mode.ACTUAL);
 
     @FXML
     private void initialize() {
