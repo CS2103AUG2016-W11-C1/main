@@ -20,9 +20,11 @@ public class ControlUnit {
     public ControlUnit() {
         this.scheduleStorage = new XmlScheduleStorage(getDefaultFilePath());
 
-        if (this.hasExistingSchedule() && getSchedule() != null) {
-            this.schedule = getSchedule();
+        if (this.hasExistingSchedule() && getExistingSchedule() != null) {
+            System.out.println("controlunit load");
+            this.schedule = getExistingSchedule();
         } else {
+            System.out.println("controlunit new");
             this.schedule = new Schedule();
         }
 
@@ -37,7 +39,7 @@ public class ControlUnit {
     }
 
     private boolean hasExistingSchedule() {
-        return scheduleStorage.getFile().exists();
+        return scheduleStorage.getFile().exists() && scheduleStorage.getFile().isFile();
     }
 
     private Schedule getExistingSchedule() {

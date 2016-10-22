@@ -7,7 +7,7 @@ import linenux.model.Schedule;
 
 @XmlRootElement(name = "Schedule")
 public class AdaptedSchedule {
-    @XmlElement(name = "states")
+    @XmlElement(name = "state")
     private AdaptedState state;
 
     public AdaptedSchedule() {
