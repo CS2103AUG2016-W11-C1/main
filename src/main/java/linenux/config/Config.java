@@ -28,7 +28,6 @@ public class Config {
     private Path testScheduleFilePath;
 
     public Config() {
-        System.out.println(DEFAULT_FILE_PATH);
         this.configFilePath = Paths.get(DEFAULT_FILE_PATH + CONFIG_FILENAME);
         this.scheduleFilePath = Paths.get(DEFAULT_FILE_PATH + SCHEDULE_FILENAME);
         this.testScheduleFilePath = Paths.get(DEFAULT_FILE_PATH + TEST_SCHEDULE_FILENAME);
