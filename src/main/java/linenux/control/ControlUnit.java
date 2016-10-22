@@ -1,11 +1,10 @@
 package linenux.control;
 
-import java.nio.file.Paths;
-
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import linenux.command.result.CommandResult;
 import linenux.model.Schedule;
+import linenux.storage.ScheduleStorage;
 import linenux.storage.XmlScheduleStorage;
 
 /**
@@ -13,18 +12,16 @@ import linenux.storage.XmlScheduleStorage;
  */
 public class ControlUnit {
     private Schedule schedule;
-    private XmlScheduleStorage scheduleStorage;
+    private ScheduleStorage scheduleStorage;
     private CommandManager commandManager;
     private ObjectProperty<CommandResult> lastCommandResult = new SimpleObjectProperty<>();
 
     public ControlUnit() {
-        this.scheduleStorage = new XmlScheduleStorage(getDefaultFilePath());
+        this.scheduleStorage = new XmlScheduleStorage();
 
-        if (this.hasExistingSchedule() && getExistingSchedule() != null) {
-            System.out.println("controlunit load");
-            this.schedule = getExistingSchedule();
+        if (this.scheduleStorage.hasScheduleFile()) {
+            this.schedule = this.scheduleStorage.loadScheduleFromFile();
         } else {
-            System.out.println("controlunit new");
             this.schedule = new Schedule();
         }
 
@@ -36,18 +33,6 @@ public class ControlUnit {
         lastCommandResult.setValue(result);
         scheduleStorage.saveScheduleToFile(schedule);
         return result;
-    }
-
-    private boolean hasExistingSchedule() {
-        return scheduleStorage.getFile().exists() && scheduleStorage.getFile().isFile();
-    }
-
-    private Schedule getExistingSchedule() {
-        return scheduleStorage.loadScheduleFromFile();
-    }
-
-    private String getDefaultFilePath() {
-        return Paths.get(".").toAbsolutePath().toString();
     }
 
     public Schedule getSchedule() {
