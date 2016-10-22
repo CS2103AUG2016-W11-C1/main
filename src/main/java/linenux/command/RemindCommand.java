@@ -6,8 +6,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import linenux.command.parser.ReminderArgumentParser;
-import linenux.command.parser.SearchKeywordParser;
 import linenux.command.result.CommandResult;
+import linenux.command.result.PromptResults;
+import linenux.command.result.SearchResults;
 import linenux.control.TimeParserManager;
 import linenux.model.Reminder;
 import linenux.model.Schedule;
@@ -19,12 +20,11 @@ import linenux.util.TasksListUtil;
 /**
  * Adds a reminder to a task in the schedule
  */
-public class RemindCommand implements Command {
+public class RemindCommand extends AbstractCommand {
     private static final String TRIGGER_WORD = "remind";
     private static final String DESCRIPTION = "Adds a reminder to a task in the schedule.";
-    public static final String COMMAND_FORMAT = "remind KEYWORDS t/TIME [n/NOTE]";
+    public static final String COMMAND_FORMAT = "remind KEYWORDS t/TIME n/NOTE";
 
-    private static final String REMIND_PATTERN = "(?i)^remind((?<keywords>.*?)(?<arguments>((n|t)/)+?.*)??)";
     private static final String NUMBER_PATTERN = "^\\d+$";
     private static final String CANCEL_PATTERN = "^cancel$";
 
@@ -32,48 +32,39 @@ public class RemindCommand implements Command {
     private boolean requiresUserResponse;
     private String argument;
     private ArrayList<Task> foundTasks;
-    private SearchKeywordParser searchKeywordParser;
     private TimeParserManager timeParserManager;
     private ReminderArgumentParser reminderArgumentParser;
 
     public RemindCommand(Schedule schedule) {
         this.schedule = schedule;
-        this.searchKeywordParser = new SearchKeywordParser(this.schedule);
         this.timeParserManager = new TimeParserManager(new ISODateWithTimeParser());
         this.reminderArgumentParser = new ReminderArgumentParser(this.timeParserManager, COMMAND_FORMAT, CALLOUTS);
-    }
-
-    @Override
-    public boolean respondTo(String userInput) {
-        return userInput.matches(REMIND_PATTERN);
+        this.TRIGGER_WORDS.add(TRIGGER_WORD);
     }
 
     @Override
     public CommandResult execute(String userInput) {
-        assert userInput.matches(REMIND_PATTERN);
+        assert userInput.matches(getPattern());
         assert this.schedule != null;
 
         String keywords = extractKeywords(userInput);
+        String argument = extractArgument(userInput);
 
         if (keywords.trim().isEmpty()) {
             return makeNoKeywordsResult();
         }
 
-        Either<ArrayList<Task>, CommandResult> tasks = this.searchKeywordParser.parse(keywords);
+        ArrayList<Task> tasks = this.schedule.search(keywords);
 
-        if (tasks.isLeft()) {
-            String argument = extractArgument(userInput);
-
-            if (tasks.getLeft().size() == 1) {
-                return implementRemind(tasks.getLeft().get(0), argument);
-            } else {
-                setResponse(true, tasks.getLeft(), argument);
-                return makePromptResult(this.foundTasks);
-            }
+        if (tasks.size() == 0) {
+            return SearchResults.makeNotFoundResult(keywords);
+        } else if (tasks.size() == 1) {
+            Task task = tasks.get(0);
+            return implementRemind(task, argument);
         } else {
-            return tasks.getRight();
+            setResponse(true, tasks, argument);
+            return PromptResults.makePromptIndexResult(tasks);
         }
-
     }
 
     @Override
@@ -96,7 +87,7 @@ public class RemindCommand implements Command {
                 setResponse(false, null, null);
                 return result;
             } else {
-                return makeInvalidIndexResult();
+                return PromptResults.makeInvalidIndexResult(this.foundTasks);
             }
         } else if (userInput.matches(CANCEL_PATTERN)) {
             setResponse(false, null, null);
@@ -121,8 +112,13 @@ public class RemindCommand implements Command {
         return COMMAND_FORMAT;
     }
 
+    @Override
+    public String getPattern() {
+        return "(?i)^\\s*(" + this.getTriggerWordsPattern() + ")((?<keywords>.*?)(?<arguments>((n|t)/)+?.*)??)";
+    }
+
     private String extractKeywords(String userInput) {
-        Matcher matcher = Pattern.compile(REMIND_PATTERN).matcher(userInput);
+        Matcher matcher = Pattern.compile(getPattern()).matcher(userInput);
 
         if (matcher.matches() && matcher.group("keywords") != null) {
             return matcher.group("keywords").trim(); // TODO
@@ -132,7 +128,7 @@ public class RemindCommand implements Command {
     }
 
     private String extractArgument(String userInput) {
-        Matcher matcher = Pattern.compile(REMIND_PATTERN).matcher(userInput);
+        Matcher matcher = Pattern.compile(getPattern()).matcher(userInput);
 
         if (matcher.matches() && matcher.group("arguments") != null) {
             return matcher.group("arguments");
@@ -145,7 +141,7 @@ public class RemindCommand implements Command {
         Either<Reminder, CommandResult> result = reminderArgumentParser.parse(argument);
 
         if (result.isLeft()) {
-            this.schedule.addReminder(original, result.getLeft());
+            this.schedule.updateTask(original, original.addReminder(result.getLeft()));
             return makeResult(original, result.getLeft());
         } else {
             return result.getRight();
@@ -169,19 +165,6 @@ public class RemindCommand implements Command {
                 + task.getTaskName();
     }
 
-    private CommandResult makePromptResult(ArrayList<Task> tasks) {
-        return () -> {
-            StringBuilder builder = new StringBuilder();
-            builder.append("Which one? (1-");
-            builder.append(tasks.size());
-            builder.append(")\n");
-
-            builder.append(TasksListUtil.display(tasks));
-
-            return builder.toString();
-        };
-    }
-
     private CommandResult makeCancelledResult() {
         return () -> "OK! Not adding new reminder.";
     }
@@ -195,16 +178,4 @@ public class RemindCommand implements Command {
             return builder.toString();
         };
     }
-
-    private CommandResult makeInvalidIndexResult() {
-        return () -> {
-            StringBuilder builder = new StringBuilder();
-            builder.append("That's not a valid index. Enter a number between 1 and ");
-            builder.append(this.foundTasks.size());
-            builder.append(":\n");
-            builder.append(TasksListUtil.display(this.foundTasks));
-            return builder.toString();
-        };
-    }
-
 }

@@ -4,45 +4,38 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import linenux.command.parser.SearchKeywordParser;
 import linenux.command.result.CommandResult;
+import linenux.command.result.PromptResults;
+import linenux.command.result.SearchResults;
 import linenux.model.Reminder;
 import linenux.model.Schedule;
 import linenux.model.Task;
-import linenux.util.Either;
 import linenux.util.RemindersListUtil;
 import linenux.util.TasksListUtil;
 
 /**
  * Generates details of tasks and reminders attached to task based on userInput.
  */
-public class ViewCommand implements Command {
+public class ViewCommand extends AbstractCommand {
     private static final String TRIGGER_WORD = "view";
     private static final String DESCRIPTION = "Views details of specific task.";
     private static final String COMMAND_FORMAT = "view KEYWORDS";
 
-    private static final String VIEW_PATTERN = "(?i)^view(\\s+(?<keywords>.*))?$";
     private static final String NUMBER_PATTERN = "^\\d+$";
     private static final String CANCEL_PATTERN = "^cancel$";
 
     private Schedule schedule;
     private boolean requiresUserResponse;
     private ArrayList<Task> foundTasks;
-    private SearchKeywordParser searchKeywordParser;
 
     public ViewCommand(Schedule schedule) {
         this.schedule = schedule;
-        this.searchKeywordParser = new SearchKeywordParser(this.schedule);
-    }
-
-    @Override
-    public boolean respondTo(String userInput) {
-        return userInput.matches(VIEW_PATTERN);
+        this.TRIGGER_WORDS.add(TRIGGER_WORD);
     }
 
     @Override
     public CommandResult execute(String userInput) {
-        assert userInput.matches(VIEW_PATTERN);
+        assert userInput.matches(getPattern());
         assert this.schedule != null;
 
         String keywords = extractKeywords(userInput);
@@ -51,17 +44,16 @@ public class ViewCommand implements Command {
             return makeNoKeywordsResult();
         }
 
-        Either<ArrayList<Task>, CommandResult> tasks = this.searchKeywordParser.parse(keywords);
+        ArrayList<Task> tasks = this.schedule.search(keywords);
 
-        if (tasks.isLeft()) {
-            if (tasks.getLeft().size() == 1) {
-                return makeResult(tasks.getLeft().get(0));
-            } else {
-                setResponse(true, tasks.getLeft());
-                return makePromptResult(this.foundTasks);
-            }
+        if (tasks.size() == 0) {
+            return SearchResults.makeNotFoundResult(keywords);
+        } else if (tasks.size() == 1) {
+            Task task = tasks.get(0);
+            return makeResult(task);
         } else {
-            return tasks.getRight();
+            setResponse(true, tasks);
+            return PromptResults.makePromptIndexResult(tasks);
         }
     }
 
@@ -84,7 +76,7 @@ public class ViewCommand implements Command {
                 setResponse(false, null);
                 return makeResult(task);
             } else {
-                return makeInvalidIndexResult();
+                return PromptResults.makeInvalidIndexResult(this.foundTasks);
             }
         } else if (userInput.matches(CANCEL_PATTERN)) {
             setResponse(false, null);
@@ -110,7 +102,7 @@ public class ViewCommand implements Command {
     }
 
     private String extractKeywords(String userInput) {
-        Matcher matcher = Pattern.compile(VIEW_PATTERN).matcher(userInput);
+        Matcher matcher = Pattern.compile(getPattern()).matcher(userInput);
 
         if (matcher.matches() && matcher.group("keywords") != null) {
             return matcher.group("keywords");
@@ -145,19 +137,6 @@ public class ViewCommand implements Command {
 
     }
 
-    private CommandResult makePromptResult(ArrayList<Task> tasks) {
-        return () -> {
-            StringBuilder builder = new StringBuilder();
-            builder.append("Which one? (1-");
-            builder.append(tasks.size());
-            builder.append(")\n");
-
-            builder.append(TasksListUtil.display(tasks));
-
-            return builder.toString();
-        };
-    }
-
     private CommandResult makeCancelledResult() {
         return () -> "OK! Not viewing any task.";
     }
@@ -167,17 +146,6 @@ public class ViewCommand implements Command {
             StringBuilder builder = new StringBuilder();
             builder.append("I don't understand \"" + userInput + "\".\n");
             builder.append("Enter a number to indicate which task to view.\n");
-            builder.append(TasksListUtil.display(this.foundTasks));
-            return builder.toString();
-        };
-    }
-
-    private CommandResult makeInvalidIndexResult() {
-        return () -> {
-            StringBuilder builder = new StringBuilder();
-            builder.append("That's not a valid index. Enter a number between 1 and ");
-            builder.append(this.foundTasks.size());
-            builder.append(":\n");
             builder.append(TasksListUtil.display(this.foundTasks));
             return builder.toString();
         };

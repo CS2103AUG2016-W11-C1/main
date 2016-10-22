@@ -57,4 +57,11 @@ public interface Command {
      * Returns the command format.
      */
     public String getCommandFormat();
+
+    /**
+     * Get regex pattern.
+     */
+    public String getPattern();
+
+    public void setAlias(String alias);
 }

@@ -4,40 +4,31 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import linenux.command.parser.SearchKeywordParser;
 import linenux.command.result.CommandResult;
+import linenux.command.result.SearchResults;
 import linenux.model.Reminder;
 import linenux.model.Schedule;
 import linenux.model.Task;
-import linenux.util.Either;
 import linenux.util.TasksListUtil;
 
 /**
  * Generates a list of tasks based on userInput.
  */
-public class ListCommand implements Command {
+public class ListCommand extends AbstractCommand {
     private static final String TRIGGER_WORD = "list";
-    private static final String DESCRIPTION = "Lists all tasks.";
-    private static final String COMMAND_FORMAT = "list KEYWORDS";
-
-    private static final String LIST_PATTERN = "(?i)^list(\\s+(?<keywords>.*))?$";
+    private static final String DESCRIPTION = "Lists tasks and reminders.";
+    private static final String COMMAND_FORMAT = "list [KEYWORDS...] [st/START_TIME] [et/END_TIME]";
 
     private Schedule schedule;
-    private SearchKeywordParser searchKeywordParser;
 
     public ListCommand(Schedule schedule) {
         this.schedule = schedule;
-        this.searchKeywordParser = new SearchKeywordParser(this.schedule);
-    }
-
-    @Override
-    public boolean respondTo(String userInput) {
-        return userInput.matches(LIST_PATTERN);
+        this.TRIGGER_WORDS.add(TRIGGER_WORD);
     }
 
     @Override
     public CommandResult execute(String userInput) {
-        assert userInput.matches(LIST_PATTERN);
+        assert userInput.matches(getPattern());
         assert this.schedule != null;
 
         String keywords = extractKeywords(userInput);
@@ -46,6 +37,7 @@ public class ListCommand implements Command {
             return makeResult(this.schedule.getTaskList(), this.schedule.getReminderList());
         }
 
+/**
         Either<ArrayList<Task>, CommandResult> tasks = this.searchKeywordParser.parse(keywords);
         Either<ArrayList<Reminder>, CommandResult> reminders = this.searchKeywordParser.parseReminder(keywords);
 
@@ -61,6 +53,14 @@ public class ListCommand implements Command {
             } else {
                 return tasks.getRight();
             }
+**/
+        ArrayList<Task> tasks = this.schedule.search(keywords);
+        ArrayList<Reminder> reminders = this.schedule.searchReminder(keywords);
+
+        if (tasks.size() == 0 && reminders.size() == 0) {
+            return SearchResults.makeNotFoundResult(keywords);
+        } else {
+            return makeResult(tasks, reminders);
         }
     }
 
@@ -80,7 +80,7 @@ public class ListCommand implements Command {
     }
 
     private String extractKeywords(String userInput) {
-        Matcher matcher = Pattern.compile(LIST_PATTERN).matcher(userInput);
+        Matcher matcher = Pattern.compile(getPattern()).matcher(userInput);
 
         if (matcher.matches() && matcher.group("keywords") != null) {
             return matcher.group("keywords");

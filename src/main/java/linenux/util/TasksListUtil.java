@@ -44,7 +44,7 @@ public class TasksListUtil {
     public static String display(ArrayList<Task> tasks, ArrayList<Reminder> reminders) {
         StringBuilder builder = new StringBuilder();
 
-        if (tasks != null) {
+        if (tasks.size() > 0) {
             builder.append("Tasks:\n");
             for (int i = 0; i < tasks.size(); i++) {
                 builder.append(i + 1);
@@ -55,7 +55,7 @@ public class TasksListUtil {
             builder.append('\n');
         }
 
-        if (reminders != null) {
+        if (reminders.size() > 0) {
             builder.append("Reminders:\n");
             for (int i = 0; i < reminders.size(); i++) {
                 builder.append(i + 1);

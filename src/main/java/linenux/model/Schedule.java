@@ -16,14 +16,7 @@ public class Schedule {
      * Constructs an empty schedule
      */
     public Schedule() {
-        this(new ArrayList<>());
-    }
-
-    /**
-     * Constructs the schedule with the given data.
-     */
-    public Schedule(ArrayList<Task> taskList) {
-        this.states.add(new State(taskList));
+        this.states.add(new State());
     }
 
     /**
@@ -34,13 +27,12 @@ public class Schedule {
     }
 
     /**
-     * Edits the specified task.
-     *
-     * @param originalTask The original version of the specified task.
-     * @param newTask The edited version of the specified task.
+     * Replace {@code originalTask} with {@code newTask}.
+     * @param originalTask The original task.
+     * @param newTask The new ask.
      */
-    public void editTask(Task originalTask, Task newTask) {
-        addState(getMostRecentState().editTask(originalTask, newTask));
+    public void updateTask(Task originalTask, Task newTask) {
+        addState(getMostRecentState().updateTask(originalTask, newTask));
     }
 
     /**
@@ -53,27 +45,15 @@ public class Schedule {
     }
 
     /**
-     * Marks specified task as done.
-     *
-     * @param task The task to mark as done.
-     */
-    public void doneTask(Task task) {
-        addState(getMostRecentState().doneTask(task));
-    }
-
-    /**
-     * Adds a reminder to a task.
-     */
-    public void addReminder(Task task, Reminder reminder) {
-        addState(getMostRecentState().addReminder(task, reminder));
-    }
-
-    /**
      * Clears all tasks from the schedule
      */
     public void clear() {
         State newState = new State();
         addState(newState);
+    }
+
+    public ArrayList<Task> search(String keywords) {
+        return search(keywords.split("\\s+"));
     }
 
     /**
@@ -85,6 +65,10 @@ public class Schedule {
      */
     public ArrayList<Task> search(String[] keywords) {
         return getMostRecentState().search(keywords);
+    }
+
+    public ArrayList<Reminder> searchReminder(String keywords) {
+        return searchReminder(keywords.split("\\s+"));
     }
 
     /**

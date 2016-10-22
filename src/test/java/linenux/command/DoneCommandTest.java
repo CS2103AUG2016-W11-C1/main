@@ -181,4 +181,15 @@ public class DoneCommandTest {
 
         assertTrue(this.doneCommand.awaitingUserResponse());
     }
+
+    @Test
+    public void testSearchOnlyUndoneTasks() {
+        this.schedule.addTask(new Task("hello"));
+        this.schedule.addTask(new Task("hello").markAsDone());
+
+        CommandResult result = this.doneCommand.execute("done hello");
+        String expectedResponse = "\"hello\" is marked as done.";
+
+        assertEquals(expectedResponse, result.getFeedback());
+    }
 }

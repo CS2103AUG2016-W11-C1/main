@@ -15,8 +15,8 @@ import linenux.util.ArrayListUtil;
          this.taskList = new ArrayList<Task>();
      }
 
-     public State(ArrayList<Task> taskList) {
-         this.taskList = taskList;
+     public State(State other) {
+         this.taskList = new ArrayList<>(other.taskList);
      }
 
      /**
@@ -25,22 +25,22 @@ import linenux.util.ArrayListUtil;
       * @return The new State of the schedule.
       */
      public State addTask(Task task) {
-         ArrayList<Task> newTaskList = copyTaskList(taskList);
-         newTaskList.add(task);
-         return new State(newTaskList);
+         State output = new State(this);
+         output.taskList.add(task);
+         return output;
      }
 
      /**
-      * Edits the specified task.
+      * Updates the specified task.
       *
       * @param originalTask The original version of the specified task.
       * @param newTask The edited version of the specified task.
       */
-     public State editTask(Task originalTask, Task newTask) {
+     public State updateTask(Task originalTask, Task newTask) {
          int taskIndex = taskList.indexOf(originalTask);
-         ArrayList<Task> newTaskList = copyTaskList(taskList);
-         newTaskList.set(taskIndex, newTask);
-         return new State(newTaskList);
+         State output = new State(this);
+         output.taskList.set(taskIndex, newTask);
+         return output;
      }
 
      /**
@@ -50,31 +50,9 @@ import linenux.util.ArrayListUtil;
       */
      public State deleteTask(Task task) {
          int taskIndex = taskList.indexOf(task);
-         ArrayList<Task> newTaskList = copyTaskList(taskList);
-         newTaskList.remove(taskIndex);
-         return new State(newTaskList);
-     }
-
-     /**
-      * Marks the specified task as done.
-      * @param task The task to mark as done.
-      * @return The new State of the schedule.
-      */
-     public State doneTask(Task task) {
-         int taskIndex = taskList.indexOf(task);
-         ArrayList<Task> newTaskList = copyTaskList(taskList);
-         newTaskList.get(taskIndex).markAsDone();;
-         return new State(newTaskList);
-     }
-
-     /**
-      * Adds a reminder to a task.
-      */
-     public State addReminder(Task task, Reminder reminder) {
-         int taskIndex = taskList.indexOf(task);
-         ArrayList<Task> newTaskList = copyTaskList(taskList);
-         newTaskList.get(taskIndex).addReminder(reminder);
-         return new State(newTaskList);
+         State output = new State(this);
+         output.taskList.remove(taskIndex);
+         return output;
      }
 
      /**
@@ -129,16 +107,4 @@ import linenux.util.ArrayListUtil;
 
         return result;
     }
-
-    /**
-     * Creates a deep copy of the task list.
-     *
-     * @param taskList
-     * @return
-     */
-     private ArrayList<Task> copyTaskList(ArrayList<Task> taskList) {
-         return new ArrayListUtil.ChainableArrayListUtil<Task>(taskList)
-                                 .map(task -> task.copyTask())
-                                 .value();
-     }
 }
