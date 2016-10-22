@@ -1,6 +1,5 @@
 package linenux.command;
 
-import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -14,12 +13,6 @@ public class AliasCommand implements Command {
 
     private static final String ALPHANUMERIC = "^[a-zA-Z0-9]*$";
 
-    private ArrayList<Command> commands;
-
-    public AliasCommand(ArrayList<Command> commands) {
-        this.commands = commands;
-    }
-
     @Override
     public boolean respondTo(String userInput) {
         return userInput.matches(getPattern());
@@ -30,19 +23,19 @@ public class AliasCommand implements Command {
         assert userInput.matches(getPattern());
 
         String arguments = extractArguments(userInput);
-        String[] commands = arguments.trim().split("\\s+");
+        String[] commandNames = arguments.trim().split("\\s+");
 
-        if (commands.length != 2) {
+        if (commandNames.length != 2) {
             return makeInvalidArgumentResult();
         }
-        if (!validCommand(commands[0])) {
+        if (!validCommand(commandNames[0])) {
             return makeNoSuchCommandResult();
         }
-        if (!validAlias(commands[1])) {
+        if (!validAlias(commandNames[1])) {
             return makeInvalidAliasResult();
         }
-        AliasUtil.ALIASMAP.put(commands[0], commands[1]);
-        return makeSuccessfulAliasResult(String[] commands);
+        AliasUtil.ALIASMAP.put(commandNames[0], commandNames[1]);
+        return makeSuccessfulAliasResult(commandNames);
     }
 
     @Override

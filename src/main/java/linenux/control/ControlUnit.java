@@ -2,7 +2,6 @@ package linenux.control;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import linenux.command.Command;
 import linenux.command.result.CommandResult;
 import linenux.model.Schedule;
 

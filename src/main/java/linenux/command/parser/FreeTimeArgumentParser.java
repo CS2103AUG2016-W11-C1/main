@@ -1,15 +1,14 @@
 package linenux.command.parser;
 
-import linenux.command.Command;
-import linenux.command.result.CommandResult;
-import linenux.control.TimeParserManager;
-import linenux.util.Either;
-import linenux.util.TimeInterval;
-
 import java.time.Clock;
 import java.time.LocalDateTime;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import linenux.command.result.CommandResult;
+import linenux.control.TimeParserManager;
+import linenux.util.Either;
+import linenux.util.TimeInterval;
 
 /**
  * Created by yihangho on 10/15/16.
