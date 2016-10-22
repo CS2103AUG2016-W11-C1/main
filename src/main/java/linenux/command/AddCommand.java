@@ -9,13 +9,12 @@ import linenux.control.TimeParserManager;
 import linenux.model.Schedule;
 import linenux.model.Task;
 import linenux.time.parser.ISODateWithTimeParser;
-import linenux.util.AliasUtil;
 import linenux.util.Either;
 
 /**
  * Adds a task to the schedule.
  */
-public class AddCommand implements Command {
+public class AddCommand extends AbstractCommand {
     private static final String TRIGGER_WORD = "add";
     private static final String DESCRIPTION = "Adds a task to the schedule.";
     private static final String COMMAND_FORMAT = "add TASK_NAME [st/START_TIME] [et/END_TIME] [#/TAGS]";
@@ -28,6 +27,7 @@ public class AddCommand implements Command {
         this.schedule = schedule;
         this.timeParserManager = new TimeParserManager(new ISODateWithTimeParser());
         this.addArgumentParser = new AddArgumentParser(this.timeParserManager, COMMAND_FORMAT, CALLOUTS);
+        this.TRIGGER_WORDS.add(TRIGGER_WORD);
     }
 
     @Override
@@ -67,16 +67,11 @@ public class AddCommand implements Command {
         return COMMAND_FORMAT;
     }
 
-    @Override
-    public String getPattern() {
-        return "(?i)^(" + TRIGGER_WORD + "|" + AliasUtil.ALIASMAP.get(TRIGGER_WORD) + ")(\\s+(?<arguments>.*))?$";
-    }
-
     private String extractArgument(String userInput) {
         Matcher matcher = Pattern.compile(getPattern()).matcher(userInput);
 
-        if (matcher.matches() && matcher.group("arguments") != null) {
-            return matcher.group("arguments");
+        if (matcher.matches() && matcher.group("keywords") != null) {
+            return matcher.group("keywords");
         } else {
             return "";
         }

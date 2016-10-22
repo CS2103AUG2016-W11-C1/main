@@ -1,15 +1,18 @@
 package linenux.command;
 
 import linenux.command.result.CommandResult;
-import linenux.util.AliasUtil;
 
 /**
  * Exits the program.
  */
-public class ExitCommand implements Command {
+public class ExitCommand extends AbstractCommand {
     private static final String TRIGGER_WORD = "exit";
     private static final String DESCRIPTION = "Exits the program.";
     public static final String COMMAND_FORMAT = "exit";
+
+    public ExitCommand() {
+        this.TRIGGER_WORDS.add(TRIGGER_WORD);
+    }
 
     @Override
     public boolean respondTo(String userInput) {
@@ -38,10 +41,5 @@ public class ExitCommand implements Command {
     @Override
     public String getCommandFormat() {
         return COMMAND_FORMAT;
-    }
-
-    @Override
-    public String getPattern() {
-        return "(?i)^\\s*(" + TRIGGER_WORD + "|" + AliasUtil.ALIASMAP.get(TRIGGER_WORD) + ")\\s*$";
     }
 }

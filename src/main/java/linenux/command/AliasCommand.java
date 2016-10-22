@@ -1,20 +1,27 @@
 package linenux.command;
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import linenux.command.result.CommandResult;
-import linenux.util.AliasUtil;
 
 /**
  * Creates an alias for commands.
  */
-public class AliasCommand implements Command {
+public class AliasCommand extends AbstractCommand {
     private static final String TRIGGER_WORD = "alias";
     private static final String DESCRIPTION = "Creates an alias for commands.";
     private static final String COMMAND_FORMAT = "alias COMMAND_NAME NEW_NAME";
 
     private static final String ALPHANUMERIC = "^[a-zA-Z0-9]*$";
+
+    private ArrayList<Command> commands;
+
+    public AliasCommand(ArrayList<Command> commands) {
+        this.commands = commands;
+        this.TRIGGER_WORDS.add(TRIGGER_WORD);
+    }
 
     @Override
     public boolean respondTo(String userInput) {
@@ -37,7 +44,14 @@ public class AliasCommand implements Command {
         if (!validAlias(commandNames[1])) {
             return makeInvalidAliasResult();
         }
-        AliasUtil.ALIASMAP.put(commandNames[0], commandNames[1]);
+
+        for (Command command: this.commands) {
+            if (command.respondTo(commandNames[0])) {
+                command.setAlias(commandNames[1]);
+            }
+            break;
+        }
+
         return makeSuccessfulAliasResult(commandNames);
     }
 
@@ -56,23 +70,23 @@ public class AliasCommand implements Command {
         return COMMAND_FORMAT;
     }
 
-    @Override
-    public String getPattern() {
-        return "(?i)^(" + TRIGGER_WORD + "|" + AliasUtil.ALIASMAP.get(TRIGGER_WORD) + ")(\\s+(?<arguments>.*))?$";
-    }
-
     private String extractArguments(String userInput) {
         Matcher matcher = Pattern.compile(getPattern()).matcher(userInput);
 
-        if (matcher.matches() && matcher.group("arguments") != null) {
-            return matcher.group("arguments").trim();
+        if (matcher.matches() && matcher.group("keywords") != null) {
+            return matcher.group("keywords").trim();
         } else {
             return "";
         }
     }
 
     private boolean validCommand(String command) {
-        return AliasUtil.ALIASMAP.containsKey(command);
+        for (Command cmd: this.commands) {
+            if (cmd.respondTo(command)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private boolean validAlias(String alias) {

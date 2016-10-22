@@ -49,7 +49,7 @@ public class CommandManager {
         commandList.add(new UndoCommand(this.schedule));
         commandList.add(new FreeTimeCommand(this.schedule));
         commandList.add(new HelpCommand(this.commandList));
-        commandList.add(new AliasCommand());
+        commandList.add(new AliasCommand(this.commandList));
         commandList.add(new ExitCommand());
 
         this.catchAllCommand = new InvalidCommand(this.commandList);

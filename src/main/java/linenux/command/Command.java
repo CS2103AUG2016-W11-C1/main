@@ -62,4 +62,6 @@ public interface Command {
      * Get regex pattern.
      */
     public String getPattern();
+
+    public void setAlias(String alias);
 }

@@ -12,14 +12,13 @@ import linenux.control.TimeParserManager;
 import linenux.model.Schedule;
 import linenux.model.Task;
 import linenux.time.parser.ISODateWithTimeParser;
-import linenux.util.AliasUtil;
 import linenux.util.Either;
 import linenux.util.TasksListUtil;
 
 /**
  * Edits a task in the schedule.
  */
-public class EditCommand implements Command {
+public class EditCommand extends AbstractCommand {
     private static final String TRIGGER_WORD = "edit";
     private static final String DESCRIPTION = "Edits a task in the schedule.";
     public static final String COMMAND_FORMAT = "edit KEYWORDS... [n/NEW_NAME][st/START_TIME][et/END_TIME]";
@@ -38,6 +37,7 @@ public class EditCommand implements Command {
         this.schedule = schedule;
         this.timeParserManager = new TimeParserManager(new ISODateWithTimeParser());
         this.editArgumentParser = new EditArgumentParser(this.timeParserManager, COMMAND_FORMAT, CALLOUTS);
+        this.TRIGGER_WORDS.add(TRIGGER_WORD);
     }
 
     @Override
@@ -117,7 +117,7 @@ public class EditCommand implements Command {
 
     @Override
     public String getPattern() {
-        return "(?i)^(" + TRIGGER_WORD + "|" + AliasUtil.ALIASMAP.get(TRIGGER_WORD) + ")((?<keywords>.*?)(?<arguments>((n|st|et|#)/)+?.*)??)";
+        return "(?i)^\\s*(" + getTriggerWordsPattern() + ")((?<keywords>.*?)(?<arguments>((n|st|et|#)/)+?.*)??)";
     }
 
     private String extractKeywords(String userInput) {

@@ -14,14 +14,13 @@ import linenux.model.Reminder;
 import linenux.model.Schedule;
 import linenux.model.Task;
 import linenux.time.parser.ISODateWithTimeParser;
-import linenux.util.AliasUtil;
 import linenux.util.Either;
 import linenux.util.TasksListUtil;
 
 /**
  * Adds a reminder to a task in the schedule
  */
-public class RemindCommand implements Command {
+public class RemindCommand extends AbstractCommand {
     private static final String TRIGGER_WORD = "remind";
     private static final String DESCRIPTION = "Adds a reminder to a task in the schedule.";
     public static final String COMMAND_FORMAT = "remind KEYWORDS t/TIME n/NOTE";
@@ -40,6 +39,7 @@ public class RemindCommand implements Command {
         this.schedule = schedule;
         this.timeParserManager = new TimeParserManager(new ISODateWithTimeParser());
         this.reminderArgumentParser = new ReminderArgumentParser(this.timeParserManager, COMMAND_FORMAT, CALLOUTS);
+        this.TRIGGER_WORDS.add(TRIGGER_WORD);
     }
 
     @Override
@@ -119,7 +119,7 @@ public class RemindCommand implements Command {
 
     @Override
     public String getPattern() {
-        return "(?i)^(" + TRIGGER_WORD + "|" + AliasUtil.ALIASMAP.get(TRIGGER_WORD) + ")((?<keywords>.*?)(?<arguments>((n|t)/)+?.*)??)";
+        return "(?i)^\\s*(" + this.getTriggerWordsPattern() + ")((?<keywords>.*?)(?<arguments>((n|t)/)+?.*)??)";
     }
 
     private String extractKeywords(String userInput) {
