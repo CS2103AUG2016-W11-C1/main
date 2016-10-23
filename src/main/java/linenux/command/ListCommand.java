@@ -65,23 +65,31 @@ public class ListCommand extends AbstractCommand {
 
         String actualViewDone = viewDone.getLeft();
         Boolean doneOnly = actualViewDone.equals(VIEW_DONE_ONLY);
-        Either<ArrayList<Task>, CommandResult> filterTasks = this.listArgumentFilter.filter(arguments, tasks, doneOnly);
 
+        Either<ArrayList<Task>, CommandResult> filterTasks = this.listArgumentFilter.filter(arguments, tasks, doneOnly);
         if (filterTasks.isRight()) {
             return filterTasks.getRight();
         }
 
+        Either<ArrayList<Reminder>, CommandResult> filterReminders = this.listArgumentFilter.filterReminders(arguments, reminders);
+        if (filterReminders.isRight()) {
+            return filterReminders.getRight();
+        }
+
+
         ArrayList<Task> actualFilterTasks = filterTasks.getLeft();
+        ArrayList<Reminder> actualFilterReminders = filterReminders.getLeft();
+
         if (actualViewDone != "") {
             doneTasks = new ArrayListUtil.ChainableArrayListUtil<>(actualFilterTasks)
                 .filter(Task::isDone)
                 .value();
         }
 
-        if (actualFilterTasks.size() == 0 && reminders.size() == 0) {
+        if (actualFilterTasks.size() == 0 && actualFilterReminders.size() == 0) {
             return SearchResults.makeListNotFoundResult(keywords);
         } else {
-            return makeResult(actualFilterTasks, doneTasks, reminders);
+            return makeResult(actualFilterTasks, doneTasks, actualFilterReminders);
         }
     }
 

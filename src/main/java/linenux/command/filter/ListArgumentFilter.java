@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 
 import linenux.command.result.CommandResult;
 import linenux.control.TimeParserManager;
+import linenux.model.Reminder;
 import linenux.model.Task;
 import linenux.util.ArrayListUtil;
 import linenux.util.Either;
@@ -61,7 +62,7 @@ public class ListArgumentFilter {
         //filter the tasks by the time parameters
         if (actualStartTime != null && actualEndTime != null) {
             filteredTasks = new ArrayListUtil.ChainableArrayListUtil<>(filteredTasks).filter(task -> task.isTodo()
-                    || task.getEndTime().isEqual(actualStartTime)
+                    || task.getEndTime().isEqual(actualStartTime) || task.getEndTime().isEqual(actualEndTime)
                     || (task.getEndTime().isAfter(actualStartTime) && task.getEndTime().isBefore(actualEndTime)))
                     .value();
         } else if (actualStartTime != null) {
@@ -86,6 +87,45 @@ public class ListArgumentFilter {
         }
 
         return Either.left(filteredTasks);
+    }
+
+    public Either<ArrayList<Reminder>, CommandResult> filterReminders(String argument, ArrayList<Reminder> reminders) {
+        ArrayList<Reminder> filteredReminders = new ArrayListUtil.ChainableArrayListUtil<>(reminders)
+                            .sortBy(Reminder::getTimeOfReminder)
+                            .value();
+
+        Either<LocalDateTime, CommandResult> startTime = extractStartTime(argument);
+        if (startTime.isRight()) {
+            return Either.right(startTime.getRight());
+        }
+
+        Either<LocalDateTime, CommandResult> endTime = extractEndTime(argument);
+        if (endTime.isRight()) {
+            return Either.right(endTime.getRight());
+        }
+
+        LocalDateTime actualStartTime = startTime.getLeft();
+        LocalDateTime actualEndTime = endTime.getLeft();
+
+        //filter the reminders by the time parameters
+        if (actualStartTime != null && actualEndTime != null) {
+            filteredReminders = new ArrayListUtil.ChainableArrayListUtil<>(filteredReminders)
+                    .filter(reminder -> reminder.getTimeOfReminder().isEqual(actualStartTime)
+                    || (reminder.getTimeOfReminder().isAfter(actualStartTime) && reminder.getTimeOfReminder().isBefore(actualEndTime)))
+                    .value();
+        } else if (actualStartTime != null) {
+            filteredReminders = new ArrayListUtil.ChainableArrayListUtil<>(filteredReminders)
+                    .filter(reminder -> reminder.getTimeOfReminder().isAfter(actualStartTime)
+                            || reminder.getTimeOfReminder().isEqual(actualStartTime))
+                    .value();
+        } else if (actualEndTime != null) {
+            filteredReminders = new ArrayListUtil.ChainableArrayListUtil<>(filteredReminders)
+                    .filter(reminder -> reminder.getTimeOfReminder().isBefore(actualEndTime)
+                            || reminder.getTimeOfReminder().isEqual(actualEndTime))
+                    .value();
+        }
+
+        return Either.left(filteredReminders);
     }
 
     private Either<LocalDateTime, CommandResult> extractStartTime(String argument) {
