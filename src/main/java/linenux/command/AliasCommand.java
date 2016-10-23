@@ -52,8 +52,8 @@ public class AliasCommand extends AbstractCommand {
         for (Command cmd: this.commands) {
             if (cmd.respondTo(command)) {
                 cmd.setAlias(alias);
+                break;
             }
-            break;
         }
 
         return makeSuccessfulAliasResult(commandNames);

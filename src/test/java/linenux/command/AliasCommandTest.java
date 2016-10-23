@@ -18,13 +18,15 @@ import linenux.model.Schedule;
 public class AliasCommandTest {
     private AliasCommand aliasCommand;
     private AddCommand addCommand;
+    private DeleteCommand deleteCommand;
     private Schedule schedule;
 
     @Before
     public void setupAliasCommand() {
         this.schedule = new Schedule();
         this.addCommand = new AddCommand(this.schedule);
-        this.aliasCommand = new AliasCommand(ArrayListUtil.fromSingleton(this.addCommand));
+        this.deleteCommand = new DeleteCommand(this.schedule);
+        this.aliasCommand = new AliasCommand(ArrayListUtil.fromArray(new Command[] {this.addCommand, this.deleteCommand}));
     }
 
     /**
@@ -104,5 +106,11 @@ public class AliasCommandTest {
         CommandResult result = this.aliasCommand.execute("alias add addi");
         String expectedFeedback = "\"addi\" is used for another command.";
         assertEquals(expectedFeedback, result.getFeedback());
+    }
+
+    @Test
+    public void testSecondCommandInList() {
+        this.aliasCommand.execute("alias delete d");
+        assertTrue(this.deleteCommand.respondTo("d"));
     }
 }
