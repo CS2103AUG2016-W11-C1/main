@@ -33,16 +33,25 @@ public class AliasCommand extends AbstractCommand {
         if (commandNames.length != 2) {
             return makeInvalidArgumentResult();
         }
-        if (!validCommand(commandNames[0])) {
+
+        String command = commandNames[0];
+        String alias = commandNames[1];
+
+        if (!validCommand(command)) {
             return makeNoSuchCommandResult();
         }
-        if (!validAlias(commandNames[1])) {
+
+        if (!validAlias(alias)) {
             return makeInvalidAliasResult();
         }
 
-        for (Command command: this.commands) {
-            if (command.respondTo(commandNames[0])) {
-                command.setAlias(commandNames[1]);
+        if (!isAliasAvailable(alias)) {
+            return makeAliasUsed(alias);
+        }
+
+        for (Command cmd: this.commands) {
+            if (cmd.respondTo(command)) {
+                cmd.setAlias(alias);
             }
             break;
         }
@@ -89,6 +98,16 @@ public class AliasCommand extends AbstractCommand {
         return matcher.matches();
     }
 
+    private boolean isAliasAvailable(String alias) {
+        for (Command cmd: this.commands) {
+            if (cmd.respondTo(alias)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     private CommandResult makeInvalidArgumentResult() {
         return () -> "Invalid arguments.\n\n" + COMMAND_FORMAT + "\n\n" + CALLOUTS;
     }
@@ -99,6 +118,10 @@ public class AliasCommand extends AbstractCommand {
 
     private CommandResult makeInvalidAliasResult() {
         return () -> "Alias must be alphanumeric.";
+    }
+
+    private CommandResult makeAliasUsed(String alias) {
+        return () -> "\"" + alias + "\" is used for another command.";
     }
 
     private CommandResult makeSuccessfulAliasResult(String[] commands) {

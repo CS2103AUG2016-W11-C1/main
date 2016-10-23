@@ -93,4 +93,16 @@ public class AliasCommandTest {
         assertChangeBy(() -> this.schedule.getTaskList().size(), 1,
                 () -> this.addCommand.execute("addi CS2103T Tutorial #/tag1 tag2"));
     }
+
+    /**
+     * Ensure that aliases can only be used once.
+     */
+    @Test
+    public void testReusedAlias() {
+        this.aliasCommand.execute("alias add addi");
+        assertTrue(this.addCommand.respondTo("addi"));
+        CommandResult result = this.aliasCommand.execute("alias add addi");
+        String expectedFeedback = "\"addi\" is used for another command.";
+        assertEquals(expectedFeedback, result.getFeedback());
+    }
 }
