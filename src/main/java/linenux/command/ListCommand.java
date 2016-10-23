@@ -117,7 +117,7 @@ public class ListCommand extends AbstractCommand {
         Matcher matcher = Pattern.compile(getPattern()).matcher(userInput);
 
         if (matcher.matches() && matcher.group("keywords") != null) {
-            return matcher.group("keywords");
+            return matcher.group("keywords").trim();
         } else {
             return "";
         }

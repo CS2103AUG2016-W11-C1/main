@@ -5,6 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -75,10 +76,7 @@ public class ListCommandTest {
 
         CommandResult result = this.listCommand.execute("list");
 
-        String expectedFeedback = "Tasks:\n1. First Task\n" +
-                "2. Second Task\n" +
-                "3. Deadline (Due 2016-01-01 5:00PM)\n" +
-                "4. Event (2016-01-01 5:00PM - 2016-01-01 6:00PM)\n" + "5. Task with Reminder\n\nReminders:\n"
+        String expectedFeedback = "Reminders:\n"
                 + "1. Reminder (On 2016-02-01 5:00PM)";
         assertEquals(expectedFeedback, result.getFeedback());
     }
@@ -88,14 +86,16 @@ public class ListCommandTest {
      */
     @Test
     public void testDisplayTasksMatchingKeywords() {
-        this.schedule.addTask(new Task("hello"));
-        this.schedule.addTask(new Task("world"));
-        this.schedule.addTask(new Task("hello world"));
+        Task task1 = new Task("hello");
+        Task task2 = new Task("world");
+        Task task3 = new Task("hello world");
+        this.schedule.addTask(task1);
+        this.schedule.addTask(task2);
+        this.schedule.addTask(task3);
 
-        CommandResult result = this.listCommand.execute("list world");
-
-        String expectedFeedback = "Tasks:\n1. world\n2. hello world";
-        assertEquals(expectedFeedback, result.getFeedback());
+        this.listCommand.execute("list world");
+        assertTrue(
+                this.schedule.getFilteredTasks().contains(task2) && this.schedule.getFilteredTasks().contains(task3));
     }
 
     @Test
@@ -121,6 +121,9 @@ public class ListCommandTest {
 
         CommandResult result = this.listCommand.execute("list world");
 
+        ArrayList<Task> filteredTasks = this.schedule.getFilteredTasks();
+        assertTrue(!filteredTasks.contains(hello));
+
         String expectedFeedback = "Reminders:\n1. world domination (On 2016-02-01 5:00PM)\n2. hello world (On 2016-03-01 5:00PM)";
         assertEquals(expectedFeedback, result.getFeedback());
     }
@@ -143,9 +146,8 @@ public class ListCommandTest {
 
         CommandResult result = this.listCommand.execute("list hello");
 
-        String expectedFeedback = "Tasks:\n" + "1. hello\n" + "2. Hello World\n\n" + "Reminders:\n"
-                + "1. hello world (On 2016-03-01 5:00PM)\n" + "2. hello darkness (On 2016-04-01 5:00PM)\n"
-                + "3. hello hello (On 2016-01-01 5:00PM)";
+        String expectedFeedback = "Reminders:\n" + "1. hello hello (On 2016-01-01 5:00PM)\n"
+                + "2. hello world (On 2016-03-01 5:00PM)\n" + "3. hello darkness (On 2016-04-01 5:00PM)";
         assertEquals(expectedFeedback, result.getFeedback());
     }
 }
