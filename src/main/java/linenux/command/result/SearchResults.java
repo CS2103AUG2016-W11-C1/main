@@ -7,4 +7,8 @@ public class SearchResults {
     public static CommandResult makeNotFoundResult(String keywords) {
         return () -> "Cannot find task names with \"" + keywords + "\".";
     }
+
+    public static CommandResult makeListNotFoundResult(String keywords) {
+        return () -> "Cannot find task or reminder names with \"" + keywords + "\".";
+    }
 }

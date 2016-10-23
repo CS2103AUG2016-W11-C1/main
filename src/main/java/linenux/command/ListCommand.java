@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 
 import linenux.command.result.CommandResult;
 import linenux.command.result.SearchResults;
+import linenux.model.Reminder;
 import linenux.model.Schedule;
 import linenux.model.Task;
 import linenux.util.TasksListUtil;
@@ -33,15 +34,15 @@ public class ListCommand extends AbstractCommand {
         String keywords = extractKeywords(userInput);
 
         if (keywords.trim().isEmpty()) {
-            return makeResult(this.schedule.getTaskList());
+            return makeResult(this.schedule.getTaskList(), this.schedule.getReminderList());
         }
-
         ArrayList<Task> tasks = this.schedule.search(keywords);
+        ArrayList<Reminder> reminders = this.schedule.searchReminder(keywords);
 
-        if (tasks.size() == 0) {
-            return SearchResults.makeNotFoundResult(keywords);
+        if (tasks.size() == 0 && reminders.size() == 0) {
+            return SearchResults.makeListNotFoundResult(keywords);
         } else {
-            return makeResult(tasks);
+            return makeResult(tasks, reminders);
         }
     }
 
@@ -70,7 +71,7 @@ public class ListCommand extends AbstractCommand {
         }
     }
 
-    private CommandResult makeResult(ArrayList<Task> tasks) {
-        return () -> TasksListUtil.display(tasks);
+    private CommandResult makeResult(ArrayList<Task> tasks, ArrayList<Reminder> reminders) {
+        return () -> TasksListUtil.display(tasks, reminders);
     }
 }

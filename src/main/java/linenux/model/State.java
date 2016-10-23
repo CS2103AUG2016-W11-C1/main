@@ -63,10 +63,12 @@ import linenux.util.ArrayListUtil;
      }
 
      /**
-      * Performs case-insensitive search using keywords.
-      * @param keywords Search keywords
-      * @return List of {@code Task} matching the keywords.
-      */
+     * Performs case-insensitive task search using keywords.
+     *
+     * @param keywords
+     *            Search keywords
+     * @return List of {@code Task} matching the keywords.
+     */
      public ArrayList<Task> search(String[] keywords) {
          ArrayList<String> keywordsList = new ArrayListUtil.ChainableArrayListUtil<String>(keywords)
                                                            .map(String::toLowerCase)
@@ -81,4 +83,28 @@ import linenux.util.ArrayListUtil;
                                                    })
                                  .value();
      }
+
+     /**
+     * Performs case-insensitive reminder search using keywords.
+     *
+     * @param keywords
+     *            Search keywords
+     * @return List of {@code Task} matching the keywords.
+     */
+    public ArrayList<Reminder> searchReminder(String[] keywords) {
+        ArrayList<String> keywordsList = new ArrayListUtil.ChainableArrayListUtil<String>(keywords)
+                .map(String::toLowerCase).value();
+
+        ArrayList<Reminder> result = new ArrayList<Reminder>();
+
+        for (Task t : this.taskList) {
+            result.addAll(new ArrayListUtil.ChainableArrayListUtil<Reminder>(t.getReminders()).filter(reminder -> {
+                ArrayList<String> reminderKeywords = new ArrayListUtil.ChainableArrayListUtil<String>(
+                        reminder.getNote().split("\\s+")).map(String::toLowerCase).value();
+                return !Collections.disjoint(keywordsList, reminderKeywords);
+            }).value());
+        }
+
+        return result;
+    }
 }

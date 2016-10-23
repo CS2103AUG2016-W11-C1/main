@@ -17,7 +17,7 @@ import linenux.util.Either;
 public class AddCommand extends AbstractCommand {
     private static final String TRIGGER_WORD = "add";
     private static final String DESCRIPTION = "Adds a task to the schedule.";
-    private static final String COMMAND_FORMAT = "add TASK_NAME [st/START_TIME] [et/END_TIME] [#/TAGS]";
+    private static final String COMMAND_FORMAT = "add TASK_NAME [st/START_TIME] [et/END_TIME] [#/TAG...]...";
 
     private Schedule schedule;
     private TimeParserManager timeParserManager;

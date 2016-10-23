@@ -64,7 +64,7 @@ public class AddArgumentParser {
     }
 
     private Either<String, CommandResult> extractTaskName(String argument) {
-        String[] parts = argument.split("(^| )(#|st|et)/");
+        String[] parts = argument.split("(^| )(st|et|#)/");
 
         if (parts.length > 0 && parts[0].trim().length() > 0) {
             return Either.left(parts[0].trim());
