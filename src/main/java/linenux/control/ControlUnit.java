@@ -12,8 +12,6 @@ import linenux.storage.XmlScheduleStorage;
  * Controls data flow for the entire application.
  */
 public class ControlUnit {
-    public static enum Mode {ACTUAL, TEST}
-
     private Config config;
     private Schedule schedule;
     private ScheduleStorage scheduleStorage;
@@ -30,11 +28,18 @@ public class ControlUnit {
         }
     }
 
-    public ControlUnit(Mode mode) {
+    public ControlUnit(String mode) {
         this.config = new Config();
-        this.scheduleStorage = (mode == Mode.ACTUAL) ? new XmlScheduleStorage(config.getActualFilePath()) : new XmlScheduleStorage(config.getTestFilePath());
+        this.scheduleStorage = new XmlScheduleStorage(config.getActualFilePath());
         this.schedule = (this.scheduleStorage.hasScheduleFile()) ? this.scheduleStorage.loadScheduleFromFile() : new Schedule();
         this.commandManager = new CommandManager(schedule);
+    }
+
+    public void setUpControlUnit(String mode) {
+        if (mode.equals("test")) {
+            this.scheduleStorage = new XmlScheduleStorage(config.getTestFilePath());
+            this.schedule = new Schedule();
+        }
     }
 
     public CommandResult execute(String userInput) {

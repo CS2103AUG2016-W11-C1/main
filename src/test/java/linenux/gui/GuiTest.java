@@ -1,9 +1,10 @@
 package linenux.gui;
 
-import linenux.Main;
-import linenux.helpers.BetterRobot;
 import org.junit.Before;
 import org.testfx.api.FxToolkit;
+
+import linenux.Main;
+import linenux.helpers.BetterRobot;
 
 /**
  * Created by yihangho on 10/18/16.
@@ -14,7 +15,7 @@ public abstract class GuiTest {
     @Before
     public void setup() throws Exception {
         FxToolkit.registerPrimaryStage();
-        FxToolkit.setupApplication(Main.class);
+        FxToolkit.setupApplication(Main.class, "test");
         FxToolkit.showStage();
         this.robot = new BetterRobot();
     }

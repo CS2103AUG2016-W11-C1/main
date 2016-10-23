@@ -18,7 +18,12 @@ public class MainWindowController {
     @FXML
     private AnchorPane commandBoxContainer;
 
-    private ControlUnit controlUnit = new ControlUnit(ControlUnit.Mode.ACTUAL);
+    private ControlUnit controlUnit = new ControlUnit();
+
+    public void setUpMode(String mode) {
+        System.out.println("hi");
+        // controlUnit.setUpControlUnit(mode);
+    }
 
     @FXML
     private void initialize() {
