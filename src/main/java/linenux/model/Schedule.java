@@ -58,7 +58,7 @@ public class Schedule {
     }
 
     /**
-     * Performs case-insensitive search using keywords.
+     * Performs case-insensitive task search using keywords.
      *
      * @param keywords
      *            Search keywords
@@ -66,6 +66,21 @@ public class Schedule {
      */
     public ArrayList<Task> search(String[] keywords) {
         return getMostRecentState().search(keywords);
+    }
+
+    public ArrayList<Reminder> searchReminder(String keywords) {
+        return searchReminder(keywords.split("\\s+"));
+    }
+
+    /**
+     * Performs case-insensitive reminder search using keywords.
+     *
+     * @param keywords
+     *            Search keywords
+     * @return List of {@code Task} matching the keywords.
+     */
+    public ArrayList<Reminder> searchReminder(String[] keywords) {
+        return getMostRecentState().searchReminder(keywords);
     }
 
     /**
@@ -98,7 +113,20 @@ public class Schedule {
     }
 
     /**
+     * Returns the list of all task reminders.
+     */
+    public ArrayList<Reminder> getReminderList() {
+        ArrayList<Reminder> result = new ArrayList<Reminder>();
+        for (Task t : getMostRecentState().getTaskList()) {
+            result.addAll(t.getReminders());
+        }
+
+        return result;
+    }
+
+    /**
      * Remove the last state if there are more than one.
+     *
      * @return {@code true} if and only if a state is removed.
      */
     public boolean popState() {

@@ -20,12 +20,11 @@ import linenux.util.TasksListUtil;
 /**
  * Adds a reminder to a task in the schedule
  */
-public class RemindCommand implements Command {
+public class RemindCommand extends AbstractCommand {
     private static final String TRIGGER_WORD = "remind";
     private static final String DESCRIPTION = "Adds a reminder to a task in the schedule.";
-    public static final String COMMAND_FORMAT = "remind KEYWORDS t/TIME [n/NOTE]";
+    public static final String COMMAND_FORMAT = "remind KEYWORDS t/TIME n/NOTE";
 
-    private static final String REMIND_PATTERN = "(?i)^remind((?<keywords>.*?)(?<arguments>((n|t)/)+?.*)??)";
     private static final String NUMBER_PATTERN = "^\\d+$";
     private static final String CANCEL_PATTERN = "^cancel$";
 
@@ -40,16 +39,12 @@ public class RemindCommand implements Command {
         this.schedule = schedule;
         this.timeParserManager = new TimeParserManager(new ISODateWithTimeParser());
         this.reminderArgumentParser = new ReminderArgumentParser(this.timeParserManager, COMMAND_FORMAT, CALLOUTS);
-    }
-
-    @Override
-    public boolean respondTo(String userInput) {
-        return userInput.matches(REMIND_PATTERN);
+        this.TRIGGER_WORDS.add(TRIGGER_WORD);
     }
 
     @Override
     public CommandResult execute(String userInput) {
-        assert userInput.matches(REMIND_PATTERN);
+        assert userInput.matches(getPattern());
         assert this.schedule != null;
 
         String keywords = extractKeywords(userInput);
@@ -117,8 +112,13 @@ public class RemindCommand implements Command {
         return COMMAND_FORMAT;
     }
 
+    @Override
+    public String getPattern() {
+        return "(?i)^\\s*(" + this.getTriggerWordsPattern() + ")((?<keywords>.*?)(?<arguments>((n|t)/)+?.*)??)";
+    }
+
     private String extractKeywords(String userInput) {
-        Matcher matcher = Pattern.compile(REMIND_PATTERN).matcher(userInput);
+        Matcher matcher = Pattern.compile(getPattern()).matcher(userInput);
 
         if (matcher.matches() && matcher.group("keywords") != null) {
             return matcher.group("keywords").trim(); // TODO
@@ -128,7 +128,7 @@ public class RemindCommand implements Command {
     }
 
     private String extractArgument(String userInput) {
-        Matcher matcher = Pattern.compile(REMIND_PATTERN).matcher(userInput);
+        Matcher matcher = Pattern.compile(getPattern()).matcher(userInput);
 
         if (matcher.matches() && matcher.group("arguments") != null) {
             return matcher.group("arguments");

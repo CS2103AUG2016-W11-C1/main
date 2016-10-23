@@ -8,20 +8,23 @@ import linenux.command.filter.ListArgumentFilter;
 import linenux.command.result.CommandResult;
 import linenux.command.result.SearchResults;
 import linenux.control.TimeParserManager;
+import linenux.model.Reminder;
 import linenux.model.Schedule;
 import linenux.model.Task;
 import linenux.time.parser.ISODateWithTimeParser;
+import linenux.util.ArrayListUtil;
 import linenux.util.Either;
+import linenux.util.TasksListUtil;
 
 /**
  * Generates a list of tasks based on userInput.
  */
-public class ListCommand implements Command {
+public class ListCommand extends AbstractCommand {
     private static final String TRIGGER_WORD = "list";
     private static final String DESCRIPTION = "Lists tasks and reminders.";
     private static final String COMMAND_FORMAT = "list [KEYWORDS...] [st/START_TIME] [et/END_TIME] [#/TAG]";
-
-    private static final String LIST_PATTERN = "(?i)^list((?<keywords>.*?)(?<arguments>((st|et|#)/)+?.*)??)";
+    private static final String VIEW_DONE_ONLY = "yes";
+    private static final String VIEW_DONE = "all";
 
     private Schedule schedule;
     private TimeParserManager timeParserManager;
@@ -31,44 +34,54 @@ public class ListCommand implements Command {
         this.schedule = schedule;
         this.timeParserManager = new TimeParserManager(new ISODateWithTimeParser());
         this.listArgumentFilter = new ListArgumentFilter(this.timeParserManager, COMMAND_FORMAT, CALLOUTS);
-    }
-
-    @Override
-    public boolean respondTo(String userInput) {
-        return userInput.matches(LIST_PATTERN);
+        this.TRIGGER_WORDS.add(TRIGGER_WORD);
     }
 
     @Override
     public CommandResult execute(String userInput) {
-        assert userInput.matches(LIST_PATTERN);
+        assert userInput.matches(getPattern());
         assert this.schedule != null;
 
-        ArrayList<Task> tasks;
+        ArrayList<Task> tasks = this.schedule.getTaskList();
+        ArrayList<Task> doneTasks = new ArrayList<Task>();
+        ArrayList<Reminder> reminders = this.schedule.getReminderList();
 
-        if (this.schedule.getTaskList().isEmpty()) {
+        if (tasks.isEmpty() && reminders.isEmpty()) {
             return makeEmptyTaskListResult();
         }
 
         String keywords = extractKeywords(userInput);
         String arguments = extractArgument(userInput);
+        Either<String, CommandResult> viewDone = extractViewDone(arguments);
 
-        if (keywords.trim().isEmpty()) {
-            tasks = this.schedule.getTaskList();
-        } else {
-            tasks = this.schedule.search(keywords);
+        if (viewDone.isRight()) {
+            return viewDone.getRight();
         }
 
-        Either<ArrayList<Task>, CommandResult> filterTasks = this.listArgumentFilter.filter(arguments, tasks);
+        if (!keywords.trim().isEmpty()) {
+            tasks = this.schedule.search(keywords);
+            reminders = this.schedule.searchReminder(keywords);
+        }
+
+        String actualViewDone = viewDone.getLeft();
+        Boolean doneOnly = actualViewDone.equals(VIEW_DONE_ONLY);
+        Either<ArrayList<Task>, CommandResult> filterTasks = this.listArgumentFilter.filter(arguments, tasks, doneOnly);
 
         if (filterTasks.isRight()) {
             return filterTasks.getRight();
         }
 
         ArrayList<Task> actualFilterTasks = filterTasks.getLeft();
-        if (actualFilterTasks.size() == 0) {
-            return SearchResults.makeNotFoundResult(keywords);
+        if (actualViewDone != "") {
+            doneTasks = new ArrayListUtil.ChainableArrayListUtil<>(actualFilterTasks)
+                .filter(Task::isDone)
+                .value();
+        }
+
+        if (actualFilterTasks.size() == 0 && reminders.size() == 0) {
+            return SearchResults.makeListNotFoundResult(keywords);
         } else {
-            return makeResult(actualFilterTasks);
+            return makeResult(actualFilterTasks, doneTasks, reminders);
         }
     }
 
@@ -87,8 +100,13 @@ public class ListCommand implements Command {
         return COMMAND_FORMAT;
     }
 
+    @Override
+    public String getPattern() {
+        return "(?i)^\\s*(" + getTriggerWordsPattern() + ")((?<keywords>.*?)(?<arguments>((st|et|#|d)/)+?.*)??)";
+    }
+
     private String extractKeywords(String userInput) {
-        Matcher matcher = Pattern.compile(LIST_PATTERN).matcher(userInput);
+        Matcher matcher = Pattern.compile(getPattern()).matcher(userInput);
 
         if (matcher.matches() && matcher.group("keywords") != null) {
             return matcher.group("keywords");
@@ -98,7 +116,7 @@ public class ListCommand implements Command {
     }
 
     private String extractArgument(String userInput) {
-        Matcher matcher = Pattern.compile(LIST_PATTERN).matcher(userInput);
+        Matcher matcher = Pattern.compile(getPattern()).matcher(userInput);
 
         if (matcher.matches() && matcher.group("arguments") != null) {
             return matcher.group("arguments");
@@ -107,12 +125,39 @@ public class ListCommand implements Command {
         }
     }
 
-    private CommandResult makeEmptyTaskListResult() {
-        return () -> "You have no tasks to list!";
+    private Either<String, CommandResult> extractViewDone(String argument) {
+        Matcher matcher = Pattern.compile("(^|.*? )d/(?<done>.*?)(\\s+(#|st|et)/.*)?$").matcher(argument);
+
+        if (matcher.matches() && matcher.group("done") != null) {
+            return parseViewDone(matcher.group("done").trim());
+        } else {
+            return Either.left("");
+        }
     }
 
-    private CommandResult makeResult(ArrayList<Task> tasks) {
+    private Either<String, CommandResult> parseViewDone(String string) {
+        if (string.toLowerCase().equals(VIEW_DONE)) {
+            return Either.left(VIEW_DONE);
+        } else if (string.toLowerCase().equals(VIEW_DONE_ONLY)){
+            return Either.left(VIEW_DONE_ONLY);
+        }
+
+        return Either.right(makeInvalidViewDoneResult(string));
+    }
+
+    private CommandResult makeInvalidViewDoneResult(String viewDone) {
+        return () -> "Unable to parse \"" + viewDone + "\".\n" + "Did you mean:\n"
+                + "d/" + VIEW_DONE + " - View all done and uncompleted tasks.\n"
+                + "d/" + VIEW_DONE_ONLY + " - Show only tasks that are marked done.";
+    }
+
+    private CommandResult makeEmptyTaskListResult() {
+        return () -> "You have no tasks and reminders to list!";
+    }
+
+    private CommandResult makeResult(ArrayList<Task> tasks, ArrayList<Task> doneTasks, ArrayList<Reminder> reminders) {
         this.schedule.addFilterTasks(tasks);
-        return () -> "Listing tasks!";
+
+        return () -> TasksListUtil.display(doneTasks, reminders);
     }
 }

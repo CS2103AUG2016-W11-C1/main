@@ -26,7 +26,7 @@ public class ListArgumentFilter {
         ListArgumentFilter.CALLOUTS = callouts;
     }
 
-    public Either<ArrayList<Task>, CommandResult> filter(String argument, ArrayList<Task> tasks) {
+    public Either<ArrayList<Task>, CommandResult> filter(String argument, ArrayList<Task> tasks, Boolean doneOnly) {
         ArrayList<Task> filteredTasks = tasks;
 
         Either<LocalDateTime, CommandResult> startTime = extractStartTime(argument);
@@ -52,6 +52,13 @@ public class ListArgumentFilter {
             return Either.right(makeEndTimeBeforeStartTimeResult());
         }
 
+        if (doneOnly) {
+            filteredTasks = new ArrayListUtil.ChainableArrayListUtil<>(filteredTasks)
+                .filter(Task::isDone)
+                .value();
+        }
+
+        //filter the tasks by the time parameters
         if (actualStartTime != null && actualEndTime != null) {
             filteredTasks = new ArrayListUtil.ChainableArrayListUtil<>(filteredTasks).filter(task -> task.isTodo()
                     || task.getEndTime().isEqual(actualStartTime)
@@ -66,11 +73,16 @@ public class ListArgumentFilter {
             filteredTasks = new ArrayListUtil.ChainableArrayListUtil<>(filteredTasks)
                     .filter(task -> task.isTodo() || task.getEndTime().isBefore(actualEndTime)
                             || task.getEndTime().isEqual(actualEndTime))
-                .value();
+                    .value();
         }
 
+        //filter tasks by tags
         if (!actualTags.isEmpty()) {
+            for (String tag : actualTags) {
+                filteredTasks = new ArrayListUtil.ChainableArrayListUtil<>(filteredTasks)
+                        .filter(task -> task.hasTag(tag)).value();
 
+            }
         }
 
         return Either.left(filteredTasks);

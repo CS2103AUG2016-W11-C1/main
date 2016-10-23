@@ -30,6 +30,20 @@ public class ScheduleTest {
     }
 
     @Test
+    public void testClear() {
+        Task task1 = new Task("hello");
+        Task task2 = new Task("blah");
+        this.schedule.addTask(task1);
+        this.schedule.addTask(task2);
+
+        int originalSize = this.schedule.getTaskList().size();
+        this.schedule.clear();
+        int endSize = this.schedule.getTaskList().size();
+
+        assertEquals(originalSize - 2, endSize);
+    }
+
+    @Test
     public void testSearch() {
         String[] keywords = {"hello", "WoRlD"};
         Task match1 = new Task("Say Hello");
@@ -43,6 +57,17 @@ public class ScheduleTest {
         ArrayList<Task> tasks = this.schedule.search(keywords);
 
         assertEquals(2, tasks.size());
+    }
+
+    @Test
+    public void testEdit() {
+        this.schedule.clear();
+        Task originalTask = new Task("hello");
+        this.schedule.addTask(originalTask);
+        Task editedTask = new Task("new task");
+        this.schedule.updateTask(originalTask, editedTask);
+
+        assertEquals(this.schedule.getTaskList().get(0), editedTask);
     }
 
     @Test

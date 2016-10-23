@@ -1,35 +1,25 @@
 package linenux.command;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import linenux.command.result.CommandResult;
 
 /**
  * Exits the program.
  */
-public class ExitCommand implements Command {
+public class ExitCommand extends AbstractCommand {
     private static final String TRIGGER_WORD = "exit";
     private static final String DESCRIPTION = "Exits the program.";
     public static final String COMMAND_FORMAT = "exit";
 
-    private static final String EXIT_PATTERN = "(?i)^\\s*exit\\s*$";
-
-    @Override
-    public boolean respondTo(String userInput) {
-        return userInput.matches(EXIT_PATTERN);
+    public ExitCommand() {
+        this.TRIGGER_WORDS.add(TRIGGER_WORD);
     }
 
     @Override
     public CommandResult execute(String userInput) {
-        assert userInput.matches(EXIT_PATTERN);
+        assert userInput.matches(getPattern());
 
-        Matcher matcher = Pattern.compile(EXIT_PATTERN).matcher(userInput);
-
-        if (matcher.matches()) {
-            // TODO: Platform.exit();
-            System.exit(0);
-        }
+        // TODO: Platform.exit();
+        System.exit(0);
         return null;
     }
 

@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import linenux.command.result.CommandResult;
+import linenux.model.Reminder;
 import linenux.model.Schedule;
 import linenux.model.Task;
 
@@ -51,7 +52,7 @@ public class ListCommandTest {
     }
 
     /**
-     * Test that list command does not respons to other commands.
+     * Test that list command does not respond to other commands.
      */
     @Test
     public void testDoesNotRespondToOtherCommands() {
@@ -59,7 +60,7 @@ public class ListCommandTest {
     }
 
     /**
-     * Test that list without params should display all tasks
+     * Test that list without params should display all tasks and reminders
      */
     @Test
     public void testDisplayTheEntireList() {
@@ -68,12 +69,17 @@ public class ListCommandTest {
         this.schedule.addTask(new Task("Deadline", null, LocalDateTime.of(2016, 1, 1, 17, 0)));
         this.schedule.addTask(new Task("Event", LocalDateTime.of(2016, 1, 1, 17, 0), LocalDateTime.of(2016, 1, 1, 18, 0)));
 
+        Task taskWithReminder = new Task("Task with Reminder");
+        taskWithReminder = taskWithReminder.addReminder(new Reminder("Reminder", LocalDateTime.of(2016, 2, 1, 17, 0)));
+        this.schedule.addTask(taskWithReminder);
+
         CommandResult result = this.listCommand.execute("list");
 
-        String expectedFeedback = "1. First Task\n" +
+        String expectedFeedback = "Tasks:\n1. First Task\n" +
                 "2. Second Task\n" +
                 "3. Deadline (Due 2016-01-01 5:00PM)\n" +
-                "4. Event (2016-01-01 5:00PM - 2016-01-01 6:00PM)";
+                "4. Event (2016-01-01 5:00PM - 2016-01-01 6:00PM)\n" + "5. Task with Reminder\n\nReminders:\n"
+                + "1. Reminder (On 2016-02-01 5:00PM)";
         assertEquals(expectedFeedback, result.getFeedback());
     }
 
@@ -88,7 +94,58 @@ public class ListCommandTest {
 
         CommandResult result = this.listCommand.execute("list world");
 
-        String expectedFeedback = "1. world\n2. hello world";
+        String expectedFeedback = "Tasks:\n1. world\n2. hello world";
+        assertEquals(expectedFeedback, result.getFeedback());
+    }
+
+    @Test
+    public void testNoMatchingKeywords() {
+        this.schedule.addTask(new Task("hi!"));
+
+        CommandResult result = this.listCommand.execute("list hello");
+
+        String expectedFeedback = "Cannot find task or reminder names with \"hello\".";
+        assertEquals(expectedFeedback, result.getFeedback());
+    }
+
+    /**
+     * Test that list command displays multiple reminders correctly.
+     */
+    @Test
+    public void testDisplayRemindersMatchingKeywords() {
+        Task hello = new Task("hello");
+        hello = hello.addReminder(new Reminder("world domination", LocalDateTime.of(2016, 2, 1, 17, 0)));
+        hello = hello.addReminder(new Reminder("is my occupation", LocalDateTime.of(2016, 1, 1, 17, 0)));
+        hello = hello.addReminder(new Reminder("hello world", LocalDateTime.of(2016, 3, 1, 17, 0)));
+        this.schedule.addTask(hello);
+
+        CommandResult result = this.listCommand.execute("list world");
+
+        String expectedFeedback = "Reminders:\n1. world domination (On 2016-02-01 5:00PM)\n2. hello world (On 2016-03-01 5:00PM)";
+        assertEquals(expectedFeedback, result.getFeedback());
+    }
+
+    /**
+     * Test that list command displays multiple reminders and tasks correctly.
+     */
+    @Test
+    public void testDisplayTaskAndRemindersMatchingKeywords() {
+        Task hello = new Task("hello");
+        hello = hello.addReminder(new Reminder("world domination", LocalDateTime.of(2016, 2, 1, 17, 0)));
+        hello = hello.addReminder(new Reminder("is my occupation", LocalDateTime.of(2016, 1, 1, 17, 0)));
+        hello = hello.addReminder(new Reminder("hello world", LocalDateTime.of(2016, 3, 1, 17, 0)));
+        hello = hello.addReminder(new Reminder("hello darkness", LocalDateTime.of(2016, 4, 1, 17, 0)));
+        this.schedule.addTask(hello);
+
+        Task helloWorld = new Task("Hello World");
+        helloWorld = helloWorld.addReminder(new Reminder("hello hello", LocalDateTime.of(2016, 1, 1, 17, 0)));
+        this.schedule.addTask(helloWorld);
+
+        CommandResult result = this.listCommand.execute("list hello");
+
+        String expectedFeedback = "Tasks:\n" + "1. hello\n" + "2. Hello World\n\n" + "Reminders:\n"
+                + "1. hello world (On 2016-03-01 5:00PM)\n" + "2. hello darkness (On 2016-04-01 5:00PM)\n"
+                + "3. hello hello (On 2016-01-01 5:00PM)";
         assertEquals(expectedFeedback, result.getFeedback());
     }
 }

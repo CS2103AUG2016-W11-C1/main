@@ -29,7 +29,7 @@ public class ExitCommandTest {
     public void testRespondToExitCommand() {
         assertTrue(this.exitCommand.respondTo("exit"));
         assertTrue(this.exitCommand.respondTo("exit    "));
-        assertFalse(this.exitCommand.respondTo("exit now"));
+        assertTrue(this.exitCommand.respondTo("exit now"));
     }
 
     /**

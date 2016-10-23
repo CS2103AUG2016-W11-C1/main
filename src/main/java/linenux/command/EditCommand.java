@@ -18,12 +18,11 @@ import linenux.util.TasksListUtil;
 /**
  * Edits a task in the schedule.
  */
-public class EditCommand implements Command {
+public class EditCommand extends AbstractCommand {
     private static final String TRIGGER_WORD = "edit";
     private static final String DESCRIPTION = "Edits a task in the schedule.";
-    public static final String COMMAND_FORMAT = "edit KEYWORDS... [n/NEW_NAME][st/START_TIME][et/END_TIME]";
+    public static final String COMMAND_FORMAT = "edit KEYWORDS... [n/NEW_NAME][st/START_TIME][et/END_TIME][#/TAG...]...";
 
-    private static final String EDIT_PATTERN = "(?i)^edit((?<keywords>.*?)(?<arguments>((n|st|et|#)/)+?.*)??)";
     private static final String NUMBER_PATTERN = "^\\d+$";
     private static final String CANCEL_PATTERN = "^cancel$";
 
@@ -38,16 +37,12 @@ public class EditCommand implements Command {
         this.schedule = schedule;
         this.timeParserManager = new TimeParserManager(new ISODateWithTimeParser());
         this.editArgumentParser = new EditArgumentParser(this.timeParserManager, COMMAND_FORMAT, CALLOUTS);
-    }
-
-    @Override
-    public boolean respondTo(String userInput) {
-        return userInput.matches(EDIT_PATTERN);
+        this.TRIGGER_WORDS.add(TRIGGER_WORD);
     }
 
     @Override
     public CommandResult execute(String userInput) {
-        assert userInput.matches(EDIT_PATTERN);
+        assert userInput.matches(getPattern());
         assert this.schedule != null;
 
         String keywords = extractKeywords(userInput);
@@ -115,8 +110,13 @@ public class EditCommand implements Command {
         return COMMAND_FORMAT;
     }
 
+    @Override
+    public String getPattern() {
+        return "(?i)^\\s*(" + getTriggerWordsPattern() + ")((?<keywords>.*?)(?<arguments>((n|st|et|#)/)+?.*)??)";
+    }
+
     private String extractKeywords(String userInput) {
-        Matcher matcher = Pattern.compile(EDIT_PATTERN).matcher(userInput);
+        Matcher matcher = Pattern.compile(getPattern()).matcher(userInput);
 
         if (matcher.matches() && matcher.group("keywords") != null) {
             return matcher.group("keywords").trim(); //TODO
@@ -126,7 +126,7 @@ public class EditCommand implements Command {
     }
 
     private String extractArgument(String userInput) {
-        Matcher matcher = Pattern.compile(EDIT_PATTERN).matcher(userInput);
+        Matcher matcher = Pattern.compile(getPattern()).matcher(userInput);
 
         if (matcher.matches() && matcher.group("arguments") != null) {
             return matcher.group("arguments");
