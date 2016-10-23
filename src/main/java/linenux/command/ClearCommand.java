@@ -1,6 +1,8 @@
 package linenux.command;
 
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import linenux.command.result.CommandResult;
 import linenux.model.Schedule;
@@ -27,8 +29,17 @@ public class ClearCommand extends AbstractCommand {
         assert userInput.matches(getPattern());
         assert this.schedule != null;
 
-        ArrayList<Task> tasks = this.schedule.getTaskList();
-        ArrayList<Task> doneTasks = new ArrayListUtil.ChainableArrayListUtil<>(tasks).filter(Task::isDone).value();
+        ArrayList<Task> doneTasks = this.schedule.getTaskList();
+
+        String tag = extractTag(userInput);
+
+        if (tag != null) {
+            doneTasks = new ArrayListUtil.ChainableArrayListUtil<>(doneTasks)
+                .filter(task -> task.hasTag(tag)).value();
+        } else {
+            doneTasks = new ArrayListUtil.ChainableArrayListUtil<>(doneTasks)
+                .filter(Task::isDone).value();
+        }
 
         if (doneTasks.isEmpty()) {
             return () -> "There are no done tasks to clear!";
@@ -51,5 +62,15 @@ public class ClearCommand extends AbstractCommand {
     @Override
     public String getCommandFormat() {
         return COMMAND_FORMAT;
+    }
+
+    private String extractTag(String argument) {
+        Matcher matcher = Pattern.compile("(^|.*? )#/(?<tag>.*?)(\\s)?").matcher(argument);
+
+        if (matcher.matches() && matcher.group("tag") != null) {
+            return matcher.group("tag").trim(); // TODO
+        } else {
+            return null;
+        }
     }
 }
