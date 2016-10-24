@@ -72,8 +72,14 @@ public class ListArgumentFilter {
                     .value();
         } else if (actualEndTime != null) {
             filteredTasks = new ArrayListUtil.ChainableArrayListUtil<>(filteredTasks)
-                    .filter(task -> task.isTodo() || task.getEndTime().isBefore(actualEndTime)
-                            || task.getEndTime().isEqual(actualEndTime))
+                    .filter(task -> {
+                        boolean checker = task.isTodo() || task.getEndTime().isBefore(actualEndTime)
+                            || task.getEndTime().isEqual(actualEndTime);
+                        if (task.isEvent()) {
+                            return checker || task.getStartTime().isBefore(actualEndTime) || task.getStartTime().isEqual(actualEndTime);
+                        };
+
+                        return checker; })
                     .value();
         }
 
