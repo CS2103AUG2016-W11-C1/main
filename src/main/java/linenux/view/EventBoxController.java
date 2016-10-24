@@ -1,5 +1,8 @@
 package linenux.view;
 
+import java.util.ArrayList;
+import java.util.function.Predicate;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -9,8 +12,6 @@ import linenux.control.ControlUnit;
 import linenux.model.State;
 import linenux.model.Task;
 import linenux.util.ArrayListUtil;
-
-import java.util.ArrayList;
 
 /**
  * Created by yihangho on 10/16/16.
