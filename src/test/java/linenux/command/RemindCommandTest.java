@@ -83,6 +83,7 @@ public class RemindCommandTest {
     @Test
     public void testNotRespondToOtherCommands() {
         assertFalse(this.remindCommand.respondTo("notremind"));
+        assertFalse(this.remindCommand.respondTo("remindr"));
     }
 
     /**

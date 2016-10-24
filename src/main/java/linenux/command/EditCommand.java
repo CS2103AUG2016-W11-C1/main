@@ -112,7 +112,7 @@ public class EditCommand extends AbstractCommand {
 
     @Override
     public String getPattern() {
-        return "(?i)^\\s*(" + getTriggerWordsPattern() + ")((?<keywords>.*?)(?<arguments>((n|st|et|#)/)+?.*)??)";
+        return "(?i)^\\s*(" + getTriggerWordsPattern() + ")(\\s+(?<keywords>.*?)(?<arguments>((n|st|et|#)/)+?.*)?)?";
     }
 
     private String extractKeywords(String userInput) {
