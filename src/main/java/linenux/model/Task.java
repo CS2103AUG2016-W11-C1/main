@@ -206,6 +206,12 @@ public class Task {
     }
 
     //@@author A0127694U
+    public Task removeReminder(Reminder reminder) {
+        Task output = new Task(this);
+        output.reminders.remove(reminder);
+        return output;
+    }
+
     private String tagsToString() {
         StringBuilder builder = new StringBuilder();
         if (this.tags.isEmpty()) {

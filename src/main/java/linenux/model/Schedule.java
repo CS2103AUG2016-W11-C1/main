@@ -112,6 +112,37 @@ public class Schedule {
         return getMostRecentState().searchReminder(keywords);
     }
 
+    public ArrayList<Reminder> searchReminder(String keywords, ArrayList<Task> tasks) {
+        return searchReminder(keywords.split("\\s+"), tasks);
+    }
+
+    public ArrayList<Reminder> searchReminder(String[] keywords, ArrayList<Task> tasks) {
+        return getMostRecentState().searchReminder(keywords, tasks);
+    }
+
+    public ArrayList<Reminder> searchReminder(String keywords, Task task) {
+        return searchReminder(keywords.split("\\s+"), task);
+    }
+
+    public ArrayList<Reminder> searchReminder(String[] keywords, Task task) {
+        return getMostRecentState().searchReminder(keywords, task);
+    }
+
+    public ArrayList<Task> searchByReminder(String keywords) {
+        return searchByReminder(keywords.split("\\s+"));
+    }
+
+    /**
+     * Performs case-insensitive task search using keywords to search it's reminders search,
+     *
+     * @param keywords
+     *            Search keywords
+     * @return List of {@code Task} matching the keywords.
+     */
+    public ArrayList<Task> searchByReminder(String[] keywords) {
+        return getMostRecentState().searchByReminder(keywords);
+    }
+
     /**
      * Returns the list of states.
      */
@@ -150,7 +181,7 @@ public class Schedule {
      */
     //@@author A0127694U
     public ArrayList<Reminder> getReminderList() {
-        ArrayList<Reminder> result = new ArrayList<Reminder>();
+        ArrayList<Reminder> result = new ArrayList<>();
         for (Task t : getMostRecentState().getTaskList()) {
             result.addAll(t.getReminders());
         }
