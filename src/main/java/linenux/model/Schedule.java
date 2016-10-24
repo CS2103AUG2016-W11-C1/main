@@ -45,6 +45,21 @@ public class Schedule {
     }
 
     /**
+     * Delete the specified list of tasks.
+     *
+     * @param tasks The tasks to delete.
+     */
+    public void deleteTasks(ArrayList<Task> tasks) {
+        State newState = getMostRecentState();
+
+        for (Task task : tasks) {
+            newState = newState.deleteTask(task);
+        }
+
+        addState(newState);
+    }
+
+    /**
      * Clears all tasks from the schedule
      */
     public void clear() {

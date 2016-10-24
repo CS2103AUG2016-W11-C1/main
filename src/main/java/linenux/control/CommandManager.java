@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import linenux.command.AddCommand;
 import linenux.command.AliasCommand;
+import linenux.command.ClearCommand;
 import linenux.command.Command;
 import linenux.command.DeleteCommand;
 import linenux.command.DoneCommand;
@@ -42,6 +43,7 @@ public class CommandManager {
         commandList.add(new DoneCommand(this.schedule));
         commandList.add(new RemindCommand(this.schedule));
         commandList.add(new DeleteCommand(this.schedule));
+        commandList.add(new ClearCommand(this.schedule));
 
         commandList.add(new ListCommand(this.schedule));
         commandList.add(new ViewCommand(this.schedule));

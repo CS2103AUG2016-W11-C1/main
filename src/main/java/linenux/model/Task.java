@@ -131,6 +131,10 @@ public class Task {
         return isDone == false;
     }
 
+    public boolean hasTag(String tag) {
+        return tags.contains(tag);
+    }
+
     /* Getters */
 
     public String getTaskName() {
