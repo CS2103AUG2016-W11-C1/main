@@ -105,6 +105,7 @@ public class EditCommandTest {
     @Test
     public void testNotRespondToOtherCommands() {
         assertFalse(this.editCommand.respondTo("halp"));
+        assertFalse(this.editCommand.respondTo("editr"));
     }
 
     /**

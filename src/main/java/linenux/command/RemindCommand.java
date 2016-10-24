@@ -114,7 +114,7 @@ public class RemindCommand extends AbstractCommand {
 
     @Override
     public String getPattern() {
-        return "(?i)^\\s*(" + this.getTriggerWordsPattern() + ")((?<keywords>.*?)(?<arguments>((n|t)/)+?.*)??)";
+        return "(?i)^\\s*(" + this.getTriggerWordsPattern() + ")(\\s+(?<keywords>.*?)(?<arguments>((n|t)/)+?.*)?)?";
     }
 
     private String extractKeywords(String userInput) {
