@@ -11,6 +11,7 @@ import javafx.collections.ObservableList;
 public class Schedule {
     public static final int MAX_STATES = 10;
     private final ObservableList<State> states = FXCollections.observableArrayList();
+    private final ObservableList<ArrayList<Task>> filteredTaskList = FXCollections.observableArrayList();
 
     /**
      * Constructs an empty schedule
@@ -104,11 +105,26 @@ public class Schedule {
         return states;
     }
 
+    public ObservableList<ArrayList<Task>> getFilteredTaskList() {
+        return filteredTaskList;
+    }
+
     /**
      * Returns the list of tasks.
      */
     public ArrayList<Task> getTaskList() {
         return getMostRecentState().getTaskList();
+    }
+
+    /**
+     * Returns the list of filtered tasks.
+     */
+    public ArrayList<Task> getFilteredTasks() {
+        if (filteredTaskList.isEmpty()) {
+            return getTaskList();
+        }
+
+        return filteredTaskList.get(0);
     }
 
     /**
@@ -134,6 +150,15 @@ public class Schedule {
             return true;
         }
         return false;
+    }
+
+    /**
+     * Adds a new list of filtered tastes into filteredTaskList
+     * @param filteredTasks
+     */
+    public void addFilterTasks(ArrayList<Task> filteredTasks) {
+        filteredTaskList.clear();
+        filteredTaskList.add(filteredTasks);
     }
 
     /**

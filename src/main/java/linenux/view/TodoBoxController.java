@@ -34,15 +34,30 @@ public class TodoBoxController {
         this.controlUnit.getSchedule().getStates().addListener((ListChangeListener<? super State>) c -> {
             updateTodos();
         });
+        this.controlUnit.getSchedule().getFilteredTaskList().addListener((ListChangeListener<? super ArrayList<Task>>) c -> {
+            updateFilteredTodos();
+        });
     }
 
     private void updateTodos() {
         ArrayList<Task> tasks = this.controlUnit.getSchedule().getTaskList();
+        ArrayList<Task> todos = filterToDos(tasks);
+        this.todos.setAll(todos);
+    }
+
+    private void updateFilteredTodos() {
+        ArrayList<Task> filteredTasks = this.controlUnit.getSchedule().getFilteredTasks();
+        ArrayList<Task> todos = filterToDos(filteredTasks);
+        this.todos.setAll(todos);
+    }
+
+    private ArrayList<Task> filterToDos(ArrayList<Task> tasks) {
         ArrayList<Task> todos = new ArrayListUtil.ChainableArrayListUtil<>(tasks)
                 .filter(Task::isTodo)
                 .filter(((Predicate<Task>) Task::isDone).negate())
                 .sortBy(Task::getTaskName)
                 .value();
-        this.todos.setAll(todos);
+
+        return todos;
     }
 }

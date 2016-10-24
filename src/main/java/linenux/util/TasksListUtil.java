@@ -34,8 +34,6 @@ public class TasksListUtil {
     /**
      * Display the list of tasks and reminders as a string.
      *
-     * @param tasks
-     *            The list of tasks to display.
      * @param reminders
      *            The list of reminders to display.
      * @return A string representing the tasks and reminders.
@@ -43,14 +41,10 @@ public class TasksListUtil {
     public static String display(ArrayList<Task> tasks, ArrayList<Reminder> reminders) {
         StringBuilder builder = new StringBuilder();
 
-        if (tasks.size() > 0) {
-            builder.append("Tasks:\n");
-            for (int i = 0; i < tasks.size(); i++) {
-                builder.append(i + 1);
-                builder.append(". ");
-                builder.append(tasks.get(i).toString());
-                builder.append('\n');
-            }
+        for (int i = 0; i < tasks.size(); i++) {
+            builder.append(i + 1);
+            builder.append(". ");
+            builder.append(tasks.get(i).toString());
             builder.append('\n');
         }
 
