@@ -2,8 +2,6 @@ package linenux.command.parser;
 
 import java.time.Clock;
 import java.time.LocalDateTime;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import linenux.command.result.CommandResult;
 import linenux.control.TimeParserManager;
@@ -15,48 +13,48 @@ import linenux.util.TimeInterval;
  */
 public class FreeTimeArgumentParser {
     private TimeParserManager timeParserManager;
+    private GenericParser genericParser;
+    private GenericParser.GenericParserResult parseResult;
     private Clock clock;
 
     public FreeTimeArgumentParser(TimeParserManager timeParserManager, Clock clock) {
         this.timeParserManager = timeParserManager;
+        this.genericParser = new GenericParser();
         this.clock = clock;
     }
 
     public Either<TimeInterval, CommandResult> parse(String argument) {
-        Either<LocalDateTime, CommandResult> startTime = parseStartTime(argument);
-        if (startTime.isRight()) {
-            return Either.right(startTime.getRight());
-        }
+        this.parseResult = this.genericParser.parse(argument);
 
-        Either<LocalDateTime, CommandResult> endTime = parseEndTime(argument);
-        if (endTime.isRight()) {
-            return Either.right(endTime.getRight());
-        }
-
-        if (startTime.getLeft().compareTo(endTime.getLeft()) > 0) {
-            return Either.right(makeEndTimeBeforeStartTimeResult());
-        }
-
-        return Either.left(new TimeInterval(startTime.getLeft(), endTime.getLeft()));
+        return Either.<TimeInterval, CommandResult>left(new TimeInterval())
+                .bind(this::parseStartTime)
+                .bind(this::parseEndTime)
+                .bind(this::ensureIntervalValidity);
     }
 
-    private Either<LocalDateTime, CommandResult> parseStartTime(String argument) {
-        Matcher matcher = Pattern.compile("(^|.*? )st/(?<startTime>.*?)(\\s+et/.*)?$").matcher(argument);
-
-        if (matcher.matches() && matcher.group("startTime") != null) {
-            return parseDateTime(matcher.group("startTime"));
+    private Either<TimeInterval, CommandResult> parseStartTime(TimeInterval interval) {
+        if (this.parseResult.getArguments("st").size() > 0) {
+            return parseDateTime(this.parseResult.getArguments("st").get(0))
+                    .bind(t -> Either.left(interval.setFrom(t)));
         } else {
-            return Either.left(LocalDateTime.now(this.clock));
+            return Either.left(interval.setFrom(LocalDateTime.now(this.clock)));
         }
     }
 
-    private Either<LocalDateTime, CommandResult> parseEndTime(String argument) {
-        Matcher matcher = Pattern.compile("(^|.*? )et/(?<endTime>.*?)(\\s+st/.*)?$").matcher(argument);
-
-        if (matcher.matches() && matcher.group("endTime") != null) {
-            return parseDateTime(matcher.group("endTime").trim());
+    private Either<TimeInterval, CommandResult> parseEndTime(TimeInterval interval) {
+        if (this.parseResult.getArguments("et").size() > 0) {
+            return parseDateTime(this.parseResult.getArguments("et").get(0))
+                    .bind(t -> Either.left(interval.setTo(t)));
         } else {
             return Either.right(makeEndTimeNotSpecified());
+        }
+    }
+
+    private Either<TimeInterval, CommandResult> ensureIntervalValidity(TimeInterval interval) {
+        if (interval.getFrom().compareTo(interval.getTo()) <= 0) {
+            return Either.left(interval);
+        } else {
+            return Either.right(makeEndTimeBeforeStartTimeResult());
         }
     }
 
