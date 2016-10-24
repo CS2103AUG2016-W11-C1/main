@@ -55,6 +55,13 @@ public class ArrayListUtilTest {
         assertEquals("1", strings.get(2));
     }
 
+    @Test
+    public void testUnique() {
+        ArrayList<Integer> numbers = ArrayListUtil.fromArray(new Integer[]{1, 2, 2, 1, 3, 1, 3, 2});
+        ArrayList<Integer> uniqueNumbers = ArrayListUtil.unique(numbers);
+        assertEquals(3, uniqueNumbers.size());
+    }
+
     public void testFromSingleton() {
         ArrayList<String> strings = ArrayListUtil.fromSingleton("hello");
         assertEquals(1, strings.size());
