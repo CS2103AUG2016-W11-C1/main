@@ -1,8 +1,6 @@
 package linenux.command.parser;
 
 import java.time.LocalDateTime;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import linenux.command.result.CommandResult;
 import linenux.control.TimeParserManager;
@@ -17,47 +15,36 @@ public class ReminderArgumentParser {
     public static String CALLOUTS;
 
     private TimeParserManager timeParserManager;
+    private GenericParser genericParser;
+    private GenericParser.GenericParserResult parseResult;
 
     public ReminderArgumentParser(TimeParserManager timeParserManager, String commandFormat, String callouts) {
         this.timeParserManager = timeParserManager;
+        this.genericParser = new GenericParser();
         ReminderArgumentParser.COMMAND_FORMAT = commandFormat;
         ReminderArgumentParser.CALLOUTS = callouts;
     }
 
     public Either<Reminder, CommandResult> parse(String argument) {
-        Either<LocalDateTime, CommandResult> time = extractTime(argument);
-        if (time.isRight()) {
-            return Either.right(time.getRight());
-        }
+        this.parseResult = this.genericParser.parse(argument);
 
-        Either<String, CommandResult> note = extractNote(argument);
-        if (note.isRight()) {
-            return Either.right(note.getRight());
-        }
-
-        LocalDateTime actualTime = time.getLeft();
-        String actualNote = note.getLeft();
-
-        Reminder reminder = new Reminder(actualNote, actualTime);
-
-        return Either.left(reminder);
+        return Either.<Reminder, CommandResult>left(new Reminder())
+                .bind(this::extractTime)
+                .bind(this::extractNote);
     }
 
-    private Either<LocalDateTime, CommandResult> extractTime(String argument) {
-        Matcher matcher = Pattern.compile("(^|.*? )t/(?<time>.*?)(\\s+n/.*)?").matcher(argument);
-
-        if (matcher.matches() && matcher.group("time") != null) {
-            return parseDateTime(matcher.group("time").trim());
+    private Either<Reminder, CommandResult> extractTime(Reminder reminder) {
+        if (this.parseResult.getArguments("t").size() > 0) {
+            return parseDateTime(this.parseResult.getArguments("t").get(0))
+                    .bind(t -> Either.left(reminder.setTimeOfReminder(t)));
         } else {
             return Either.right(makeWithoutDateResult());
         }
     }
 
-    private Either<String, CommandResult> extractNote(String argument) {
-        Matcher matcher = Pattern.compile("(^|.*? )n/(?<note>.*?)(\\s+t/.*)?").matcher(argument);
-
-        if (matcher.matches() && matcher.group("note") != null) {
-            return Either.left(matcher.group("note").trim());
+    private Either<Reminder, CommandResult> extractNote(Reminder reminder) {
+        if (this.parseResult.getArguments("n").size() > 0) {
+            return Either.left(reminder.setNote(this.parseResult.getArguments("n").get(0)));
         } else {
             return Either.right(makeWithoutNoteResult());
         }
