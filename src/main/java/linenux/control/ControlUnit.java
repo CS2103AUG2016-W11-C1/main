@@ -35,13 +35,6 @@ public class ControlUnit {
         this.commandManager = new CommandManager(schedule);
     }
 
-    public void setUpControlUnit(String mode) {
-        if (mode.equals("test")) {
-            this.scheduleStorage = new XmlScheduleStorage(config.getTestFilePath());
-            this.schedule = new Schedule();
-        }
-    }
-
     public CommandResult execute(String userInput) {
         CommandResult result = commandManager.delegateCommand(userInput);
         lastCommandResult.setValue(result);

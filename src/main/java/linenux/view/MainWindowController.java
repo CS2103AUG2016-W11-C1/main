@@ -20,23 +20,8 @@ public class MainWindowController {
 
     private ControlUnit controlUnit = new ControlUnit();
 
-    public void setUpMode(String mode) {
-        System.out.println("hi");
-        // controlUnit.setUpControlUnit(mode);
-    }
-
     @FXML
     private void initialize() {
-        // For testing purposes
-//        LocalDateTime now = LocalDateTime.now();
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-M-d h:mma");
-//        String todayString = now.format(formatter);
-//        this.controlUnit.execute("add important task");
-//        this.controlUnit.execute("remind important t/" + todayString);
-//        this.controlUnit.execute("add this should not appear on the reminder pane");
-//        this.controlUnit.execute("add do stuff");
-//        this.controlUnit.execute("remind stuff n/walalala t/" + todayString);
-
         setupTodoBox();
         setupDeadlineBox();
         setupEventBox();
