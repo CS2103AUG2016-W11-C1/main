@@ -59,7 +59,7 @@ public class EditrCommand extends AbstractCommand {
         ArrayList<Task> tasks = this.schedule.searchByReminder(keywords);
 
         if (tasks.size() == 0) {
-            return SearchResults.makeNotFoundResult(keywords);
+            return SearchResults.makeReminderNotFoundResult(keywords);
         }
 
         ArrayList<Integer> noOfReminders = new ArrayListUtil.ChainableArrayListUtil<>(tasks)
@@ -188,7 +188,7 @@ public class EditrCommand extends AbstractCommand {
     }
 
     private CommandResult makeEditedReminder(Reminder original, Reminder reminder) {
-        return () -> "Edited \"" + original.getNote() + "\".\nNew task details: " + reminder.toString();
+        return () -> "Edited \"" + original.getNote() + "\".\nNew reminder details: " + reminder.toString();
     }
 
     private CommandResult makeCancelledResult() {
@@ -200,7 +200,7 @@ public class EditrCommand extends AbstractCommand {
             StringBuilder builder = new StringBuilder();
             builder.append("I don't understand \"" + userInput + "\".\n");
             builder.append("Enter a number to indicate which reminder to edit.\n");
-            builder.append(TasksListUtil.display(this.foundTasks));
+            builder.append(TasksListUtil.display(this.foundTasks, this.noOfReminders, this.foundReminders));
             return builder.toString();
         };
     }

@@ -61,4 +61,34 @@ public class TasksListUtil {
 
         return builder.toString().trim();
     }
+
+    /**
+     * Display the list of tasks and reminders as a string.
+     *
+     * @param tasks
+     *            The list of tasks to display.
+     * @param reminders
+     *            The list of reminders to display.
+     * @return A string representing the tasks and reminders.
+     */
+    public static String display(ArrayList<Task> tasks, ArrayList<Integer> noOfReminders, ArrayList<Reminder> reminders) {
+        StringBuilder builder = new StringBuilder();
+
+        int counter = 0;
+        for (int i = 0; i < noOfReminders.size(); i++) {
+            builder.append("Task: ");
+            builder.append(tasks.get(i).getTaskName());
+            builder.append("\n");
+
+            for (int j = 0; j < noOfReminders.get(i); j++) {
+                builder.append(counter + 1);
+                builder.append(". ");
+                builder.append(reminders.get(counter).toString());
+                builder.append("\n");
+                counter++;
+            };
+        };
+
+        return builder.toString().trim();
+    }
 }

@@ -66,7 +66,7 @@ public class PromptResults {
             StringBuilder builder = new StringBuilder();
             builder.append("That's not a valid index. Enter a number between 1 and ");
             builder.append(reminders.size());
-            builder.append(")\n");
+            builder.append(":\n");
 
             int counter = 0;
             for (int i = 0; i < noOfReminders.size(); i++) {
