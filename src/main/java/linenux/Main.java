@@ -8,6 +8,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import linenux.config.Config;
+import linenux.view.MainWindowController;
 
 /**
  * Main program for Linenux.
@@ -19,6 +21,8 @@ public class Main extends Application implements Stoppable {
 
     public static final int INITIAL_CONSOLE_WIDTH = 800;
     public static final int INITIAL_CONSOLE_HEIGHT = 500;
+
+    protected Config config = new Config();
 
     public static void main(String args) {
         launch(args);
@@ -43,10 +47,11 @@ public class Main extends Application implements Stoppable {
             loader.setLocation(Main.class.getResource("/view/MainWindow.fxml"));
             primaryStage.setTitle(APP_NAME);
             primaryStage.getIcons().add(new Image("/images/terminal.png"));
+
+            loader.setController(new MainWindowController(this.config));
             Scene scene = new Scene(loader.load(), INITIAL_CONSOLE_WIDTH, INITIAL_CONSOLE_HEIGHT);
             primaryStage.setScene(scene);
             primaryStage.show();
-
         } catch (IOException e) {
             e.printStackTrace();
         }

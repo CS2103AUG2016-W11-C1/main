@@ -26,8 +26,12 @@ public class Config {
     private Path scheduleFilePath;
 
     public Config() {
-        this.configFilePath = Paths.get(DEFAULT_FILE_PATH + CONFIG_FILENAME);
-        this.scheduleFilePath = Paths.get(DEFAULT_FILE_PATH + SCHEDULE_FILENAME);
+        this(DEFAULT_FILE_PATH + CONFIG_FILENAME, DEFAULT_FILE_PATH + SCHEDULE_FILENAME);
+    }
+
+    public Config(String configFilePath, String scheduleFilePath) {
+        this.configFilePath = Paths.get(configFilePath);
+        this.scheduleFilePath = Paths.get(scheduleFilePath);
         initialize();
     }
 

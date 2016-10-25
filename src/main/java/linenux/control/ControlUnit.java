@@ -12,24 +12,12 @@ import linenux.storage.XmlScheduleStorage;
  * Controls data flow for the entire application.
  */
 public class ControlUnit {
-    private Config config;
     private Schedule schedule;
     private ScheduleStorage scheduleStorage;
     private CommandManager commandManager;
     private ObjectProperty<CommandResult> lastCommandResult = new SimpleObjectProperty<>();
 
-    public ControlUnit() {
-        this.scheduleStorage = new XmlScheduleStorage();
-
-        if (this.scheduleStorage.hasScheduleFile()) {
-            this.schedule = this.scheduleStorage.loadScheduleFromFile();
-        } else {
-            this.schedule = new Schedule();
-        }
-    }
-
-    public ControlUnit(String mode) {
-        this.config = new Config();
+    public ControlUnit(Config config) {
         this.scheduleStorage = new XmlScheduleStorage(config.getActualFilePath());
         this.schedule = (this.scheduleStorage.hasScheduleFile()) ? this.scheduleStorage.loadScheduleFromFile() : new Schedule();
         this.commandManager = new CommandManager(schedule);

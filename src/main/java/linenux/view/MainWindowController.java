@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import linenux.config.Config;
 import linenux.control.ControlUnit;
 
 /**
@@ -18,7 +19,11 @@ public class MainWindowController {
     @FXML
     private AnchorPane commandBoxContainer;
 
-    private ControlUnit controlUnit = new ControlUnit();
+    private ControlUnit controlUnit;
+
+    public MainWindowController(Config config) {
+        this.controlUnit = new ControlUnit(config);
+    }
 
     @FXML
     private void initialize() {
