@@ -64,4 +64,6 @@ public interface Command {
     public String getPattern();
 
     public void setAlias(String alias);
+
+    public void removeAlias(String alias);
 }

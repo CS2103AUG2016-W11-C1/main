@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -188,6 +189,26 @@ public class ArrayListUtil {
             xs.add(x);
             return xs;
         }, new ArrayList<T>(), list);
+    }
+
+    /**
+     * Returns a new list by removing repeated elements in {@code list}.
+     * @param list The input list.
+     * @param <T> The type of the list.
+     * @return The list with repeated elements removed.
+     */
+    public static <T> ArrayList<T> unique(ArrayList<T> list) {
+        HashSet<T> set = new HashSet<>();
+        ArrayList<T> output = new ArrayList<>();
+
+        for (T val: list) {
+            if (!set.contains(val)) {
+                set.add(val);
+                output.add(val);
+            }
+        }
+
+        return output;
     }
 
     /**

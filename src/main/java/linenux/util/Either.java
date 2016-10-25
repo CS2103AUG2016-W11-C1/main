@@ -1,6 +1,7 @@
 package linenux.util;
 
 import java.util.NoSuchElementException;
+import java.util.function.Function;
 
 /**
  * A data structure inspired by the FP world. Can be used to represent an operation that can have two possible
@@ -111,5 +112,19 @@ public class Either<L, R> {
      */
     public R getRight() {
         return this.right.get();
+    }
+
+    /**
+     * Execute a function with the left value skip otherwise.
+     * @param function The function to execute.
+     * @param <T> The normal return type of {@code function}.
+     * @return An {@code Either}.
+     */
+    public <T> Either<T, R> bind(Function<L, Either<T, R>> function) {
+        if (this.isRight()) {
+            return Either.right(this.getRight());
+        } else {
+            return function.apply(this.getLeft());
+        }
     }
 }

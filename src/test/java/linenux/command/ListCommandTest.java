@@ -209,17 +209,20 @@ public class ListCommandTest {
         Task eventBefore = new Task("event before", LocalDateTime.of(2015, 1, 1, 17, 0),
                 LocalDateTime.of(2015, 1, 1, 19, 0));
         Task eventOn = new Task("event on", LocalDateTime.of(2015, 1, 1, 17, 0), LocalDateTime.of(2016, 1, 1, 17, 0));
-        Task eventAfter = new Task("event after", LocalDateTime.of(2015, 1, 1, 17, 0),
+        Task eventEndTimeAfter = new Task("event after", LocalDateTime.of(2015, 1, 1, 19, 0),
                 LocalDateTime.of(2017, 1, 1, 17, 0));
+        Task eventStartTimeAfter = new Task("event after", LocalDateTime.of(2017, 1, 1, 19, 0),
+                LocalDateTime.of(2018, 1, 1, 17, 0));
 
         Task deadlineBefore = new Task("deadline before", LocalDateTime.of(2015, 1, 1, 17, 0));
         Task deadlineOn = new Task("deadline On", LocalDateTime.of(2016, 1, 1, 17, 0));
-        Task deadlineAfter = new Task("deadline before", LocalDateTime.of(2017, 1, 1, 17, 0));
+        Task deadlineAfter = new Task("deadline after", LocalDateTime.of(2017, 1, 1, 17, 0));
 
         this.schedule.addTask(todo);
         this.schedule.addTask(eventBefore);
         this.schedule.addTask(eventOn);
-        this.schedule.addTask(eventAfter);
+        this.schedule.addTask(eventEndTimeAfter);
+        this.schedule.addTask(eventStartTimeAfter);
         this.schedule.addTask(deadlineBefore);
         this.schedule.addTask(deadlineOn);
         this.schedule.addTask(deadlineAfter);
@@ -231,7 +234,8 @@ public class ListCommandTest {
         assertTrue(filteredTasks.contains(todo));
         assertTrue(filteredTasks.contains(eventBefore));
         assertTrue(filteredTasks.contains(eventOn));
-        assertTrue(!filteredTasks.contains(eventAfter));
+        assertTrue(filteredTasks.contains(eventEndTimeAfter));
+        assertTrue(!filteredTasks.contains(eventStartTimeAfter));
         assertTrue(filteredTasks.contains(deadlineBefore));
         assertTrue(filteredTasks.contains(deadlineOn));
         assertTrue(!filteredTasks.contains(deadlineAfter));

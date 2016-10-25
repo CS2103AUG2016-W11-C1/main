@@ -1,15 +1,14 @@
 package linenux.view;
 
+import java.io.IOException;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import linenux.config.Config;
 import linenux.control.ControlUnit;
-
-import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 /**
  * Created by yihangho on 10/16/16.
@@ -20,20 +19,14 @@ public class MainWindowController {
     @FXML
     private AnchorPane commandBoxContainer;
 
-    private ControlUnit controlUnit = new ControlUnit();
+    private ControlUnit controlUnit;
+
+    public MainWindowController(Config config) {
+        this.controlUnit = new ControlUnit(config);
+    }
 
     @FXML
     private void initialize() {
-        // For testing purposes
-//        LocalDateTime now = LocalDateTime.now();
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-M-d h:mma");
-//        String todayString = now.format(formatter);
-//        this.controlUnit.execute("add important task");
-//        this.controlUnit.execute("remind important t/" + todayString);
-//        this.controlUnit.execute("add this should not appear on the reminder pane");
-//        this.controlUnit.execute("add do stuff");
-//        this.controlUnit.execute("remind stuff n/walalala t/" + todayString);
-
         setupTodoBox();
         setupDeadlineBox();
         setupEventBox();

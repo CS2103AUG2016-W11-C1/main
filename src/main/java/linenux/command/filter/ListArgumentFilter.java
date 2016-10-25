@@ -61,10 +61,17 @@ public class ListArgumentFilter {
 
         //filter the tasks by the time parameters
         if (actualStartTime != null && actualEndTime != null) {
-            filteredTasks = new ArrayListUtil.ChainableArrayListUtil<>(filteredTasks).filter(task -> task.isTodo()
-                    || task.getEndTime().isEqual(actualStartTime) || task.getEndTime().isEqual(actualEndTime)
-                    || (task.getEndTime().isAfter(actualStartTime) && task.getEndTime().isBefore(actualEndTime)))
-                    .value();
+            filteredTasks = new ArrayListUtil.ChainableArrayListUtil<>(filteredTasks).filter(task -> {
+                            boolean checker = task.isTodo()
+                                    || task.getEndTime().isEqual(actualStartTime) || task.getEndTime().isEqual(actualEndTime)
+                                    || (task.getEndTime().isAfter(actualStartTime) && task.getEndTime().isBefore(actualEndTime));
+                            if (task.isEvent()) {
+                                LocalDateTime taskStartTime = task.getStartTime();
+                                return checker || taskStartTime.isEqual(actualStartTime) || taskStartTime.isEqual(actualEndTime)
+                                || (taskStartTime.isAfter(actualStartTime) && taskStartTime.isBefore(actualEndTime));
+                            }
+                            return checker; })
+                        .value();
         } else if (actualStartTime != null) {
             filteredTasks = new ArrayListUtil.ChainableArrayListUtil<>(filteredTasks)
                     .filter(task -> task.isTodo() || task.getEndTime().isAfter(actualStartTime)
@@ -72,8 +79,14 @@ public class ListArgumentFilter {
                     .value();
         } else if (actualEndTime != null) {
             filteredTasks = new ArrayListUtil.ChainableArrayListUtil<>(filteredTasks)
-                    .filter(task -> task.isTodo() || task.getEndTime().isBefore(actualEndTime)
-                            || task.getEndTime().isEqual(actualEndTime))
+                    .filter(task -> {
+                        boolean checker = task.isTodo() || task.getEndTime().isBefore(actualEndTime)
+                            || task.getEndTime().isEqual(actualEndTime);
+                        if (task.isEvent()) {
+                            return checker || task.getStartTime().isBefore(actualEndTime) || task.getStartTime().isEqual(actualEndTime);
+                        };
+
+                        return checker; })
                     .value();
         }
 

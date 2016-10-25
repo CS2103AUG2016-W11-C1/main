@@ -2,12 +2,11 @@ package linenux.command.parser;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import linenux.command.result.CommandResult;
 import linenux.control.TimeParserManager;
 import linenux.model.Task;
+import linenux.util.ArrayListUtil;
 import linenux.util.Either;
 
 /**
@@ -18,6 +17,8 @@ public class AddArgumentParser {
     public static String CALLOUTS;
 
     private TimeParserManager timeParserManager;
+    private GenericParser genericParser = new GenericParser();
+    private GenericParser.GenericParserResult parseResult;
 
     public AddArgumentParser(TimeParserManager timeParserManager, String commandFormat, String callouts) {
         this.timeParserManager = timeParserManager;
@@ -26,89 +27,68 @@ public class AddArgumentParser {
     }
 
     public Either<Task, CommandResult> parse(String argument) {
-        Either<String, CommandResult> taskName = extractTaskName(argument);
-        if (taskName.isRight()) {
-            return Either.right(taskName.getRight());
-        }
+        this.parseResult = this.genericParser.parse(argument);
 
-        Either<LocalDateTime, CommandResult> startTime = extractStartTime(argument);
-        if (startTime.isRight()) {
-            return Either.right(startTime.getRight());
-        }
-
-        Either<LocalDateTime, CommandResult> endTime = extractEndTime(argument);
-        if (endTime.isRight()) {
-            return Either.right(endTime.getRight());
-        }
-
-        Either<ArrayList<String>, CommandResult> tags = extractTags(argument);
-        if (tags.isRight()) {
-            return Either.right(tags.getRight());
-        }
-
-        String actualTaskName = taskName.getLeft();
-        LocalDateTime actualStartTime = startTime.getLeft();
-        LocalDateTime actualEndTime = endTime.getLeft();
-        ArrayList<String> actualTags = tags.getLeft();
-
-        if (actualStartTime != null && actualEndTime == null) {
-            return Either.right(makeStartTimeWithoutEndTimeResult());
-        }
-
-        if (actualStartTime != null && actualEndTime != null && actualEndTime.compareTo(actualStartTime) < 0) {
-            return Either.right(makeEndTimeBeforeStartTimeResult());
-        }
-
-        Task task = new Task(actualTaskName, actualStartTime, actualEndTime, actualTags);
-        return Either.left(task);
+        return Either.<Task, CommandResult>left(new Task(""))
+                .bind(this::extractTaskName)
+                .bind(this::extractStartTime)
+                .bind(this::extractEndTime)
+                .bind(this::extractTags)
+                .bind(this::ensureValidDateCombination)
+                .bind(this::ensureValidEventTimes);
     }
 
-    private Either<String, CommandResult> extractTaskName(String argument) {
-        String[] parts = argument.split("(^| )(st|et|#)/");
-
-        if (parts.length > 0 && parts[0].trim().length() > 0) {
-            return Either.left(parts[0].trim());
+    private Either<Task, CommandResult> extractTaskName(Task task) {
+        if (this.parseResult.getKeywords().length() > 0) {
+            Task output = task.setTaskName(this.parseResult.getKeywords());
+            return Either.left(output);
         } else {
             return Either.right(makeInvalidArgumentResult());
         }
     }
 
-    private Either<LocalDateTime, CommandResult> extractStartTime(String argument) {
-        Matcher matcher = Pattern.compile("(^|.*? )st/(?<startTime>.*?)(\\s+(#|et)/.*)?").matcher(argument);
-
-        if (matcher.matches() && matcher.group("startTime") != null) {
-            return parseDateTime(matcher.group("startTime").trim());
+    private Either<Task, CommandResult> extractStartTime(Task task) {
+        if (this.parseResult.getArguments("st").size() > 0) {
+            return parseDateTime(this.parseResult.getArguments("st").get(0))
+                    .bind(t -> Either.left(task.setStartTime(t)));
         } else {
-            return Either.left(null);
+            return Either.left(task);
         }
     }
 
-    private Either<LocalDateTime, CommandResult> extractEndTime(String argument) {
-        Matcher matcher = Pattern.compile("(^|.*? )et/(?<endTime>.*?)(\\s+(#|st)/.*)?$").matcher(argument);
-
-        if (matcher.matches() && matcher.group("endTime") != null) {
-            return parseDateTime(matcher.group("endTime").trim());
+    private Either<Task, CommandResult> extractEndTime(Task task) {
+        if (this.parseResult.getArguments("et").size() > 0) {
+            return parseDateTime(this.parseResult.getArguments("et").get(0))
+                    .bind(t -> Either.left(task.setEndTime(t)));
         } else {
-            return Either.left(null);
+            return Either.left(task);
         }
     }
 
-    private Either<ArrayList<String>, CommandResult> extractTags(String argument) {
-        Matcher matcher = Pattern.compile("(?=(^|.*? )#/(?<tags>.*?)(\\s+(n|st|et|#)/.*)?$)").matcher(argument);
-        ArrayList<String> tagList = new ArrayList<String>();
-        String input;
+    private Either<Task, CommandResult> extractTags(Task task) {
+        ArrayList<String> tags = ArrayListUtil.unique(this.parseResult.getArguments("#"));
 
-        while (matcher.find() && matcher.group("tags") != null) {
-            input = matcher.group("tags").trim();
-            if (input.isEmpty()) {
-                return Either.right(makeInvalidArgumentResult());
-            }
-            if (!tagList.contains(input)) {
-                tagList.add(input);
-            }
+        if (tags.indexOf("") == -1) {
+            return Either.left(task.setTags(tags));
+        } else {
+            return Either.right(makeInvalidArgumentResult());
         }
+    }
 
-        return Either.left(tagList);
+    private Either<Task, CommandResult> ensureValidDateCombination(Task task) {
+        if (task.getStartTime() == null || task.getEndTime() != null) {
+            return Either.left(task);
+        } else {
+            return Either.right(makeStartTimeWithoutEndTimeResult());
+        }
+    }
+
+    private Either<Task, CommandResult> ensureValidEventTimes(Task task) {
+        if (task.getStartTime() == null || task.getEndTime() == null || task.getEndTime().compareTo(task.getStartTime()) >= 0) {
+            return Either.left(task);
+        } else {
+            return Either.right(makeEndTimeBeforeStartTimeResult());
+        }
     }
 
     private Either<LocalDateTime, CommandResult> parseDateTime(String string) {
