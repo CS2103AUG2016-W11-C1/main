@@ -1,6 +1,7 @@
 package linenux.command.parser;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -8,6 +9,7 @@ import linenux.command.result.CommandResult;
 import linenux.control.TimeParserManager;
 import linenux.model.Reminder;
 import linenux.model.Task;
+import linenux.util.ArrayListUtil;
 import linenux.util.Either;
 
 /**
@@ -18,59 +20,53 @@ public class EditrArgumentParser {
     public static String CALLOUTS;
 
     private TimeParserManager timeParserManager;
+    private GenericParser genericParser;
+    private GenericParser.GenericParserResult parseResult;
 
     public EditrArgumentParser(TimeParserManager timeParserManager, String commandFormat, String callouts) {
         this.timeParserManager = timeParserManager;
+        this.genericParser = new GenericParser();
         EditArgumentParser.COMMAND_FORMAT = commandFormat;
         EditArgumentParser.CALLOUTS = callouts;
     }
 
-    public Either<Reminder, CommandResult> parse(Task task, Reminder original, String argument) {
-        if (argument.trim().isEmpty()) {
+    public Either<Reminder, CommandResult> parse(Reminder original, String argument) {
+        this.parseResult = this.genericParser.parse(argument);
+
+        return Either.<Reminder, CommandResult>left(original)
+                .bind(this::ensureNeedsEdit)
+                .bind(this::extractTime)
+                .bind(this::extractNote);
+    }
+
+    private Either<Reminder, CommandResult> extractTime(Reminder original) {
+        if (this.parseResult.getArguments("t").size() > 0) {
+            return parseDateTime(this.parseResult.getArguments("t").get(0))
+                    .bind(t -> Either.left(original.setTimeOfReminder(t)));
+        } else {
+            return Either.left(original);
+        }
+    }
+
+    private Either<Reminder, CommandResult> extractNote(Reminder original) {
+        if (this.parseResult.getArguments("n").size() > 0) {
+            return Either.left(original.setNote(this.parseResult.getArguments("n").get(0)));
+        } else {
+            return Either.left(original);
+        }
+    }
+
+    private Either<Reminder, CommandResult> ensureNeedsEdit(Reminder reminder) {
+        boolean needsEdit = new ArrayListUtil.ChainableArrayListUtil<>(new String[] {"n", "t"})
+                .map(this.parseResult::getArguments)
+                .map(ArrayList::size)
+                .map(s -> s > 0)
+                .foldr(Boolean::logicalOr, false);
+
+        if (needsEdit) {
+            return Either.left(reminder);
+        } else {
             return Either.right(makeNoArgumentsResult());
-        }
-
-        Either<LocalDateTime, CommandResult> time = extractTime(original, argument);
-        if (time.isRight()) {
-            return Either.right(time.getRight());
-        }
-
-        Either<String, CommandResult> note = extractNote(original, argument);
-        if (note.isRight()) {
-            return Either.right(note.getRight());
-        }
-
-        if (time.equals(original.getTimeOfReminder()) && note.equals(original.getNote())) {
-            return Either.right(makeNoChangeResult());
-        }
-
-        LocalDateTime actualTime = time.getLeft();
-        String actualNote = note.getLeft();
-
-        assert actualTime != null;
-        assert actualNote != null;
-
-        Reminder newReminder = new Reminder(actualNote, actualTime);
-        return Either.left(newReminder);
-    }
-
-    private Either<LocalDateTime, CommandResult> extractTime(Reminder original, String argument) {
-        Matcher matcher = Pattern.compile("(^|.*? )t/(?<time>.*?)(\\s+n/.*)?").matcher(argument);
-
-        if (matcher.matches() && matcher.group("time") != null) {
-            return parseDateTime(matcher.group("time").trim());
-        } else {
-            return Either.left(original.getTimeOfReminder());
-        }
-    }
-
-    private Either<String, CommandResult> extractNote(Reminder original, String argument) {
-        Matcher matcher = Pattern.compile("(^|.*? )n/(?<note>.*?)(\\s+t/.*)?").matcher(argument);
-
-        if (matcher.matches() && matcher.group("note") != null) {
-            return Either.left(matcher.group("note").trim());
-        } else {
-            return Either.left(original.getNote());
         }
     }
 

@@ -162,7 +162,7 @@ public class EditrCommand extends AbstractCommand {
     }
 
     private CommandResult implementEditr(Task task, Reminder original, String argument) {
-        Either<Reminder, CommandResult> result = editrArgumentParser.parse(task, original, argument);
+        Either<Reminder, CommandResult> result = editrArgumentParser.parse(original, argument);
 
         if (result.isLeft()) {
             Reminder newReminder = result.getLeft();
