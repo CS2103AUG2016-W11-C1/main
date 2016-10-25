@@ -52,36 +52,33 @@ public class Task {
      * slots).
      */
     public Task(String taskName, ArrayList<String> tags) {
-        this.taskName = taskName;
-        this.isDone = false;
-        this.startTime = null;
-        this.endTime = null;
-        this.tags = tags;
-        this.reminders = new ArrayList<Reminder>();
+        this(taskName, false, null, null, tags, new ArrayList<Reminder>());
     }
 
     /**
      * Constructor for Deadlines (tasks with deadlines only).
      */
     public Task(String taskName, LocalDateTime endTime, ArrayList<String> tags) {
-        this.taskName = taskName;
-        this.isDone = false;
-        this.startTime = null;
-        this.endTime = endTime;
-        this.tags = tags;
-        this.reminders = new ArrayList<Reminder>();
+        this(taskName, false, null, endTime, tags, new ArrayList<Reminder>());
     }
 
     /**
      * Constructor for Events (tasks with predetermined time slots).
      */
     public Task(String taskName, LocalDateTime startTime, LocalDateTime endTime, ArrayList<String> tags) {
+        this(taskName, false, startTime, endTime, tags, new ArrayList<Reminder>());
+    }
+
+    /**
+     * Constructor for all Tasks
+     */
+    public Task(String taskName, boolean isDone, LocalDateTime startTime, LocalDateTime endTime, ArrayList<String> tags, ArrayList<Reminder> reminders) {
         this.taskName = taskName;
-        this.isDone = false;
+        this.isDone = isDone;
         this.startTime = startTime;
         this.endTime = endTime;
         this.tags = tags;
-        this.reminders = new ArrayList<Reminder>();
+        this.reminders = reminders;
     }
 
     /**

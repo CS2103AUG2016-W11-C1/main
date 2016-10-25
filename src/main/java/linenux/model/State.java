@@ -9,14 +9,18 @@ import linenux.util.ArrayListUtil;
  * Represents a snapshot in time of a schedule. The State class is immutable.
  */
  public class State {
-     private final ArrayList<Task> taskList;
+     private final ArrayList<Task> tasks;
 
      public State() {
-         this.taskList = new ArrayList<Task>();
+         this.tasks = new ArrayList<Task>();
      }
 
      public State(State other) {
-         this.taskList = new ArrayList<>(other.taskList);
+         this.tasks = new ArrayList<>(other.tasks);
+     }
+
+     public State(ArrayList<Task> taskList) {
+         this.tasks = taskList;
      }
 
      /**
@@ -26,7 +30,7 @@ import linenux.util.ArrayListUtil;
       */
      public State addTask(Task task) {
          State output = new State(this);
-         output.taskList.add(task);
+         output.tasks.add(task);
          return output;
      }
 
@@ -37,9 +41,9 @@ import linenux.util.ArrayListUtil;
       * @param newTask The edited version of the specified task.
       */
      public State updateTask(Task originalTask, Task newTask) {
-         int taskIndex = taskList.indexOf(originalTask);
+         int taskIndex = tasks.indexOf(originalTask);
          State output = new State(this);
-         output.taskList.set(taskIndex, newTask);
+         output.tasks.set(taskIndex, newTask);
          return output;
      }
 
@@ -49,9 +53,9 @@ import linenux.util.ArrayListUtil;
       * @return The new State of the schedule.
       */
      public State deleteTask(Task task) {
-         int taskIndex = taskList.indexOf(task);
+         int taskIndex = tasks.indexOf(task);
          State output = new State(this);
-         output.taskList.remove(taskIndex);
+         output.tasks.remove(taskIndex);
          return output;
      }
 
@@ -59,7 +63,7 @@ import linenux.util.ArrayListUtil;
       * Returns the list of tasks.
       */
      public ArrayList<Task> getTaskList() {
-         return taskList;
+         return tasks;
      }
 
      /**
@@ -74,7 +78,7 @@ import linenux.util.ArrayListUtil;
                                                            .map(String::toLowerCase)
                                                            .value();
 
-         return new ArrayListUtil.ChainableArrayListUtil<Task>(this.taskList)
+         return new ArrayListUtil.ChainableArrayListUtil<Task>(this.tasks)
                                  .filter(task -> { ArrayList<String> taskKeywords =
                                                      new ArrayListUtil.ChainableArrayListUtil<String>(task.getTaskName().split("\\s+"))
                                                                       .map(String::toLowerCase)
@@ -97,7 +101,7 @@ import linenux.util.ArrayListUtil;
 
         ArrayList<Reminder> result = new ArrayList<Reminder>();
 
-        for (Task t : this.taskList) {
+        for (Task t : this.tasks) {
             result.addAll(new ArrayListUtil.ChainableArrayListUtil<Reminder>(t.getReminders()).filter(reminder -> {
                 ArrayList<String> reminderKeywords = new ArrayListUtil.ChainableArrayListUtil<String>(
                         reminder.getNote().split("\\s+")).map(String::toLowerCase).value();

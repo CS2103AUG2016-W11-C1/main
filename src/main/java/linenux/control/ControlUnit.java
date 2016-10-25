@@ -3,36 +3,31 @@ package linenux.control;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import linenux.command.result.CommandResult;
+import linenux.config.Config;
 import linenux.model.Schedule;
+import linenux.storage.ScheduleStorage;
+import linenux.storage.XmlScheduleStorage;
 
 /**
  * Controls data flow for the entire application.
  */
-
 public class ControlUnit {
     private Schedule schedule;
+    private ScheduleStorage scheduleStorage;
     private CommandManager commandManager;
     private ObjectProperty<CommandResult> lastCommandResult = new SimpleObjectProperty<>();
 
-    public ControlUnit() {
-        this.schedule = (hasExistingSchedule()) ? getExistingSchedule() : new Schedule();
+    public ControlUnit(Config config) {
+        this.scheduleStorage = new XmlScheduleStorage(config.getActualFilePath());
+        this.schedule = (this.scheduleStorage.hasScheduleFile()) ? this.scheduleStorage.loadScheduleFromFile() : new Schedule();
         this.commandManager = new CommandManager(schedule);
     }
 
     public CommandResult execute(String userInput) {
         CommandResult result = commandManager.delegateCommand(userInput);
-        this.lastCommandResult.setValue(result);
+        lastCommandResult.setValue(result);
+        scheduleStorage.saveScheduleToFile(schedule);
         return result;
-    }
-
-    // TODO: Check if JAXB schedule file exist.
-    private boolean hasExistingSchedule() {
-        return false;
-    }
-
-    // TODO: Get existing JAXB schedule.
-    private Schedule getExistingSchedule() {
-        return null;
     }
 
     public Schedule getSchedule() {
