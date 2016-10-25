@@ -19,6 +19,11 @@ public abstract class AbstractCommand implements Command {
     }
 
     @Override
+    public void removeAlias(String alias) {
+        this.TRIGGER_WORDS.remove(alias);
+    }
+
+    @Override
     public String getPattern(){
         return "(?i)^\\s*(" + getTriggerWordsPattern() + ")(\\s+(?<keywords>.*))?$";
     }
