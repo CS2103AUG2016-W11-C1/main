@@ -92,19 +92,7 @@ public class EditrArgumentParser {
         return () -> "No changes to be made!";
     }
 
-    private CommandResult makeInvalidArgumentResult() {
-        return () -> "Invalid arguments.\n\n" + COMMAND_FORMAT + "\n\n" + CALLOUTS;
-    }
-
     private CommandResult makeInvalidDateTimeResult(String dateTime) {
         return () -> "Cannot parse \"" + dateTime + "\".";
-    }
-
-    private CommandResult makeStartTimeWithoutEndTimeResult() {
-        return () -> "Cannot create task with start time but without end time.";
-    }
-
-    private CommandResult makeEndTimeBeforeStartTimeResult() {
-        return () -> "End time cannot come before start time.";
     }
 }
