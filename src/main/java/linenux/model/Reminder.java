@@ -11,6 +11,10 @@ public class Reminder {
     private String note;
     private LocalDateTime timeOfReminder;
 
+    public Reminder() {
+        this(null, null);
+    }
+
     public Reminder(String note, LocalDateTime timeOfReminder) {
         this.note = note;
         this.timeOfReminder = timeOfReminder;

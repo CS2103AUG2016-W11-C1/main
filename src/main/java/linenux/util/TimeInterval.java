@@ -8,6 +8,14 @@ import java.time.LocalDateTime;
 public class TimeInterval {
     private LocalDateTime from, to;
 
+    public TimeInterval() {
+        this(null, null);
+    }
+
+    public TimeInterval(TimeInterval other) {
+        this(other.from, other.to);
+    }
+
     public TimeInterval(LocalDateTime from, LocalDateTime to) {
         this.from = from;
         this.to = to;
@@ -19,6 +27,14 @@ public class TimeInterval {
 
     public LocalDateTime getTo() {
         return this.to;
+    }
+
+    public TimeInterval setFrom(LocalDateTime from) {
+        return new TimeInterval(from, this.to);
+    }
+
+    public TimeInterval setTo(LocalDateTime to) {
+        return new TimeInterval(this.from, to);
     }
 
     /**
