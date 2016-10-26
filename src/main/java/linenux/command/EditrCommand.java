@@ -15,12 +15,47 @@ import linenux.model.Task;
 import linenux.time.parser.ISODateWithTimeParser;
 import linenux.util.ArrayListUtil;
 import linenux.util.Either;
+import linenux.util.RemindersListUtil;
 import linenux.util.TasksListUtil;
 
 /**
  * Edits a task in the schedule.
  */
 public class EditrCommand extends AbstractCommand {
+    public static class ReminderSearchResult {
+        private Task task;
+        private ArrayList<Reminder> reminders;
+
+        public static Task getTaskFromReminder(ArrayList<ReminderSearchResult> results, Reminder reminder) {
+            for (ReminderSearchResult result: results) {
+                if (result.getReminders().contains(reminder)) {
+                    return result.getTask();
+                }
+            }
+            return null;
+        }
+
+        public static int totalReminders(ArrayList<ReminderSearchResult> results) {
+            return new ArrayListUtil.ChainableArrayListUtil<>(results)
+                    .map(ReminderSearchResult::getReminders)
+                    .map(ArrayList::size)
+                    .foldr((a, b) -> a + b, 0);
+        }
+
+        public ReminderSearchResult(Task task, ArrayList<Reminder> reminders) {
+            this.task = task;
+            this.reminders = reminders;
+        }
+
+        public Task getTask() {
+            return this.task;
+        }
+
+        public ArrayList<Reminder> getReminders() {
+            return this.reminders;
+        }
+    }
+
     private static final String TRIGGER_WORD = "editr";
     private static final String DESCRIPTION = "Edits a reminder in the schedule.";
     public static final String COMMAND_FORMAT = "editr KEYWORDS... [t/TIME] [n/NOTE]";
@@ -31,11 +66,9 @@ public class EditrCommand extends AbstractCommand {
     private Schedule schedule;
     private boolean requiresUserResponse;
     private String argument;
-    private ArrayList<Task> foundTasks;
-    private ArrayList<Integer> noOfReminders;
-    private ArrayList<Reminder> foundReminders;
     private TimeParserManager timeParserManager;
     private EditrArgumentParser editrArgumentParser;
+    private ArrayList<ReminderSearchResult> searchResults;
 
     public EditrCommand(Schedule schedule) {
         this.schedule = schedule;
@@ -56,27 +89,24 @@ public class EditrCommand extends AbstractCommand {
             return makeNoKeywordsResult();
         }
 
-        ArrayList<Task> tasks = this.schedule.searchByReminder(keywords);
+        ArrayList<ReminderSearchResult> results = new ArrayListUtil.ChainableArrayListUtil<>(this.schedule.getTaskList())
+                .map(task -> new ReminderSearchResult(task, task.searchReminder(keywords)))
+                .filter(result -> result.getReminders().size() > 0)
+                .value();
 
-        if (tasks.size() == 0) {
+        int totalResults = new ArrayListUtil.ChainableArrayListUtil<>(results)
+                .map(ReminderSearchResult::getReminders)
+                .map(ArrayList::size)
+                .foldr((a, b) -> a + b, 0);
+
+        if (totalResults == 0) {
             return SearchResults.makeReminderNotFoundResult(keywords);
-        }
-
-        ArrayList<Integer> noOfReminders = new ArrayListUtil.ChainableArrayListUtil<>(tasks)
-                                                            .map(task -> this.schedule.searchReminder(keywords, task).size())
-                                                            .value();
-        ArrayList<Reminder> filteredReminders = this.schedule.searchReminder(keywords, tasks);
-
-        assert filteredReminders.size() > 0;
-
-        if (filteredReminders.size() == 1) {
-            assert tasks.size() == 1;
-            assert filteredReminders.size() == 1;
-
-            return implementEditr(tasks.get(0), filteredReminders.get(0), argument);
+        } else if (totalResults == 1) {
+            ReminderSearchResult result = results.get(0);
+            return implementEditr(result.getTask(), result.getReminders().get(0), argument);
         } else {
-            setResponse(true, tasks, noOfReminders, filteredReminders, argument);
-            return PromptResults.makePromptIndexResult(tasks, noOfReminders, filteredReminders);
+            setResponse(true, results, argument);
+            return PromptResults.makePromptReminderIndexResult(results);
         }
     }
 
@@ -88,33 +118,31 @@ public class EditrCommand extends AbstractCommand {
     @Override
     public CommandResult userResponse(String userInput) {
         assert this.argument != null;
-        assert this.foundTasks != null;
         assert this.schedule != null;
+        assert this.searchResults != null;
+
+        ArrayList<Reminder> remindersFound = new ArrayListUtil.ChainableArrayListUtil<>(searchResults)
+                .map(ReminderSearchResult::getReminders)
+                .foldr((r, l) -> {
+                    l.addAll(r);
+                    return l;
+                }, new ArrayList<Reminder>())
+                .value();
 
         if (userInput.matches(NUMBER_PATTERN)) {
             int index = Integer.parseInt(userInput);
-            if (1 <= index && index <= this.foundReminders.size()) {
-                Reminder reminder = this.foundReminders.get(index - 1);
+            if (1 <= index && index <= remindersFound.size()) {
+                Reminder reminder = remindersFound.get(index - 1);
+                Task task = ReminderSearchResult.getTaskFromReminder(this.searchResults, reminder);
 
-                int counter = noOfReminders.get(0);
-                int taskIndex = 0;
-
-                for (int i = 0; i < this.foundTasks.size(); i++) {
-                    if (index <= counter) {
-                        taskIndex = i;
-                        break;
-                    }
-                    counter += noOfReminders.get(i + 1);
-                }
-
-                CommandResult result = implementEditr(this.foundTasks.get(taskIndex), reminder, this.argument);
-                setResponse(false, null, null, null, null);
+                CommandResult result = implementEditr(task, reminder, this.argument);
+                setResponse(false, null, null);
                 return result;
             } else {
-                return PromptResults.makeInvalidIndexResult(this.foundTasks, this.noOfReminders, this.foundReminders);
+                return PromptResults.makeInvalidReminderIndexResult(this.searchResults);
             }
         } else if (userInput.matches(CANCEL_PATTERN)) {
-            setResponse(false, null, null, null, null);
+            setResponse(false, null, null);
             return makeCancelledResult();
         } else {
             return makeInvalidUserResponse(userInput);
@@ -174,12 +202,9 @@ public class EditrCommand extends AbstractCommand {
         }
     }
 
-    private void setResponse(boolean requiresUserResponse, ArrayList<Task> foundTasks, ArrayList<Integer> noOfReminders,
-            ArrayList<Reminder> foundReminders, String argument) {
+    private void setResponse(boolean requiresUserResponse, ArrayList<ReminderSearchResult> results, String argument) {
         this.requiresUserResponse = requiresUserResponse;
-        this.foundTasks = foundTasks;
-        this.noOfReminders = noOfReminders;
-        this.foundReminders = foundReminders;
+        this.searchResults = results;
         this.argument = argument;
     }
 
@@ -200,7 +225,7 @@ public class EditrCommand extends AbstractCommand {
             StringBuilder builder = new StringBuilder();
             builder.append("I don't understand \"" + userInput + "\".\n");
             builder.append("Enter a number to indicate which reminder to edit.\n");
-            builder.append(TasksListUtil.display(this.foundTasks, this.noOfReminders, this.foundReminders));
+            builder.append(RemindersListUtil.displaySearchResults(this.searchResults));
             return builder.toString();
         };
     }

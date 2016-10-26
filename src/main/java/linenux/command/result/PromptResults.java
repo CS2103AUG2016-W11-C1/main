@@ -2,8 +2,11 @@ package linenux.command.result;
 
 import java.util.ArrayList;
 
+import linenux.command.EditrCommand;
 import linenux.model.Reminder;
 import linenux.model.Task;
+import linenux.util.ArrayListUtil;
+import linenux.util.RemindersListUtil;
 import linenux.util.TasksListUtil;
 
 /**
@@ -24,27 +27,15 @@ public class PromptResults {
         };
     }
 
-    public static CommandResult makePromptIndexResult(ArrayList<Task> tasks, ArrayList<Integer> noOfReminders, ArrayList<Reminder> reminders) {
+    public static CommandResult makePromptReminderIndexResult(ArrayList<EditrCommand.ReminderSearchResult> results) {
         return () -> {
+            int totalResults = EditrCommand.ReminderSearchResult.totalReminders(results);
+
             StringBuilder builder = new StringBuilder();
             builder.append("Which one? (1-");
-            builder.append(reminders.size());
+            builder.append(totalResults);
             builder.append(")\n");
-
-            int counter = 0;
-            for (int i = 0; i < noOfReminders.size(); i++) {
-                builder.append("Task: ");
-                builder.append(tasks.get(i).getTaskName());
-                builder.append("\n");
-
-                for (int j = 0; j < noOfReminders.get(i); j++) {
-                    builder.append(counter + 1);
-                    builder.append(". ");
-                    builder.append(reminders.get(counter).toString());
-                    builder.append("\n");
-                    counter++;
-                };
-            };
+            builder.append(RemindersListUtil.displaySearchResults(results));
 
             return builder.toString().trim();
         };
@@ -61,27 +52,15 @@ public class PromptResults {
         };
     }
 
-    public static CommandResult makeInvalidIndexResult(ArrayList<Task> tasks, ArrayList<Integer> noOfReminders, ArrayList<Reminder> reminders) {
+    public static CommandResult makeInvalidReminderIndexResult(ArrayList<EditrCommand.ReminderSearchResult> results) {
         return () -> {
+            int totalReminders = EditrCommand.ReminderSearchResult.totalReminders(results);
+
             StringBuilder builder = new StringBuilder();
             builder.append("That's not a valid index. Enter a number between 1 and ");
-            builder.append(reminders.size());
+            builder.append(totalReminders);
             builder.append(":\n");
-
-            int counter = 0;
-            for (int i = 0; i < noOfReminders.size(); i++) {
-                builder.append("Task: ");
-                builder.append(tasks.get(i).getTaskName());
-                builder.append("\n");
-
-                for (int j = 0; j < noOfReminders.get(i); j++) {
-                    builder.append(counter + 1);
-                    builder.append(". ");
-                    builder.append(reminders.get(counter).toString());
-                    builder.append("\n");
-                    counter++;
-                };
-            };
+            builder.append(RemindersListUtil.displaySearchResults(results));
 
             return builder.toString().trim();
         };

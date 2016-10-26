@@ -1,8 +1,11 @@
 package linenux.model;
 
+import linenux.util.ArrayListUtil;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Represents a task in the schedule. Only taskName is a required field and
@@ -228,5 +231,24 @@ public class Task {
         builder.append(" ]");
 
         return builder.toString();
+    }
+
+    public ArrayList<Reminder> searchReminder(String keywords) {
+        return this.searchReminder(keywords.split("\\s+"));
+    }
+
+    public ArrayList<Reminder> searchReminder(String[] keywords) {
+        ArrayList<String> keywordsList = new ArrayListUtil.ChainableArrayListUtil<>(keywords)
+                .map(String::toLowerCase)
+                .value();
+
+        return new ArrayListUtil.ChainableArrayListUtil<>(this.reminders)
+                .filter(task -> { ArrayList<String> reminderKeywords =
+                        new ArrayListUtil.ChainableArrayListUtil<>(task.getNote().split("\\s+"))
+                                .map(String::toLowerCase)
+                                .value();
+                    return !Collections.disjoint(keywordsList, reminderKeywords);
+                })
+                .value();
     }
 }
