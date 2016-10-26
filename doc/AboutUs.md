@@ -22,8 +22,8 @@
   - [Undo](https://github.com/CS2103AUG2016-W11-C1/main/blob/master/doc/UserGuide.md#undo)
   - [Alias](https://github.com/CS2103AUG2016-W11-C1/main/blob/master/doc/UserGuide.md#alias)
   - [Exit](https://github.com/CS2103AUG2016-W11-C1/main/blob/master/doc/UserGuide.md#exit)
- 5. Code Written [[functional code](https://github.com/CS2103AUG2016-W11-C1/main/blob/master/doc/UserGuide.md#view)]
- 6. Other Major Contributions: 
+5. Code Written [[functional code](https://github.com/CS2103AUG2016-W11-C1/main/blob/master/doc/UserGuide.md#view)]
+6. Other Major Contributions: 
   - initial refactoring from Addressbook 3 
   - storage to file 
   - most model classes
