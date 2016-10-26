@@ -52,3 +52,5 @@
   - [Alias](https://github.com/CS2103AUG2016-W11-C1/main/blob/master/doc/UserGuide.md#alias)
   - [Freetime](https://github.com/CS2103AUG2016-W11-C1/main/blob/master/doc/UserGuide.md#freetime)
 5. Code Written [[functional code](https://github.com/CS2103AUG2016-W11-C1/main/blob/master/collated/main/A0144915A.md)]
+6. Other Major Contributions: 
+  - model and abstract classes
