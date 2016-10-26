@@ -2,6 +2,8 @@
 
 #### Kai Ling [@Kaiiiii](https://github.com/Kaiiiii)
 
+![Kaiiiii](https://github.com/Kaiiiii.png?size=150)
+
 1. Team Leader - In charge of overall project coordination.
 2. Documentation - Ensures that project documentations are in order.
 3. Features Implemented:
@@ -12,6 +14,8 @@
   - implemented tags
 
 #### Charlton [@cadmusthefounder](https://github.com/cadmusthefounder)
+
+![cadmusthefounder](https://github.com/cadmusthefounder.png?size=150)
 
 1. Scheduling and Tracking - In charge of defining, assigning, and tracking project tasks.
 2. Deliverables and Deadlines - Ensure project deliverables are done on time and in the right format.
@@ -31,6 +35,8 @@
 
 #### Rong Hua [@Roahhh](https://github.com/Roahhh)
 
+![Roahhh](https://github.com/Roahhh.png?size=150)
+
 1. Test - Ensures testing of the project is done properly and on time.
 2. Eclipse Expert - Advisor for other members with regards to Eclipse.
 3. Intern - Helps out everyone for free.
@@ -42,6 +48,8 @@
 5. Code Written [[functional code](https://github.com/CS2103AUG2016-W11-C1/main/blob/master/collated/main/A1234567A.md)]
 
 #### Yi Hang [@yihangho](https://github.com/yihangho)
+
+![Yihang](https://github.com/yihangho.png?size=150)
 
 1. Code Quality - Ensures adherence to coding standards.
 2. Integration - In charge of versioning and code maintainence.
