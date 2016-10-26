@@ -13,6 +13,7 @@ import java.util.function.Predicate;
 /**
  * A set of utility functions for {@code ArrayList}.
  */
+//@@author A0144915A
 public class ArrayListUtil {
     /**
      * A layer of abstraction on top of ArrayListUtil to allow chainable calls.

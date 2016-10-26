@@ -17,12 +17,14 @@ public class HelpCommand extends AbstractCommand {
 
     private ArrayList<Command> commands;
 
+    //@@author A0144915A
     public HelpCommand(ArrayList<Command> commands) {
         this.commands = commands;
         this.TRIGGER_WORDS.add(TRIGGER_WORD);
     }
 
     @Override
+    //@@author A1234567A
     public CommandResult execute(String userInput) {
         assert userInput.matches(getPattern());
 
@@ -59,6 +61,7 @@ public class HelpCommand extends AbstractCommand {
     }
 
     @Override
+    //@@author A0135788M
     public String getTriggerWord() {
         return TRIGGER_WORD;
     }
@@ -73,6 +76,7 @@ public class HelpCommand extends AbstractCommand {
         return COMMAND_FORMAT;
     }
 
+    //@@author A1234567A
     private String displayAllHelp() {
         int maxLength = 0;
         for (Command command: this.commands) {
@@ -143,6 +147,7 @@ public class HelpCommand extends AbstractCommand {
         return () -> "Invalid command given for help. Did you mean " + suggestion + "?";
     }
 
+    //@@author A1234567A
     private String extractKeywords(String userInput) {
         Matcher matcher = Pattern.compile(getPattern()).matcher(userInput);
 

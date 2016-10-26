@@ -21,6 +21,7 @@ public class EditArgumentParser {
     private GenericParser genericParser;
     private GenericParser.GenericParserResult parseResult;
 
+    //@@author A0135788M
     public EditArgumentParser(TimeParserManager timeParserManager, String commandFormat, String callouts) {
         this.timeParserManager = timeParserManager;
         this.genericParser = new GenericParser();
@@ -28,6 +29,7 @@ public class EditArgumentParser {
         EditArgumentParser.CALLOUTS = callouts;
     }
 
+    //@@author A0144915A
     public Either<Task, CommandResult> parse(Task original, String argument) {
         this.parseResult = this.genericParser.parse(argument);
 
@@ -127,10 +129,12 @@ public class EditArgumentParser {
         }
     }
 
+    //@@author A0135788M
     private CommandResult makeNoArgumentsResult() {
         return () -> "No changes to be made!";
     }
 
+    //@@author A0135788M
     private CommandResult makeInvalidArgumentResult() {
         return () -> "Invalid arguments.\n\n" + COMMAND_FORMAT + "\n\n" + CALLOUTS;
     }

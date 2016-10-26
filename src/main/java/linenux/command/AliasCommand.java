@@ -18,6 +18,7 @@ public class AliasCommand extends AbstractCommand {
 
     private ArrayList<Command> commands;
 
+    //@@author A0144915A
     public AliasCommand(ArrayList<Command> commands) {
         this.commands = commands;
         this.TRIGGER_WORDS.add(TRIGGER_WORD);
@@ -60,6 +61,7 @@ public class AliasCommand extends AbstractCommand {
     }
 
     @Override
+    //@@author A0135788M
     public String getTriggerWord() {
         return TRIGGER_WORD;
     }
@@ -74,6 +76,7 @@ public class AliasCommand extends AbstractCommand {
         return COMMAND_FORMAT;
     }
 
+    //@@author A0135788M
     private String extractArguments(String userInput) {
         Matcher matcher = Pattern.compile(getPattern()).matcher(userInput);
 
@@ -84,6 +87,7 @@ public class AliasCommand extends AbstractCommand {
         }
     }
 
+    //@@author A0144915A
     private boolean validCommand(String command) {
         for (Command cmd: this.commands) {
             if (cmd.respondTo(command)) {
@@ -93,11 +97,13 @@ public class AliasCommand extends AbstractCommand {
         return false;
     }
 
+    //@@author A0135788M
     private boolean validAlias(String alias) {
         Matcher matcher = Pattern.compile(ALPHANUMERIC).matcher(alias);
         return matcher.matches();
     }
 
+    //@@author A0144915A
     private boolean isAliasAvailable(String alias) {
         for (Command cmd: this.commands) {
             if (cmd.respondTo(alias)) {
@@ -108,6 +114,7 @@ public class AliasCommand extends AbstractCommand {
         return true;
     }
 
+    //@@author A0135788M
     private CommandResult makeInvalidArgumentResult() {
         return () -> "Invalid arguments.\n\n" + COMMAND_FORMAT + "\n\n" + CALLOUTS;
     }
@@ -120,10 +127,12 @@ public class AliasCommand extends AbstractCommand {
         return () -> "Alias must be alphanumeric.";
     }
 
+    //@@author A0144915A
     private CommandResult makeAliasUsed(String alias) {
         return () -> "\"" + alias + "\" is used for another command.";
     }
 
+    //@@author A0135788M
     private CommandResult makeSuccessfulAliasResult(String[] commands) {
         return () -> commands[1] + " is now the alias for the " + commands[0] + " command.";
     }

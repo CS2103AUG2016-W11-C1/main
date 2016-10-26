@@ -26,6 +26,7 @@ public class DeleteCommand extends AbstractCommand {
     private boolean requiresUserResponse;
     private ArrayList<Task> foundTasks;
 
+    //@@author A0144915A
     public DeleteCommand(Schedule schedule) {
         this.schedule = schedule;
         this.TRIGGER_WORDS.add(TRIGGER_WORD);
@@ -86,6 +87,7 @@ public class DeleteCommand extends AbstractCommand {
         }
     }
 
+    //@@author A0135788M
     @Override
     public String getTriggerWord() {
         return TRIGGER_WORD;
@@ -120,6 +122,7 @@ public class DeleteCommand extends AbstractCommand {
         return () -> "Invalid arguments.\n\n" + COMMAND_FORMAT + "\n\n" + CALLOUTS;
     }
 
+    //@@author A0144915A
     private CommandResult makeDeletedTask(Task task) {
         return () -> "Deleted \"" + task.getTaskName() + "\".";
     }

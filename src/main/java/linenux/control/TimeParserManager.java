@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 public class TimeParserManager {
     private ArrayList<TimeParser> parserList;
 
+    //@@author A0135788M
     public TimeParserManager(TimeParser... parsers) {
         parserList = new ArrayList<TimeParser>();
         for (TimeParser parser: parsers){
@@ -23,6 +24,7 @@ public class TimeParserManager {
      * @param userInput The string to check
      * @return {@code true} if and only if at least one of the parsers can parse {@code userInput}
      */
+    //@@author A0144915A
     public boolean canParse(String userInput) {
         for (TimeParser parser: parserList) {
             if (parser.respondTo(userInput)) {
@@ -36,6 +38,7 @@ public class TimeParserManager {
     /**
      * Assigns the appropriate time parser to the user input.
      */
+    //@@author A0135788M
     public LocalDateTime delegateTimeParser(String userInput) {
         for (TimeParser parser: parserList) {
             if (parser.respondTo(userInput)) {

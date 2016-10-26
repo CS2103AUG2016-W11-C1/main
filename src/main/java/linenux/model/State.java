@@ -8,6 +8,7 @@ import linenux.util.ArrayListUtil;
 /**
  * Represents a snapshot in time of a schedule. The State class is immutable.
  */
+//@@author A0135788M
  public class State {
      private final ArrayList<Task> tasks;
 

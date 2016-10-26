@@ -17,6 +17,7 @@ import javafx.scene.control.Alert.AlertType;
 /**
  * Creates the configuration file.
  */
+//@@author A0135788M
 public class Config {
     public static final String DEFAULT_FILE_PATH = Paths.get(".").toAbsolutePath().toString();
     public static final String CONFIG_FILENAME = "Config.json";

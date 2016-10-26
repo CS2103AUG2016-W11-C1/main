@@ -3,6 +3,7 @@ package linenux.util;
 /**
  * Computes the similarity between two strings.
  */
+//@@author A0144915A
 public class StringsSimilarity {
     /**
      * Computes the similarity between two strings.

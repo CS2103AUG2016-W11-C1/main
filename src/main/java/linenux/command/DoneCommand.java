@@ -10,6 +10,7 @@ import linenux.command.result.SearchResults;
 import linenux.model.Schedule;
 import linenux.model.Task;
 import linenux.util.ArrayListUtil;
+//@@author A0135788M
 import linenux.util.TasksListUtil;
 
 /**
@@ -27,12 +28,14 @@ public class DoneCommand extends AbstractCommand {
     private boolean requiresUserResponse;
     private ArrayList<Task> foundTasks;
 
+    //@@author A0135788M
     public DoneCommand(Schedule schedule) {
         this.schedule = schedule;
         this.TRIGGER_WORDS.add(TRIGGER_WORD);
     }
 
     @Override
+    //@@author A0144915A
     public CommandResult execute(String userInput) {
         assert userInput.matches(getPattern());
         assert this.schedule != null;
@@ -60,6 +63,7 @@ public class DoneCommand extends AbstractCommand {
     }
 
     @Override
+    //@@author A0135788M
     public boolean awaitingUserResponse() {
         return requiresUserResponse;
     }
@@ -90,11 +94,13 @@ public class DoneCommand extends AbstractCommand {
     }
 
     @Override
+    //@@author A0144915A
     public String getTriggerWord() {
         return TRIGGER_WORD;
     }
 
     @Override
+    //@@author A0135788M
     public String getDescription() {
         return DESCRIPTION;
     }

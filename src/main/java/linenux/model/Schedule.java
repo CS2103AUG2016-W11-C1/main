@@ -16,10 +16,12 @@ public class Schedule {
     /**
      * Constructs an empty schedule
      */
+    //@@author A0144915A
     public Schedule() {
         this.states.add(new State());
     }
 
+    //@@author A0135788M
     public Schedule(State s) {
         this.states.add(s);
     }
@@ -36,6 +38,7 @@ public class Schedule {
      * @param originalTask The original task.
      * @param newTask The new ask.
      */
+    //@@author A0144915A
     public void updateTask(Task originalTask, Task newTask) {
         addState(getMostRecentState().updateTask(originalTask, newTask));
     }
@@ -45,6 +48,7 @@ public class Schedule {
      *
      * @param task The task to delete.
      */
+    //@@author A0135788M
     public void deleteTask(Task task) {
         addState(getMostRecentState().deleteTask(task));
     }
@@ -54,6 +58,7 @@ public class Schedule {
      *
      * @param tasks The tasks to delete.
      */
+    //@@author A1234567A
     public void deleteTasks(ArrayList<Task> tasks) {
         State newState = getMostRecentState();
 
@@ -67,11 +72,13 @@ public class Schedule {
     /**
      * Clears all tasks from the schedule
      */
+    //@@author A0135788M
     public void clear() {
         State newState = new State();
         addState(newState);
     }
 
+    //@@author A0144915A
     public ArrayList<Task> search(String keywords) {
         return search(keywords.split("\\s+"));
     }
@@ -83,10 +90,12 @@ public class Schedule {
      *            Search keywords
      * @return List of {@code Task} matching the keywords.
      */
+    //@@author A0135788M
     public ArrayList<Task> search(String[] keywords) {
         return getMostRecentState().search(keywords);
     }
 
+    //@@author A0127694U
     public ArrayList<Reminder> searchReminder(String keywords) {
         return searchReminder(keywords.split("\\s+"));
     }
@@ -98,6 +107,7 @@ public class Schedule {
      *            Search keywords
      * @return List of {@code Task} matching the keywords.
      */
+    //@@author A0127694U
     public ArrayList<Reminder> searchReminder(String[] keywords) {
         return getMostRecentState().searchReminder(keywords);
     }
@@ -105,10 +115,12 @@ public class Schedule {
     /**
      * Returns the list of states.
      */
+    //@@author A0135788M
     public ObservableList<State> getStates() {
         return states;
     }
 
+    //@@author A1234567A
     public ObservableList<ArrayList<Task>> getFilteredTaskList() {
         return filteredTaskList;
     }
@@ -116,6 +128,7 @@ public class Schedule {
     /**
      * Returns the list of tasks.
      */
+    //@@author A0135788M
     public ArrayList<Task> getTaskList() {
         return getMostRecentState().getTaskList();
     }
@@ -123,6 +136,7 @@ public class Schedule {
     /**
      * Returns the list of filtered tasks.
      */
+    //@@author A1234567A
     public ArrayList<Task> getFilteredTasks() {
         if (filteredTaskList.isEmpty()) {
             return getTaskList();
@@ -134,6 +148,7 @@ public class Schedule {
     /**
      * Returns the list of all task reminders.
      */
+    //@@author A0127694U
     public ArrayList<Reminder> getReminderList() {
         ArrayList<Reminder> result = new ArrayList<Reminder>();
         for (Task t : getMostRecentState().getTaskList()) {
@@ -148,6 +163,7 @@ public class Schedule {
      *
      * @return {@code true} if and only if a state is removed.
      */
+    //@@author A0144915A
     public boolean popState() {
         if (states.size() > 1) {
             states.remove(states.size() - 1);
@@ -160,6 +176,7 @@ public class Schedule {
      * Adds a new list of filtered tastes into filteredTaskList
      * @param filteredTasks
      */
+    //@@author A1234567A
     public void addFilterTasks(ArrayList<Task> filteredTasks) {
         filteredTaskList.clear();
         filteredTaskList.add(filteredTasks);
@@ -168,6 +185,7 @@ public class Schedule {
     /**
      * Returns the most recent state of schedule
      */
+    //@@author A0144915A
     private State getMostRecentState() {
         return states.get(states.size() - 1);
     }

@@ -11,6 +11,7 @@ import linenux.util.StringsSimilarity;
 public class InvalidCommand extends AbstractCommand {
     private ArrayList<Command> commands;
 
+    //@@author A0144915A
     public InvalidCommand(ArrayList<Command> commands) {
         this.commands = commands;
     }
@@ -19,11 +20,13 @@ public class InvalidCommand extends AbstractCommand {
      * @return true for all user inputs.
      */
     @Override
+    //@@author A0135788M
     public boolean respondTo(String userInput) {
         return true;
     }
 
     @Override
+    //@@author A0144915A
     public CommandResult execute(String userInput) {
         String userCommand = extractCommand(userInput);
         Command closestCommand = null;
@@ -44,6 +47,7 @@ public class InvalidCommand extends AbstractCommand {
         }
     }
 
+    //@@author A0135788M
     @Override
     public String getTriggerWord() {
         return null;
@@ -64,6 +68,7 @@ public class InvalidCommand extends AbstractCommand {
         return null;
     }
 
+    //@@author A0144915A
     private String extractCommand(String userInput) {
         String[] parts = userInput.split(" ");
 

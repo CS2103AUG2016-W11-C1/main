@@ -33,6 +33,7 @@ public class EditCommand extends AbstractCommand {
     private TimeParserManager timeParserManager;
     private EditArgumentParser editArgumentParser;
 
+    //@@author A0127694U
     public EditCommand(Schedule schedule) {
         this.schedule = schedule;
         this.timeParserManager = new TimeParserManager(new ISODateWithTimeParser());
@@ -41,6 +42,7 @@ public class EditCommand extends AbstractCommand {
     }
 
     @Override
+    //@@author A0135788M
     public CommandResult execute(String userInput) {
         assert userInput.matches(getPattern());
         assert this.schedule != null;
@@ -66,6 +68,7 @@ public class EditCommand extends AbstractCommand {
     }
 
     @Override
+    //@@author A0127694U
     public boolean awaitingUserResponse() {
         return requiresUserResponse;
     }
@@ -95,6 +98,7 @@ public class EditCommand extends AbstractCommand {
         }
     }
 
+    //@@author A0135788M
     @Override
     public String getTriggerWord() {
         return TRIGGER_WORD;
@@ -111,6 +115,7 @@ public class EditCommand extends AbstractCommand {
     }
 
     @Override
+    //@@author A0135788M
     public String getPattern() {
         return "(?i)^\\s*(" + getTriggerWordsPattern() + ")(\\s+(?<keywords>.*?)(?<arguments>((n|st|et|#)/)+?.*)?)?";
     }
@@ -125,6 +130,7 @@ public class EditCommand extends AbstractCommand {
         }
     }
 
+    //@@author A0127694U
     private String extractArgument(String userInput) {
         Matcher matcher = Pattern.compile(getPattern()).matcher(userInput);
 
@@ -135,6 +141,7 @@ public class EditCommand extends AbstractCommand {
         }
     }
 
+    //@@author A0127694U
     private CommandResult implementEdit(Task original, String argument) {
         Either<Task, CommandResult> result = editArgumentParser.parse(original, argument);
 
@@ -146,6 +153,7 @@ public class EditCommand extends AbstractCommand {
         }
     }
 
+    //@@author A0135788M
     private void setResponse(boolean requiresUserResponse, ArrayList<Task> foundTasks, String argument) {
         this.requiresUserResponse = requiresUserResponse;
         this.foundTasks = foundTasks;
@@ -156,6 +164,7 @@ public class EditCommand extends AbstractCommand {
         return () -> "Invalid arguments.\n\n" + COMMAND_FORMAT + "\n\n" + CALLOUTS;
     }
 
+    //@@author A0127694U
     private CommandResult makeEditedTask(Task original, Task task) {
         return () -> "Edited \"" + original.getTaskName() + "\".\nNew task details: " + task.toString();
     }

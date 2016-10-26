@@ -11,21 +11,25 @@ public class Reminder {
     private String note;
     private LocalDateTime timeOfReminder;
 
+    //@@author A0144915A
     public Reminder() {
         this(null, null);
     }
 
+    //@@author A0135788M
     public Reminder(String note, LocalDateTime timeOfReminder) {
         this.note = note;
         this.timeOfReminder = timeOfReminder;
     }
 
+    //@@author A0144915A
     public Reminder(Reminder other) {
         this.note = other.note;
         this.timeOfReminder = other.timeOfReminder;
     }
 
     @Override
+    //@@author A1234567A
     public String toString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd h:mma");
 
@@ -38,6 +42,7 @@ public class Reminder {
 
     /* Getters */
 
+    //@@author A0135788M
     public String getNote() {
         return this.note;
     }
@@ -48,6 +53,7 @@ public class Reminder {
 
     /* Setters */
 
+    //@@author A0144915A
     public Reminder setNote(String newNote) {
         Reminder output = new Reminder(this);
         output.note = newNote;

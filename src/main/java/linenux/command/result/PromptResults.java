@@ -8,6 +8,7 @@ import java.util.ArrayList;
 /**
  * Created by yihangho on 10/20/16.
  */
+//@@author A0144915A
 public class PromptResults {
     public static CommandResult makePromptIndexResult(ArrayList<Task> tasks) {
         return () -> {

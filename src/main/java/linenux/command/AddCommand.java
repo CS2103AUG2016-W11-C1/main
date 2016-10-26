@@ -23,6 +23,7 @@ public class AddCommand extends AbstractCommand {
     private TimeParserManager timeParserManager;
     private AddArgumentParser addArgumentParser;
 
+    //@@author A0144915A
     public AddCommand(Schedule schedule) {
         this.schedule = schedule;
         this.timeParserManager = new TimeParserManager(new ISODateWithTimeParser());
@@ -47,6 +48,7 @@ public class AddCommand extends AbstractCommand {
         }
     }
 
+    //@@author A0135788M
     @Override
     public String getTriggerWord() {
         return TRIGGER_WORD;
@@ -62,6 +64,7 @@ public class AddCommand extends AbstractCommand {
         return COMMAND_FORMAT;
     }
 
+    //@@author A0144915A
     private String extractArgument(String userInput) {
         Matcher matcher = Pattern.compile(getPattern()).matcher(userInput);
 

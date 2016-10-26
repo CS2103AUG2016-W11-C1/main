@@ -22,6 +22,7 @@ public class Task {
      *
      * @param taskName
      */
+    //@@author A0127694U
     public Task(String taskName) {
         this(taskName, new ArrayList<String>());
     }
@@ -51,6 +52,7 @@ public class Task {
      * Constructor for To-Dos (tasks with no deadlines or predetermined time
      * slots).
      */
+    //@@author A0135788M
     public Task(String taskName, ArrayList<String> tags) {
         this(taskName, false, null, null, tags, new ArrayList<Reminder>());
     }
@@ -65,6 +67,7 @@ public class Task {
     /**
      * Constructor for Events (tasks with predetermined time slots).
      */
+    //@@author A0135788M
     public Task(String taskName, LocalDateTime startTime, LocalDateTime endTime, ArrayList<String> tags) {
         this(taskName, false, startTime, endTime, tags, new ArrayList<Reminder>());
     }
@@ -85,6 +88,7 @@ public class Task {
      * Copy constructor.
      * @param other The other {@code Task} to copy from.
      */
+    //@@author A0144915A
     public Task(Task other) {
         this.taskName = other.taskName;
         this.isDone = other.isDone;
@@ -108,6 +112,7 @@ public class Task {
         }
     }
 
+    //@@author A0144915A
     public boolean isTodo() {
         return startTime == null && endTime == null;
     }
@@ -120,6 +125,7 @@ public class Task {
         return startTime != null && endTime != null;
     }
 
+    //@@author A0135788M
     public boolean isDone() {
         return isDone == true;
     }
@@ -128,12 +134,14 @@ public class Task {
         return isDone == false;
     }
 
+    //@@author A1234567A
     public boolean hasTag(String tag) {
         return tags.contains(tag);
     }
 
     /* Getters */
 
+    //@@author A0135788M
     public String getTaskName() {
         return this.taskName;
     }
@@ -146,16 +154,19 @@ public class Task {
         return this.endTime;
     }
 
+    //@@author A0127694U
     public ArrayList<String> getTags() {
         return this.tags;
     }
 
+    //@@author A0135788M
     public ArrayList<Reminder> getReminders() {
         return this.reminders;
     }
 
     /* Setters */
 
+    //@@author A0144915A
     public Task setTaskName(String taskName) {
         Task output = new Task(this);
         output.taskName = taskName;
@@ -180,18 +191,21 @@ public class Task {
         return output;
     }
 
+    //@@author A0144915A
     public Task addReminder(Reminder reminder) {
         Task output = new Task(this);
         output.reminders.add(reminder);
         return output;
     }
 
+    //@@author A0144915A
     public Task setTags(ArrayList<String> tags) {
         Task output = new Task(this);
         output.tags = tags;
         return output;
     }
 
+    //@@author A0127694U
     private String tagsToString() {
         StringBuilder builder = new StringBuilder();
         if (this.tags.isEmpty()) {

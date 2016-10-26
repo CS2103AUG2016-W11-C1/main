@@ -5,6 +5,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import linenux.model.Schedule;
 
+//@@author A0135788M
 @XmlRootElement(name = "Schedule")
 public class AdaptedSchedule {
     @XmlElement(name = "state")

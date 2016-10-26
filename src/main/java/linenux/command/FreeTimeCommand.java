@@ -21,6 +21,7 @@ import linenux.util.TimeInterval;
 /**
  * Created by yihangho on 10/15/16.
  */
+//@@author A0144915A
 public class FreeTimeCommand extends AbstractCommand {
     private static final String TRIGGER_WORD = "freetime";
     private static final String DESCRIPTION = "Find a free time slot.";

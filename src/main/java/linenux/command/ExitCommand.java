@@ -10,10 +10,12 @@ public class ExitCommand extends AbstractCommand {
     private static final String DESCRIPTION = "Exits the program.";
     public static final String COMMAND_FORMAT = "exit";
 
+    //@@author A0144915A
     public ExitCommand() {
         this.TRIGGER_WORDS.add(TRIGGER_WORD);
     }
 
+    //@@author A0135788M
     @Override
     public CommandResult execute(String userInput) {
         assert userInput.matches(getPattern());
@@ -24,6 +26,7 @@ public class ExitCommand extends AbstractCommand {
     }
 
     @Override
+    //@@author A0144915A
     public String getTriggerWord() {
         return TRIGGER_WORD;
     }
@@ -34,6 +37,7 @@ public class ExitCommand extends AbstractCommand {
     }
 
     @Override
+    //@@author A0135788M
     public String getCommandFormat() {
         return COMMAND_FORMAT;
     }

@@ -18,6 +18,7 @@ public class ReminderArgumentParser {
     private GenericParser genericParser;
     private GenericParser.GenericParserResult parseResult;
 
+    //@@author A0135788M
     public ReminderArgumentParser(TimeParserManager timeParserManager, String commandFormat, String callouts) {
         this.timeParserManager = timeParserManager;
         this.genericParser = new GenericParser();
@@ -25,6 +26,7 @@ public class ReminderArgumentParser {
         ReminderArgumentParser.CALLOUTS = callouts;
     }
 
+    //@@author A0144915A
     public Either<Reminder, CommandResult> parse(String argument) {
         this.parseResult = this.genericParser.parse(argument);
 

@@ -31,6 +31,7 @@ public class CommandManager {
     private Schedule schedule;
     private Command catchAllCommand;
 
+    //@@author A0144915A
     public CommandManager(Schedule schedule) {
         this.schedule = schedule;
         commandList = new ArrayList<>();
@@ -67,6 +68,7 @@ public class CommandManager {
      * Assigns the appropriate command to the user input. Contract: only 1
      * command should be awaiting user response at any point in time.
      */
+    //@@author A0135788M
     public CommandResult delegateCommand(String userInput) {
         for (Command command : commandList) {
             if (command.awaitingUserResponse()) {

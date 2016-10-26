@@ -35,6 +35,7 @@ public class RemindCommand extends AbstractCommand {
     private TimeParserManager timeParserManager;
     private ReminderArgumentParser reminderArgumentParser;
 
+    //@@author A0135788M
     public RemindCommand(Schedule schedule) {
         this.schedule = schedule;
         this.timeParserManager = new TimeParserManager(new ISODateWithTimeParser());
@@ -68,6 +69,7 @@ public class RemindCommand extends AbstractCommand {
     }
 
     @Override
+    //@@author A0135788M
     public boolean awaitingUserResponse() {
         return requiresUserResponse;
     }
@@ -97,6 +99,7 @@ public class RemindCommand extends AbstractCommand {
         }
     }
 
+    //@@author A0135788M
     @Override
     public String getTriggerWord() {
         return TRIGGER_WORD;

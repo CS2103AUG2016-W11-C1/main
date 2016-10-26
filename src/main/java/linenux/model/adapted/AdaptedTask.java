@@ -13,6 +13,7 @@ import linenux.model.Reminder;
 import linenux.model.Task;
 import linenux.storage.LocalDateTimeAdapter;
 
+//@@author A0135788M
 @XmlRootElement(name = "Task")
 @XmlType(propOrder = { "taskName", "isDone", "startTime", "endTime", "tags", "reminders" })
 public class AdaptedTask {

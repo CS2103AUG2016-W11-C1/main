@@ -15,6 +15,7 @@ public interface Command {
      * @param userInput
      * @return true if format matches and false otherwise.
      */
+    //@@author A0144915A
     public boolean respondTo(String userInput);
 
     /**
@@ -45,6 +46,7 @@ public interface Command {
     /**
      * Returns the command word.
      */
+    //@@author A0144915A
     public String getTriggerWord();
 
     /**
@@ -56,6 +58,7 @@ public interface Command {
     /**
      * Returns the command format.
      */
+    //@@author A0135788M
     public String getCommandFormat();
 
     /**
@@ -63,6 +66,7 @@ public interface Command {
      */
     public String getPattern();
 
+    //@@author A0144915A
     public void setAlias(String alias);
 
     public void removeAlias(String alias);

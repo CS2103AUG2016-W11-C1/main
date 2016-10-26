@@ -13,6 +13,7 @@ import linenux.control.ControlUnit;
 /**
  * Created by yihangho on 10/16/16.
  */
+//@@author A0144915A
 public class MainWindowController {
     @FXML
     private SplitPane splitPane;

@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 /**
  * Created by yihangho on 10/25/16.
  */
+//@@author A0144915A
 public class UnaliasCommand extends AbstractCommand {
     private static final String TRIGGER_WORD = "unalias";
     private static final String DESCRIPTION = "Removes an alias.";

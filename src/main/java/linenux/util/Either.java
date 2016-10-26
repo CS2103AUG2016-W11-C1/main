@@ -11,6 +11,7 @@ import java.util.function.Function;
  * Exactly one of them must be empty and the other present. To enforce this restriction, {@code Either} must
  * be built using the static factory methods.
  */
+//@@author A0144915A
 public class Either<L, R> {
     /**
      * A custom implementation of the {@code Optional} class. The default Java implementation does not

@@ -12,6 +12,7 @@ import linenux.util.Either;
 /**
  * Parser for the argument portion of add command.
  **/
+//@@author A0135788M
 public class AddArgumentParser {
     public static String COMMAND_FORMAT;
     public static String CALLOUTS;
@@ -20,12 +21,14 @@ public class AddArgumentParser {
     private GenericParser genericParser = new GenericParser();
     private GenericParser.GenericParserResult parseResult;
 
+    //@@author A0135788M
     public AddArgumentParser(TimeParserManager timeParserManager, String commandFormat, String callouts) {
         this.timeParserManager = timeParserManager;
         AddArgumentParser.COMMAND_FORMAT = commandFormat;
         AddArgumentParser.CALLOUTS = callouts;
     }
 
+    //@@author A0144915A
     public Either<Task, CommandResult> parse(String argument) {
         this.parseResult = this.genericParser.parse(argument);
 
@@ -99,10 +102,12 @@ public class AddArgumentParser {
         }
     }
 
+    //@@author A0135788M
     private CommandResult makeInvalidArgumentResult() {
         return () -> "Invalid arguments.\n\n" + COMMAND_FORMAT + "\n\n" + CALLOUTS;
     }
 
+    //@@author A0144915A
     private CommandResult makeInvalidDateTimeResult(String dateTime) {
         return () -> "Cannot parse \"" + dateTime + "\".";
     }

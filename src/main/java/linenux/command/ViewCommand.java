@@ -16,6 +16,7 @@ import linenux.util.TasksListUtil;
 /**
  * Generates details of tasks and reminders attached to task based on userInput.
  */
+//@@author A0135788M
 public class ViewCommand extends AbstractCommand {
     private static final String TRIGGER_WORD = "view";
     private static final String DESCRIPTION = "Views details of specific task.";

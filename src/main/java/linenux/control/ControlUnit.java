@@ -17,6 +17,7 @@ public class ControlUnit {
     private CommandManager commandManager;
     private ObjectProperty<CommandResult> lastCommandResult = new SimpleObjectProperty<>();
 
+    //@@author A0135788M
     public ControlUnit(Config config) {
         this.scheduleStorage = new XmlScheduleStorage(config.getActualFilePath());
         this.schedule = (this.scheduleStorage.hasScheduleFile()) ? this.scheduleStorage.loadScheduleFromFile() : new Schedule();
@@ -30,6 +31,7 @@ public class ControlUnit {
         return result;
     }
 
+    //@@author A0144915A
     public Schedule getSchedule() {
         return this.schedule;
     }

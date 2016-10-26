@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import linenux.model.State;
 import linenux.model.Task;
 
+//@@author A0135788M
 @XmlRootElement(name = "State")
 public class AdaptedState {
     @XmlElement(name = "tasks")
