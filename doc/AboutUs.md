@@ -9,6 +9,7 @@
 4. Code Written [[functional code](https://github.com/CS2103AUG2016-W11-C1/main/blob/master/collated/main/A0127694U.md)]
 5. Other Major Contribution: 
   - searching reminders 
+  - implemented tags
 
 #### Charlton [@cadmusthefounder](https://github.com/cadmusthefounder)
 
