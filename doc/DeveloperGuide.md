@@ -27,7 +27,7 @@
     * [Appendix E: Product Survey](#appendix-e--product-survey)
 
 ## Introduction
-Linenux is a command-line, task manager application designed for consumers who are quick at typing. Being an open-source project, we understand that there are developers (yes, you) who wants to contribute to the project but do not know where to begin. Thus, we have written this guide to inform newcomers to the project on the key design considerations and the overall software architecture. We hope that by the end of this developer guide, you will in a better position to start working on improving Linenux.
+Linenux is a command-line, task manager application designed for consumers who are quick at typing. Being an open-source project, we understand that there are developers (yes, you) who want to contribute to the project but do not know where to begin. Thus, we have written this guide to inform newcomers to the project on the key design considerations and the overall software architecture. We hope that by the end of this developer guide, you will in a better position to start working on improving Linenux.
 
 ## Setting up
 
@@ -96,6 +96,7 @@ Linenux follows the Model-View-Controller (MVC) pattern which is made up of 3 ma
 The **Schedule** class stores a collection of states. A **State** is an immutable class that is created whenever a task or reminder is added or deleted from the **Schedule**. This design allows users to `undo` their previous command.
 
 The **Task** class is made up of the name of the task, a start time, an end time and a list of reminders. There are 3 types of tasks:
+
 1. **Deadlines** - tasks that have an end time but no start time.
 2. **Events** - tasks that have both start and end times.
 3. **To-dos** - tasks that have neither start nor end times.
@@ -133,7 +134,7 @@ public CommandResult delegateCommand(String userInput) {
     return this.catchAllCommand.execute(userInput);
 }
 ```
-The above code shows how the **CommandManager** class delegates the right command based on the user input. Every command class must implement the **Command** interface. At any point in time, only 1 command is awaiting user response. If there are none, then each command will check if the user input corresponds to the command format.
+The above code shows how the **CommandManager** class delegates the right command based on the user input. Every command class must implement the **Command** interface. At any point in time, only one command is awaiting user response. If there are none, then each command will check if the user input corresponds to the command format.
 
 ``` java
 public boolean canParse(String userInput) {
@@ -146,7 +147,35 @@ public boolean canParse(String userInput) {
     return false;
 }
 ```
+
 Similarly, the same pattern is used if the command has to parse the time. These commands will have their own **TimeParserManager** and they can pick and choose which **TimeParser** format they want to support.
+
+The sequence diagram below shows how the components interact when the ControlUnit receives an input from the user.
+<img src="images/sequenceDiagramGeneric.png">
+> Figure 7: Sequence Diagram for executing a Generic Command
+
+_**Command** Interface_
+
+**Command** interface lists all the required method that a command must have, so, to implement a new command, you will need to ensure that it implements the **Command** interface.
+
+Important!!
+> As seen in Figure 7, whenever an input is given by the user, the **CommandManager** will loop through a list of Commands that it is keeping track of.
+
+> Thus, when you implement a new command, make sure that you add your command into **CommandManager**'s commandList through the it's initializeCommands() mathod.
+
+_**AbstractCommand** Class_
+
+As many of the commands are similar in their implementation of some of the interface methods, we have abstracted the implementation into the **AbstractCommand** class. The methods are:
+
+1. `respondTo(String userInput)`
+2. `setAlias(String alias)`
+3. `removeAlias(String alias)`
+4. `getPattern()`
+
+Thus, when you implement a new command, for convenience, you can make your command extend the **AbstractCommand** class for the implementation the above listed methods.
+
+Important!!
+> When your command extends AbstractCommand, ensure that in your command's constructor, the command's trigger word is added into TRIGGER_WORDS, an ArrayList<String> that is instantiated in AbstractCommand.
 
 ## Testing
 
@@ -167,7 +196,7 @@ Tests can be found in the `./src/test/java` folder.
 
 Gradle is a build automation tool. It can automate build-related tasks such as:
 * Running tests
-* Managing library dependecies
+* Managing library dependencies
 * Analysing code for style compliance
 
 The gradle configuration for this project is defined in the build script `build.gradle`.
@@ -176,8 +205,8 @@ The gradle configuration for this project is defined in the build script `build.
 
 Travis CI is a Continuous Integration platform for GitHub projects. It runs the projects' tests automatically whenever new code is pushed to the repo. This ensures that existing functionality and features  have not been broken by the changes.
 
-The current Travis CI set up performs the following things whenever someone push code to the repo:
-* Runs the `./gradlew test` command.
+Whenever you push code to the repository, the current Travis CI set up will:
+* Runs the `./gradlew test` command
 
 #### Making a Release
 
@@ -410,7 +439,7 @@ Tasks **cannot** be created with start dates only.
 #### Appendix E : Product Survey
 ##### Pros of Products Surveyed
 <img src="images/ProductSurveyPros.jpeg"/>
-> Figure 7 Pros of Products Surveyed
+> Figure 8 Pros of Products Surveyed
 
 ##### Cons of Products Surveyed:
 *Google Calendar*
