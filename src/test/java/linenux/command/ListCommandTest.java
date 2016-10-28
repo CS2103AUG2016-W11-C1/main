@@ -277,6 +277,37 @@ public class ListCommandTest {
     }
 
     /**
+     * Test that list command filters by tags is case-insensitive
+     */
+    @Test
+    public void testFilterTaskAndRemindersByTagsCaseInsensitive() {
+        ArrayList<String> tags1 = new ArrayList<>();
+        ArrayList<String> tags2 = new ArrayList<>();
+        ArrayList<String> tags3 = new ArrayList<>();
+
+        tags1.add("hello");
+        tags2.add("hello");
+        tags2.add("world");
+        tags3.add("wat");
+
+        Task todo1 = new Task("todo 1", tags1);
+        Task todo2 = new Task("todo 2", tags2);
+        Task todo3 = new Task("todo 3", tags3);
+
+        this.schedule.addTask(todo1);
+        this.schedule.addTask(todo2);
+        this.schedule.addTask(todo3);
+
+        this.listCommand.execute("list #/hElLo");
+
+        ArrayList<Task> filteredTasks = this.schedule.getFilteredTasks();
+
+        assertTrue(filteredTasks.contains(todo1));
+        assertTrue(filteredTasks.contains(todo2));
+        assertTrue(!filteredTasks.contains(todo3));
+    }
+
+    /**
      * Test that list command field d/yes (view done only)
      */
     @Test
