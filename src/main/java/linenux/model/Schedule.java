@@ -58,7 +58,7 @@ public class Schedule {
      *
      * @param tasks The tasks to delete.
      */
-    //@@author A1234567A
+    //@@author A0140702X
     public void deleteTasks(ArrayList<Task> tasks) {
         State newState = getMostRecentState();
 
@@ -120,7 +120,7 @@ public class Schedule {
         return states;
     }
 
-    //@@author A1234567A
+    //@@author A0140702X
     public ObservableList<ArrayList<Task>> getFilteredTaskList() {
         return filteredTaskList;
     }
@@ -136,7 +136,7 @@ public class Schedule {
     /**
      * Returns the list of filtered tasks.
      */
-    //@@author A1234567A
+    //@@author A0140702X
     public ArrayList<Task> getFilteredTasks() {
         if (filteredTaskList.isEmpty()) {
             return getTaskList();
@@ -150,7 +150,7 @@ public class Schedule {
      */
     //@@author A0127694U
     public ArrayList<Reminder> getReminderList() {
-        ArrayList<Reminder> result = new ArrayList<Reminder>();
+        ArrayList<Reminder> result = new ArrayList<>();
         for (Task t : getMostRecentState().getTaskList()) {
             result.addAll(t.getReminders());
         }
@@ -176,7 +176,7 @@ public class Schedule {
      * Adds a new list of filtered tastes into filteredTaskList
      * @param filteredTasks
      */
-    //@@author A1234567A
+    //@@author A0140702X
     public void addFilterTasks(ArrayList<Task> filteredTasks) {
         filteredTaskList.clear();
         filteredTaskList.add(filteredTasks);

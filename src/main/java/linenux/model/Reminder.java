@@ -29,7 +29,7 @@ public class Reminder {
     }
 
     @Override
-    //@@author A1234567A
+    //@@author A0140702X
     public String toString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd h:mma");
 

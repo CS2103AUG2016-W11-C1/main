@@ -75,13 +75,13 @@ import linenux.util.ArrayListUtil;
      * @return List of {@code Task} matching the keywords.
      */
      public ArrayList<Task> search(String[] keywords) {
-         ArrayList<String> keywordsList = new ArrayListUtil.ChainableArrayListUtil<String>(keywords)
+         ArrayList<String> keywordsList = new ArrayListUtil.ChainableArrayListUtil<>(keywords)
                                                            .map(String::toLowerCase)
                                                            .value();
 
-         return new ArrayListUtil.ChainableArrayListUtil<Task>(this.tasks)
+         return new ArrayListUtil.ChainableArrayListUtil<>(this.tasks)
                                  .filter(task -> { ArrayList<String> taskKeywords =
-                                                     new ArrayListUtil.ChainableArrayListUtil<String>(task.getTaskName().split("\\s+"))
+                                                     new ArrayListUtil.ChainableArrayListUtil<>(task.getTaskName().split("\\s+"))
                                                                       .map(String::toLowerCase)
                                                                       .value();
                                                    return !Collections.disjoint(keywordsList, taskKeywords);
@@ -97,19 +97,60 @@ import linenux.util.ArrayListUtil;
      * @return List of {@code Task} matching the keywords.
      */
     public ArrayList<Reminder> searchReminder(String[] keywords) {
-        ArrayList<String> keywordsList = new ArrayListUtil.ChainableArrayListUtil<String>(keywords)
-                .map(String::toLowerCase).value();
-
-        ArrayList<Reminder> result = new ArrayList<Reminder>();
+        ArrayList<Reminder> result = new ArrayList<>();
 
         for (Task t : this.tasks) {
-            result.addAll(new ArrayListUtil.ChainableArrayListUtil<Reminder>(t.getReminders()).filter(reminder -> {
-                ArrayList<String> reminderKeywords = new ArrayListUtil.ChainableArrayListUtil<String>(
-                        reminder.getNote().split("\\s+")).map(String::toLowerCase).value();
-                return !Collections.disjoint(keywordsList, reminderKeywords);
-            }).value());
+            result.addAll(searchReminder(keywords, t));
         }
 
         return result;
     }
+
+    public ArrayList<Reminder> searchReminder(String[] keywords, ArrayList<Task> tasks) {
+        ArrayList<Reminder> result = new ArrayList<>();
+
+        for (Task t : tasks) {
+            result.addAll(searchReminder(keywords, t));
+        }
+
+        return result;
+    }
+
+    public ArrayList<Reminder> searchReminder(String[] keywords, Task task) {
+        ArrayList<String> keywordsList = new ArrayListUtil.ChainableArrayListUtil<>(keywords)
+                .map(String::toLowerCase).value();
+
+        return new ArrayListUtil.ChainableArrayListUtil<>(task.getReminders()).filter(reminder -> {
+                ArrayList<String> reminderKeywords = new ArrayListUtil.ChainableArrayListUtil<>(
+                        reminder.getNote().split("\\s+")).map(String::toLowerCase).value();
+                return !Collections.disjoint(keywordsList, reminderKeywords);
+        }).value();
+    }
+
+     /**
+     * Performs case-insensitive task search using keywords to search it's remidners.
+     *
+     * @param keywords
+     *            Search keywords
+     * @return List of {@code Task} matching the keywords.
+     */
+     public ArrayList<Task> searchByReminder(String[] keywords) {
+         ArrayList<String> keywordsList = new ArrayListUtil.ChainableArrayListUtil<>(keywords)
+                                                           .map(String::toLowerCase)
+                                                           .value();
+
+         return new ArrayListUtil.ChainableArrayListUtil<>(this.tasks)
+                 .filter(task -> {
+                     ArrayList<Reminder> filteredReminders = new ArrayListUtil.ChainableArrayListUtil<>(task.getReminders())
+                             .filter(reminder -> {
+                                 ArrayList<String> reminderKeywords = new ArrayListUtil.ChainableArrayListUtil<>(reminder.getNote().split("\\s+"))
+                                         .map(String::toLowerCase)
+                                         .value();
+                                 return !Collections.disjoint(keywordsList, reminderKeywords);
+                             })
+                             .value();
+                     return !filteredReminders.isEmpty();
+                 })
+                 .value();
+     }
 }
