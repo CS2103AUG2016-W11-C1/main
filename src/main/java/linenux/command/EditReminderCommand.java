@@ -21,7 +21,7 @@ import linenux.util.RemindersListUtil;
 /**
  * Edits a task in the schedule.
  */
-public class EditrCommand extends AbstractCommand {
+public class EditReminderCommand extends AbstractCommand {
 
     private static final String TRIGGER_WORD = "editr";
     private static final String DESCRIPTION = "Edits a reminder in the schedule.";
@@ -37,7 +37,7 @@ public class EditrCommand extends AbstractCommand {
     private EditrArgumentParser editrArgumentParser;
     private ArrayList<ReminderSearchResult> searchResults;
 
-    public EditrCommand(Schedule schedule) {
+    public EditReminderCommand(Schedule schedule) {
         this.schedule = schedule;
         this.timeParserManager = new TimeParserManager(new ISODateWithTimeParser());
         this.editrArgumentParser = new EditrArgumentParser(this.timeParserManager, COMMAND_FORMAT, CALLOUTS);

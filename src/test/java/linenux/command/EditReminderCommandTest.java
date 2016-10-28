@@ -18,14 +18,14 @@ import linenux.model.Task;
 /**
  * JUnit test for add command.
  */
-public class EditrCommandTest {
+public class EditReminderCommandTest {
     private Schedule schedule;
-    private EditrCommand editrCommand;
+    private EditReminderCommand editReminderCommand;
 
     @Before
     public void setupeditrCommand() {
         this.schedule = new Schedule();
-        this.editrCommand = new EditrCommand(this.schedule);
+        this.editReminderCommand = new EditReminderCommand(this.schedule);
     }
 
     private void setupMultipleHelloRemindersAndExecuteAmbiguousCommand() {
@@ -37,11 +37,11 @@ public class EditrCommandTest {
         task = task.addReminder(reminder2);
 
         this.schedule.addTask(task);
-        this.editrCommand.execute("editr world n/wat t/2018-01-01 5:00PM");
+        this.editReminderCommand.execute("editr world n/wat t/2018-01-01 5:00PM");
     }
 
     private String expectedInvalidArgumentMessage() {
-        return "Invalid arguments.\n\n" + this.editrCommand.getCommandFormat() + "\n\n" + Command.CALLOUTS;
+        return "Invalid arguments.\n\n" + this.editReminderCommand.getCommandFormat() + "\n\n" + Command.CALLOUTS;
     }
     /**
      * Test that respondTo detects various versions of the commands. It should
@@ -49,15 +49,15 @@ public class EditrCommandTest {
      */
     @Test
     public void testRespondToEditTaskCommand() {
-        assertTrue(this.editrCommand.respondTo("editr"));
-        assertTrue(this.editrCommand.respondTo("editr n/note"));
-        assertTrue(this.editrCommand.respondTo("editr t/2016-01-01 5:00PM"));
-        assertTrue(this.editrCommand.respondTo("editr n/note t/2016-01-01 5:00PM"));
+        assertTrue(this.editReminderCommand.respondTo("editr"));
+        assertTrue(this.editReminderCommand.respondTo("editr n/note"));
+        assertTrue(this.editReminderCommand.respondTo("editr t/2016-01-01 5:00PM"));
+        assertTrue(this.editReminderCommand.respondTo("editr n/note t/2016-01-01 5:00PM"));
 
-        assertTrue(this.editrCommand.respondTo("editr reminder"));
-        assertTrue(this.editrCommand.respondTo("editr reminder n/note"));
-        assertTrue(this.editrCommand.respondTo("editr reminder t/2016-01-01 5:00PM"));
-        assertTrue(this.editrCommand.respondTo("editr reminder n/note t/2016-01-01 5:00PM"));
+        assertTrue(this.editReminderCommand.respondTo("editr reminder"));
+        assertTrue(this.editReminderCommand.respondTo("editr reminder n/note"));
+        assertTrue(this.editReminderCommand.respondTo("editr reminder t/2016-01-01 5:00PM"));
+        assertTrue(this.editReminderCommand.respondTo("editr reminder n/note t/2016-01-01 5:00PM"));
     }
 
     /**
@@ -65,7 +65,7 @@ public class EditrCommandTest {
      */
     @Test
     public void testCaseInsensitiveEditTaskCommand() {
-        assertTrue(this.editrCommand.respondTo("EdITr reminder n/note t/2016-01-01 5:00PM"));
+        assertTrue(this.editReminderCommand.respondTo("EdITr reminder n/note t/2016-01-01 5:00PM"));
     }
 
     /**
@@ -74,7 +74,7 @@ public class EditrCommandTest {
      */
     @Test
     public void testNotRespondToOtherCommands() {
-        assertFalse(this.editrCommand.respondTo("halp"));
+        assertFalse(this.editReminderCommand.respondTo("halp"));
     }
 
     /**
@@ -88,7 +88,7 @@ public class EditrCommandTest {
         task = task.addReminder(reminder);
         this.schedule.addTask(task);
 
-        this.editrCommand.execute("editr reminder n/new reminder t/2017-01-01 5:00PM");
+        this.editReminderCommand.execute("editr reminder n/new reminder t/2017-01-01 5:00PM");
 
         // The edited reminder has correct note and time
         Task editedTask = this.schedule.getTaskList().get(0);
@@ -108,7 +108,7 @@ public class EditrCommandTest {
         task = task.addReminder(reminder);
         this.schedule.addTask(task);
 
-        this.editrCommand.execute("editr reminder n/new reminder");
+        this.editReminderCommand.execute("editr reminder n/new reminder");
 
         // The edited reminder has correct note and time
         Task editedTask = this.schedule.getTaskList().get(0);
@@ -128,7 +128,7 @@ public class EditrCommandTest {
         task = task.addReminder(reminder);
         this.schedule.addTask(task);
 
-        this.editrCommand.execute("editr reminder t/2017-01-01 5:00PM");
+        this.editReminderCommand.execute("editr reminder t/2017-01-01 5:00PM");
 
         // The edited reminder has correct note and time
         Task editedTask = this.schedule.getTaskList().get(0);
@@ -148,29 +148,29 @@ public class EditrCommandTest {
 
         this.schedule.addTask(task);
 
-        CommandResult result = this.editrCommand.execute("editr world n/new world t/2016-01-01 5:00PM");
+        CommandResult result = this.editReminderCommand.execute("editr world n/new world t/2016-01-01 5:00PM");
         assertEquals("Cannot find reminders with \"world\".", result.getFeedback());
     }
 
     @Test
     public void testAwaitingUserResponse() {
-        assertFalse(this.editrCommand.awaitingUserResponse());
+        assertFalse(this.editReminderCommand.awaitingUserResponse());
         this.setupMultipleHelloRemindersAndExecuteAmbiguousCommand();
-        assertTrue(this.editrCommand.awaitingUserResponse());
+        assertTrue(this.editReminderCommand.awaitingUserResponse());
     }
 
     @Test
     public void testUserResponseCancel() {
         this.setupMultipleHelloRemindersAndExecuteAmbiguousCommand();
-        CommandResult result = this.editrCommand.userResponse("cancel");
+        CommandResult result = this.editReminderCommand.userResponse("cancel");
         assertEquals("OK! Not editing anything.", result.getFeedback());
-        assertFalse(this.editrCommand.awaitingUserResponse());
+        assertFalse(this.editReminderCommand.awaitingUserResponse());
     }
 
     @Test
     public void testUserResponseValidIndex() {
         this.setupMultipleHelloRemindersAndExecuteAmbiguousCommand();
-        CommandResult result = this.editrCommand.userResponse("1");
+        CommandResult result = this.editReminderCommand.userResponse("1");
 
         Task task = this.schedule.getTaskList().get(0);
         ArrayList<Reminder> reminders = task.getReminders();
@@ -186,7 +186,7 @@ public class EditrCommandTest {
     @Test
     public void testUserResponseInvalidIndex() {
         this.setupMultipleHelloRemindersAndExecuteAmbiguousCommand();
-        CommandResult result = this.editrCommand.userResponse("3");
+        CommandResult result = this.editReminderCommand.userResponse("3");
 
         String expectedResult = "That's not a valid index. Enter a number between 1 and 2:\n" + "Task: hello\n"
                 + "1. world (On 2016-01-01 5:00PM)\n" + "2. hello world (On 2017-01-01 5:00PM)";
@@ -196,7 +196,7 @@ public class EditrCommandTest {
     @Test
     public void testUserResponseInvalidResponse() {
         this.setupMultipleHelloRemindersAndExecuteAmbiguousCommand();
-        CommandResult result = this.editrCommand.userResponse("asd");
+        CommandResult result = this.editReminderCommand.userResponse("asd");
 
         String expectedResult = "I don't understand \"asd\".\nEnter a number to indicate which reminder to edit.\n"
                 + "Task: hello\n"
@@ -215,7 +215,7 @@ public class EditrCommandTest {
         task = task.addReminder(reminder);
         this.schedule.addTask(task);
 
-        this.editrCommand.execute("editr reminder t/2017-01-01 5:00PM n/new reminder");
+        this.editReminderCommand.execute("editr reminder t/2017-01-01 5:00PM n/new reminder");
 
         // The edited reminder has correct note and time
         Task editedTask = this.schedule.getTaskList().get(0);
@@ -231,7 +231,7 @@ public class EditrCommandTest {
         task = task.addReminder(reminder);
         this.schedule.addTask(task);
 
-        CommandResult result = this.editrCommand.execute("editr reminder t/yesterday n/new reminder");
+        CommandResult result = this.editReminderCommand.execute("editr reminder t/yesterday n/new reminder");
 
         assertEquals("Cannot parse \"yesterday\".", result.getFeedback());
     }
@@ -243,7 +243,7 @@ public class EditrCommandTest {
         task = task.addReminder(reminder);
         this.schedule.addTask(task);
 
-        CommandResult result = this.editrCommand.execute("editr t/2016-01-01 5:00PM n/new reminder");
+        CommandResult result = this.editReminderCommand.execute("editr t/2016-01-01 5:00PM n/new reminder");
 
         assertEquals(expectedInvalidArgumentMessage(), result.getFeedback());
     }
@@ -255,7 +255,7 @@ public class EditrCommandTest {
         task = task.addReminder(reminder);
         this.schedule.addTask(task);
 
-        CommandResult result = this.editrCommand.execute("editr reminder");
+        CommandResult result = this.editReminderCommand.execute("editr reminder");
 
         assertEquals("No changes to be made!", result.getFeedback());
     }
@@ -267,7 +267,7 @@ public class EditrCommandTest {
         task = task.addReminder(reminder);
         this.schedule.addTask(task);
 
-        CommandResult result = this.editrCommand.execute("editr hello");
+        CommandResult result = this.editReminderCommand.execute("editr hello");
 
         assertEquals("Cannot find reminders with \"hello\".", result.getFeedback());
     }
