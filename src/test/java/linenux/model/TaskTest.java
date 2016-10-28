@@ -76,7 +76,7 @@ public class TaskTest {
 
     @Test
     public void testCategoryToString() {
-        ArrayList<String> tags = new ArrayList<String>();
+        ArrayList<String> tags = new ArrayList<>();
         tags.add("tag");
         Task task = new Task("hello", null, null, tags);
         assertEquals("hello [Tags: \"tag\" ]", task.toString());

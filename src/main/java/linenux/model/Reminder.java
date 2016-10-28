@@ -40,6 +40,38 @@ public class Reminder {
         }
     }
 
+    // @@author A0140702X
+    @Override
+    public boolean equals(Object other) {
+        if (other == null || !(other instanceof Reminder)) {
+            return false;
+        }
+
+        Reminder otherReminder = (Reminder) other;
+
+        assert this.getNote() != null;
+        assert otherReminder.getNote() != null;
+
+        // testing for equality is not case-sensitive
+        if (!this.getNote().toLowerCase().equals(otherReminder.getNote().toLowerCase())) {
+            return false;
+        }
+
+        assert this.getTimeOfReminder() != null;
+        assert otherReminder.getTimeOfReminder() != null;
+
+        if (!this.getTimeOfReminder().equals(otherReminder.getTimeOfReminder())) {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return note.hashCode() ^ timeOfReminder.hashCode();
+    }
+
     /* Getters */
 
     //@@author A0135788M

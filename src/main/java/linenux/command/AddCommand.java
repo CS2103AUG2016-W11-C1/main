@@ -1,5 +1,6 @@
 package linenux.command;
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -9,6 +10,7 @@ import linenux.control.TimeParserManager;
 import linenux.model.Schedule;
 import linenux.model.Task;
 import linenux.time.parser.ISODateWithTimeParser;
+import linenux.util.ArrayListUtil;
 import linenux.util.Either;
 
 /**
@@ -40,11 +42,22 @@ public class AddCommand extends AbstractCommand {
 
         Either<Task, CommandResult> task = this.addArgumentParser.parse(argument);
 
-        if (task.isLeft()) {
-            this.schedule.addTask(task.getLeft());
-            return makeResult(task.getLeft());
-        } else {
+        if (task.isRight()) {
             return task.getRight();
+        }
+
+        Task actualTask = task.getLeft();
+
+        ArrayList<Task> duplicateTaskList = new ArrayListUtil.ChainableArrayListUtil<>(this.schedule.getTaskList())
+                .filter(a -> a.equals(actualTask)).value();
+
+        assert duplicateTaskList.size() <= 1;
+
+        if (duplicateTaskList.isEmpty()) {
+            this.schedule.addTask(actualTask);
+            return makeResult(actualTask);
+        } else {
+            return makeDuplicateTaskResult(actualTask);
         }
     }
 
@@ -77,5 +90,9 @@ public class AddCommand extends AbstractCommand {
 
     private CommandResult makeResult(Task task) {
         return () -> "Added " + task.toString();
+    }
+
+    private CommandResult makeDuplicateTaskResult(Task task) {
+        return () -> task.toString() + " already exists in the schedule!";
     }
 }

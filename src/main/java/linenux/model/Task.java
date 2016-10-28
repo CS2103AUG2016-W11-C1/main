@@ -134,6 +134,96 @@ public class Task {
         return isDone == false;
     }
 
+    //@@author A0140702X
+    @Override
+    public boolean equals(Object other) {
+        if (other == null || !(other instanceof Task)) {
+            return false;
+        }
+
+        Task otherTask = (Task) other;
+
+        // equality of task name should be case insensitive
+        if (!this.getTaskName().toLowerCase().equals(otherTask.getTaskName().toLowerCase())) {
+            return false;
+        }
+
+        LocalDateTime thisStartTime = this.getStartTime();
+        LocalDateTime otherStartTime = otherTask.getStartTime();
+
+        if (thisStartTime == null && otherStartTime == null) {
+            // do nothing and proceed to check other fields.
+        } else {
+            if (thisStartTime == null || otherStartTime == null) {
+                return false;
+            }
+
+            if (!thisStartTime.equals(otherStartTime)) {
+                return false;
+            }
+        }
+
+        LocalDateTime thisEndTime = this.getEndTime();
+        LocalDateTime otherEndTime = otherTask.getEndTime();
+
+        if (thisEndTime == null && otherEndTime == null) {
+            // do nothing and proceed to check other fields.
+        } else {
+            if (thisEndTime == null || otherEndTime == null) {
+                return false;
+            }
+
+            if (!thisEndTime.equals(otherEndTime)) {
+                return false;
+            }
+        }
+
+        //checking tags
+        if (this.tags.size() != otherTask.getTags().size()) {
+            return false;
+        } else {
+            ArrayList<String> otherTags = otherTask.getTags();
+            for (String tag : this.tags) {
+                if (!otherTags.contains(tag)) {
+                    return false;
+                }
+            }
+        }
+
+        // checking reminders
+        if (this.reminders.size() != otherTask.getReminders().size()) {
+            return false;
+        } else {
+            ArrayList<Reminder> otherReminders = otherTask.getReminders();
+            for (Reminder reminder : this.reminders) {
+                if (!otherReminders.contains(reminder)) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = taskName.hashCode() ^ startTime.hashCode() ^ endTime.hashCode();
+
+        if (!tags.isEmpty()) {
+            for (String tag : tags) {
+                result = result ^ tag.hashCode();
+            }
+        }
+
+        if (!reminders.isEmpty()) {
+            for (Reminder reminder : reminders) {
+                result = result ^ reminder.hashCode();
+            }
+        }
+
+        return result;
+    }
+
     //@@author A1234567A
     public boolean hasTag(String tag) {
         return tags.contains(tag);
