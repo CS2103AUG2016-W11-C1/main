@@ -2,7 +2,7 @@ package linenux.util;
 
 import java.util.ArrayList;
 
-import linenux.command.EditrCommand;
+import linenux.command.util.ReminderSearchResult;
 import linenux.model.Reminder;
 
 //@@author A0140702X
@@ -25,11 +25,11 @@ public class RemindersListUtil {
         return builder.toString().trim();
     }
 
-    public static String displaySearchResults(ArrayList<EditrCommand.ReminderSearchResult> results) {
+    public static String displaySearchResults(ArrayList<ReminderSearchResult> results) {
         StringBuilder builder = new StringBuilder();
 
         int counter = 1;
-        for (EditrCommand.ReminderSearchResult result: results) {
+        for (ReminderSearchResult result: results) {
             builder.append("Task: ");
             builder.append(result.getTask().getTaskName());
             builder.append("\n");

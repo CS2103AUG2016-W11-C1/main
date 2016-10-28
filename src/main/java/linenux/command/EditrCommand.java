@@ -8,6 +8,7 @@ import linenux.command.parser.EditrArgumentParser;
 import linenux.command.result.CommandResult;
 import linenux.command.result.PromptResults;
 import linenux.command.result.SearchResults;
+import linenux.command.util.ReminderSearchResult;
 import linenux.control.TimeParserManager;
 import linenux.model.Reminder;
 import linenux.model.Schedule;
@@ -16,45 +17,11 @@ import linenux.time.parser.ISODateWithTimeParser;
 import linenux.util.ArrayListUtil;
 import linenux.util.Either;
 import linenux.util.RemindersListUtil;
-import linenux.util.TasksListUtil;
 
 /**
  * Edits a task in the schedule.
  */
 public class EditrCommand extends AbstractCommand {
-    public static class ReminderSearchResult {
-        private Task task;
-        private ArrayList<Reminder> reminders;
-
-        public static Task getTaskFromReminder(ArrayList<ReminderSearchResult> results, Reminder reminder) {
-            for (ReminderSearchResult result: results) {
-                if (result.getReminders().contains(reminder)) {
-                    return result.getTask();
-                }
-            }
-            return null;
-        }
-
-        public static int totalReminders(ArrayList<ReminderSearchResult> results) {
-            return new ArrayListUtil.ChainableArrayListUtil<>(results)
-                    .map(ReminderSearchResult::getReminders)
-                    .map(ArrayList::size)
-                    .foldr((a, b) -> a + b, 0);
-        }
-
-        public ReminderSearchResult(Task task, ArrayList<Reminder> reminders) {
-            this.task = task;
-            this.reminders = reminders;
-        }
-
-        public Task getTask() {
-            return this.task;
-        }
-
-        public ArrayList<Reminder> getReminders() {
-            return this.reminders;
-        }
-    }
 
     private static final String TRIGGER_WORD = "editr";
     private static final String DESCRIPTION = "Edits a reminder in the schedule.";

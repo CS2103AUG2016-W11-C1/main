@@ -2,10 +2,8 @@ package linenux.command.result;
 
 import java.util.ArrayList;
 
-import linenux.command.EditrCommand;
-import linenux.model.Reminder;
+import linenux.command.util.ReminderSearchResult;
 import linenux.model.Task;
-import linenux.util.ArrayListUtil;
 import linenux.util.RemindersListUtil;
 import linenux.util.TasksListUtil;
 
@@ -27,9 +25,9 @@ public class PromptResults {
         };
     }
 
-    public static CommandResult makePromptReminderIndexResult(ArrayList<EditrCommand.ReminderSearchResult> results) {
+    public static CommandResult makePromptReminderIndexResult(ArrayList<ReminderSearchResult> results) {
         return () -> {
-            int totalResults = EditrCommand.ReminderSearchResult.totalReminders(results);
+            int totalResults = ReminderSearchResult.totalReminders(results);
 
             StringBuilder builder = new StringBuilder();
             builder.append("Which one? (1-");
@@ -52,9 +50,9 @@ public class PromptResults {
         };
     }
 
-    public static CommandResult makeInvalidReminderIndexResult(ArrayList<EditrCommand.ReminderSearchResult> results) {
+    public static CommandResult makeInvalidReminderIndexResult(ArrayList<ReminderSearchResult> results) {
         return () -> {
-            int totalReminders = EditrCommand.ReminderSearchResult.totalReminders(results);
+            int totalReminders = ReminderSearchResult.totalReminders(results);
 
             StringBuilder builder = new StringBuilder();
             builder.append("That's not a valid index. Enter a number between 1 and ");
