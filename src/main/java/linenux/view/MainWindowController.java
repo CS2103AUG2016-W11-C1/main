@@ -94,10 +94,10 @@ public class MainWindowController {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainWindowController.class.getResource("/view/CommandBox.fxml"));
             TextField field = loader.load();
-            AnchorPane.setTopAnchor(field, 0.0);
-            AnchorPane.setRightAnchor(field, 0.0);
-            AnchorPane.setBottomAnchor(field, 0.0);
-            AnchorPane.setLeftAnchor(field, 0.0);
+            AnchorPane.setTopAnchor(field, 2.0);
+            AnchorPane.setRightAnchor(field, 5.0);
+            AnchorPane.setBottomAnchor(field, 5.0);
+            AnchorPane.setLeftAnchor(field, 5.0);
             commandBoxContainer.getChildren().add(field);
 
             CommandBoxController controller = loader.getController();

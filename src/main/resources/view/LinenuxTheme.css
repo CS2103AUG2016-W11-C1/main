@@ -1,0 +1,65 @@
+.mainWindowAnchor {
+	-fx-background-color: AliceBlue;
+}
+
+.header {
+	-fx-font: 40px "Trebuchet MS";
+    -fx-stroke: #003834;
+    -fx-stroke-width: 1;
+}
+
+
+.commandBox {
+    -fx-font-size: 12pt;
+    -fx-font-family: "Trebuchet MS";
+    -fx-font-weight: bold;
+    -fx-text-fill: MintCream;
+    -fx-control-inner-background: derive(SteelBlue,20%);
+    -fx-background-radius: 10;
+    -fx-focus-color:transparent;
+}
+
+.todolist .list-cell:even {
+	-fx-background-color:#E5CCED;
+	-fx-text-fill:SaddleBrown;
+	-fx-background-radius: 5;
+}
+
+.todolist .list-cell:odd {
+	-fx-background-color:#F4EEF6;
+	-fx-background-radius: 5;
+}
+
+.todolist .list-cell:even {
+	-fx-background-color:#E5CCED;
+	-fx-background-radius: 5;
+}
+
+.deadlineList .list-cell:odd {
+	-fx-background-color: #E6B8D5;
+	-fx-background-radius: 5;
+}
+
+.deadlineList .list-cell:even {
+	-fx-background-color: #FEEDF8;
+	-fx-background-radius: 5;
+}
+
+.eventList .list-cell:odd {
+	-fx-background-colour: #E9D3FA;
+	-fx-background-radius: 5;
+}
+
+.eventList .list-cell:even {
+	-fx-background-color: #D2B8E6;
+	-fx-background-radius: 5;
+}
+
+.list-view {
+	-fx-background-color:Ivory;
+	-fx-font: 15px "Trebuchet MS";
+}
+
+.list-view .list-cell:empty {
+	-fx-background-color: Ivory;
+}
