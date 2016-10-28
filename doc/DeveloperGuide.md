@@ -103,7 +103,25 @@ The **Task** class is made up of the name of the task, a start time, an end time
 
 The **Reminder** class allows our users to set one or more reminders for their tasks.
 
-The **Storage** class allows the in-memory data to persist after the application is closed. The state of the **Schedule** is stored as an XML file called **XMLScheduleStorage**.
+We have made all the models except **Schedule** immutable, thus all the commands should only interact with the Schedule model.
+
+Notable APIs for **Schedule** model:
+| Method | Description |
+| ------ | ----------- |
+| addTask(Task task) | Adds the task into the schedule. |
+| updateTask(Task originalTask, Task newTask) | Updates the original task in the schedule with the new task. |
+| deleteTask(Task task) | Deletes the task from the schedule. |
+| deleteTasks(ArrayList<Task> tasks) | Deletes all the tasks in the list from the schedule. |
+| clear() | Deletes all tasks from the schedule. |
+| search(String keywords) | Search and returns tasks based on given keywords. |
+| searchReminder(String keywords) | Search by each task's reminders based on given keywords and returns tasks whose reminders fits the keywords. |
+| getState() | Returns list of state. |
+| 
+
+
+The **Storage** class allows the in-memory data to persist after the application is closed. The state of the **Schedule** is stored as an XML file using **XMLScheduleStorage** class.
+
+
 
 #### View Component
 <img src="images/viewDiagram.png">
