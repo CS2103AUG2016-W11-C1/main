@@ -15,6 +15,7 @@ import linenux.model.Task;
 import linenux.time.parser.ISODateWithTimeParser;
 import linenux.time.parser.StandardDateWithTimeParser;
 import linenux.time.parser.TodayWithTimeParser;
+import linenux.time.parser.TomorrowWithTimeParser;
 import linenux.util.ArrayListUtil;
 import linenux.util.Either;
 import linenux.util.LocalDateTimeUtil;
@@ -40,7 +41,7 @@ public class FreeTimeCommand extends AbstractCommand {
 
     public FreeTimeCommand(Schedule schedule, Clock clock) {
         this.schedule = schedule;
-        this.timeParserManager = new TimeParserManager(new ISODateWithTimeParser(), new StandardDateWithTimeParser(), new TodayWithTimeParser());
+        this.timeParserManager = new TimeParserManager(new ISODateWithTimeParser(), new StandardDateWithTimeParser(), new TodayWithTimeParser(), new TomorrowWithTimeParser());
         this.argumentParser = new FreeTimeArgumentParser(this.timeParserManager, clock);
         this.clock = clock;
         this.TRIGGER_WORDS.add(TRIGGER_WORD);

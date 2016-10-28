@@ -4,6 +4,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Parse date and time in the form of "today 5.00pm"
+ */
+//@@author A0135788M
 public class TodayWithTimeParser implements TimeParser {
     private static final String TODAY_TIME_PATTERN = "(?i)^today (1[012]|[1-9]).[0-5][0-9](\\s)?(am|pm)";
 

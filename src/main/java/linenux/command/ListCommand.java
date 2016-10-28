@@ -14,6 +14,7 @@ import linenux.model.Task;
 import linenux.time.parser.ISODateWithTimeParser;
 import linenux.time.parser.StandardDateWithTimeParser;
 import linenux.time.parser.TodayWithTimeParser;
+import linenux.time.parser.TomorrowWithTimeParser;
 import linenux.util.ArrayListUtil;
 import linenux.util.Either;
 import linenux.util.TasksListUtil;
@@ -35,7 +36,7 @@ public class ListCommand extends AbstractCommand {
     //@@author A0140702X
     public ListCommand(Schedule schedule) {
         this.schedule = schedule;
-        this.timeParserManager = new TimeParserManager(new ISODateWithTimeParser(), new StandardDateWithTimeParser(), new TodayWithTimeParser());
+        this.timeParserManager = new TimeParserManager(new ISODateWithTimeParser(), new StandardDateWithTimeParser(), new TodayWithTimeParser(), new TomorrowWithTimeParser());
         this.listArgumentFilter = new ListArgumentFilter(this.timeParserManager, COMMAND_FORMAT, CALLOUTS);
         this.TRIGGER_WORDS.add(TRIGGER_WORD);
     }
