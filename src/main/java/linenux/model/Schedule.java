@@ -150,7 +150,7 @@ public class Schedule {
      */
     //@@author A0127694U
     public ArrayList<Reminder> getReminderList() {
-        ArrayList<Reminder> result = new ArrayList<Reminder>();
+        ArrayList<Reminder> result = new ArrayList<>();
         for (Task t : getMostRecentState().getTaskList()) {
             result.addAll(t.getReminders());
         }
