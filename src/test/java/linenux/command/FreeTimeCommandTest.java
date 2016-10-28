@@ -1,19 +1,20 @@
 package linenux.command;
 
-import linenux.model.Schedule;
-import linenux.model.Task;
-import linenux.command.result.CommandResult;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.time.Clock;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import org.junit.Before;
+import org.junit.Test;
+
+import linenux.command.result.CommandResult;
+import linenux.model.Schedule;
+import linenux.model.Task;
 
 /**
  * Created by yihangho on 10/15/16.
@@ -38,8 +39,8 @@ public class FreeTimeCommandTest {
     public void testRespondToFreetimeCommand() {
         assertTrue(this.command.respondTo("freetime"));
         assertTrue(this.command.respondTo("   freetime   "));
-        assertTrue(this.command.respondTo("freetime et/2016-01-01 5:00PM"));
-        assertTrue(this.command.respondTo("freetime st/2016-01-01 5:00PM et/2016-01-02 5:00PM"));
+        assertTrue(this.command.respondTo("freetime et/2016-01-01 5.00PM"));
+        assertTrue(this.command.respondTo("freetime st/2016-01-01 5.00PM et/2016-01-02 5.00PM"));
     }
 
     @Test
@@ -55,21 +56,21 @@ public class FreeTimeCommandTest {
 
     @Test
     public void testExecuteWithStartTime() {
-        CommandResult result = this.command.execute("freetime st/2016-01-01 3:00PM et/2016-01-01 11:59PM");
+        CommandResult result = this.command.execute("freetime st/2016-01-01 3.00PM et/2016-01-01 11.59PM");
         String expectedResult = "You are free at the following time slots:\n" +
-                " - 2016-01-01 3:00PM - 2016-01-01 5:00PM\n" +
-                " - 2016-01-01 7:00PM - 2016-01-01 9:00PM\n" +
-                " - 2016-01-01 11:00PM - 2016-01-01 11:59PM\n";
+                " - 2016-01-01 3.00PM - 2016-01-01 5.00PM\n" +
+                " - 2016-01-01 7.00PM - 2016-01-01 9.00PM\n" +
+                " - 2016-01-01 11.00PM - 2016-01-01 11.59PM\n";
         assertEquals(expectedResult, result.getFeedback());
     }
 
     @Test
     public void testExecuteWithoutStartTime() {
-        CommandResult result = this.command.execute("freetime et/2016-01-01 11:59PM");
+        CommandResult result = this.command.execute("freetime et/2016-01-01 11.59PM");
         String expectedResult = "You are free at the following time slots:\n" +
-                " - 2016-01-01 3:24PM - 2016-01-01 5:00PM\n" +
-                " - 2016-01-01 7:00PM - 2016-01-01 9:00PM\n" +
-                " - 2016-01-01 11:00PM - 2016-01-01 11:59PM\n";
+                " - 2016-01-01 3.24PM - 2016-01-01 5.00PM\n" +
+                " - 2016-01-01 7.00PM - 2016-01-01 9.00PM\n" +
+                " - 2016-01-01 11.00PM - 2016-01-01 11.59PM\n";
         assertEquals(expectedResult, result.getFeedback());
     }
 
@@ -79,34 +80,34 @@ public class FreeTimeCommandTest {
         String expectedResult = "Cannot parse \"Jan 1, 16 2359\".";
         assertEquals(expectedResult, result.getFeedback());
 
-        result = this.command.execute("freetime st/tomorrow et/2016-01-01 11:59PM");
+        result = this.command.execute("freetime st/tomorrow et/2016-01-01 11.59PM");
         expectedResult = "Cannot parse \"tomorrow\".";
         assertEquals(expectedResult, result.getFeedback());
     }
 
     @Test
     public void testEndTimeBeforeStartTime() {
-        CommandResult result = this.command.execute("freetime st/2016-01-01 5:00PM et/2016-01-01 4:45PM");
+        CommandResult result = this.command.execute("freetime st/2016-01-01 5.00PM et/2016-01-01 4.45PM");
         String expectedResult = "End time must be after start time.";
         assertEquals(expectedResult, result.getFeedback());
 
-        result = this.command.execute("freetime et/2016-01-01 3:00PM");
+        result = this.command.execute("freetime et/2016-01-01 3.00PM");
         assertEquals(expectedResult, result.getFeedback());
     }
 
     @Test
     public void testTrivialFirstEmptySlot() {
-        CommandResult result = this.command.execute("freetime st/2016-01-01 5:00PM et/2016-01-01 8:00PM");
+        CommandResult result = this.command.execute("freetime st/2016-01-01 5.00PM et/2016-01-01 8.00PM");
         String expectedResult = "You are free at the following time slots:\n" +
-                " - 2016-01-01 7:00PM - 2016-01-01 8:00PM\n";
+                " - 2016-01-01 7.00PM - 2016-01-01 8.00PM\n";
         assertEquals(expectedResult, result.getFeedback());
     }
 
     @Test
     public void testTrivialLastEmptySlot() {
-        CommandResult result = this.command.execute("freetime st/2016-01-01 3:00PM et/2016-01-01 7:00PM");
+        CommandResult result = this.command.execute("freetime st/2016-01-01 3.00PM et/2016-01-01 7.00PM");
         String expectedResult = "You are free at the following time slots:\n" +
-                " - 2016-01-01 3:00PM - 2016-01-01 5:00PM\n";
+                " - 2016-01-01 3.00PM - 2016-01-01 5.00PM\n";
         assertEquals(expectedResult, result.getFeedback());
     }
 
@@ -116,30 +117,30 @@ public class FreeTimeCommandTest {
         String expectedResult = "End time must be specified.";
         assertEquals(expectedResult, result.getFeedback());
 
-        result = this.command.execute("freetime st/2016-01-01 5:00PM");
+        result = this.command.execute("freetime st/2016-01-01 5.00PM");
         assertEquals(expectedResult, result.getFeedback());
     }
 
     @Test
     public void testNoFreeTime() {
-        CommandResult result = this.command.execute("freetime st/2016-01-01 5:00PM et/2016-01-01 7:00PM");
+        CommandResult result = this.command.execute("freetime st/2016-01-01 5.00PM et/2016-01-01 7.00PM");
         String expectedResult = "You are free at the following time slots:\n";
         assertEquals(expectedResult, result.getFeedback());
     }
 
     @Test
     public void testQueryRangeIntersectWithEvent() {
-        CommandResult result = this.command.execute("freetime st/2016-01-01 6:00PM et/2016-01-01 8:00PM");
+        CommandResult result = this.command.execute("freetime st/2016-01-01 6.00PM et/2016-01-01 8.00PM");
         String expectedResult = "You are free at the following time slots:\n" +
-                " - 2016-01-01 7:00PM - 2016-01-01 8:00PM\n";
+                " - 2016-01-01 7.00PM - 2016-01-01 8.00PM\n";
         assertEquals(expectedResult, result.getFeedback());
 
-        result = this.command.execute("freetime st/2016-01-01 4:00PM et/2016-01-01 6:00PM");
+        result = this.command.execute("freetime st/2016-01-01 4.00PM et/2016-01-01 6.00PM");
         expectedResult = "You are free at the following time slots:\n" +
-                " - 2016-01-01 4:00PM - 2016-01-01 5:00PM\n";
+                " - 2016-01-01 4.00PM - 2016-01-01 5.00PM\n";
         assertEquals(expectedResult, result.getFeedback());
 
-        result = this.command.execute("freetime st/2016-01-01 5:30PM et/2016-01-01 6:30PM");
+        result = this.command.execute("freetime st/2016-01-01 5.30PM et/2016-01-01 6.30PM");
         expectedResult = "You are free at the following time slots:\n";
         assertEquals(expectedResult, result.getFeedback());
     }

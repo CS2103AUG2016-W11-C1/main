@@ -165,7 +165,7 @@ public class RemindCommand extends AbstractCommand {
     }
 
     private CommandResult makeResult(Task task, Reminder reminder) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd h:mma");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd h.mma");
 
         return () -> "Added reminder on " + reminder.getTimeOfReminder().format(formatter) + " for "
                 + task.getTaskName();

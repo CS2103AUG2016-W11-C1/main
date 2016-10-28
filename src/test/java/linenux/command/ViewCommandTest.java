@@ -99,9 +99,9 @@ public class ViewCommandTest {
         this.setupTaskWithAndWithoutReminders();
         CommandResult result = this.viewCommand.execute("view Task2");
         assertEquals("Task2\n" + "Reminders:\n"
-            + "1. Attend Workshop 1 (On 2016-01-01 5:00PM)\n"
-            + "2. Attend Workshop 2 (On 2016-02-01 5:00PM)\n"
-            + "3. Attend Workshop 3 (On 2016-03-01 5:00PM)", result.getFeedback());
+            + "1. Attend Workshop 1 (On 2016-01-01 5.00PM)\n"
+            + "2. Attend Workshop 2 (On 2016-02-01 5.00PM)\n"
+            + "3. Attend Workshop 3 (On 2016-03-01 5.00PM)", result.getFeedback());
     }
 
     /**

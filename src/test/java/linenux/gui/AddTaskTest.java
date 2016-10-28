@@ -1,11 +1,11 @@
 package linenux.gui;
 
-import org.junit.Test;
-
 import static linenux.helpers.GuiMatchers.hasCellLabelled;
 import static org.testfx.api.FxAssert.verifyThat;
 import static org.testfx.matcher.control.ListViewMatchers.hasItems;
 import static org.testfx.matcher.control.ListViewMatchers.isEmpty;
+
+import org.junit.Test;
 
 /**
  * Created by yihangho on 10/17/16.
@@ -49,26 +49,26 @@ public class AddTaskTest extends GuiTest {
         verifyThat("#eventsList", isEmpty());
 
         robot.clickOn("#textField");
-        robot.write("add deadline et/2016-01-01 5:00PM\n");
+        robot.write("add deadline et/2016-01-01 5.00PM\n");
 
         verifyThat("#todosList", isEmpty());
         verifyThat("#deadlinesList", hasItems(1));
-        verifyThat("#deadlinesList", hasCellLabelled("deadline (Due 2016-01-01 5:00PM)"));
+        verifyThat("#deadlinesList", hasCellLabelled("deadline (Due 2016-01-01 5.00PM)"));
         verifyThat("#eventsList", isEmpty());
     }
 
     @Test
     public void testMarkDeadlineAsDone() {
         robot.clickOn("#textField");
-        robot.write("add deadline et/2016-01-01 5:00PM\n");
-        robot.write("add another et/2016-02-01 5:00PM\n");
+        robot.write("add deadline et/2016-01-01 5.00PM\n");
+        robot.write("add another et/2016-02-01 5.00PM\n");
 
         verifyThat("#deadlinesList", hasItems(2));
 
         robot.write("done deadline\n");
 
         verifyThat("#deadlinesList", hasItems(1));
-        verifyThat("#deadlinesList", hasCellLabelled("another (Due 2016-02-01 5:00PM)"));
+        verifyThat("#deadlinesList", hasCellLabelled("another (Due 2016-02-01 5.00PM)"));
     }
 
     @Test
@@ -78,11 +78,11 @@ public class AddTaskTest extends GuiTest {
         verifyThat("#eventsList", isEmpty());
 
         robot.clickOn("#textField");
-        robot.write("add event st/2016-01-01 5:00PM et/2016-01-01 7:00PM\n");
+        robot.write("add event st/2016-01-01 5.00PM et/2016-01-01 7.00PM\n");
 
         verifyThat("#todosList", isEmpty());
         verifyThat("#deadlinesList", isEmpty());
         verifyThat("#eventsList", hasItems(1));
-        verifyThat("#eventsList", hasCellLabelled("event (2016-01-01 5:00PM - 2016-01-01 7:00PM)"));
+        verifyThat("#eventsList", hasCellLabelled("event (2016-01-01 5.00PM - 2016-01-01 7.00PM)"));
     }
 }

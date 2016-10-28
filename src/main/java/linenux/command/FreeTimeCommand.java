@@ -177,7 +177,7 @@ public class FreeTimeCommand extends AbstractCommand {
 
     private CommandResult makeResult(ArrayList<TimeInterval> freetimes) {
         return () -> {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd h:mma");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd h.mma");
             StringBuilder builder = new StringBuilder();
             builder.append("You are free at the following time slots:\n");
             for (TimeInterval freetime: freetimes) {
