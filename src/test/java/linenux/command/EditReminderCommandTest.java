@@ -37,7 +37,7 @@ public class EditReminderCommandTest {
         task = task.addReminder(reminder2);
 
         this.schedule.addTask(task);
-        this.editReminderCommand.execute("editr world n/wat t/2018-01-01 5:00PM");
+        this.editReminderCommand.execute("editr world n/wat t/2018-01-01 5.00PM");
     }
 
     private String expectedInvalidArgumentMessage() {
@@ -51,13 +51,13 @@ public class EditReminderCommandTest {
     public void testRespondToEditTaskCommand() {
         assertTrue(this.editReminderCommand.respondTo("editr"));
         assertTrue(this.editReminderCommand.respondTo("editr n/note"));
-        assertTrue(this.editReminderCommand.respondTo("editr t/2016-01-01 5:00PM"));
-        assertTrue(this.editReminderCommand.respondTo("editr n/note t/2016-01-01 5:00PM"));
+        assertTrue(this.editReminderCommand.respondTo("editr t/2016-01-01 5.00PM"));
+        assertTrue(this.editReminderCommand.respondTo("editr n/note t/2016-01-01 5.00PM"));
 
         assertTrue(this.editReminderCommand.respondTo("editr reminder"));
         assertTrue(this.editReminderCommand.respondTo("editr reminder n/note"));
-        assertTrue(this.editReminderCommand.respondTo("editr reminder t/2016-01-01 5:00PM"));
-        assertTrue(this.editReminderCommand.respondTo("editr reminder n/note t/2016-01-01 5:00PM"));
+        assertTrue(this.editReminderCommand.respondTo("editr reminder t/2016-01-01 5.00PM"));
+        assertTrue(this.editReminderCommand.respondTo("editr reminder n/note t/2016-01-01 5.00PM"));
     }
 
     /**
@@ -65,7 +65,7 @@ public class EditReminderCommandTest {
      */
     @Test
     public void testCaseInsensitiveEditTaskCommand() {
-        assertTrue(this.editReminderCommand.respondTo("EdITr reminder n/note t/2016-01-01 5:00PM"));
+        assertTrue(this.editReminderCommand.respondTo("EdITr reminder n/note t/2016-01-01 5.00PM"));
     }
 
     /**
@@ -88,7 +88,7 @@ public class EditReminderCommandTest {
         task = task.addReminder(reminder);
         this.schedule.addTask(task);
 
-        this.editReminderCommand.execute("editr reminder n/new reminder t/2017-01-01 5:00PM");
+        this.editReminderCommand.execute("editr reminder n/new reminder t/2017-01-01 5.00PM");
 
         // The edited reminder has correct note and time
         Task editedTask = this.schedule.getTaskList().get(0);
@@ -128,7 +128,7 @@ public class EditReminderCommandTest {
         task = task.addReminder(reminder);
         this.schedule.addTask(task);
 
-        this.editReminderCommand.execute("editr reminder t/2017-01-01 5:00PM");
+        this.editReminderCommand.execute("editr reminder t/2017-01-01 5.00PM");
 
         // The edited reminder has correct note and time
         Task editedTask = this.schedule.getTaskList().get(0);
@@ -179,7 +179,7 @@ public class EditReminderCommandTest {
         assertEquals("wat", editedReminder.getNote());
         assertEquals(LocalDateTime.of(2018, 1, 1, 17, 0), editedReminder.getTimeOfReminder());
 
-        String expectedResult = "Edited \"world\".\n" + "New reminder details: wat (On 2018-01-01 5:00PM)";
+        String expectedResult = "Edited \"world\".\n" + "New reminder details: wat (On 2018-01-01 5.00PM)";
         assertEquals(expectedResult, result.getFeedback());
     }
 
@@ -189,7 +189,7 @@ public class EditReminderCommandTest {
         CommandResult result = this.editReminderCommand.userResponse("3");
 
         String expectedResult = "That's not a valid index. Enter a number between 1 and 2:\n" + "Task: hello\n"
-                + "1. world (On 2016-01-01 5:00PM)\n" + "2. hello world (On 2017-01-01 5:00PM)";
+                + "1. world (On 2016-01-01 5.00PM)\n" + "2. hello world (On 2017-01-01 5.00PM)";
         assertEquals(expectedResult, result.getFeedback());
     }
 
@@ -200,7 +200,7 @@ public class EditReminderCommandTest {
 
         String expectedResult = "I don't understand \"asd\".\nEnter a number to indicate which reminder to edit.\n"
                 + "Task: hello\n"
-                + "1. world (On 2016-01-01 5:00PM)\n" + "2. hello world (On 2017-01-01 5:00PM)";
+                + "1. world (On 2016-01-01 5.00PM)\n" + "2. hello world (On 2017-01-01 5.00PM)";
         assertEquals(expectedResult, result.getFeedback());
     }
 
@@ -215,7 +215,7 @@ public class EditReminderCommandTest {
         task = task.addReminder(reminder);
         this.schedule.addTask(task);
 
-        this.editReminderCommand.execute("editr reminder t/2017-01-01 5:00PM n/new reminder");
+        this.editReminderCommand.execute("editr reminder t/2017-01-01 5.00PM n/new reminder");
 
         // The edited reminder has correct note and time
         Task editedTask = this.schedule.getTaskList().get(0);
