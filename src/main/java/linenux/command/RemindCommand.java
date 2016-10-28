@@ -14,6 +14,8 @@ import linenux.model.Reminder;
 import linenux.model.Schedule;
 import linenux.model.Task;
 import linenux.time.parser.ISODateWithTimeParser;
+import linenux.time.parser.StandardDateWithTimeParser;
+import linenux.time.parser.TodayWithTimeParser;
 import linenux.util.Either;
 import linenux.util.TasksListUtil;
 
@@ -38,7 +40,7 @@ public class RemindCommand extends AbstractCommand {
     //@@author A0135788M
     public RemindCommand(Schedule schedule) {
         this.schedule = schedule;
-        this.timeParserManager = new TimeParserManager(new ISODateWithTimeParser());
+        this.timeParserManager = new TimeParserManager(new ISODateWithTimeParser(), new StandardDateWithTimeParser(), new TodayWithTimeParser());
         this.reminderArgumentParser = new ReminderArgumentParser(this.timeParserManager, COMMAND_FORMAT, CALLOUTS);
         this.TRIGGER_WORDS.add(TRIGGER_WORD);
     }
