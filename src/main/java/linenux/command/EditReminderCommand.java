@@ -37,6 +37,7 @@ public class EditReminderCommand extends AbstractCommand {
     private EditrArgumentParser editrArgumentParser;
     private ArrayList<ReminderSearchResult> searchResults;
 
+    //@author A0140702X
     public EditReminderCommand(Schedule schedule) {
         this.schedule = schedule;
         this.timeParserManager = new TimeParserManager(new ISODateWithTimeParser());
@@ -44,6 +45,7 @@ public class EditReminderCommand extends AbstractCommand {
         this.TRIGGER_WORDS.add(TRIGGER_WORD);
     }
 
+    //@author A0144915A
     @Override
     public CommandResult execute(String userInput) {
         assert userInput.matches(getPattern());
@@ -77,6 +79,7 @@ public class EditReminderCommand extends AbstractCommand {
         }
     }
 
+    //@author A0140702X
     @Override
     public boolean awaitingUserResponse() {
         return requiresUserResponse;

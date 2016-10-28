@@ -9,6 +9,7 @@ import java.util.ArrayList;
 /**
  * Created by yihangho on 10/28/16.
  */
+//@author A0144915A
 public class ReminderSearchResult {
     private Task task;
     private ArrayList<Reminder> reminders;
