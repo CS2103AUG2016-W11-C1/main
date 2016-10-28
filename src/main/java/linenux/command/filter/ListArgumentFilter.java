@@ -118,6 +118,16 @@ public class ListArgumentFilter {
             return Either.right(endTime.getRight());
         }
 
+        Either<ArrayList<String>, CommandResult> tags = extractTags(argument);
+        if (tags.isRight()) {
+            return Either.right(tags.getRight());
+        }
+
+        ArrayList<String> actualTags = tags.getLeft();
+        if (!actualTags.isEmpty()) {
+            return Either.left(new ArrayList<Reminder>());
+        }
+
         LocalDateTime actualStartTime = startTime.getLeft();
         LocalDateTime actualEndTime = endTime.getLeft();
 
