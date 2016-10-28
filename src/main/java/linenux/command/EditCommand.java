@@ -145,11 +145,19 @@ public class EditCommand extends AbstractCommand {
     private CommandResult implementEdit(Task original, String argument) {
         Either<Task, CommandResult> result = editArgumentParser.parse(original, argument);
 
-        if (result.isLeft()) {
+        if (result.isRight()) {
+            return result.getRight();
+        }
+
+        Task editedTask = result.getLeft();
+
+        // Will still allow edit if the edited task is equals to the original
+        // task.
+        if (this.schedule.isUniqueTask(editedTask) || editedTask.equals(original)) {
             this.schedule.updateTask(original, result.getLeft());
             return makeEditedTask(original, result.getLeft());
         } else {
-            return result.getRight();
+            return makeDuplicateTaskResult(editedTask);
         }
     }
 
@@ -181,5 +189,10 @@ public class EditCommand extends AbstractCommand {
             builder.append(TasksListUtil.display(this.foundTasks));
             return builder.toString();
         };
+    }
+
+    // A0140702X
+    private CommandResult makeDuplicateTaskResult(Task task) {
+        return () -> task.toString() + " already exists in the schedule!";
     }
 }

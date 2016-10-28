@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import linenux.util.ArrayListUtil;
 
 /**
  * Contains all outstanding tasks.
@@ -110,6 +111,19 @@ public class Schedule {
     //@@author A0127694U
     public ArrayList<Reminder> searchReminder(String[] keywords) {
         return getMostRecentState().searchReminder(keywords);
+    }
+
+    // @@author A0140702X
+    public boolean isUniqueTask(Task task) {
+        ArrayList<Task> taskList = getMostRecentState().getTaskList();
+        ArrayList<Task> duplicateTaskList = new ArrayListUtil.ChainableArrayListUtil<>(taskList)
+                .filter(a -> a.equals(task)).value();
+
+        if (duplicateTaskList.size() >= 1) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     /**
