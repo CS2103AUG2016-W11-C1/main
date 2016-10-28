@@ -25,7 +25,7 @@ public class ISODateWithTimeParserTest {
      */
     @Test
     public void testRespondToValidFormat() {
-        assertTrue(this.parser.respondTo("2016-10-01 2:05PM"));
+        assertTrue(this.parser.respondTo("2016-10-01 2.05PM"));
     }
 
     /**
@@ -33,7 +33,7 @@ public class ISODateWithTimeParserTest {
      */
     @Test
     public void testRespondToSmallAmPm() {
-        assertTrue(this.parser.respondTo("2016-10-01 2:05am"));
+        assertTrue(this.parser.respondTo("2016-10-01 2.05am"));
     }
 
     /**
@@ -53,7 +53,7 @@ public class ISODateWithTimeParserTest {
      */
     @Test
     public void testParseAM() {
-        LocalDateTime dateTime = this.parser.parse("2016-10-01 9:23AM");
+        LocalDateTime dateTime = this.parser.parse("2016-10-01 9.23AM");
         LocalDateTime expectedDateTime = LocalDateTime.of(2016, 10, 01, 9, 23);
         assertEquals(expectedDateTime, dateTime);
     }
@@ -63,7 +63,7 @@ public class ISODateWithTimeParserTest {
      */
     @Test
     public void testParsePM() {
-        LocalDateTime dateTime = this.parser.parse("2016-10-01 2:05PM");
+        LocalDateTime dateTime = this.parser.parse("2016-10-01 2.05PM");
         LocalDateTime expectedDateTime = LocalDateTime.of(2016, 10, 01, 14, 5);
         assertEquals(expectedDateTime, dateTime);
     }
@@ -73,7 +73,7 @@ public class ISODateWithTimeParserTest {
      */
     @Test
     public void testParseSmallAm() {
-        LocalDateTime dateTime = this.parser.parse("2016-10-01 9:23am");
+        LocalDateTime dateTime = this.parser.parse("2016-10-01 9.23am");
         LocalDateTime expectedDateTime = LocalDateTime.of(2016, 10, 01, 9, 23);
         assertEquals(expectedDateTime, dateTime);
     }

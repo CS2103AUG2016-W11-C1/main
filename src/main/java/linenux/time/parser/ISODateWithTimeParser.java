@@ -9,7 +9,7 @@ import java.time.format.DateTimeParseException;
  */
 //@@author A0144915A
 public class ISODateWithTimeParser implements TimeParser {
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-M-d h:mma");
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-M-d h.mma");
 
     @Override
     public boolean respondTo(String input) {
