@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import linenux.command.parser.EditrArgumentParser;
+import linenux.command.parser.EditReminderArgumentParser;
 import linenux.command.result.CommandResult;
 import linenux.command.result.PromptResults;
 import linenux.command.result.SearchResults;
@@ -34,14 +34,14 @@ public class EditReminderCommand extends AbstractCommand {
     private boolean requiresUserResponse;
     private String argument;
     private TimeParserManager timeParserManager;
-    private EditrArgumentParser editrArgumentParser;
+    private EditReminderArgumentParser editReminderArgumentParser;
     private ArrayList<ReminderSearchResult> searchResults;
 
     //@author A0140702X
     public EditReminderCommand(Schedule schedule) {
         this.schedule = schedule;
         this.timeParserManager = new TimeParserManager(new ISODateWithTimeParser());
-        this.editrArgumentParser = new EditrArgumentParser(this.timeParserManager, COMMAND_FORMAT, CALLOUTS);
+        this.editReminderArgumentParser = new EditReminderArgumentParser(this.timeParserManager, COMMAND_FORMAT, CALLOUTS);
         this.TRIGGER_WORDS.add(TRIGGER_WORD);
     }
 
@@ -160,7 +160,7 @@ public class EditReminderCommand extends AbstractCommand {
     }
 
     private CommandResult implementEditr(Task task, Reminder original, String argument) {
-        Either<Reminder, CommandResult> result = editrArgumentParser.parse(original, argument);
+        Either<Reminder, CommandResult> result = editReminderArgumentParser.parse(original, argument);
 
         if (result.isLeft()) {
             Reminder newReminder = result.getLeft();

@@ -15,7 +15,7 @@ import linenux.util.Either;
 /**
  * Parses new details of reminder to be edited.
  */
-public class EditrArgumentParser {
+public class EditReminderArgumentParser {
     public static String COMMAND_FORMAT;
     public static String CALLOUTS;
 
@@ -23,7 +23,7 @@ public class EditrArgumentParser {
     private GenericParser genericParser;
     private GenericParser.GenericParserResult parseResult;
 
-    public EditrArgumentParser(TimeParserManager timeParserManager, String commandFormat, String callouts) {
+    public EditReminderArgumentParser(TimeParserManager timeParserManager, String commandFormat, String callouts) {
         this.timeParserManager = timeParserManager;
         this.genericParser = new GenericParser();
         EditArgumentParser.COMMAND_FORMAT = commandFormat;
