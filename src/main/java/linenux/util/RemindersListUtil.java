@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import linenux.model.Reminder;
 
-//@@author A1234567A
+//@@author A0140702X
 public class RemindersListUtil {
     /**
      * Display the list of tasks as a string.
