@@ -9,7 +9,7 @@ import java.time.format.DateTimeParseException;
  * Parse date and time in the form of "16 October 2016 5.00pm"
  */
 //@@author A0135788M
-public class StandardDateTimeParser implements TimeParser {
+public class StandardDateWithTimeParser implements TimeParser {
     DateTimeFormatter formatter = new DateTimeFormatterBuilder().parseCaseInsensitive()
                                         .appendPattern("dd MMM yyyy h.mma").toFormatter();
 

@@ -7,15 +7,15 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * JUnit test for StandardDateWithTime time format.
+ * JUnit test for TodayWithTime time format.
  */
 //@@author A0135788M
-public class StandardDateTimeParserTest {
+public class TodayWithTimeParserTest {
     TimeParser parser;
 
     @Before
     public void setupParser() {
-        this.parser = new StandardDateTimeParser();
+        this.parser = new TodayWithTimeParser();
     }
 
     /**
@@ -23,7 +23,7 @@ public class StandardDateTimeParserTest {
      */
     @Test
     public void testRespondToValidFormat() {
-        assertTrue(this.parser.respondTo("16 Oct 2016 2.05PM"));
+        assertTrue(this.parser.respondTo("today 2.05PM"));
     }
 
     /**
@@ -31,7 +31,7 @@ public class StandardDateTimeParserTest {
      */
     @Test
     public void testRespondToSmallAmPm() {
-        assertTrue(this.parser.respondTo("16 Oct 2016 2.05am"));
+        assertTrue(this.parser.respondTo("today 2.05am"));
     }
 
     /**
@@ -47,11 +47,11 @@ public class StandardDateTimeParserTest {
     }
 
     /**
-     * Test that parser responds to uppercase month.
+     * Test that parser responds to uppercase today.
      */
     @Test
     public void testRespondToUppercaseMonth() {
-        assertTrue(this.parser.respondTo("16 OCT 2016 2.05am"));
+        assertTrue(this.parser.respondTo("TODAY 2.05am"));
     }
 
 }
