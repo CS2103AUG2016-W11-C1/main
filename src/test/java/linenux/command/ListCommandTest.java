@@ -104,7 +104,7 @@ public class ListCommandTest {
 
         CommandResult result = this.listCommand.execute("list hello");
 
-        String expectedFeedback = "Cannot find task or reminder names with \"hello\".";
+        String expectedFeedback = "There are no tasks and reminders found based on your given inputs!";
         assertEquals(expectedFeedback, result.getFeedback());
     }
 
