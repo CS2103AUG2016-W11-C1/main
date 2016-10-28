@@ -24,7 +24,7 @@ public class HelpCommand extends AbstractCommand {
     }
 
     @Override
-    //@@author A1234567A
+    //@@author A0140702X
     public CommandResult execute(String userInput) {
         assert userInput.matches(getPattern());
 
@@ -76,7 +76,7 @@ public class HelpCommand extends AbstractCommand {
         return COMMAND_FORMAT;
     }
 
-    //@@author A1234567A
+    //@@author A0140702X
     private String displayAllHelp() {
         int maxLength = 0;
         for (Command command: this.commands) {
@@ -147,7 +147,7 @@ public class HelpCommand extends AbstractCommand {
         return () -> "Invalid command given for help. Did you mean " + suggestion + "?";
     }
 
-    //@@author A1234567A
+    //@@author A0140702X
     private String extractKeywords(String userInput) {
         Matcher matcher = Pattern.compile(getPattern()).matcher(userInput);
 

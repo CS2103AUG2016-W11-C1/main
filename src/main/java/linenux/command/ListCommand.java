@@ -30,7 +30,7 @@ public class ListCommand extends AbstractCommand {
     private TimeParserManager timeParserManager;
     private ListArgumentFilter listArgumentFilter;
 
-    //@@author A1234567A
+    //@@author A0140702X
     public ListCommand(Schedule schedule) {
         this.schedule = schedule;
         this.timeParserManager = new TimeParserManager(new ISODateWithTimeParser());
@@ -39,7 +39,7 @@ public class ListCommand extends AbstractCommand {
     }
 
     @Override
-    //@@author A1234567A
+    //@@author A0140702X
     public CommandResult execute(String userInput) {
         assert userInput.matches(getPattern());
         assert this.schedule != null;
@@ -113,7 +113,7 @@ public class ListCommand extends AbstractCommand {
     }
 
     @Override
-    //@@author A1234567A
+    //@@author A0140702X
     public String getPattern() {
         return "(?i)^\\s*(" + getTriggerWordsPattern() + ")((?<keywords>.*?)(?<arguments>((st|et|#|d)/)+?.*)??)";
     }
@@ -129,7 +129,7 @@ public class ListCommand extends AbstractCommand {
         }
     }
 
-    //@@author A1234567A
+    //@@author A0140702X
     private String extractArgument(String userInput) {
         Matcher matcher = Pattern.compile(getPattern()).matcher(userInput);
 

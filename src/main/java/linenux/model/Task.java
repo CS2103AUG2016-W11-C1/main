@@ -134,7 +134,7 @@ public class Task {
         return isDone == false;
     }
 
-    //@@author A1234567A
+    //@@author A0140702X
     public boolean hasTag(String tag) {
         return tags.contains(tag);
     }
