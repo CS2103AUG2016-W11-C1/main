@@ -2,14 +2,16 @@ package linenux.time.parser;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.DateTimeParseException;
 
 /**
- * Parse date and time in the form of "2016-10-01 2:00pm"
+ * Parse date and time in the form of "16 October 2016 5.00pm"
  */
-//@@author A0144915A
-public class ISODateWithTimeParser implements TimeParser {
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-M-d h:mma");
+//@@author A0135788M
+public class StandardDateTimeParser implements TimeParser {
+    DateTimeFormatter formatter = new DateTimeFormatterBuilder().parseCaseInsensitive()
+                                        .appendPattern("dd MMM yyyy h.mma").toFormatter();
 
     @Override
     public boolean respondTo(String input) {
@@ -23,6 +25,7 @@ public class ISODateWithTimeParser implements TimeParser {
 
     @Override
     public LocalDateTime parse(String input) {
-        return LocalDateTime.parse(input.toUpperCase(), formatter);
+        return LocalDateTime.parse(input, formatter);
     }
+
 }

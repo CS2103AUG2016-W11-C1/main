@@ -10,7 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * JUnit test for ISODateWithTime time forma.t
+ * JUnit test for ISODateWithTime time format.
  */
 public class ISODateWithTimeParserTest {
     TimeParser parser;
