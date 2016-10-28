@@ -1,11 +1,11 @@
 package linenux.model;
 
-import linenux.util.ArrayListUtil;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
+
+import linenux.util.ArrayListUtil;
 
 /**
  * Represents a task in the schedule. Only taskName is a required field and
@@ -227,9 +227,11 @@ public class Task {
         return result;
     }
 
-    //@@author A1234567A
+    //@@author A0140702X
     public boolean hasTag(String tag) {
-        return tags.contains(tag);
+        ArrayList<String> lowercaseTags = new ArrayListUtil.ChainableArrayListUtil<>(tags).map(String::toLowerCase)
+                .value();
+        return lowercaseTags.contains(tag.toLowerCase());
     }
 
     /* Getters */
