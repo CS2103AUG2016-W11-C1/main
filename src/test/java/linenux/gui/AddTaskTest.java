@@ -3,6 +3,7 @@ package linenux.gui;
 import org.junit.Test;
 
 import static linenux.helpers.GuiMatchers.hasCellLabelled;
+import static linenux.helpers.GuiMatchers.hasTodoCell;
 import static org.testfx.api.FxAssert.verifyThat;
 import static org.testfx.matcher.control.ListViewMatchers.hasItems;
 import static org.testfx.matcher.control.ListViewMatchers.isEmpty;
@@ -19,7 +20,7 @@ public class AddTaskTest extends GuiTest {
         robot.write("add hello\n");
 
         verifyThat("#todosList", hasItems(1));
-        verifyThat("#todosList", hasCellLabelled("hello"));
+        verifyThat("#todosList", hasTodoCell("hello"));
         verifyThat("#deadlinesList", isEmpty());
         verifyThat("#eventsList", isEmpty());
     }
@@ -31,13 +32,13 @@ public class AddTaskTest extends GuiTest {
         robot.write("add world\n");
 
         verifyThat("#todosList", hasItems(2));
-        verifyThat("#todosList", hasCellLabelled("hello"));
-        verifyThat("#todosList", hasCellLabelled("world"));
+        verifyThat("#todosList", hasTodoCell("hello"));
+        verifyThat("#todosList", hasTodoCell("world"));
 
         robot.write("done hello\n");
 
         verifyThat("#todosList", hasItems(1));
-        verifyThat("#todosList", hasCellLabelled("world"));
+        verifyThat("#todosList", hasTodoCell("world"));
     }
 
     @Test
