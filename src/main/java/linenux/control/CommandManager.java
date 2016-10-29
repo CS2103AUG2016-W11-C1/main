@@ -66,11 +66,11 @@ public class CommandManager {
         this.catchAllCommand = new InvalidCommand(this.commandList);
     }
 
+    //@@author A0135788M
     /**
      * Assigns the appropriate command to the user input. Contract: only 1
      * command should be awaiting user response at any point in time.
      */
-    //@@author A0135788M
     public CommandResult delegateCommand(String userInput) {
         for (Command command : commandList) {
             if (command.awaitingUserResponse()) {

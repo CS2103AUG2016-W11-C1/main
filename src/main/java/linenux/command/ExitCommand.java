@@ -25,8 +25,8 @@ public class ExitCommand extends AbstractCommand {
         return null;
     }
 
-    @Override
     //@@author A0144915A
+    @Override
     public String getTriggerWord() {
         return TRIGGER_WORD;
     }
@@ -36,8 +36,8 @@ public class ExitCommand extends AbstractCommand {
         return DESCRIPTION;
     }
 
-    @Override
     //@@author A0135788M
+    @Override
     public String getCommandFormat() {
         return COMMAND_FORMAT;
     }

@@ -29,8 +29,8 @@ public class Main extends Application implements Stoppable {
     }
 
     // TODO: Handle general exception & make TextArea keyboard insensitive.
-    @Override
     //@@author A0135788M
+    @Override
     public void start(Stage primaryStage) throws Exception {
         setupMainWindow(primaryStage);
     }

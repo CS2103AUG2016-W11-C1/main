@@ -7,9 +7,6 @@ import linenux.control.TimeParserManager;
 import linenux.model.Reminder;
 import linenux.util.Either;
 
-/**
- * Created by yihangho on 10/8/16.
- */
 public class ReminderArgumentParser {
     public static String COMMAND_FORMAT;
     public static String CALLOUTS;

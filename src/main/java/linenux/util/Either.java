@@ -3,6 +3,7 @@ package linenux.util;
 import java.util.NoSuchElementException;
 import java.util.function.Function;
 
+//@@author A0144915A
 /**
  * A data structure inspired by the FP world. Can be used to represent an operation that can have two possible
  * outcomes. For example, when parsing something, the output is either the result, or an error.
@@ -11,7 +12,6 @@ import java.util.function.Function;
  * Exactly one of them must be empty and the other present. To enforce this restriction, {@code Either} must
  * be built using the static factory methods.
  */
-//@@author A0144915A
 public class Either<L, R> {
     /**
      * A custom implementation of the {@code Optional} class. The default Java implementation does not

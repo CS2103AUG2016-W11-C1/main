@@ -13,9 +13,6 @@ import linenux.util.ArrayListUtil;
 import java.util.ArrayList;
 import java.util.function.Predicate;
 
-/**
- * Created by yihangho on 10/16/16.
- */
 //@@author A0144915A
 public class TodoBoxController {
     @FXML

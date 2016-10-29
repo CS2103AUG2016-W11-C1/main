@@ -2,10 +2,10 @@ package linenux.util;
 
 import java.time.LocalDateTime;
 
+//@@author A0144915A
 /**
  * Represents a time interval represented by a pair of {@code LocalDateTime}.
  */
-//@@author A0144915A
 public class TimeInterval {
     private LocalDateTime from, to;
 

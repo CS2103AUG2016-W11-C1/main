@@ -1,8 +1,5 @@
 package linenux.command.result;
 
-/**
- * Created by yihangho on 10/20/16.
- */
 public class SearchResults {
     //@@author A0144915A
     public static CommandResult makeNotFoundResult(String keywords) {

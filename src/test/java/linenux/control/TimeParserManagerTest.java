@@ -9,11 +9,11 @@ import org.junit.Test;
 
 import linenux.time.parser.TimeParser;
 
+//@@author A0144915A
 /**
  * JUnit test for time parser manager.
  */
 public class TimeParserManagerTest {
-
     /**
      * Test that parses can correctly parse.
      */

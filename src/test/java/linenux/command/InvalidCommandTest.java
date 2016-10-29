@@ -15,6 +15,7 @@ import linenux.command.result.CommandResult;
 public class InvalidCommandTest {
     private Command invalidCommand;
 
+    //@@author A0144915A
     @Before
     public void setupInvalidCommand() {
         ArrayList<Command> commands = new ArrayList<>();
@@ -53,11 +54,13 @@ public class InvalidCommandTest {
             return null;
         }
 
+        //@@author A0135788M
         @Override
         public String getCommandFormat() {
             return null;
         }
 
+        //@@author A0144915A
         @Override
         public boolean respondTo(String input) {
             return true;
@@ -68,13 +71,14 @@ public class InvalidCommandTest {
             return null;
         }
 
+        //@@author A0135788M
         @Override
         public String getPattern() {
             return null;
         }
-
     }
 
+    //@@author A0144915A
     private static class ListCommand extends BaseMockCommand {
         @Override
         public String getTriggerWord() {

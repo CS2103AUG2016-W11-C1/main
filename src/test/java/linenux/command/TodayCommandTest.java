@@ -13,9 +13,7 @@ import java.time.ZoneId;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-/**
- * Created by yihangho on 10/25/16.
- */
+//@@author A0144915A
 public class TodayCommandTest {
     private TodayCommand todayCommand;
 
