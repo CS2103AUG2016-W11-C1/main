@@ -1,22 +1,25 @@
 package linenux.view;
 
-import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import linenux.command.result.CommandResult;
-import linenux.control.ControlUnit;
-import linenux.model.Task;
-import linenux.util.ArrayListUtil;
-
 import java.time.Clock;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.function.Predicate;
 
+import javafx.fxml.FXML;
+import javafx.scene.control.TextArea;
+import linenux.command.result.CommandResult;
+import linenux.control.ControlUnit;
+import linenux.model.Task;
+import linenux.util.ArrayListUtil;
+
+/**
+ * Created by yihangho on 10/16/16.
+ */
 //@@author A0144915A
 public class ResultBoxController {
     @FXML
-    private Label commandResultLabel;
+    private TextArea commandResultTextArea;
 
     private ControlUnit controlUnit;
     private Clock clock = Clock.systemDefaultZone();
@@ -26,7 +29,7 @@ public class ResultBoxController {
 
         this.controlUnit.getLastCommandResultProperty().addListener((change) -> {
             CommandResult lastResult = this.controlUnit.getLastCommandResultProperty().getValue();
-            commandResultLabel.setText(lastResult.getFeedback());
+            commandResultTextArea.setText(lastResult.getFeedback());
         });
     }
 
@@ -54,7 +57,7 @@ public class ResultBoxController {
         String displayString = new ArrayListUtil.ChainableArrayListUtil<>(reminders)
             .foldr(String::concat, "");
 
-        commandResultLabel.setText(displayString);
+        commandResultTextArea.setText(displayString);
     }
 
     private boolean isToday(LocalDateTime dateTime) {

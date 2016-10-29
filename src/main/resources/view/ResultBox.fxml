@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -14,7 +15,7 @@
                   <Font name="System Bold" size="26.0" />
                </font>
             </Label>
-            <Label fx:id="commandResultLabel" alignment="TOP_LEFT" text="Results" />
+            <TextArea fx:id="commandResultTextArea" editable="false" prefHeight="353.0" prefWidth="600.0" stylesheets="@LinenuxTheme.css" wrapText="true" VBox.vgrow="SOMETIMES" />
          </children>
       </VBox>
    </children>
