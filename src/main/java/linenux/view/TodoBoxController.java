@@ -9,6 +9,7 @@ import linenux.control.ControlUnit;
 import linenux.model.State;
 import linenux.model.Task;
 import linenux.util.ArrayListUtil;
+import linenux.view.components.TodoCell;
 
 import java.util.ArrayList;
 import java.util.function.Predicate;
@@ -24,6 +25,9 @@ public class TodoBoxController {
     @FXML
     private void initialize() {
         todosList.itemsProperty().setValue(todos);
+        todosList.setCellFactory(list -> new TodoCell());
+        todosList.setMouseTransparent(true);
+        todosList.setFocusTraversable(false);
     }
 
     public void setControlUnit(ControlUnit controlUnit) {
