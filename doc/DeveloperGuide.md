@@ -93,19 +93,17 @@ Linenux follows the Model-View-Controller (MVC) pattern which is made up of 3 ma
 <img src="images/modelDiagram.png">
 > Figure 4: Model Diagram
 
+##### ***Schedule** class*
+
 The **Schedule** class stores a collection of states. A **State** is an immutable class that is created whenever a task or reminder is added or deleted from the **Schedule**. This design allows users to `undo` their previous command.
 
-The **Task** class is made up of the name of the task, a start time, an end time and a list of reminders. There are 3 types of tasks:
+We have made all the models except **Schedule** immutable, thus any command that mutates data should do so through the Schedule model. Specifically, we have exposed three mutation methods:
 
-1. **Deadlines** - tasks that have an end time but no start time.
-2. **Events** - tasks that have both start and end times.
-3. **To-dos** - tasks that have neither start nor end times.
+1. `addTask`
+2. `updateTask`
+3. `deleteTask` / `deleteTasks`
 
-The **Reminder** class allows our users to set one or more reminders for their tasks.
-
-We have made all the models except **Schedule** immutable, thus all the commands should only interact with the Schedule model.
-
-##### *Notable APIs for **Schedule** model*:
+*Notable APIs:* [`Schedule.java`](https://github.com/CS2103AUG2016-W11-C1/main/blob/master/src/main/java/linenux/model/Schedule.java)
 
 | Return type           | Method and Description |
 | --------------------- | ---------------------- |
@@ -126,9 +124,77 @@ We have made all the models except **Schedule** immutable, thus all the commands
 | State                 | `getMostRecentState()`: Returns the most recent state of schedule. |
 | void                  | `addState(State)`: Adds a new state into the list of states. |
 
-The **Storage** class allows the in-memory data to persist after the application is closed. The state of the **Schedule** is stored as an XML file using **XMLScheduleStorage** class.
+##### *State Class*
+
+The **State** class represents an immutable snapshot in time of the schedule.
+
+*Notable APIs:* [`State.java`](https://github.com/CS2103AUG2016-W11-C1/main/blob/master/src/main/java/linenux/model/State.java)
+
+| Return type | Method and Description |
+| ----------- | ---------------------- |
+| State       | `addTask(Task task)`: creates and returns a copy of the current state, with the task added into the copied state. |
+| State       | `updateTask(Task original, Task newTask)`: creates and returns a copy of the current state, where the original task is updated with the new task in the copied state. |
+| State       | `deleteTask(Task task)`: creates and returns a copy of the current state, deleting the task specified in the copied state. |
+| State       | `getTaskList()`: returns the task list in the current state. |
+
+##### *Task Class*
+
+The immutable **Task** class is made up of the name of the task, a start time, an end time and a list of reminders. There are 3 types of tasks:
+
+1. **Deadlines** - tasks that have an end time but no start time.
+2. **Events** - tasks that have both start and end times.
+3. **To-dos** - tasks that have neither start nor end times.
+
+*Notable APIs:* [`Task.java`](https://github.com/CS2103AUG2016-W11-C1/main/blob/master/src/main/java/linenux/model/Task.java)
+
+| Return type | Method and Description |
+| ----------- | ---------------------- |
+| String      | `toString()`: returns the String representation of a Task. |
+| Boolean     | `isTodo()`: checks if Task is a todo. |
+| Boolean     | `isDeadline()`: checks if Task is a deadline. |
+| Boolean     | `isEvent()`: checks if Task is an event. |
+| Boolean     | `isDone()`: checks if Task is marked as done. |
+| Boolean     | `isNotDone()`: checks if Task is not marked as done. |
+| Boolean     | `hasTag(String tag)`: checks if Task contains a tag (case-insensitive). |
+| String      | `getTaskName()`: returns the name of the Task. |
+| LocalDateTime | `getStartTime()`: returns the start time of the Task. |
+| LocalDateTime | `getEndTime()`: returns the end time of the Task. |
+| ArrayList<String> | `getTags()`: returns all the tags of the Task in an arraylist. |
+| ArrayList<Reminder> | `getReminders()`: returns all the reminders of the Task in an arraylist. |
+| Task        | `setTaskName(String taskName)`: creates and returns a copy of the current Task with the new task name. |
+| Task        | `setStartTime(LocalDateTime startTime)`: creates and returns a copy of the current Task with the new start time. |
+| Task        | `setEndTime(LocalDateTime endTime)`: creates and returns a copy of the current Task with the new end time. |
+| Task        | `markAsDone()`: creates and returns a copy of the current Task, with it set to Done. |
+| Task        | `addReminder(Reminder reminder)`: creates and return a copy of the current Task, adding reminder into it's list of reminders. |
+| Task        | `setTags(ArrayList<String> tags)`: creates and returns a copy of the current Task, replacing all the original tags with the new tags. |
 
 
+##### *Reminder Class*
+
+The immutable **Reminder** class allows our users to set one or more reminders for their tasks.
+
+*Notable APIs:* [`Reminder.java`](https://github.com/CS2103AUG2016-W11-C1/main/blob/master/src/main/java/linenux/model/Reminder.java)
+
+| Return type | Method and Description |
+| ----------- | ---------------------- |
+| String      | `toString()`: returns the String representation of a Reminder. |
+| String      | `getNote()`: returns the note of the reminder. |
+| LocalDateTime | `getTimeOfReminder()`: returns the time of reminder. |
+| Reminder    | `setNote(String newNote)`: creates and returns a copy of the current Reminder with the new note. |
+| Reminder    | `setTimeOfReminder(LocalDateTime newTimeOfReminder)`: creates and returns a copy of the current Reminder with the new time of reminder. |
+
+##### *Storage*
+
+The **ScheduleStorage** interface lists all the methods that our `Controller` will require to save the schedule into a file format to ensure that in-memory data persists after the application is stored. The methods are:
+
+| Return type | Method and Description |
+| ----------- | ---------------------- |
+| Schedule    | `loadScheduleFromFile()`: reads a file and returns the schedule from the file. |
+| void        | `saveScheduleToFile(Schedule schedule)`: writes the given schedule into the file. |
+| Boolean     | `hasScheduleFile()`: checks if the schedule file exits. |
+| void        | `setFilePath(String filePath)`: sets a new file path.   |
+
+Currently, we have implemented **XMLScheduleStorage** class, which will save the schedule into an XML file. Thus, if you would like to implement saving to another file format, make sure you implement the **ScheduleStorage** interface.
 
 #### View Component
 <img src="images/viewDiagram.png">
@@ -428,28 +494,35 @@ Tasks **cannot** be created with start dates only.
 
 *Legend:*
 
-1. *Optional fields are enclosed in square brackets `[]`.*
-2. *The notation `...` means that multiple words can be used for that field.*
+1. *The `command` word must be the first word in the sentence.*
+2. *Optional fields are enclosed in square brackets `[]`.*
+3. *All commands and their respective fields are case-insensitive.*
+4. *The order of the fields do not matter.*
+5. *The notation `...` means that you can have more than one instance of that field.*
 
-| Command    | Description                               | Format                                                                          |
-|------------|-------------------------------------------|---------------------------------------------------------------------------------|
-| `add`      | Adding a task.                            | `add` TASK_NAME... [st/START_TIME] [et/END_TIME] [#/TAG...]...                  |
-| `remind`   | Setting a reminder for a task.            | `remind` KEYWORDS... t/TIME n/NOTE...                                           |
-| `edit`     | Editing a task.                           | `edit` KEYWORDS... [n/TASK_NAME...] [st/START_TIME] [et/END_TIME] [#/TAG...]... |
-| `editr`    | Editing a reminder.                       | `editr` KEYWORDS... [t/TIME] [n/NOTE...]                                        |
-| `rename`   | Rename a tag.                             | `rename` KEYWORDS... #/TAG...                                                   |
-| `done`     | Marking a task as done.                   | `done` KEYWORDS...                                                              |
-| `delete`   | Deleting a task or reminder.              | `delete` KEYWORDS...                                                            |
-| `clear`    | Clearing a set of tasks.                  | `clear` [#/TAG...]                                                              |
-| `freetime` | Finding a free timeslot.                  | `freetime` [st/START_TIME] et/END_TIME                                          |
-| `list`     | Listing tasks and reminders.              | `list` [KEYWORDS...] [st/START_TIME] [et/END_TIME] [#/TAG...]                   |
-| `today`    | Listing tasks and reminders for today.    | `today`                                                                         |
-| `tomorrow` | Listing tasks and reminders for tomorrow. | `tomorrow`                                                                      |
-| `view`     | Viewing details around a task.            | `view` KEYWORDS...                                                              |
-| `undo`     | Undoing the previous command.             | `undo`                                                                          |
-| `help`     | Seeking help.                             | `help` [COMMMAND_NAME]                                                          |
-| `alias`    | Making aliases for the commands.          | `alias` COMMMAND_NAME n/NEW_NAME                                                |
-| `exit`     | Exiting Linenux.                          | `exit`                                                                          |
+| Command                 | Description                               | Format                                                                  |
+|-------------------------|-------------------------------------------|-------------------------------------------------------------------------|
+| [`add`](#add)           | Adding a task.                            | `add` TASK_NAME [st/START_TIME] [et/END_TIME] [#/TAG]...                |
+| [`remind`](#remind)     | Setting a reminder for a task.            | `remind` KEYWORD t/TIME n/NOTE                                          |
+| [`edit`](#edit)         | Editing a task.                           | `edit` KEYWORDS [n/TASK_NAME] [st/START_TIME] [et/END_TIME] [#/TAG]...  |
+| [`editr`](#editr)       | Editing a reminder.                       | `editr` KEYWORDS [t/TIME] [n/NOTE...]                                   |
+| [`rename`](#rename)     | Renaming a tag.                           | `rename` KEYWORDS #/TAG                                                 |
+| [`done`](#done)         | Marking a task as done.                   | `done` KEYWORDS                                                         |
+| [`undone`](#undone)     | Marking a task as undone.                 | `undone` KEYWORDS                                                       |
+| [`delete`](#delete)     | Deleting a task.                          | `delete` KEYWORDS                                                       |
+| [`deleter`](#deleter)   | Deleting a reminder.                      | `deleter` KEYWORDS                                                      |
+| [`clear`](#clear)       | Clearing a set of tasks.                  | `clear` [#/TAG]                                                         |
+| [`freetime`](#freetime) | Finding a free timeslot.                  | `freetime` [st/START_TIME] et/END_TIME                                  |
+| [`list`](#list)         | Listing tasks and reminders.              | `list` [KEYWORDS] [st/START_TIME] [et/END_TIME] [#/TAG...] [d/DONE]     |
+| [`today`](#today)       | Listing tasks and reminders for today.    | `today`                                                                 |
+| [`tomorrow`](#tomorrow) | Listing tasks and reminders for tomorrow. | `tomorrow`                                                              |
+| [`view`](#view)         | Viewing details around a task.            | `view` KEYWORDS                                                         |
+| [`undo`](#undo)         | Undoing the previous command.             | `undo`                                                                  |
+| [`help`](#help)         | Seeking help.                             | `help` [COMMMAND_NAME]                                                  |
+| [`alias`](#alias)       | Making aliases for the commands.          | `alias` COMMMAND_NAME n/NEW_NAME                                        |
+| [`unalias`](#unalias)   | Removing aliases for the commands.        | `unalias` ALIAS                                                         |
+| [`path`](#path)         | Changing the filepath of the schedule.    | `path` NEW_PATH                                                         |
+| [`exit`](#exit)         | Exiting Linenux.                          | `exit`                                                                  |
 
 ##### Supported Time Formats
 

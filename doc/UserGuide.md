@@ -339,7 +339,7 @@ delete KEYWORDS
 
 ##### *Deleter*
 
-`deleter` is the delete command for reminders. Deleting a reminder will not delete its task.
+`deleter` is the delete command for reminders. When you delete a reminder will, you will not delete the task that it is associated with.
 
 *Format:*
 
