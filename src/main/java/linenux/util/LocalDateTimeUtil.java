@@ -2,9 +2,6 @@ package linenux.util;
 
 import java.time.LocalDateTime;
 
-/**
- * Created by yihangho on 10/15/16.
- */
 //@@author A0144915A
 public class LocalDateTimeUtil {
     /**

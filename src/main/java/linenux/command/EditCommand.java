@@ -41,8 +41,8 @@ public class EditCommand extends AbstractCommand {
         this.TRIGGER_WORDS.add(TRIGGER_WORD);
     }
 
-    @Override
     //@@author A0135788M
+    @Override
     public CommandResult execute(String userInput) {
         assert userInput.matches(getPattern());
         assert this.schedule != null;
@@ -67,8 +67,8 @@ public class EditCommand extends AbstractCommand {
         }
     }
 
-    @Override
     //@@author A0127694U
+    @Override
     public boolean awaitingUserResponse() {
         return requiresUserResponse;
     }
@@ -114,8 +114,8 @@ public class EditCommand extends AbstractCommand {
         return COMMAND_FORMAT;
     }
 
-    @Override
     //@@author A0135788M
+    @Override
     public String getPattern() {
         return "(?i)^\\s*(" + getTriggerWordsPattern() + ")(\\s+(?<keywords>.*?)(?<arguments>((n|st|et|#)/)+?.*)?)?";
     }
@@ -141,7 +141,6 @@ public class EditCommand extends AbstractCommand {
         }
     }
 
-    //@@author A0127694U
     private CommandResult implementEdit(Task original, String argument) {
         Either<Task, CommandResult> result = editArgumentParser.parse(original, argument);
 

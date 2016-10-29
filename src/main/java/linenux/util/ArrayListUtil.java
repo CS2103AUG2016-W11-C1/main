@@ -10,10 +10,10 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
+//@@author A0144915A
 /**
  * A set of utility functions for {@code ArrayList}.
  */
-//@@author A0144915A
 public class ArrayListUtil {
     /**
      * A layer of abstraction on top of ArrayListUtil to allow chainable calls.

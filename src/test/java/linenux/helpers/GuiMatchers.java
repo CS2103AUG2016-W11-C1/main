@@ -12,9 +12,7 @@ import org.testfx.service.query.NodeQuery;
 import static org.testfx.matcher.base.GeneralMatchers.baseMatcher;
 import static org.testfx.matcher.base.GeneralMatchers.typeSafeMatcher;
 
-/**
- * Created by yihangho on 10/17/16.
- */
+//@@author A0144915A
 public class GuiMatchers {
     public static Matcher<Node> hasCellLabelled(String label) {
         return typeSafeMatcher(ListView.class, label, node -> listHasCellLabelled(node, label));

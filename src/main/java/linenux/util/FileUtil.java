@@ -7,9 +7,6 @@ import java.nio.file.Paths;
 
 import linenux.command.result.CommandResult;
 
-/**
- *
- */
 //@@author A0135788M
 public class FileUtil {
 

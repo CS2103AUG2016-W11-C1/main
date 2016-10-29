@@ -12,10 +12,10 @@ import linenux.model.Task;
 import linenux.util.ArrayListUtil;
 import linenux.util.Either;
 
+//@@author A0140702X
 /**
  * Parser for the argument portion of add command.
  **/
-//@@author A0140702X
 public class ListArgumentFilter {
     public static String COMMAND_FORMAT;
     public static String CALLOUTS;

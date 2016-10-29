@@ -14,10 +14,10 @@ import org.json.simple.parser.ParseException;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
+//@@author A0135788M
 /**
  * Creates the configuration file.
  */
-//@@author A0135788M
 public class Config {
     public static final String DEFAULT_FILE_PATH = Paths.get(".").toAbsolutePath().toString();
     public static final String CONFIG_FILENAME = "Config.json";

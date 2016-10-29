@@ -7,9 +7,7 @@ import static org.testfx.api.FxAssert.verifyThat;
 import static org.testfx.matcher.control.ListViewMatchers.hasItems;
 import static org.testfx.matcher.control.ListViewMatchers.isEmpty;
 
-/**
- * Created by yihangho on 10/17/16.
- */
+//@@author A0144915A
 public class AddTaskTest extends GuiTest {
     @Test
     public void testAddTodo() {

@@ -8,6 +8,7 @@ import linenux.command.result.CommandResult;
 public interface Command {
     public static final String CALLOUTS = "* Non-compulsory fields are in square brackets.\n* Arguments are case insensitive.";
 
+    //@@author A0144915A
     /**
      * Checks if the user input corresponds to the format of the respective
      * command.
@@ -15,7 +16,6 @@ public interface Command {
      * @param userInput
      * @return true if format matches and false otherwise.
      */
-    //@@author A0144915A
     public boolean respondTo(String userInput);
 
     /**
@@ -46,7 +46,6 @@ public interface Command {
     /**
      * Returns the command word.
      */
-    //@@author A0144915A
     public String getTriggerWord();
 
     /**
@@ -55,10 +54,10 @@ public interface Command {
      */
     public String getDescription();
 
+    //@@author A0135788M
     /**
      * Returns the command format.
      */
-    //@@author A0135788M
     public String getCommandFormat();
 
     /**

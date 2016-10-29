@@ -9,10 +9,10 @@ import linenux.model.Schedule;
 import linenux.model.Task;
 import linenux.util.ArrayListUtil;
 
+//@@author A0140702X
 /**
  * Generates details of tasks and reminders attached to task based on userInput.
  */
-//@@author A0140702X
 public class ClearCommand extends AbstractCommand {
     private static final String TRIGGER_WORD = "clear";
     private static final String DESCRIPTION = "Clears the schedule of all done tasks.";

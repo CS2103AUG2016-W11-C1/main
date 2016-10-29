@@ -8,9 +8,7 @@ import java.util.ArrayList;
 
 import static junit.framework.TestCase.assertEquals;
 
-/**
- * Created by yihangho on 10/22/16.
- */
+//@@author A0144915A
 public class GenericParserTest {
     private GenericParser parser;
 
