@@ -105,25 +105,26 @@ The **Reminder** class allows our users to set one or more reminders for their t
 
 We have made all the models except **Schedule** immutable, thus all the commands should only interact with the Schedule model.
 
-Notable APIs for **Schedule** model:
-| Return type | Method | Description |
-| ----------- | ------ | ----------- |
-| void        | addTask(Task task) | Adds the task into the schedule. |
-| void        | updateTask(Task originalTask, Task newTask) | Updates the original task in the schedule with the new task. |
-| void        | deleteTask(Task task) | Deletes the task from the schedule. |
-| void        | deleteTasks(ArrayList<Task> tasks) | Deletes all the tasks in the list from the schedule. |
-| void        | clear() | Deletes all tasks from the schedule. |
-| ArrayList<Task> | search(String keywords) | Search and returns tasks based on given keywords. |
-| ArrayList<Reminder> | searchReminder(String keywords) | Search and return reminders based on given keywords. |
-| ObservableList<State> | getState() | Returns list of state. |
-| ArrayList<Task> | getTaskList() | Returns list of tasks in schedule. |
-| ObservableList<ArrayList<Task>> | getFilteredTaskList() | Returns list of ArrayList of filtered tasks. |
-| ArrayList<Task> | getFilterTasks() | Returns the current filtered task |
-| void | addFilterTasks(ArrayList<Task> filteredTasks) | Will first clear the current filteredTaskList add the given list of tasks into it. |
-| ArrayList<Reminder> | getReminderList() | Returns all the reminders in the schedule. |
-| Boolean | popState() | Returns true and removes the most recent true if the list of states is not empty. Returns false otherwise. |
-| State | getMostRecentState() | Returns the most recent state of schedule. |
-| void | addState(State) | Adds a new state into the list of states. |
+##### *Notable APIs for **Schedule** model*:
+
+| Return type           | Method and Description |
+| --------------------- | ---------------------- |
+| void                  | `addTask(Task task)`: Adds the task into the schedule. |
+| void                  | `updateTask(Task originalTask, Task newTask)`: Updates the original task in the schedule with the new task. |
+| void                  | `deleteTask(Task task)`: Deletes the task from the schedule. |
+| void                  | `deleteTasks(ArrayList<Task> tasks)`: Deletes all the tasks in the list from the schedule. |
+| void                  | `clear()`: Deletes all tasks from the schedule. |
+| ArrayList<Task>       | `search(String keywords)`: Search and returns tasks based on given keywords. |
+| ArrayList<Reminder>   | `searchReminder(String keywords)`: Search and return reminders based on given keywords. |
+| ObservableList<State> | `getState()`: Returns list of state. |
+| ArrayList<Task>       | `getTaskList()`: Returns list of tasks in schedule. |
+| ObservableList<ArrayList<Task>> | `getFilteredTaskList()`: Returns list of ArrayList of filtered tasks. |
+| ArrayList<Task>       | `getFilterTasks()`: Returns the current filtered task |
+| void                  | `addFilterTasks(ArrayList<Task> filteredTasks)`: Will first clear the current filteredTaskList add the given list of tasks into it. |
+| ArrayList<Reminder>   | `getReminderList()`: Returns all the reminders in the schedule. |
+| Boolean               | `popState()`: Returns true and removes the most recent true if the list of states is not empty. Returns false otherwise. |
+| State                 | `getMostRecentState()`: Returns the most recent state of schedule. |
+| void                  | `addState(State)`: Adds a new state into the list of states. |
 
 The **Storage** class allows the in-memory data to persist after the application is closed. The state of the **Schedule** is stored as an XML file using **XMLScheduleStorage** class.
 
@@ -178,7 +179,7 @@ The sequence diagram below shows how the components interact when the ControlUni
 <img src="images/sequenceDiagramGeneric.png">
 > Figure 7: Sequence Diagram for executing a Generic Command
 
-_**Command** Interface_
+##### **Command** *Interface*
 
 **Command** interface lists all the required method that a command must have, so, to implement a new command, you will need to ensure that it implements the **Command** interface.
 
