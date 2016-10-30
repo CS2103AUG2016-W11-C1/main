@@ -11,6 +11,7 @@
     * [Model Component](#model-component)
     * [View Component](#view-component)
     * [Controller Component](#controller-component)
+    * [Activity Diagram]($activity-diagram)
 * [Testing](#testing)
     * [In Eclipse](#in-eclipse)
     * [Using Gradle](#using-gradle)
@@ -28,7 +29,7 @@
 
 ## Introduction
 Linenux is a command-line, task manager application designed for consumers who are quick at typing. Being an open-source project, we understand that there are developers (yes, you) who want to contribute to the project but do not know where to begin. Thus, we have written this guide to inform newcomers to the project on the key design considerations and the overall software architecture. We hope that by the end of this developer guide, you will in a better position to start working on improving Linenux.
-
+<br>
 ## Setting up
 
 #### Prerequisites
@@ -75,6 +76,8 @@ To ensure code readablity on Github, please follow the following instructions to
     * Reason: Eclipse fails to detect the changes made to your project during `git pull`.
     * Solution: Refresh your project in Eclipse by clicking on it in the package explorer window and pressing `F5`.
 
+<br>
+
 ## Design
 
 #### Architecture
@@ -93,7 +96,7 @@ Linenux follows the Model-View-Controller (MVC) pattern which is made up of 3 ma
 <img src="images/modelDiagram.png">
 > Figure 4: Model Diagram
 
-##### ***Schedule** class*
+##### *Schedule class*
 
 The **Schedule** class stores a collection of states. A **State** is an immutable class that is created whenever a task or reminder is added or deleted from the **Schedule**. This design allows users to `undo` their previous command.
 
@@ -206,7 +209,11 @@ The **View Component** follows the JavaFx UI framework. Each of the classes (**M
 <img src="images/controllerDiagram.png">
 > Figure 6: Controller Diagram
 
-The **ConsoleController** takes the user input and sends it to the "brain" of Linenux, the "ControlUnit" class. The "ControlUnit" class is in charge of retrieving the appropriate schedule from storage and passing it over to the **CommandManager** class. The **CommandManager** class then delegates the right command based on the user input.
+##### *Overview*
+
+The **MainWindowController** takes the user input and sends it to the "brain" of Linenux, the **ControlUnit** class. The **ControlUnit** class is in charge of retrieving the appropriate schedule from storage and passing it over to the **CommandManager** class. The **CommandManager** class then delegates the right command based on the user input.
+
+##### *CommandManager Class*
 
 ``` java
 public CommandResult delegateCommand(String userInput) {
@@ -225,48 +232,60 @@ public CommandResult delegateCommand(String userInput) {
     return this.catchAllCommand.execute(userInput);
 }
 ```
-The above code shows how the **CommandManager** class delegates the right command based on the user input. Every command class must implement the **Command** interface. At any point in time, only one command is awaiting user response. If there are none, then each command will check if the user input corresponds to the command format.
+The above code shows how the **CommandManager** class delegates the right command based on the user input. Every command class must implement the **Command** interface.
 
-``` java
-public boolean canParse(String userInput) {
-    for (TimeParser parser: parserList) {
-        if (parser.respondTo(userInput)) {
-            return true;
-        }
-    }
-
-    return false;
-}
-```
-
-Similarly, the same pattern is used if the command has to parse the time. These commands will have their own **TimeParserManager** and they can pick and choose which **TimeParser** format they want to support.
-
-The sequence diagram below shows how the components interact when the ControlUnit receives an input from the user.
 <img src="images/sequenceDiagramGeneric.png">
 > Figure 7: Sequence Diagram for executing a Generic Command
 
-##### **Command** *Interface*
+The sequence diagram above shows the flow of a typical command.
 
-**Command** interface lists all the required method that a command must have, so, to implement a new command, you will need to ensure that it implements the **Command** interface.
+However, we understand that some commands would require some form of user response. For example, our `delete` command requires user to choose which task to delete if more than one task is found. Thus, in the case where you require user response, you can set the command as awaiting response and the next user input will be delegated to that command (as seen in the code snippet above).
 
-Important!!
+However, do take note that at any point in time, only one command is awaiting user response. Thus, once your command is resolved, ensure that it is not awaiting for any user response.
+
+##### *Command Interface*
+
+**Command** interface lists all the required method that a command must have, so, to implement a new command, you will need to ensure that it implements the **Command** interface. The methods are:
+
+| Return type | Method and Description |
+| ----------- | ---------------------- |
+| Boolean     | `respondTo(String userInput)`: checks if command responds to userInput. |
+| CommandResult | `execute(String userInput)`: executes the command. <br> Contract: use respondTo to check before calling execute. |
+| Boolean     | `awaitingUserResponse()`: checks if the command is awaiting for a response from the user. |
+| CommandResult | `userResponse(String userInput)`: carries out user response. |
+| String      | `getTriggerWord()`: returns command word. |
+| String      | `getDescription()`: returns description of command. |
+| String      | `getCommandFormat()`: returns command format. |
+| String      | `getPattern()`: returns regex pattern. |
+| void        | `setAlias(String alias)`: set a new alias for the command. |
+| void        | `removeAlias(String alias)`: removes an alias for the command. |
+
+*Important!!*
 > As seen in Figure 7, whenever an input is given by the user, the **CommandManager** will loop through a list of Commands that it is keeping track of.
 
 > Thus, when you implement a new command, make sure that you add your command into **CommandManager**'s commandList through the it's initializeCommands() mathod.
 
-_**AbstractCommand** Class_
+##### *AbstractCommand Class*
 
 As many of the commands are similar in their implementation of some of the interface methods, we have abstracted the implementation into the **AbstractCommand** class. The methods are:
 
-1. `respondTo(String userInput)`
-2. `setAlias(String alias)`
-3. `removeAlias(String alias)`
-4. `getPattern()`
+1. `respondTo`
+2. `setAlias`
+3. `removeAlias`
+4. `getPattern`
 
-Thus, when you implement a new command, for convenience, you can make your command extend the **AbstractCommand** class for the implementation the above listed methods.
+Thus, when you implement a new command, for convenience, you can make your command inherit the **AbstractCommand** class for the implementation the above listed methods.
 
-Important!!
+*Important!!*
 > When your command extends AbstractCommand, ensure that in your command's constructor, the command's trigger word is added into TRIGGER_WORDS, an ArrayList<String> that is instantiated in AbstractCommand.
+
+#### Activity Diagram
+<img src="images/activityDiagram.png">
+> Figure 8: Acitivity Diagram of Linenux
+
+The above activity diagram shows the generic flow of activities in Linenux.
+
+<br>
 
 ## Testing
 
@@ -281,6 +300,8 @@ Tests can be found in the `./src/test/java` folder.
 
 * To run all tests, run `gradle test` command in the terminal.
 
+<br>
+
 ## Dev Ops
 
 #### Build Automation
@@ -294,18 +315,22 @@ The gradle configuration for this project is defined in the build script `build.
 
 #### Continuous Integration
 
-Travis CI is a Continuous Integration platform for GitHub projects. It runs the projects' tests automatically whenever new code is pushed to the repo. This ensures that existing functionality and features  have not been broken by the changes.
+Travis CI is a Continuous Integration platform for GitHub projects. It runs the projects' tests automatically whenever new code is pushed to the repo. This ensures that existing functionality and features have not been broken by the changes.
 
 Whenever you push code to the repository, the current Travis CI set up will:
 * Runs the `./gradlew test` command
 
 #### Making a Release
 
-Linenux automatically creates a new release by using Travis. This can be done by pushing tagged commits to GitHub.
+Linenux automatically creates a new release by using Travis. To create a new release, you can push a tagged commit to GitHub.
 
 #### Managing Dependecies
 
-A project often depends on third-party libraries. Linenux manages these dependencies using Gradle. Gradle will automatically download all the required dependencies when any Gradle command is invoked.
+A project often depends on third-party libraries. Linenux manages these dependencies using Gradle.
+
+Gradle will automatically download all the required dependencies when any Gradle command is invoked so you do not have to worry about managing these dependencies manually.
+
+<br>
 
 ## Appendices
 
@@ -537,7 +562,7 @@ Tasks **cannot** be created with start dates only.
 #### Appendix E : Product Survey
 ##### Pros of Products Surveyed
 <img src="images/ProductSurveyPros.jpeg"/>
-> Figure 8 Pros of Products Surveyed
+> Figure 9 Pros of Products Surveyed
 
 ##### Cons of Products Surveyed:
 *Google Calendar*

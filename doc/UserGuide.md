@@ -169,7 +169,7 @@ Linenux supports 3 kinds of tasks:
 2. **Deadlines** (Tasks with end times only)
 3. **Events**    (Tasks with start and end times)
 
-Adding a task has never been this easy. Just indicate the appropriate fields and we will automatically assign the newly created task to one of the three categories above. Tags can be used to group similar tasks together.
+Adding a task has never been this easy. Just indicate the appropriate fields and we will automatically assign the newly created task to one of the three categories above.
 
 *Format:*
 
@@ -397,7 +397,7 @@ Sometimes we might need to know when we are free. The `freetime` command shows y
 
 ##### *List*
 
-The default behaviour of the `list` command returns the list of all incomplete tasks and reminders. This may not be particularly helpful as you may have a lot of outstanding tasks. Luckily, you are able to search for tasks by specifying the various fields.
+The default behaviour of the `list` command returns the list of all incomplete tasks and reminders. This may not be particularly helpful as you may have a lot of outstanding tasks. Luckily, you are able to search for tasks by specifying the various fields. For example, you can list tasks that have the same tag.
 
 Also, if you need to see the tasks that you have completed, simply add the `d/DONE` field which works as follows:
 
