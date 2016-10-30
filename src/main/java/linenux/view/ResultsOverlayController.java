@@ -33,11 +33,15 @@ public class ResultsOverlayController {
         this.controlUnit = controlUnit;
         this.controlUnit.getLastCommandResultProperty().addListener((change) -> {
             CommandResult lastResult = this.controlUnit.getLastCommandResultProperty().get();
-            this.messages.add(lastResult.getFeedback());
+            String feedback = lastResult.getFeedback().trim();
 
-            TimerTask task = this.autoRemovalTask();
-            this.timer.schedule(task, 5000);
-            this.pendingTasks.add(task);
+            if (!feedback.contains("\n") && feedback.length() > 0) {
+                this.messages.add(lastResult.getFeedback());
+
+                TimerTask task = this.autoRemovalTask();
+                this.timer.schedule(task, 5000);
+                this.pendingTasks.add(task);
+            }
         });
     }
 
