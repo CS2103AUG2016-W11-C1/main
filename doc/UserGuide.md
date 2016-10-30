@@ -46,11 +46,10 @@ Without further ado, let's get started!
 
 Double-click on the file to launch Linenux. Wait for a few seconds for the main window to appear.
 
-<img src="images/mainWindow.png">
-
 #### Visual Walkthrough
 
 <img src="images/mainWindowDiagram.png">
+> Figure 1: Main Window of Linenux
 
 1. **Command Box** - where you enter the command.
 2. **To-do Panel** - shows to-dos.
@@ -188,6 +187,9 @@ Adding a task has never been this easy. Just indicate the appropriate fields and
 > add house warming st/2016-10-16 5:00pm et/2016-10-16 9:00pm #/household
 ```
 
+<img src="images/userGuide/addCommand.png">
+> Figure 2: Adding a task to Linenux
+
 ##### *Remind*
 
 Setting reminders is as simple as adding a task. Just specify the appropriate fields and we will assign the reminder to the task that you want. Reminders will show up on the display panel upon launch or when the commands `list`, `today` and `tomorrow` are entered.
@@ -203,6 +205,9 @@ Setting reminders is as simple as adding a task. Just specify the appropriate fi
 > remind house warming t/2016-10-16 07:00am n/buy groceries
 ```
 
+<img src="images/userGuide/remindCommand.png">
+> Figure 3: Adding a reminder to a task
+
 *Did you know?*
 
 Have you wonder why we use the word `KEYWORDS` rather than `TASK_NAME`? This is because the `remind` command actually searches for task names containing those keywords! For example, consider the scenario below :
@@ -212,6 +217,9 @@ Have you wonder why we use the word `KEYWORDS` rather than `TASK_NAME`? This is 
 > add cs2103 assignment et/2016-10-18 11:59pm
 > remind assignment n/finish assignment t/2016-10-15 10:00pm
 ```
+
+<img src="images/userGuide/multipleTaskFound.png">
+> Figure 4: Multiple Task Found
 
 In this scenario, since there are multiple task names with the keyword `assignment`, both results are returned and you get to choose, via specifying an index, which task is the reminder for. This mechanism is known as fuzzy searching and it is implemented for all commands with the field `KEYWORD`. How cool is that?
 
@@ -393,6 +401,9 @@ Sometimes we might need to know when we are free. The `freetime` command shows y
 > freetime st/2016-10-16 7:00am et/2016-10-16 9:00pm
 ```
 
+<img src="images/userGuide/freetimeCommand.png">
+> Figure 5: Showing free time slots
+
 #### Listing Tasks and Reminders
 
 ##### *List*
@@ -436,6 +447,9 @@ Also, if you need to see the tasks that you have completed, simply add the `d/DO
 * List all incomplete tasks from 16 October 2016, 12.00am to 25 December 2016, 11.59pm and with tags 'assignment'.
 > list st/2016-10-16 12:00am et/2016-12-25 11:59pm #/assignment
 ```
+
+<img src="images/userGuide/listCommand.png">
+> Figure 6: Before and After List Command
 
 ##### *Today*
 
@@ -483,6 +497,9 @@ The command `list` only provides the general details surrounding a task. To see 
 * View details regarding the deadline.
 > view cs2101 assignment
 ```
+
+<img src="images/userGuide/viewCommand.png">
+> Figure 7: Viewing a task
 
 #### Undo
 
