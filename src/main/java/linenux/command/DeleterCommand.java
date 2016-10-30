@@ -13,7 +13,7 @@ import linenux.util.ArrayListUtil;
 import linenux.util.RemindersListUtil;
 
 /**
- * Deletes a task reminder from the schedule.
+ * Handles deletion of reminders from schedule.
  */
 // @@author A0127694U
 public class DeleterCommand extends AbstractCommand {
@@ -131,7 +131,7 @@ public class DeleterCommand extends AbstractCommand {
     // @@author A0144915A
     private CommandResult makeDeletedReminder(ReminderSearchResult remind) {
         return () -> "Deleted reminder \"" + remind.getReminders().get(0).toString() + "\" from task \""
-                + remind.getTask().getTaskName() + ".";
+                + remind.getTask().getTaskName() + "\".";
     }
 
     private CommandResult makeCancelledResult() {
@@ -142,7 +142,7 @@ public class DeleterCommand extends AbstractCommand {
         return () -> {
             StringBuilder builder = new StringBuilder();
             builder.append("I don't understand \"" + userInput + "\".\n");
-            builder.append("Enter a number to indicate which task to delete.\n");
+            builder.append("Enter a number to indicate which reminder to delete.\n");
             builder.append(RemindersListUtil.displaySearchResults(this.foundReminders));
             return builder.toString();
         };
