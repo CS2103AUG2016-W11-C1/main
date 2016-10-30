@@ -35,6 +35,7 @@ public class MainWindowController {
         setupResultBox();
         splitPane.setDividerPositions(0.25, 0.50, 0.75);
         setupCommandBox();
+        setupResultsOverlay();
     }
 
     private void setupTodoBox() {
@@ -102,6 +103,18 @@ public class MainWindowController {
             commandBoxContainer.getChildren().add(field);
 
             CommandBoxController controller = loader.getController();
+            controller.setControlUnit(this.controlUnit);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setupResultsOverlay() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainWindowController.class.getResource("/view/ResultsOverlay.fxml"));
+            this.stackPane.getChildren().add(loader.load());
+            ResultsOverlayController controller = loader.getController();
             controller.setControlUnit(this.controlUnit);
         } catch (IOException e) {
             e.printStackTrace();

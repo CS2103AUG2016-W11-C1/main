@@ -1,0 +1,8 @@
+.result {
+    -fx-background-color: #444;
+    -fx-background-radius: 5px;
+}
+
+.result .label {
+    -fx-text-fill: #fff;
+}
