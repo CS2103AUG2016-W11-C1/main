@@ -1,8 +1,11 @@
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'application'
-apply plugin: 'coveralls'
 apply plugin: 'jacoco'
+
+plugins {
+    id 'com.github.kt3k.coveralls' version '2.6.3'
+}
 
 dependencies {
     testCompile 'junit:junit:4.12'
