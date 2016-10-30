@@ -28,6 +28,12 @@ public class TomorrowCommand extends AbstractCommand {
         this.TRIGGER_WORDS.add(TRIGGER_WORD);
     }
 
+    /**
+     * Executes the command based on {@code userInput}. This method operates under the assumption that
+     * {@code respondTo(userInput)} is {@code true}.
+     * @param userInput A {@code String} representing the user input.
+     * @return A {@code CommandResult} representing the result of the command.
+     */
     @Override
     public CommandResult execute(String userInput) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-M-d h.mma");
@@ -38,16 +44,25 @@ public class TomorrowCommand extends AbstractCommand {
         return this.listCommand.execute("list st/" + startOfTomorrow.format(formatter) + " et/" + endOfTomorrow.format(formatter));
     }
 
+    /**
+     * @return A {@code String} representing the default command word.
+     */
     @Override
     public String getTriggerWord() {
         return TRIGGER_WORD;
     }
 
+    /**
+     * @return A {@code String} describing what this {@code Command} does.
+     */
     @Override
     public String getDescription() {
         return DESCRIPTION;
     }
 
+    /**
+     * @return A {@code String} describing the format that this {@code Command} expects.
+     */
     @Override
     public String getCommandFormat() {
         return COMMAND_FORMAT;

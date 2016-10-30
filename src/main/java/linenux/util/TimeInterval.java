@@ -9,27 +9,49 @@ import java.time.LocalDateTime;
 public class TimeInterval {
     private LocalDateTime from, to;
 
+    /**
+     * Instantiate an indeterminate {@code TimeInterval}.
+     */
     public TimeInterval() {
         this(null, null);
     }
 
+    /**
+     * Instantiate a {@code TimeInterval} from the given start and end time.
+     * @param from The beginning of the interval.
+     * @param to The end of the interval.
+     */
     public TimeInterval(LocalDateTime from, LocalDateTime to) {
         this.from = from;
         this.to = to;
     }
 
+    /**
+     * @return The beginning of the interval.
+     */
     public LocalDateTime getFrom() {
         return this.from;
     }
 
+    /**
+     * @return The end of the interval.
+     */
     public LocalDateTime getTo() {
         return this.to;
     }
 
+    /**
+     * @param from The new beginning of the interval.
+     * @return A new {@code TimeInterval} with the updated beginning.
+     */
     public TimeInterval setFrom(LocalDateTime from) {
         return new TimeInterval(from, this.to);
     }
 
+    /**
+     * @param to The new end of the interval.
+     * @return A new {@code TimeInterval} with the updated ending.
+     */
     public TimeInterval setTo(LocalDateTime to) {
         return new TimeInterval(this.from, to);
     }

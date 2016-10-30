@@ -13,6 +13,13 @@ public class StandardDateWithTimeParser implements TimeParser {
     DateTimeFormatter formatter = new DateTimeFormatterBuilder().parseCaseInsensitive()
                                         .appendPattern("dd MMM yyyy h.mma").toFormatter();
 
+    /**
+     * Checks if the user input corresponds to the format of the respective
+     * time parser.
+     *
+     * @param input
+     * @return true if format matches and false otherwise.
+     */
     @Override
     public boolean respondTo(String input) {
         try {
@@ -23,6 +30,11 @@ public class StandardDateWithTimeParser implements TimeParser {
         }
     }
 
+    /**
+     * Parses the userInput string to a time instance. This method assumes that {@code respondTo} returns {@code true}.
+     * @param input The input to parse.
+     * @return The {@code LocalDateTime}, which is the result of parsing {@code input}.
+     */
     @Override
     public LocalDateTime parse(String input) {
         return LocalDateTime.parse(input, formatter);

@@ -22,57 +22,68 @@ public interface Command {
     public boolean respondTo(String userInput);
 
     /**
-     * Carries out the command.
-     * Contract: use respondTo to check before calling execute
-     * @param userInput
-     * @return The result of the execution.
+     * Executes the command based on {@code userInput}. This method operates under the assumption that
+     * {@code respondTo(userInput)} is {@code true}.
+     * @param userInput A {@code String} representing the user input.
+     * @return A {@code CommandResult} representing the result of the command.
      */
     public CommandResult execute(String userInput);
 
     /**
-     * Checks if command is waiting for user response.
-     * @return true if command is waiting and false otherwise.
+     * @return {@code true} if and only if this {@code Command} is awaiting for user response.
      */
     default public boolean awaitingUserResponse() {
         return false;
     }
 
     /**
-     * Carries out the user response.
-     * @param userInput
-     * @return The result of the user response.
+     * Process the response given by the user.
+     * @param userInput {@code String} representing the user response.
+     * @return A {@code CommandResult}, which is the result of processing {@code userInput}.
      */
     default public CommandResult getUserResponse(String userInput) {
         return null;
     }
 
     /**
-     * Returns the command word.
+     * @return A {@code String} representing the default command word.
      */
     public String getTriggerWord();
 
     /**
-     * A brief description of what the command is about.
-     * @return A string describing what the command is about.
+     * @return A {@code String} describing what this {@code Command} does.
      */
     public String getDescription();
 
     //@@author A0135788M
     /**
-     * Returns the command format.
+     * @return A {@code String} describing the format that this {@code Command} expects.
      */
     public String getCommandFormat();
 
     /**
-     * Get regex pattern.
+     * @return A {@code String} representing a regular expression for this {@code Command}.
      */
     public String getPattern();
 
     //@@author A0144915A
+
+    /**
+     * Add a new alias.
+     * @param alias The new alias.
+     */
     public void setAlias(String alias);
 
+    /**
+     * Update the list of aliases.
+     * @param aliases The new aliases.
+     */
     public void setAliases(Collection<String> aliases);
 
+    /**
+     * Remove an alias.
+     * @param alias The alias to remove.
+     */
     public void removeAlias(String alias);
 
     //@@author A0135788M

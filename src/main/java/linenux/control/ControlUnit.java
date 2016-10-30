@@ -48,6 +48,10 @@ public class ControlUnit {
     private ArrayList<BiConsumer<String, CommandResult>> postExecuteListeners = new ArrayList<>();
 
     //@@author A0135788M
+    /**
+     * Constructs a {@code ControlUnit} from a {@code Config}.
+     * @param config A {@code Config} representing the application configuration.
+     */
     public ControlUnit(Config config) {
         this.scheduleStorage = new XmlScheduleStorage(config);
         this.schedule = (this.scheduleStorage.hasScheduleFile()) ? this.scheduleStorage.loadScheduleFromFile() : new Schedule();
@@ -58,6 +62,12 @@ public class ControlUnit {
         this.initializeAliases();
     }
 
+    /**
+     * Constructs a {@code ControlUnit} from {@code ScheduleStorage}, {@code Config}, and {@code CommandManager}.
+     * @param storage The {@code ScheduleStorage} class that will be used to store {@code Schedule}.
+     * @param config The application configuration.
+     * @param commandManager The {@code CommandManager} that should be used.
+     */
     public ControlUnit(ScheduleStorage storage, Config config, CommandManager commandManager) {
         this.scheduleStorage = storage;
         this.schedule = this.scheduleStorage.loadScheduleFromFile();
@@ -65,6 +75,11 @@ public class ControlUnit {
         this.commandManager = commandManager;
     }
 
+    /**
+     * Executes a user command.
+     * @param userInput A {@code String}, which is the user input.
+     * @return A {@code CommandResult} containing feedback for the user.
+     */
     public CommandResult execute(String userInput) {
         CommandResult result = commandManager.delegateCommand(userInput);
         lastCommandResult.setValue(result);
@@ -81,30 +96,52 @@ public class ControlUnit {
     }
 
     //@@author A0144915A
+    /**
+     * @return The current {@code Schedule}.
+     */
     public Schedule getSchedule() {
         return this.schedule;
     }
 
+    /**
+     * @return The application configuration.
+     */
     public Config getConfig() {
         return (this.config);
     }
 
+    /**
+     * @return A reactive object which encapsulate the latest {@code CommandResult} shown to the user.
+     */
     public ObjectProperty<CommandResult> getLastCommandResultProperty() {
         return this.lastCommandResult;
     }
 
+    /**
+     * @return An {@code ArrayList} of supported {@code Command}.
+     */
     public ArrayList<Command> getCommandList() {
         return commandManager.getCommandList();
     }
 
+    /**
+     * Update the path to the schedule file.
+     * @param path The absolute path to the new file.
+     */
     public void setScheduleFilePath(String path) {
         this.config.setScheduleFilePath(path);
     }
 
+    /**
+     * Save the current {@code Schedule} into the file.
+     */
     public void saveSchedule() {
         this.scheduleStorage.saveScheduleToFile(schedule);
     }
 
+    /**
+     * Load the current {@code Schedule} from file.
+     */
     public void loadSchedule() {
         Schedule schedule;
 
@@ -117,16 +154,26 @@ public class ControlUnit {
         this.schedule.update(schedule);
     }
 
+    /**
+     * Add a listener that will be executed every time a command is processed.
+     * @param listener A function that takes in the user input and the {@code CommandResult}.
+     */
     public void addPostExecuteListener(BiConsumer<String, CommandResult> listener) {
         this.postExecuteListeners.add(listener);
     }
 
+    /**
+     * Setup aliases for the commands based on what's in the config file.
+     */
     private void initializeAliases() {
         for (Command command: this.commandManager.getCommandList()) {
             command.setAliases(this.config.getAliases(command.getTriggerWord()));
         }
     }
 
+    /**
+     * Setup the default set of commands.
+     */
     private void initializeCommands() {
         this.commandManager.addCommand(new AddCommand(this.schedule));
         this.commandManager.addCommand(new EditReminderCommand(this.schedule));

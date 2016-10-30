@@ -39,9 +39,17 @@ public class AdaptedTask {
     @XmlElementWrapper
     private ArrayList<AdaptedReminder> reminders;
 
+    /**
+     * Empty constructor for XML use.
+     */
     public AdaptedTask() {
     }
 
+    /**
+     * Converts a reminder to an XML-friendly task object.
+     * @param r A {@code task} instance.
+     * @return an XML-friendly task object.
+     */
     public AdaptedTask convertToXml(Task t) {
         this.taskName = t.getTaskName();
         this.isDone = t.isDone();
@@ -55,6 +63,10 @@ public class AdaptedTask {
         return this;
     }
 
+    /**
+     * Converts an XML-friendly task object to a task.
+     * @return a task object.
+     */
     public Task convertToModel() {
         ArrayList<Reminder> newReminders = new ArrayList<>();
         for (AdaptedReminder r : reminders) {

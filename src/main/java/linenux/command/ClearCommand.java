@@ -10,7 +10,7 @@ import linenux.util.ArrayListUtil;
 
 //@@author A0140702X
 /**
- * Generates details of tasks and reminders attached to task based on userInput.
+ * Clears the schedule of all done tasks.
  */
 public class ClearCommand extends AbstractCommand {
     private static final String TRIGGER_WORD = "clear";
@@ -19,11 +19,21 @@ public class ClearCommand extends AbstractCommand {
 
     private Schedule schedule;
 
+    /**
+     * Constructs an {@code ClearCommand}.
+     * @param schedule The {@code Schedule} that will be cleared.
+     */
     public ClearCommand(Schedule schedule) {
         this.schedule = schedule;
         this.TRIGGER_WORDS.add(TRIGGER_WORD);
     }
 
+    /**
+     * Executes the command based on {@code userInput}. This method operates under the assumption that
+     * {@code respondTo(userInput)} is {@code true}.
+     * @param userInput A {@code String} representing the user input.
+     * @return A {@code CommandResult} representing the result of the command.
+     */
     @Override
     public CommandResult execute(String userInput) {
         assert userInput.matches(getPattern());
@@ -49,21 +59,35 @@ public class ClearCommand extends AbstractCommand {
         }
     }
 
+    /**
+     * @return A {@code String} representing the default command word.
+     */
     @Override
     public String getTriggerWord() {
         return TRIGGER_WORD;
     }
 
+    /**
+     * @return A {@code String} describing what this {@code Command} does.
+     */
     @Override
     public String getDescription() {
         return DESCRIPTION;
     }
 
+    /**
+     * @return A {@code String} describing the format that this {@code Command} expects.
+     */
     @Override
     public String getCommandFormat() {
         return COMMAND_FORMAT;
     }
 
+    /**
+     * Extract tag from the {@code argument}.
+     * @param argument A {@code String} representing the argument of the {@code Command}.
+     * @return A tag, if present.
+     */
     private String extractTag(String argument) {
         GenericParser parser = new GenericParser();
         GenericParser.GenericParserResult result = parser.parse(argument);

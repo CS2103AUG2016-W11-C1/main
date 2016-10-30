@@ -26,12 +26,22 @@ public class DoneCommand extends AbstractCommand {
     private ArrayList<Task> foundTasks;
 
     //@@author A0135788M
+    /**
+     * Constructs an {@code AliasCommand}.
+     * @param schedule The {@code Schedule} to search and update {@code Task} from.
+     */
     public DoneCommand(Schedule schedule) {
         this.schedule = schedule;
         this.TRIGGER_WORDS.add(TRIGGER_WORD);
     }
 
-    //@@author A0144915A
+    //@@author A0144915
+    /**
+     * Executes the command based on {@code userInput}. This method operates under the assumption that
+     * {@code respondTo(userInput)} is {@code true}.
+     * @param userInput A {@code String} representing the user input.
+     * @return A {@code CommandResult} representing the result of the command.
+     */
     @Override
     public CommandResult execute(String userInput) {
         assert userInput.matches(getPattern());
@@ -60,11 +70,19 @@ public class DoneCommand extends AbstractCommand {
     }
 
     //@@author A0135788M
+    /**
+     * @return {@code true} if and only if this {@code Command} is awaiting for user response.
+     */
     @Override
     public boolean awaitingUserResponse() {
         return requiresUserResponse;
     }
 
+    /**
+     * Process the response given by the user.
+     * @param userInput {@code String} representing the user response.
+     * @return A {@code CommandResult}, which is the result of processing {@code userInput}.
+     */
     @Override
     public CommandResult getUserResponse(String userInput) {
         assert this.foundTasks != null;
@@ -91,39 +109,67 @@ public class DoneCommand extends AbstractCommand {
     }
 
     //@@author A0144915A
+    /**
+     * @return A {@code String} representing the default command word.
+     */
     @Override
     public String getTriggerWord() {
         return TRIGGER_WORD;
     }
 
     //@@author A0135788M
+    /**
+     * @return A {@code String} describing what this {@code Command} does.
+     */
     @Override
     public String getDescription() {
         return DESCRIPTION;
     }
 
+    /**
+     * @return A {@code String} describing the format that this {@code Command} expects.
+     */
     @Override
     public String getCommandFormat() {
         return COMMAND_FORMAT;
     }
 
+    /**
+     * Updates the user response status.
+     * @param requiresUserResponse Whether or not this {@code Command} is expecting user response.
+     * @param foundTasks An {@code ArrayList} of {@code Task} matching some search criteria.
+     */
     private void setResponse(boolean requiresUserResponse, ArrayList<Task> foundTasks) {
         this.requiresUserResponse = requiresUserResponse;
         this.foundTasks = foundTasks;
     }
 
+    /**
+     * @return A {@code CommandResult} indicating that the user does not specify a keywords.
+     */
     private CommandResult makeNoKeywordsResult() {
         return () -> "Invalid arguments.\n\n" + COMMAND_FORMAT + "\n\n" + CALLOUTS;
     }
 
+    /**
+     * @param task The {@code Task} that is marked as done.
+     * @return A {@code CommandResult} informing the user that {@code task} has been marked as done.
+     */
     private CommandResult makeDoneTask(Task task) {
         return () -> "\"" + task.getTaskName() + "\" is marked as done.";
     }
 
+    /**
+     * @return A {@code CommandResult} indicating that the done operation is cancelled.
+     */
     private CommandResult makeCancelledResult() {
         return () -> "OK! Not marking any task as done.";
     }
 
+    /**
+     * @param userInput A {@code String} representing the user response.
+     * @return A {@code CommandResult} indicating that {@code userInput} is invalid.
+     */
     private CommandResult makeInvalidUserResponse(String userInput) {
         return () -> {
             StringBuilder builder = new StringBuilder();

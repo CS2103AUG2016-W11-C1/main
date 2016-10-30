@@ -28,7 +28,6 @@ public class Main extends Application {
         launch(args);
     }
 
-    // TODO: Handle general exception & make TextArea keyboard insensitive.
     //@@author A0135788M
     @Override
     public void start(Stage primaryStage) {
@@ -44,6 +43,11 @@ public class Main extends Application {
     }
 
     //@@author A0144915A
+
+    /**
+     * Setup the main window
+     * @param primaryStage The stage where the window will live in.
+     */
     private void setupMainWindow(Stage primaryStage) {
         try {
             FXMLLoader loader = setUpLoader();
@@ -57,6 +61,10 @@ public class Main extends Application {
         }
     }
 
+    /**
+     * Setup the loader to load the main window.
+     * @return An {@code FXMLLoader} with the correct locations set.
+     */
     private FXMLLoader setUpLoader() {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(Main.class.getResource("/view/MainWindow.fxml"));
@@ -64,6 +72,10 @@ public class Main extends Application {
         return loader;
     }
 
+    /**
+     * Setup the stage for the application to live in.
+     * @param primaryStage The {@code Stage} to setup.
+     */
     private void setUpStage(Stage primaryStage) {
         primaryStage.setTitle(APP_NAME);
         primaryStage.getIcons().add(new Image("/images/terminal.png"));

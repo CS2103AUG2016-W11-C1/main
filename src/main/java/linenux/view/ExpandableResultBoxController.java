@@ -16,6 +16,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 //@@author A0144915A
+/**
+ * Controller for expandable result box, which is used to show longer command results.
+ */
 public class ExpandableResultBoxController {
     public enum UserAction {
         SHOW, HIDE
@@ -30,6 +33,10 @@ public class ExpandableResultBoxController {
     private UserAction lastUserAction = UserAction.HIDE;
     private Clock clock = Clock.systemDefaultZone();
 
+    /**
+     * Update the application {@code ControlUnit}.
+     * @param controlUnit The new {@code ControlUnit}.
+     */
     public void setControlUnit(ControlUnit controlUnit) {
         this.controlUnit = controlUnit;
         this.controlUnit.getLastCommandResultProperty().addListener((change) -> {
@@ -41,6 +48,9 @@ public class ExpandableResultBoxController {
         });
     }
 
+    /**
+     * Initializes subviews.
+     */
     @FXML
     private void initialize() {
         this.expanded.addListener(change -> {
@@ -48,6 +58,9 @@ public class ExpandableResultBoxController {
         });
     }
 
+    /**
+     * Show the result box if it's currently hidden, hide otherwise.
+     */
     @FXML
     private void toggleExpandedState() {
         if (this.expanded.get()) {
@@ -59,6 +72,9 @@ public class ExpandableResultBoxController {
         }
     }
 
+    /**
+     * Ensure that the UI is in the correct state.
+     */
     private void render() {
         if (this.expanded.get()) {
             this.textArea.setPrefHeight(200);
@@ -67,6 +83,10 @@ public class ExpandableResultBoxController {
         }
     }
 
+    /**
+     * Render {@code text} on screen.
+     * @param text The {@code String} to show.
+     */
     private void setText(String text) {
         if (text.trim().contains("\n")) {
             this.isShowingReminders = false;
@@ -81,12 +101,18 @@ public class ExpandableResultBoxController {
         }
     }
 
+    /**
+     * Callback when filtered task changes.
+     */
     private void onFilteredTaskListChange() {
         if (this.isShowingReminders) {
             this.renderReminders();
         }
     }
 
+    /**
+     * Render the initial set of reminders.
+     */
     private void renderInitialReminders() {
         String formattedReminders = this.formatReminders();
 
@@ -98,6 +124,9 @@ public class ExpandableResultBoxController {
         }
     }
 
+    /**
+     * @return Format the reminders that will be shown.
+     */
     private String formatReminders() {
         LocalDateTime now = LocalDateTime.now(this.clock);
         LocalDateTime today = now.withHour(0).withMinute(0).withSecond(0);
@@ -115,6 +144,9 @@ public class ExpandableResultBoxController {
         return RemindersListUtil.display(reminders);
     }
 
+    /**
+     * Display the reminders on screen.
+     */
     private void renderReminders() {
         this.textArea.setText(formatReminders());
     }

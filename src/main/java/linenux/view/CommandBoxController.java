@@ -10,6 +10,9 @@ import linenux.control.ControlUnit;
 import linenux.util.AutoCompleter;
 
 //@@author A0144915A
+/**
+ * Controller for the command box, which is where the user enters the command.
+ */
 public class CommandBoxController {
     @FXML
     private TextField textField;
@@ -19,6 +22,9 @@ public class CommandBoxController {
     private ArrayList<String> history;
     private int historyIndex;
 
+    /**
+     * Initializes subviews.
+     */
     @FXML
     private void initialize() {
         Platform.runLater(() -> textField.requestFocus());
@@ -59,6 +65,9 @@ public class CommandBoxController {
         });
     }
 
+    /**
+     * Callback when the user presses enter.
+     */
     @FXML
     private void onCommand() {
         String command = textField.getText();
@@ -69,6 +78,10 @@ public class CommandBoxController {
         textField.setText("");
     }
 
+    /**
+     * Update the {@code ControlUnit} of the application.
+     * @param controlUnit The new {@code ControlUnit}.
+     */
     public void setControlUnit(ControlUnit controlUnit) {
         this.controlUnit = controlUnit;
         this.autoCompleter = new AutoCompleter(this.controlUnit.getCommandList());

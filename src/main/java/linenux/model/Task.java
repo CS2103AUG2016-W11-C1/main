@@ -101,6 +101,9 @@ public class Task {
         this.reminders = new ArrayList<>(other.reminders);
     }
 
+    /**
+     * @return The textual representation of the {@code Task}.
+     */
     @Override
     public String toString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd h.mma");
@@ -116,28 +119,49 @@ public class Task {
     }
 
     //@@author A0144915A
+
+    /**
+     * @return {@code true} if and only if this {@code Task} is a todo.
+     */
     public boolean isTodo() {
         return startTime == null && endTime == null;
     }
 
+    /**
+     * @return {@code true} if and only if this {@code Task} is a deadline.
+     */
     public boolean isDeadline() {
         return startTime == null && endTime != null;
     }
 
+    /**
+     * @return {@code true} if and only if this {@code Task} is an event.
+     */
     public boolean isEvent() {
         return startTime != null && endTime != null;
     }
 
     //@@author A0135788M
+    /**
+     * @return {@code true} if and only if this {@code Task} is marked as done.
+     */
     public boolean isDone() {
         return isDone == true;
     }
 
+    /**
+     * @return {@code true} if and only if this {@code Task} is not marked as done.
+     */
     public boolean isNotDone() {
         return isDone == false;
     }
 
     //@@author A0140702X
+
+    /**
+     * @param other Another {@code Object} to compare with.
+     * @return {@code true} if and only if this {@code Task} is equal to {@code other}.
+     */
     @Override
     public boolean equals(Object other) {
         if (other == null || !(other instanceof Task)) {
@@ -184,6 +208,9 @@ public class Task {
         return true;
     }
 
+    /**
+     * @return The correct hash code for the current {@code Task}.
+     */
     @Override
     public int hashCode() {
         int result = taskName.hashCode() ^ startTime.hashCode() ^ endTime.hashCode();
@@ -192,6 +219,11 @@ public class Task {
     }
 
     //@@author A0140702X
+
+    /**
+     * @param tag The tag to check.
+     * @return {@code true} if and only if this {@code Task} has {@code tag}.
+     */
     public boolean hasTag(String tag) {
         ArrayList<String> lowercaseTags = new ArrayListUtil.ChainableArrayListUtil<>(tags).map(String::toLowerCase)
                 .value();
@@ -201,24 +233,40 @@ public class Task {
     /* Getters */
 
     //@@author A0135788M
+
+    /**
+     * @return The name of the task.
+     */
     public String getTaskName() {
         return this.taskName;
     }
 
+    /**
+     * @return The start time of the task.
+     */
     public LocalDateTime getStartTime() {
         return this.startTime;
     }
 
+    /**
+     * @return The end time of the task.
+     */
     public LocalDateTime getEndTime() {
         return this.endTime;
     }
 
     //@@author A0127694U
+    /**
+     * @return An {@code ArrayList} of tags.
+     */
     public ArrayList<String> getTags() {
         return this.tags;
     }
 
     //@@author A0135788M
+    /**
+     * @return An {@code ArrayList} of {@code Reminder}.
+     */
     public ArrayList<Reminder> getReminders() {
         return this.reminders;
     }
@@ -226,24 +274,39 @@ public class Task {
     /* Setters */
 
     //@@author A0144915A
+    /**
+     * @param taskName The new task name.
+     * @return A new {@code Task} with the updated name.
+     */
     public Task setTaskName(String taskName) {
         Task output = new Task(this);
         output.taskName = taskName;
         return output;
     }
 
+    /**
+     * @param startTime The new start time.
+     * @return A new {@code Task} with the updated start time.
+     */
     public Task setStartTime(LocalDateTime startTime) {
         Task output = new Task(this);
         output.startTime = startTime;
         return output;
     }
 
+    /**
+     * @param endTime The new end time.
+     * @return A new {@code Task} with the updated end time.
+     */
     public Task setEndTime(LocalDateTime endTime) {
         Task output = new Task(this);
         output.endTime = endTime;
         return output;
     }
 
+    /**
+     * @return A new {@code Task} by marking the current {@code Task} as done.
+     */
     public Task markAsDone() {
         Task output = new Task(this);
         output.isDone = true;
@@ -251,6 +314,9 @@ public class Task {
     }
 
     //A0140702X
+    /**
+     * @return A new {@code Task} by marking the current {@code Task} as undone.
+     */
     public Task markAsUndone() {
         Task output = new Task(this);
         output.isDone = false;
@@ -258,13 +324,20 @@ public class Task {
     }
 
     //@@author A0144915A
+    /**
+     * @param reminder The {@code Reminder} to add.
+     * @return A new {@code Task} by adding a new reminder.
+     */
     public Task addReminder(Reminder reminder) {
         Task output = new Task(this);
         output.reminders.add(reminder);
         return output;
     }
 
-    //@@author A0144915A
+    /**
+     * @param tags The new tag to add.
+     * @return A new {@code Task} by adding a new tag.
+     */
     public Task setTags(ArrayList<String> tags) {
         Task output = new Task(this);
         output.tags = tags;
@@ -272,12 +345,19 @@ public class Task {
     }
 
     //@@author A0127694U
+    /**
+     * @param reminder The {@code Reminder} to remove from this {@code Task}.
+     * @return A new {@code Task} by removing {@code reminder}.
+     */
     public Task removeReminder(Reminder reminder) {
         Task output = new Task(this);
         output.reminders.remove(reminder);
         return output;
     }
 
+    /**
+     * @return The textual representation of the tags.
+     */
     private String tagsToString() {
         StringBuilder builder = new StringBuilder();
         if (this.tags.isEmpty()) {
@@ -297,10 +377,18 @@ public class Task {
     }
 
     //@author A0144915A
+    /**
+     * @param keywords The search keywords.
+     * @return An {@code ArrayList} of {@code Reminder} matching the keywords.
+     */
     public ArrayList<Reminder> searchReminder(String keywords) {
         return this.searchReminder(keywords.split("\\s+"));
     }
 
+    /**
+     * @param keywords The search keywords.
+     * @return An {@code ArrayList} of {@code Reminder} matching the keywords.
+     */
     public ArrayList<Reminder> searchReminder(String[] keywords) {
         ArrayList<String> keywordsList = new ArrayListUtil.ChainableArrayListUtil<>(keywords)
                 .map(String::toLowerCase)

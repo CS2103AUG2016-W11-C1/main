@@ -14,9 +14,17 @@ public class AdaptedState {
     @XmlElement(name = "tasks")
     private ArrayList<AdaptedTask> tasks;
 
+    /**
+     * Empty constructor for XML use.
+     */
     public AdaptedState() {
     }
 
+    /**
+     * Converts a state to an XML-friendly state object.
+     * @param r A {@code state} instance.
+     * @return an XML-friendly state object.
+     */
     public AdaptedState convertToXml(State s) {
         this.tasks = new ArrayList<>();
         for (Task t : s.getTaskList()) {
@@ -25,6 +33,10 @@ public class AdaptedState {
         return this;
     }
 
+    /**
+     * Converts an XML-friendly state object to a state.
+     * @return a state object.
+     */
     public State convertToModel() {
         ArrayList<Task> newTasks = new ArrayList<>();
         for (AdaptedTask t : tasks) {

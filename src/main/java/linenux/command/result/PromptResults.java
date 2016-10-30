@@ -8,7 +8,15 @@ import linenux.util.RemindersListUtil;
 import linenux.util.TasksListUtil;
 
 //@@author A0144915A
+/**
+ * A collection of helper functions related to prompting user for more information.
+ */
 public class PromptResults {
+    /**
+     * Prompts the user to choose from an {@code ArrayList} of {@code Task}.
+     * @param tasks The {@code ArrayList} of {@code Task} that the user can choose from.
+     * @return A {@code CommandResult} prompting the user to choose a {@code Task} from {@code tasks}.
+     */
     public static CommandResult makePromptIndexResult(ArrayList<Task> tasks) {
         return () -> {
             StringBuilder builder = new StringBuilder();
@@ -22,6 +30,11 @@ public class PromptResults {
         };
     }
 
+    /**
+     * Prompts the user to choose from an {@code ArrayList} of {@code Reminder}.
+     * @param results The {@code ArrayList} of {@code Reminder} that the user can choose from.
+     * @return A {@code CommandResult} prompting the user to choose a {@code Reminder} from {@code results}.
+     */
     public static CommandResult makePromptReminderIndexResult(ArrayList<ReminderSearchResult> results) {
         return () -> {
             int totalResults = ReminderSearchResult.totalReminders(results);
@@ -36,6 +49,11 @@ public class PromptResults {
         };
     }
 
+    /**
+     * Make a {@code CommandResult} indicating that the index the user chose is invalid.
+     * @param tasks The {@code ArrayList} of {@code Task} that the user can choose from.
+     * @return A {@code CommandResult} prompting the user to choose again.
+     */
     public static CommandResult makeInvalidIndexResult(ArrayList<Task> tasks) {
         return () -> {
             StringBuilder builder = new StringBuilder();
@@ -47,6 +65,11 @@ public class PromptResults {
         };
     }
 
+    /**
+     * Make a {@code CommandResult} indicating that the index the user chose is invalid.
+     * @param results The {@code ArrayList} of {@code Reminder} that the user can choose from.
+     * @return A {@code CommandResult} prompting the user to choose again.
+     */
     public static CommandResult makeInvalidReminderIndexResult(ArrayList<ReminderSearchResult> results) {
         return () -> {
             int totalReminders = ReminderSearchResult.totalReminders(results);

@@ -25,6 +25,11 @@ public class RemindersListUtil {
         return builder.toString().trim();
     }
 
+    /**
+     * Display the list of {@code ReminderSearchResult}.
+     * @param results An {@code ArrayList} of {@code ReminderSearchResult} to display.
+     * @return A {@code String} representing {@code results}.
+     */
     public static String displaySearchResults(ArrayList<ReminderSearchResult> results) {
         StringBuilder builder = new StringBuilder();
 

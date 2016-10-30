@@ -21,15 +21,27 @@ public class AdaptedReminder {
     @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
     private LocalDateTime timeOfReminder;
 
+    /**
+     * Empty constructor for XML use.
+     */
     public AdaptedReminder() {
     }
 
+    /**
+     * Converts a reminder to an XML-friendly reminder object.
+     * @param r A {@code reminder} instance.
+     * @return an XML-friendly reminder object.
+     */
     public AdaptedReminder convertToXml(Reminder r) {
         this.note = r.getNote();
         this.timeOfReminder = r.getTimeOfReminder();
         return this;
     }
 
+    /**
+     * Converts an XML-friendly reminder object to a reminder.
+     * @return a reminder object.
+     */
     public Reminder convertToModel() {
         return new Reminder(note, timeOfReminder);
     }

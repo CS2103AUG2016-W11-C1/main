@@ -13,11 +13,23 @@ public class TomorrowWithTimeParser implements TimeParser {
 
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-M-d h.mma");
 
+    /**
+     * Checks if the user input corresponds to the format of the respective
+     * time parser.
+     *
+     * @param input
+     * @return true if format matches and false otherwise.
+     */
     @Override
     public boolean respondTo(String input) {
         return input.matches(TOMORROW_TIME_PATTERN);
     }
 
+    /**
+     * Parses the userInput string to a time instance. This method assumes that {@code respondTo} returns {@code true}.
+     * @param input The input to parse.
+     * @return The {@code LocalDateTime}, which is the result of parsing {@code input}.
+     */
     @Override
     public LocalDateTime parse(String input) {
         assert input.matches(TOMORROW_TIME_PATTERN);
