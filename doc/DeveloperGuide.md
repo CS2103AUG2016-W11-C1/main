@@ -366,7 +366,7 @@ Priority | As a ...  | I want to ...                             | So that I can
 
 #### Appendix B : Use Cases
 
-##### Use Case: Add task
+##### *Use Case 1: Add task*
 
 *MSS*
 
@@ -401,7 +401,7 @@ Use Case ends.
 > 1e1a1. Linenux shows that task is not added.
 > Use Case ends.
 
-##### Use Case: List tasks
+##### *Use Case 2: List tasks*
 
 *MSS*
 
@@ -415,7 +415,7 @@ Use Case ends.
 > 1a1. Linenux will show all tasks and reminders for the next 7 days to the User.
 > Use Case ends.
 
-##### Use Case: Using commands which has a search parameter.
+##### *Use Case 3: Using commands which has a search parameter.*
 
 *MSS*
 
@@ -443,7 +443,7 @@ Use Case ends.
 > 2b1. Linenux shows error that no tasks were found.
 > Use Case ends.
 
-##### Use Case: Add reminder to task
+##### *Use Case 4: Add reminder to task*
 
 *MSS*
 
@@ -452,7 +452,7 @@ Use Case ends.
 3. Linenux adds reminder to the found task and shows message indicating successful add, including details of reminder and task that reminder was added to.
 Use Case ends.
 
-##### Use Case: Delete task
+##### *Use Case 5: Delete task*
 
 *MSS*
 
@@ -461,7 +461,7 @@ Use Case ends.
 3. TaskManager deletes specific task from schedule and shows message indicating successful delete, including details of task deleted.
 Use Case ends.
 
-##### Use Case: Mark task as done.
+##### *Use Case 6: Mark task as done.*
 
 *MSS*
 
@@ -469,7 +469,7 @@ Use Case ends.
 2. Linenux marks found task as done, and shows message indicating task is marked as done, including details of task.
 Use Case ends.
 
-##### Use Case: Undo
+##### *Use Case 7: Undo*
 
 *MSS*
 
@@ -483,7 +483,7 @@ Use case ends.
 > 1a1. Linenux shows error indicating unable to undo.
 > Use Case ends
 
-##### Use Case: Edit
+##### *Use Case 8: Edit*
 
 *MSS*
 
@@ -498,7 +498,7 @@ Use Case ends.
 > 1c1. Linenux shows error message indicating invalid changes.
 > Use case ends.
 
-##### Use Case: Exit
+##### *Use Case 9: Exit*
 
 *MSS*
 
