@@ -7,11 +7,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import linenux.config.Config;
 import linenux.control.ControlUnit;
 
 //@@author A0144915A
 public class MainWindowController {
+    @FXML
+    private StackPane stackPane;
+
     @FXML
     private SplitPane splitPane;
     @FXML
