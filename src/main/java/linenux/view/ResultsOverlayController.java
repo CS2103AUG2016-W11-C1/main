@@ -16,9 +16,7 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-/**
- * Created by yihangho on 10/30/16.
- */
+//@@author A0144915A
 public class ResultsOverlayController {
     @FXML
     private VBox container;

@@ -7,9 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import linenux.control.ControlUnit;
 
-/**
- * Created by yihangho on 10/30/16.
- */
+//@@author A0144915A
 public class ExpandableResultBoxController {
     @FXML
     Button button;

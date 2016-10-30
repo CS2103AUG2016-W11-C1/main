@@ -1,9 +1,10 @@
+/* @@author 0135788M */
 .vBox {
 	-fx-background-color: darkgray;
 }
 
 .splitPane {
-	-fx-background-color: aliceblue;
+    -fx-background-color: aliceblue;
 }
 
 .header {

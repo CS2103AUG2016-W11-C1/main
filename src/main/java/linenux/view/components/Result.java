@@ -8,6 +8,7 @@ import linenux.view.MainWindowController;
 
 import java.io.IOException;
 
+//@@author A0144915A
 public class Result {
     private HBox root;
 

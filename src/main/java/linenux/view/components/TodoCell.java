@@ -12,9 +12,7 @@ import javafx.scene.paint.Color;
 import linenux.model.Task;
 import linenux.util.ArrayListUtil;
 
-/**
- * Created by yihangho on 10/29/16.
- */
+//@@author A0144915A
 public class TodoCell extends ListCell<Task> {
     @FXML
     private Label title;
