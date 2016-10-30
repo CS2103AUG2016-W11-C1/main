@@ -539,7 +539,7 @@ Tasks are split into 3 different sub-categories:
 
 Tasks **cannot** be created with start dates only.
 
-##### Commands Summary
+##### *Commands Summary*
 
 *Legend:*
 
@@ -573,7 +573,7 @@ Tasks **cannot** be created with start dates only.
 | [`path`](#path)         | Changing the filepath of the schedule.    | `path` NEW_PATH                                                         |
 | [`exit`](#exit)         | Exiting Linenux.                          | `exit`                                                                  |
 
-##### Supported Time Formats
+##### *Supported Time Formats*
 
 *All of the examples below have the equivalent meaning to the time 26 October 2016, 5.50pm*
 
@@ -584,11 +584,31 @@ Tasks **cannot** be created with start dates only.
 | ddMMyyyy HHmm      | 16102016 1750          |
 
 #### Appendix E : Product Survey
-##### Pros of Products Surveyed
+
+##### Things we learnt:
+
+Our group has surveyed 4 different task managers, Google Calendar, Todoist, Wunderlist and Fantastical. Below is a summary of what we have found:
+
+*UI*
+
+All the 4 task managers had great and easy to understand UIs. The main issue is that none of them are catered for users like Jim who prefer typing. For example, Google Calendar allows users to quick add a task, but other functionalities such as editing tasks still requires user to click and navigate through pages. For Jim who accesses the app so frequently and who is more proficient in typing, it is inefficient to need to navigate through many pages and require so many mouse clicks to handle one action.
+
+*Functionalities*
+
+Generally, the 4 task managers share the same basic functionalities to add and maintain tasks. After trying out the additional features that each of the application had, we decided to included the following features:
+
+1. Searching for freetime.
+2. Reminders.
+
+Noting that Jim follows the Inbox Zero email management plan and how he will be adding all his tasks into the application, we would be able to look at all his events to judge when he is free. Hence, we believe that adding this feature would be able to help Jim better manage his tasks as he would be able to rasily find his free timeslots and schedule his work accordingly.
+
+We decided to add reminders as Jim can use it to remind himself about his important deadlines and events, especially in the case where his task list is flooded. Furthermore, he can use reminders as a way to remind himself to clear certain pre-requisites to a task.
+
+##### *Pros of Products Surveyed*
 <img src="images/ProductSurveyPros.jpeg"/>
 > Figure 9 Pros of Products Surveyed
 
-##### Cons of Products Surveyed:
+##### *Cons of Products Surveyed:*
 *Google Calendar*
 * Keyboard shortcuts needs to be discovered.
 * CLI commands is only for the addition of tasks.
