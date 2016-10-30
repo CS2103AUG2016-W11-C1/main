@@ -1,7 +1,7 @@
 # Introduction
 
 [![Build Status](https://travis-ci.org/CS2103AUG2016-W11-C1/main.svg?branch=master)](https://travis-ci.org/CS2103AUG2016-W11-C1/main)
-[![Coverage Status](https://coveralls.io/repos/github/CS2103AUG2016-W11-C1/main/badge.svg?branch=coveralls-setup)](https://coveralls.io/github/CS2103AUG2016-W11-C1/main?branch=coveralls-setup)
+[![Coverage Status](https://coveralls.io/repos/github/CS2103AUG2016-W11-C1/main/badge.svg?branch=master)](https://coveralls.io/github/CS2103AUG2016-W11-C1/main?branch=master)
 
 Linenux is a CLI (Command Line Interface) Task Manager application written in Java. Its goal is to serve users who prefer typing over clicking. Linenux's simple and natural syntax allows users to efficiently organize their schedule. Works offline.
 
