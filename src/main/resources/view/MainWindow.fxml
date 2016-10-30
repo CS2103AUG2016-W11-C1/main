@@ -5,11 +5,11 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<StackPane fx:id="stackPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane fx:id="stackPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <VBox styleClass="mainWindowAnchor" stylesheets="@LinenuxTheme.css">
+      <VBox styleClass="vBox" stylesheets="@LinenuxTheme.css">
          <children>
-            <SplitPane fx:id="splitPane" styleClass="mainWindowAnchor" stylesheets="@LinenuxTheme.css" VBox.vgrow="ALWAYS" />
+            <SplitPane fx:id="splitPane" styleClass="splitPane" stylesheets="@LinenuxTheme.css" VBox.vgrow="ALWAYS" />
             <AnchorPane fx:id="commandBoxContainer" styleClass="mainWindowAnchor" stylesheets="@LinenuxTheme.css" />
          </children>
       </VBox>

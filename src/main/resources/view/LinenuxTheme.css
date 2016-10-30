@@ -1,65 +1,69 @@
-mainWindowAnchor {
-	-fx-background-color: AliceBlue;
+.vBox {
+	-fx-background-color: darkgray;
+}
+
+.splitPane {
+	-fx-background-color: aliceblue;
 }
 
 .header {
-	-fx-font: 40px "Trebuchet MS";
-    -fx-stroke: #003834;
-    -fx-stroke-width: 1;
+	-fx-font: 40px "AR JULIAN";
+    -fx-text-fill: steelblue;
 }
 
+.mainWindowAnchor {
+	-fx-background-color: white;
+	-fx-border-color: steelblue transparent transparent transparent;
+	-fx-border-width: 2px;
+}
 
 .commandBox {
     -fx-font-size: 12pt;
-    -fx-font-family: "Trebuchet MS";
+    -fx-font-family: "Consolas";
     -fx-font-weight: bold;
-    -fx-text-fill: MintCream;
-    -fx-control-inner-background: derive(SteelBlue,20%);
-    -fx-background-radius: 10;
+    -fx-text-fill: steelblue;
+    -fx-background-color: white;
     -fx-focus-color:transparent;
 }
 
 .todolist .list-cell:even {
-	-fx-background-color:#E5CCED;
-	-fx-text-fill:SaddleBrown;
-	-fx-background-radius: 5;
+	-fx-background-color: darkgray;
 }
 
 .todolist .list-cell:odd {
-	-fx-background-color:#F4EEF6;
-	-fx-background-radius: 5;
-}
-
-.todolist .list-cell:even {
-	-fx-background-color:#E5CCED;
-	-fx-background-radius: 5;
-}
-
-.deadlineList .list-cell:odd {
-	-fx-background-color: #E6B8D5;
-	-fx-background-radius: 5;
+	-fx-background-color: silver;
 }
 
 .deadlineList .list-cell:even {
-	-fx-background-color: #FEEDF8;
-	-fx-background-radius: 5;
+	-fx-background-color: silver;
 }
 
-.eventList .list-cell:odd {
-	-fx-background-colour: #E9D3FA;
-	-fx-background-radius: 5;
+.deadlineList .list-cell:odd {
+	-fx-background-color: darkgray;
 }
 
 .eventList .list-cell:even {
-	-fx-background-color: #D2B8E6;
-	-fx-background-radius: 5;
+	-fx-background-color: darkgray;
 }
 
-.list-view {
-	-fx-background-color:Ivory;
-	-fx-font: 15px "Trebuchet MS";
+.eventList .list-cell:odd {
+	-fx-background-color: silver;
 }
+
+.title {
+	-fx-font: 25px "Garamond";
+	-fx-font-weight: bold;
+}
+
+.time {
+	-fx-font: 20px "Garamond";
+}
+
+.tags {
+	-fx-font: 20px "Garamond";
+}
+
 
 .list-view .list-cell:empty {
-	-fx-background-color: Ivory;
+	-fx-background-color: aliceblue;
 }

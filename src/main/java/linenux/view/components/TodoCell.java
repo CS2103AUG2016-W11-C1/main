@@ -1,16 +1,16 @@
 package linenux.view.components;
 
+import java.io.IOException;
+import java.util.ArrayList;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import linenux.model.Task;
 import linenux.util.ArrayListUtil;
-import linenux.view.MainWindowController;
-
-import java.io.IOException;
-import java.util.ArrayList;
 
 /**
  * Created by yihangho on 10/29/16.
@@ -50,6 +50,8 @@ public class TodoCell extends ListCell<Task> {
 
             this.title.setText(task.getTaskName());
             this.tags.setText(String.join(", ", tagsWithHash));
+            this.title.setTextFill(Color.MINTCREAM);
+            this.tags.setTextFill(Color.MINTCREAM);
         }
     }
 }

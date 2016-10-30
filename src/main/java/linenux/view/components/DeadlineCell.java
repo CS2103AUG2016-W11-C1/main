@@ -57,9 +57,12 @@ public class DeadlineCell extends ListCell<Task> {
             this.tags.setText(String.join(", ", tagsWithHash));
 
             if (isOverdue(task)) {
-                this.title.setTextFill(Color.CRIMSON);
-                this.time.setTextFill(Color.CRIMSON);
+                this.time.setTextFill(Color.RED);
+            } else {
+                this.time.setTextFill(Color.MINTCREAM);
             }
+            this.title.setTextFill(Color.MINTCREAM);
+            this.tags.setTextFill(Color.MINTCREAM);
         }
     }
 

@@ -5,16 +5,16 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="80.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label fx:id="title" text="Title">
+      <Label fx:id="title" styleClass="title" stylesheets="@LinenuxTheme.css" text="Title">
          <font>
             <Font name="System Bold" size="19.0" />
          </font>
       </Label>
       <AnchorPane VBox.vgrow="ALWAYS">
          <children>
-            <Label fx:id="tags" text="#tag1, #tag2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <Label fx:id="tags" styleClass="tags" stylesheets="@LinenuxTheme.css" text="#tag1, #tag2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <font>
                   <Font size="16.0" />
                </font>
