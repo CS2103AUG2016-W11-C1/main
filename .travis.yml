@@ -24,4 +24,4 @@ deploy:
     tags: true
     repo: CS2103AUG2016-W11-C1/main
 after_success:
-  - gradle jacocoTestReport coveralls
+  - ./gradlew jacocoTestReport coveralls
