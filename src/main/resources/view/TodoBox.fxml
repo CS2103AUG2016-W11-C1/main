@@ -10,7 +10,7 @@
       <VBox prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Label prefHeight="60.0" prefWidth="600.0" styleClass="header" stylesheets="@LinenuxTheme.css" text="To-dos"></Label>
-            <ListView fx:id="todosList" centerShape="false" focusTraversable="false" mouseTransparent="true" prefHeight="340.0" prefWidth="600.0" snapToPixel="false" styleClass="todolist" stylesheets="@LinenuxTheme.css" VBox.vgrow="ALWAYS" />
+            <ListView fx:id="todosList" centerShape="false" focusTraversable="false" mouseTransparent="false" prefHeight="340.0" prefWidth="600.0" snapToPixel="false" styleClass="todolist" stylesheets="@LinenuxTheme.css" VBox.vgrow="ALWAYS" />
          </children>
       </VBox>
    </children>
