@@ -289,7 +289,7 @@ The above activity diagram shows the generic flow of activities in Linenux.
 
 ## Testing
 
-Tests can be found in the `./src/test/java` folder.
+Tests can be found in the `./src/test/java` folder. We have done unit testing on every command implemented, so make sure to add unit test whenever you implement a new command.
 
 #### In Eclipse
 
@@ -367,12 +367,15 @@ Priority | As a ...  | I want to ...                             | So that I can
 #### Appendix B : Use Cases
 
 ##### Use Case: Add task
+
 *MSS*
+
 1. User requests to add task.
 2. Linenux adds task into schedule and shows message indicating successful add, including details of added task.
 Use Case ends.
 
 *Extensions*
+
 1a. User provides start time without end time.
 > 1a1. TaskManager shows error message to indicate that task is not a valid task.
 > Use Case ends.
@@ -399,23 +402,29 @@ Use Case ends.
 > Use Case ends.
 
 ##### Use Case: List tasks
+
 *MSS*
+
 1. User requests to list tasks giving certain parameters.
 2. Linenux filters all the tasks based given parameters and shows the filtered list of tasks to the User.
 Use Case ends.
 
 *Extensions*
+
 1a. User provides no parameters.
 > 1a1. Linenux will show all tasks and reminders for the next 7 days to the User.
 > Use Case ends.
 
 ##### Use Case: Using commands which has a search parameter.
+
 *MSS*
+
 1. User uses a command which has a search parameter(e.g remind, edit, view etc).
 2. Linenux will search all task names and perform the command on the found task.
 Use Case ends.
 
 *Extensions*
+
 2a. More than one task found with the given search parameter.
 > 2a1. Linenux will show the list of tasks, each with their index, found to the user and prompt the user for the index of the task to perform the command on.
 > 2a2. User provides the index of the task to perform the command on.
@@ -435,50 +444,64 @@ Use Case ends.
 > Use Case ends.
 
 ##### Use Case: Add reminder to task
+
 *MSS*
+
 1. User requests to add reminder to task, providing search parameters for task.
 2. Linenux searches for the task (See Use Case for commands with search).
 3. Linenux adds reminder to the found task and shows message indicating successful add, including details of reminder and task that reminder was added to.
 Use Case ends.
 
 ##### Use Case: Delete task
+
 *MSS*
+
 1. User requests to delete task, providing search parameters for task.
 2. Linenux searches for the task (See Use Case for commands with search)l
 3. TaskManager deletes specific task from schedule and shows message indicating successful delete, including details of task deleted.
 Use Case ends.
 
 ##### Use Case: Mark task as done.
+
 *MSS*
+
 1. User requests to mark task as done, providing search parameters for task.
 2. Linenux marks found task as done, and shows message indicating task is marked as done, including details of task.
 Use Case ends.
 
 ##### Use Case: Undo
+
 *MSS*
+
 1. User requests to undo to previous state.
 2. Linenux undos to previous state.
 Use case ends.
 
 *Extensions*
+
 1a. No previous state to undo to.
 > 1a1. Linenux shows error indicating unable to undo.
 > Use Case ends
 
 ##### Use Case: Edit
+
 *MSS*
+
 1. User requests to edit task, providing search parameters and changes to be made.
 2. Linenux searches for the task (See Use Case for commands with search).
 3. Linenux processes changes and shows changes made.
 Use Case ends.
 
 *Extensions*
+
 1a. Specified changes are invalid.
 > 1c1. Linenux shows error message indicating invalid changes.
 > Use case ends.
 
 ##### Use Case: Exit
+
 *MSS*
+
 1. User requests to exit application.
 2. Linenux prompts user to confirm application exit.
 3. User confirms exit.
@@ -486,6 +509,7 @@ Use Case ends.
 Use case ends.
 
 *Extensions*
+
 2a. User cancels exit operation.
 > Use Case ends.
 
