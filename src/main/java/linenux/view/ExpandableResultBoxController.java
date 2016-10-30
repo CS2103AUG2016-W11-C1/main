@@ -50,6 +50,7 @@ public class ExpandableResultBoxController {
 
     private void setText(String text) {
         if (text.trim().contains("\n")) {
+            this.expanded.set(true);
             this.textArea.setText(text.trim());
         } else {
             // TODO show the reminders instead.
