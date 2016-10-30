@@ -7,13 +7,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.util.Callback;
 import linenux.control.ControlUnit;
 import linenux.model.State;
 import linenux.model.Task;
 import linenux.util.ArrayListUtil;
+import linenux.view.components.DeadlineCell;
 
 //@@author A0144915A
 public class DeadlineBoxController {
@@ -25,8 +24,8 @@ public class DeadlineBoxController {
 
     @FXML
     private void initialize() {
-        setOverdueCell();
         deadlinesList.itemsProperty().setValue(deadlines);
+        deadlinesList.setCellFactory(list -> new DeadlineCell());
     }
 
     public void setControlUnit(ControlUnit controlUnit) {
@@ -61,14 +60,5 @@ public class DeadlineBoxController {
                 .value();
 
         return deadlines;
-    }
-
-    private void setOverdueCell() {
-        deadlinesList.setCellFactory(new Callback<ListView<Task>, ListCell<Task>>() {
-            @Override
-            public ListCell<Task> call(ListView<Task> list) {
-                return new OverdueCell();
-            }
-        });
     }
 }

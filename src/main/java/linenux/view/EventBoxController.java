@@ -7,13 +7,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.util.Callback;
 import linenux.control.ControlUnit;
 import linenux.model.State;
 import linenux.model.Task;
 import linenux.util.ArrayListUtil;
+import linenux.view.components.EventCell;
 
 //@@author A0144915A
 public class EventBoxController {
@@ -25,8 +24,8 @@ public class EventBoxController {
 
     @FXML
     private void initialize() {
-        setOverdueCell();
         eventsList.itemsProperty().setValue(events);
+        eventsList.setCellFactory(list -> new EventCell());
     }
 
     public void setControlUnit(ControlUnit controlUnit) {
@@ -61,14 +60,5 @@ public class EventBoxController {
                 .value();
 
         return events;
-    }
-
-    private void setOverdueCell() {
-        eventsList.setCellFactory(new Callback<ListView<Task>, ListCell<Task>>() {
-            @Override
-            public ListCell<Task> call(ListView<Task> list) {
-                return new OverdueCell();
-            }
-        });
     }
 }

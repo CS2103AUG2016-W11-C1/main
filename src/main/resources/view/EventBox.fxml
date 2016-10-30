@@ -15,7 +15,7 @@
                   <Font name="System Bold" size="26.0" />
                </font>
             </Label>
-            <ListView fx:id="eventsList" prefHeight="200.0" prefWidth="200.0" styleClass="eventList" stylesheets="@LinenuxTheme.css" VBox.vgrow="ALWAYS" />
+            <ListView fx:id="eventsList" focusTraversable="false" mouseTransparent="true" prefHeight="200.0" prefWidth="200.0" styleClass="eventList" stylesheets="@LinenuxTheme.css" VBox.vgrow="ALWAYS" />
          </children>
       </VBox>
    </children>

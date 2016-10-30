@@ -16,7 +16,7 @@
                   <Font name="System Bold" size="26.0" />
                </font>
             </Label>
-            <ListView fx:id="todosList" centerShape="false" prefHeight="200.0" prefWidth="200.0" snapToPixel="false" styleClass="todolist" stylesheets="@LinenuxTheme.css" VBox.vgrow="ALWAYS">
+            <ListView fx:id="todosList" centerShape="false" focusTraversable="false" mouseTransparent="true" prefHeight="200.0" prefWidth="200.0" snapToPixel="false" styleClass="todolist" stylesheets="@LinenuxTheme.css" VBox.vgrow="ALWAYS">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
