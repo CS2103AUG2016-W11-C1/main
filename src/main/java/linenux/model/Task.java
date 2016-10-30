@@ -1,11 +1,11 @@
 package linenux.model;
 
-import linenux.util.ArrayListUtil;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
+
+import linenux.util.ArrayListUtil;
 
 /**
  * Represents a task in the schedule. Only taskName is a required field and

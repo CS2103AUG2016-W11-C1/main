@@ -35,6 +35,17 @@ public class ChainableArrayListUtil {
     }
 
     @Test
+    public void testMapWithIndex() {
+        ArrayList<Integer> list = new ArrayListUtil.ChainableArrayListUtil<>(new Integer[] {0, 0, 0})
+                .mapWithIndex((x, i) -> x + i)
+                .value();
+        assertEquals(3, list.size());
+        assertEquals(0, (int)list.get(0));
+        assertEquals(1, (int)list.get(1));
+        assertEquals(2, (int)list.get(2));
+    }
+
+    @Test
     public void testFilter() {
         ArrayList<String> list = new ArrayListUtil.ChainableArrayListUtil<String>(new String[] {"1", "2", "3"})
                 .filter(x -> x.equals("2"))

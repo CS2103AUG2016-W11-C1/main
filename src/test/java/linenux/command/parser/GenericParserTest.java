@@ -1,12 +1,11 @@
 package linenux.command.parser;
 
-import linenux.util.ArrayListUtil;
-import org.junit.Before;
-import org.junit.Test;
+import static junit.framework.TestCase.assertEquals;
 
 import java.util.ArrayList;
 
-import static junit.framework.TestCase.assertEquals;
+import org.junit.Before;
+import org.junit.Test;
 
 //@@author A0144915A
 public class GenericParserTest {
