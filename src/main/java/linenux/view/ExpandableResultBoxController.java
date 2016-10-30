@@ -22,7 +22,7 @@ public class ExpandableResultBoxController {
     public void setControlUnit(ControlUnit controlUnit) {
         this.controlUnit = controlUnit;
         this.controlUnit.getLastCommandResultProperty().addListener((change) -> {
-            this.textArea.setText(this.controlUnit.getLastCommandResultProperty().get().getFeedback());
+            this.setText(this.controlUnit.getLastCommandResultProperty().get().getFeedback());
         });
     }
 
@@ -45,6 +45,15 @@ public class ExpandableResultBoxController {
         } else {
             this.button.setText("Show");
             this.textArea.setPrefHeight(0);
+        }
+    }
+
+    private void setText(String text) {
+        if (text.trim().contains("\n")) {
+            this.textArea.setText(text.trim());
+        } else {
+            // TODO show the reminders instead.
+            this.textArea.setText("");
         }
     }
 }
