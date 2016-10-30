@@ -8,6 +8,7 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import linenux.config.Config;
 import linenux.control.ControlUnit;
 
@@ -15,7 +16,8 @@ import linenux.control.ControlUnit;
 public class MainWindowController {
     @FXML
     private StackPane stackPane;
-
+    @FXML
+    private VBox vbox;
     @FXML
     private SplitPane splitPane;
     @FXML
@@ -36,6 +38,7 @@ public class MainWindowController {
         splitPane.setDividerPositions(0.25, 0.50, 0.75);
         setupCommandBox();
         setupResultsOverlay();
+        setupNewResultBox();
     }
 
     private void setupTodoBox() {
@@ -115,6 +118,19 @@ public class MainWindowController {
             loader.setLocation(MainWindowController.class.getResource("/view/ResultsOverlay.fxml"));
             this.stackPane.getChildren().add(loader.load());
             ResultsOverlayController controller = loader.getController();
+            controller.setControlUnit(this.controlUnit);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setupNewResultBox() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainWindowController.class.getResource("/view/ExpandableResultBox.fxml"));
+            VBox root = loader.load();
+            vbox.getChildren().add(1, root);
+            ExpandableResultBoxController controller = loader.getController();
             controller.setControlUnit(this.controlUnit);
         } catch (IOException e) {
             e.printStackTrace();
