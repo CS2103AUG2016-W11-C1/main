@@ -1,5 +1,8 @@
 package linenux.view;
 
+import java.util.ArrayList;
+import java.util.function.Predicate;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -9,9 +12,7 @@ import linenux.control.ControlUnit;
 import linenux.model.State;
 import linenux.model.Task;
 import linenux.util.ArrayListUtil;
-
-import java.util.ArrayList;
-import java.util.function.Predicate;
+import linenux.view.components.TodoCell;
 
 //@@author A0144915A
 public class TodoBoxController {
@@ -24,6 +25,7 @@ public class TodoBoxController {
     @FXML
     private void initialize() {
         todosList.itemsProperty().setValue(todos);
+        todosList.setCellFactory(list -> new TodoCell());
     }
 
     public void setControlUnit(ControlUnit controlUnit) {

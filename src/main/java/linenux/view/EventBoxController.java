@@ -12,6 +12,7 @@ import linenux.control.ControlUnit;
 import linenux.model.State;
 import linenux.model.Task;
 import linenux.util.ArrayListUtil;
+import linenux.view.components.EventCell;
 
 //@@author A0144915A
 public class EventBoxController {
@@ -24,6 +25,7 @@ public class EventBoxController {
     @FXML
     private void initialize() {
         eventsList.itemsProperty().setValue(events);
+        eventsList.setCellFactory(list -> new EventCell());
     }
 
     public void setControlUnit(ControlUnit controlUnit) {

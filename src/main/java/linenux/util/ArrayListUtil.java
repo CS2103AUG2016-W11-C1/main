@@ -66,6 +66,15 @@ public class ArrayListUtil {
         }
 
         /**
+         * @param fn The mapper function. The second argument is the index of each element.
+         * @param <R> Any type that ArrayList accepts.
+         * @return A new {@code ChainableArrayListUtil} wrapping the new {@code ArrayList}.
+         */
+        public <R> ChainableArrayListUtil<R> mapWithIndex(BiFunction<T, Integer, R> fn) {
+            return new ChainableArrayListUtil<>(ArrayListUtil.mapWithIndex(fn, this.list));
+        }
+
+        /**
          * @param fn The filter predicate.
          * @return A new {@code ChainableArrayListUtil} wrapping the new {@code ArrayList}.
          */
@@ -146,7 +155,25 @@ public class ArrayListUtil {
      * @return The transformed {@code ArrayList}.
      */
     public static <T, R> ArrayList<R> map(Function<T, R> fn, ArrayList<T> list) {
-        return list.stream().map(fn).collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
+        return mapWithIndex((x, i) -> fn.apply(x), list);
+    }
+
+    /**
+     * Transform the input {@code ArrayList} using {@code fn}.
+     * @param fn The stateless mapper function. The second argument of {@code fn} is the index.
+     * @param list The input {@code ArrayList}.
+     * @param <T> The type of the input {@code ArrayList}.
+     * @param <R> The type of the output {@code ArrayList}.
+     * @return The transformed {@code ArrayList}.
+     */
+    public static <T, R> ArrayList<R> mapWithIndex(BiFunction<T, Integer, R> fn, ArrayList<T> list) {
+        ArrayList<R> output = new ArrayList<>();
+
+        for (int i = 0; i < list.size(); i++) {
+            output.add(fn.apply(list.get(i), i));
+        }
+
+        return output;
     }
 
     /**

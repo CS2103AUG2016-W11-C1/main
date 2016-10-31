@@ -103,7 +103,7 @@ public class Task {
 
     @Override
     public String toString() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd h:mma");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd h.mma");
 
         if (this.isDeadline()) {
             return taskName + " (Due " + this.endTime.format(formatter) + ")" + tagsToString();

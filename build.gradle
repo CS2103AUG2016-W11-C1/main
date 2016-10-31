@@ -1,3 +1,8 @@
+plugins {
+    id 'jacoco'
+    id 'com.github.kt3k.coveralls' version '2.6.3'
+}
+
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'application'
@@ -36,6 +41,13 @@ sourceSets {
 javadoc {
     classpath += sourceSets.test.compileClasspath
     source += sourceSets.test.allJava
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
 }
 
 test {
