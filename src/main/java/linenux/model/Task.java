@@ -194,6 +194,13 @@ public class Task {
         return output;
     }
 
+    //A0140702X
+    public Task markAsUndone() {
+        Task output = new Task(this);
+        output.isDone = false;
+        return output;
+    }
+
     //@@author A0144915A
     public Task addReminder(Reminder reminder) {
         Task output = new Task(this);
