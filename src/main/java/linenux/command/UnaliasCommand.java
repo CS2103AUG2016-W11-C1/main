@@ -6,9 +6,6 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * Created by yihangho on 10/25/16.
- */
 //@@author A0144915A
 public class UnaliasCommand extends AbstractCommand {
     private static final String TRIGGER_WORD = "unalias";

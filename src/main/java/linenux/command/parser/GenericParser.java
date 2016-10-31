@@ -5,9 +5,6 @@ import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * Created by yihangho on 10/22/16.
- */
 //@@author A0144915A
 public class GenericParser {
     private static final Pattern FIRST_FLAG_PATTERN = Pattern.compile("(^|\\s+)\\S+/");

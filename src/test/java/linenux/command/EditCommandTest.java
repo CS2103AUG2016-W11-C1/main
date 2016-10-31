@@ -17,8 +17,9 @@ import linenux.command.result.CommandResult;
 import linenux.model.Schedule;
 import linenux.model.Task;
 
+//@@author A0127694U
 /**
- * JUnit test for add command.
+ * JUnit test for edit command.
  */
 public class EditCommandTest {
     private Schedule schedule;
@@ -99,7 +100,7 @@ public class EditCommandTest {
     }
 
     /**
-     * Test that respondTo will return false for commands not related to add
+     * Test that respondTo will return false for commands not related to edit
      * tasks.
      */
     @Test
@@ -613,6 +614,7 @@ public class EditCommandTest {
         assertEquals("Cannot find task names with \"that nasty todo\".", result.getFeedback());
     }
 
+    //@@ A0140702X
     /**
      * Test that ensures command will not edit will not create duplicate task.
      */
@@ -638,6 +640,7 @@ public class EditCommandTest {
                 result3.getFeedback());
     }
 
+    //@@author A0135788M
     private String expectedInvalidArgumentMessage() {
         return "Invalid arguments.\n\n" + this.editCommand.getCommandFormat() + "\n\n" + Command.CALLOUTS;
     }

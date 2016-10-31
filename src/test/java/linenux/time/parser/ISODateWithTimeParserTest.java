@@ -9,8 +9,9 @@ import java.time.LocalDateTime;
 import org.junit.Before;
 import org.junit.Test;
 
+//@@author A0144915A
 /**
- * JUnit test for ISODateWithTime time forma.t
+ * JUnit test for ISODateWithTime time format.
  */
 public class ISODateWithTimeParserTest {
     TimeParser parser;

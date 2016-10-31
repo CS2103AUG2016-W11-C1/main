@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.util.function.IntSupplier;
 import java.util.function.Supplier;
 
+//@@author A0144915A
 /**
  * More assertions to make life (testing) easier.
  *

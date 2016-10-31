@@ -4,9 +4,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-/**
- * Created by yihangho on 10/8/16.
- */
+//@@author A0144915A
 public class StringsSimilarityTest {
     @Test
     public void levenshteinDistanceTest() {

@@ -60,8 +60,8 @@ public class AliasCommand extends AbstractCommand {
         return makeSuccessfulAliasResult(commandNames);
     }
 
-    @Override
     //@@author A0135788M
+    @Override
     public String getTriggerWord() {
         return TRIGGER_WORD;
     }

@@ -16,17 +16,17 @@ public class InvalidCommand extends AbstractCommand {
         this.commands = commands;
     }
 
+    //@@author A0135788M
     /**
      * @return true for all user inputs.
      */
     @Override
-    //@@author A0135788M
     public boolean respondTo(String userInput) {
         return true;
     }
 
-    @Override
     //@@author A0144915A
+    @Override
     public CommandResult execute(String userInput) {
         String userCommand = extractCommand(userInput);
         Command closestCommand = null;

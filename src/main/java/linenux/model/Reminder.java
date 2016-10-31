@@ -28,8 +28,8 @@ public class Reminder {
         this.timeOfReminder = other.timeOfReminder;
     }
 
-    @Override
     //@@author A0140702X
+    @Override
     public String toString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd h:mma");
 

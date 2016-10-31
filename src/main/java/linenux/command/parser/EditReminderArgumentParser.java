@@ -23,6 +23,7 @@ public class EditReminderArgumentParser {
     private GenericParser genericParser;
     private GenericParser.GenericParserResult parseResult;
 
+    //@@author A0140702X
     public EditReminderArgumentParser(TimeParserManager timeParserManager, String commandFormat, String callouts) {
         this.timeParserManager = timeParserManager;
         this.genericParser = new GenericParser();
@@ -30,6 +31,7 @@ public class EditReminderArgumentParser {
         EditArgumentParser.CALLOUTS = callouts;
     }
 
+    //@@author A0144915A
     public Either<Reminder, CommandResult> parse(Reminder original, String argument) {
         this.parseResult = this.genericParser.parse(argument);
 
@@ -70,6 +72,7 @@ public class EditReminderArgumentParser {
         }
     }
 
+    //@@author A0140702X
     private Either<LocalDateTime, CommandResult> parseDateTime(String string) {
         if (this.timeParserManager.canParse(string)) {
             return Either.left(this.timeParserManager.delegateTimeParser(string));

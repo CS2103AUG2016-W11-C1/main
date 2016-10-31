@@ -19,12 +19,12 @@ public class TimeParserManager {
         }
     }
 
+    //@@author A0144915A
     /**
      * Check if the manager can parse some string
      * @param userInput The string to check
      * @return {@code true} if and only if at least one of the parsers can parse {@code userInput}
      */
-    //@@author A0144915A
     public boolean canParse(String userInput) {
         for (TimeParser parser: parserList) {
             if (parser.respondTo(userInput)) {
@@ -35,10 +35,10 @@ public class TimeParserManager {
         return false;
     }
 
+    //@@author A0135788M
     /**
      * Assigns the appropriate time parser to the user input.
      */
-    //@@author A0135788M
     public LocalDateTime delegateTimeParser(String userInput) {
         for (TimeParser parser: parserList) {
             if (parser.respondTo(userInput)) {

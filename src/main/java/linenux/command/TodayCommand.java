@@ -7,9 +7,7 @@ import java.time.Clock;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-/**
- * Created by yihangho on 10/25/16.
- */
+//@@author A0144915A
 public class TodayCommand extends AbstractCommand {
     private static final String TRIGGER_WORD = "today";
     private static final String DESCRIPTION = "Lists tasks and reminders for today.";

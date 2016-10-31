@@ -3,10 +3,10 @@ package linenux.command;
 import linenux.command.result.CommandResult;
 import linenux.model.Schedule;
 
+//@@author A0135788M
 /**
  * Undo the previous command that mutated the state of the schedule.
  */
-//@@author A0135788M
 public class UndoCommand extends AbstractCommand {
     private static final String TRIGGER_WORD = "undo";
     private static final String DESCRIPTION = "Undo the previous command.";

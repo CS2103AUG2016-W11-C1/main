@@ -5,10 +5,10 @@ import java.util.Collections;
 
 import linenux.util.ArrayListUtil;
 
+//@@author A0135788M
 /**
  * Represents a snapshot in time of a schedule. The State class is immutable.
  */
-//@@author A0135788M
  public class State {
      private final ArrayList<Task> tasks;
 

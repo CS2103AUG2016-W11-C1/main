@@ -14,10 +14,10 @@ public class Schedule {
     private final ObservableList<State> states = FXCollections.observableArrayList();
     private final ObservableList<ArrayList<Task>> filteredTaskList = FXCollections.observableArrayList();
 
+    //@@author A0144915A
     /**
      * Constructs an empty schedule
      */
-    //@@author A0144915A
     public Schedule() {
         this.states.add(new State());
     }
@@ -34,32 +34,32 @@ public class Schedule {
         addState(getMostRecentState().addTask(task));
     }
 
+    //@@author A0144915A
     /**
      * Replace {@code originalTask} with {@code newTask}.
      * @param originalTask The original task.
      * @param newTask The new ask.
      */
-    //@@author A0144915A
     public void updateTask(Task originalTask, Task newTask) {
         addState(getMostRecentState().updateTask(originalTask, newTask));
     }
 
+    //@@author A0135788M
     /**
      * Delete the specified task.
      *
      * @param task The task to delete.
      */
-    //@@author A0135788M
     public void deleteTask(Task task) {
         addState(getMostRecentState().deleteTask(task));
     }
 
+    //@@author A0140702X
     /**
      * Delete the specified list of tasks.
      *
      * @param tasks The tasks to delete.
      */
-    //@@author A0140702X
     public void deleteTasks(ArrayList<Task> tasks) {
         State newState = getMostRecentState();
 
@@ -70,10 +70,10 @@ public class Schedule {
         addState(newState);
     }
 
+    //@@author A0135788M
     /**
      * Clears all tasks from the schedule
      */
-    //@@author A0135788M
     public void clear() {
         State newState = new State();
         addState(newState);
@@ -84,6 +84,7 @@ public class Schedule {
         return search(keywords.split("\\s+"));
     }
 
+    //@@author A0135788M
     /**
      * Performs case-insensitive task search using keywords.
      *
@@ -91,7 +92,6 @@ public class Schedule {
      *            Search keywords
      * @return List of {@code Task} matching the keywords.
      */
-    //@@author A0135788M
     public ArrayList<Task> search(String[] keywords) {
         return getMostRecentState().search(keywords);
     }
@@ -101,6 +101,7 @@ public class Schedule {
         return searchReminder(keywords.split("\\s+"));
     }
 
+    //@@author A0127694U
     /**
      * Performs case-insensitive reminder search using keywords.
      *
@@ -108,12 +109,14 @@ public class Schedule {
      *            Search keywords
      * @return List of {@code Task} matching the keywords.
      */
-    //@@author A0127694U
     public ArrayList<Reminder> searchReminder(String[] keywords) {
         return getMostRecentState().searchReminder(keywords);
     }
 
     // @@author A0140702X
+    /**
+     * Checks if the task given is a unique task.
+     */
     public boolean isUniqueTask(Task task) {
         ArrayList<Task> taskList = getMostRecentState().getTaskList();
         ArrayList<Task> duplicateTaskList = new ArrayListUtil.ChainableArrayListUtil<>(taskList)
@@ -126,10 +129,11 @@ public class Schedule {
         }
     }
 
+
+    //@@author A0135788M
     /**
      * Returns the list of states.
      */
-    //@@author A0135788M
     public ObservableList<State> getStates() {
         return states;
     }
@@ -139,18 +143,18 @@ public class Schedule {
         return filteredTaskList;
     }
 
+    //@@author A0135788M
     /**
      * Returns the list of tasks.
      */
-    //@@author A0135788M
     public ArrayList<Task> getTaskList() {
         return getMostRecentState().getTaskList();
     }
 
+    //@@author A0140702X
     /**
      * Returns the list of filtered tasks.
      */
-    //@@author A0140702X
     public ArrayList<Task> getFilteredTasks() {
         if (filteredTaskList.isEmpty()) {
             return getTaskList();
@@ -159,10 +163,10 @@ public class Schedule {
         return filteredTaskList.get(0);
     }
 
+    //@@author A0127694U
     /**
      * Returns the list of all task reminders.
      */
-    //@@author A0127694U
     public ArrayList<Reminder> getReminderList() {
         ArrayList<Reminder> result = new ArrayList<>();
         for (Task t : getMostRecentState().getTaskList()) {
@@ -172,12 +176,12 @@ public class Schedule {
         return result;
     }
 
+    //@@author A0144915A
     /**
      * Remove the last state if there are more than one.
      *
      * @return {@code true} if and only if a state is removed.
      */
-    //@@author A0144915A
     public boolean popState() {
         if (states.size() > 1) {
             states.remove(states.size() - 1);
@@ -186,20 +190,20 @@ public class Schedule {
         return false;
     }
 
+    //@@author A0140702X
     /**
      * Adds a new list of filtered tastes into filteredTaskList
      * @param filteredTasks
      */
-    //@@author A0140702X
     public void addFilterTasks(ArrayList<Task> filteredTasks) {
         filteredTaskList.clear();
         filteredTaskList.add(filteredTasks);
     }
 
+    //@@author A0144915A
     /**
      * Returns the most recent state of schedule
      */
-    //@@author A0144915A
     private State getMostRecentState() {
         return states.get(states.size() - 1);
     }

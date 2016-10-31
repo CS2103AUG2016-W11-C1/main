@@ -10,9 +10,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-/**
- * Created by yihangho on 10/25/16.
- */
+//@@author A0144915A
 public class UnaliasCommandTest {
     private Schedule schedule;
     private AddCommand addCommand;
