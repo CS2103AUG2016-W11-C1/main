@@ -59,12 +59,15 @@ public class CommandBoxController {
                     searchIndex++;
                     this.textField.setText(this.searchResult.get(searchIndex));
                 }
+
             }
 
             if (!event.getCode().equals(KeyCode.TAB)) {
                 searchIndex = -1;
                 searchResult.clear();
             }
+
+            this.textField.positionCaret(this.textField.getLength());
         });
     }
 
