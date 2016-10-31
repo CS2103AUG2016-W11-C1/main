@@ -22,6 +22,11 @@ public abstract class AbstractCommand implements Command {
     }
 
     @Override
+    public ArrayList<String> getAlias() {
+        return TRIGGER_WORDS;
+    }
+
+    @Override
     public String getPattern(){
         return "(?i)^\\s*(" + getTriggerWordsPattern() + ")(\\s+(?<keywords>.*))?$";
     }
