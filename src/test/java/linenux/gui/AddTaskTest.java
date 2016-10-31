@@ -53,12 +53,10 @@ public class AddTaskTest extends GuiTest {
 
         verifyThat("#todosList", isEmpty());
         verifyThat("#deadlinesList", hasItems(1));
-<<<<<<< HEAD
-        verifyThat("#deadlinesList", hasCellLabelled("deadline (Due 2016-01-01 5.00PM)"));
-=======
+
         verifyThat("#deadlinesList", hasCellTitle("deadline"));
         verifyThat("#deadlinesList", hasCellTime("Due 01 Jan 2016 5.00PM"));
->>>>>>> master
+
         verifyThat("#eventsList", isEmpty());
     }
 
@@ -73,11 +71,8 @@ public class AddTaskTest extends GuiTest {
         robot.write("done deadline\n");
 
         verifyThat("#deadlinesList", hasItems(1));
-<<<<<<< HEAD
-        verifyThat("#deadlinesList", hasCellLabelled("another (Due 2016-02-01 5.00PM)"));
-=======
+
         verifyThat("#deadlinesList", hasCellTitle("another"));
->>>>>>> master
     }
 
     @Test
@@ -92,11 +87,8 @@ public class AddTaskTest extends GuiTest {
         verifyThat("#todosList", isEmpty());
         verifyThat("#deadlinesList", isEmpty());
         verifyThat("#eventsList", hasItems(1));
-<<<<<<< HEAD
-        verifyThat("#eventsList", hasCellLabelled("event (2016-01-01 5.00PM - 2016-01-01 7.00PM)"));
-=======
+
         verifyThat("#eventsList", hasCellTitle("event"));
         verifyThat("#eventsList", hasCellTime("From 01 Jan 2016 5.00PM to 01 Jan 2016 7.00PM"));
->>>>>>> master
     }
 }
