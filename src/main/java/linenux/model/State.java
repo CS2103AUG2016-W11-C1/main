@@ -49,10 +49,31 @@ import linenux.util.ArrayListUtil;
      }
 
      /**
-      * Delete the specified task.
-      * @param task The task to delete.
-      * @return The new State of the schedule.
-      */
+     * Updates the specified task.
+     *
+     * @param originalTask
+     *            The original version of the specified task.
+     * @param newTask
+     *            The edited version of the specified task.
+     */
+    // @@author A0127694U
+    public State updateTasks(ArrayList<Task> originalTasks, ArrayList<Task> newTasks) {
+        State output = new State(this);
+        for (int i = 0; i < originalTasks.size(); i++) {
+            int taskIndex = tasks.indexOf(originalTasks.get(i));
+            output.tasks.set(taskIndex, newTasks.get(i));
+        }
+        return output;
+    }
+
+    /**
+     * Delete the specified task.
+     *
+     * @param task
+     *            The task to delete.
+     * @return The new State of the schedule.
+     */
+    // @@author A0135788M
      public State deleteTask(Task task) {
          int taskIndex = tasks.indexOf(task);
          State output = new State(this);
@@ -127,6 +148,23 @@ import linenux.util.ArrayListUtil;
         }).value();
     }
 
+    /**
+     * Performs case-insensitive tag search using keywords.
+     *
+     * @param keywords
+     *            Search keywords
+     * @return List of {@code Task} matching the keywords.
+     */
+    // @@author A0127694U
+    public ArrayList<Task> searchTag(String tagName) {
+        ArrayList<Task> result = this.tasks;
+
+        result = new ArrayListUtil.ChainableArrayListUtil<>(result).filter(task -> task.hasTag(tagName)).value();
+
+        return result;
+    }
+
+    // @@author A0135788M
      /**
      * Performs case-insensitive task search using keywords to search it's remidners.
      *
