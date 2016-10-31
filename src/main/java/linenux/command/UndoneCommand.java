@@ -45,7 +45,7 @@ public class UndoneCommand extends AbstractCommand {
                 .filter(Task::isDone).value();
 
         if (tasks.size() == 0) {
-            return SearchResults.makeListNotFoundResult(keywords);
+            return SearchResults.makeNotFoundResult(keywords);
         } else if (tasks.size() == 1) {
             Task task = tasks.get(0);
             this.schedule.updateTask(task, task.markAsUndone());
