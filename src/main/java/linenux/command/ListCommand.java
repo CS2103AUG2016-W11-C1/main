@@ -141,7 +141,7 @@ public class ListCommand extends AbstractCommand {
     }
 
     private Either<String, CommandResult> extractViewDone(String argument) {
-        Matcher matcher = Pattern.compile("(^|.*? )d/(?<done>.*?)(\\s+(#|st|et)/.*)?$").matcher(argument);
+        Matcher matcher = Pattern.compile("(?i)(^|.*? )d/(?<done>.*?)(\\s+(#|st|et)/.*)?$").matcher(argument);
 
         if (matcher.matches() && matcher.group("done") != null) {
             return parseViewDone(matcher.group("done").trim());
