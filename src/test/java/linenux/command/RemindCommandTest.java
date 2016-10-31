@@ -25,6 +25,7 @@ public class RemindCommandTest {
     private Schedule schedule;
     private RemindCommand remindCommand;
 
+    //@@author A0144915A
     @Before
     public void setupRemindCommand() {
         Task todo = new Task("Todo");
@@ -38,6 +39,7 @@ public class RemindCommandTest {
         this.remindCommand = new RemindCommand(this.schedule);
     }
 
+    //@@author A0135788M
     private void setupTaskWithSameNameAndExecuteAmbiguousCommand() {
         this.schedule.addTask(new Task("Todo 2"));
         this.remindCommand.execute("remind Todo t/2016-01-01 05.00PM n/Hey");
@@ -86,6 +88,7 @@ public class RemindCommandTest {
         assertFalse(this.remindCommand.respondTo("remindr"));
     }
 
+    //@@author A0135788M
     /**
      * Test that executing adding reminder to a To-Do should return correct
      * result.
@@ -170,6 +173,7 @@ public class RemindCommandTest {
         assertEquals("Attend Workshop", addedReminder.getNote());
     }
 
+    //@@author A0140702X
     /**
      * Test the result when no task name is given to search.
      */
@@ -212,6 +216,7 @@ public class RemindCommandTest {
         assertEquals("Cannot create reminder without date.", result.getFeedback());
     }
 
+    //@@author A0135788M
     /**
      * Test the result when time is invalid.
      */
@@ -222,6 +227,7 @@ public class RemindCommandTest {
         assertEquals("Cannot parse \"tomorrow\".", result.getFeedback());
     }
 
+    //@@author A0140702X
     /**
      * Test the result when no match is found.
      */
@@ -309,6 +315,7 @@ public class RemindCommandTest {
         assertTrue(this.remindCommand.awaitingUserResponse());
     }
 
+    //@@author A0144915A
     private int totalNumberOfReminders() {
         return new ArrayListUtil.ChainableArrayListUtil<>(this.schedule.getTaskList())
                 .map(Task::getReminders)

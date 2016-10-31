@@ -7,9 +7,7 @@ import java.time.LocalDateTime;
 
 import static org.junit.Assert.assertEquals;
 
-/**
- * Created by yihangho on 10/15/16.
- */
+//@@author A0144915A
 public class LocalDateTimeUtilTest {
     private LocalDateTime first, second;
 

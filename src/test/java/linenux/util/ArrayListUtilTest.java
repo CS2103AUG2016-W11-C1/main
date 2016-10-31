@@ -7,9 +7,7 @@ import java.util.ArrayList;
 
 import static junit.framework.TestCase.assertEquals;
 
-/**
- * Created by yihangho on 10/5/16.
- */
+//@@author A0144915A
 public class ArrayListUtilTest {
     ArrayList<String> list;
     @Before
@@ -31,6 +29,17 @@ public class ArrayListUtilTest {
         assertEquals("1 bla", mapped.get(0));
         assertEquals("2 bla", mapped.get(1));
         assertEquals("3 bla", mapped.get(2));
+    }
+
+    @Test
+    public void testMapWithIndex() {
+        ArrayList<Integer> numbers = ArrayListUtil.fromArray(new Integer[] {0, 0, 0});
+        ArrayList<Integer> mapped = ArrayListUtil.mapWithIndex((x, i) -> x + i, numbers);
+
+        assertEquals(3, mapped.size());
+        assertEquals(0, (int)mapped.get(0));
+        assertEquals(1, (int)mapped.get(1));
+        assertEquals(2, (int)mapped.get(2));
     }
 
     @Test

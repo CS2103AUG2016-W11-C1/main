@@ -17,10 +17,6 @@ import linenux.view.MainWindowController;
 public class Main extends Application implements Stoppable {
 
     public static final String APP_NAME = "Linenux";
-    public static final String VERSION = "Linenux - Version 0.3";
-
-    public static final int INITIAL_CONSOLE_WIDTH = 800;
-    public static final int INITIAL_CONSOLE_HEIGHT = 500;
 
     protected Config config = new Config();
 
@@ -29,8 +25,8 @@ public class Main extends Application implements Stoppable {
     }
 
     // TODO: Handle general exception & make TextArea keyboard insensitive.
-    @Override
     //@@author A0135788M
+    @Override
     public void start(Stage primaryStage) throws Exception {
         setupMainWindow(primaryStage);
     }
@@ -45,17 +41,26 @@ public class Main extends Application implements Stoppable {
     //@@author A0144915A
     private void setupMainWindow(Stage primaryStage) {
         try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(Main.class.getResource("/view/MainWindow.fxml"));
-            primaryStage.setTitle(APP_NAME);
-            primaryStage.getIcons().add(new Image("/images/terminal.png"));
-
-            loader.setController(new MainWindowController(this.config));
-            Scene scene = new Scene(loader.load(), INITIAL_CONSOLE_WIDTH, INITIAL_CONSOLE_HEIGHT);
+            FXMLLoader loader = setUpLoader();
+            Scene scene = new Scene(loader.load());
+            setUpStage(primaryStage);
             primaryStage.setScene(scene);
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private FXMLLoader setUpLoader() {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(Main.class.getResource("/view/MainWindow.fxml"));
+        loader.setController(new MainWindowController(this.config));
+        return loader;
+    }
+
+    private void setUpStage(Stage primaryStage) {
+        primaryStage.setTitle(APP_NAME);
+        primaryStage.getIcons().add(new Image("/images/terminal.png"));
+        primaryStage.setMaximized(true);;
     }
 }

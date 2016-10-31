@@ -41,8 +41,8 @@ public class ListCommand extends AbstractCommand {
         this.TRIGGER_WORDS.add(TRIGGER_WORD);
     }
 
-    @Override
     //@@author A0140702X
+    @Override
     public CommandResult execute(String userInput) {
         assert userInput.matches(getPattern());
         assert this.schedule != null;
@@ -98,8 +98,8 @@ public class ListCommand extends AbstractCommand {
         }
     }
 
-    @Override
     //@@author A0144915A
+    @Override
     public String getTriggerWord() {
         return TRIGGER_WORD;
     }
@@ -109,14 +109,14 @@ public class ListCommand extends AbstractCommand {
         return DESCRIPTION;
     }
 
-    @Override
     //@@author A0135788M
+    @Override
     public String getCommandFormat() {
         return COMMAND_FORMAT;
     }
 
-    @Override
     //@@author A0140702X
+    @Override
     public String getPattern() {
         return "(?i)^\\s*(" + getTriggerWordsPattern() + ")((?<keywords>.*?)(?<arguments>((st|et|#|d)/)+?.*)??)";
     }

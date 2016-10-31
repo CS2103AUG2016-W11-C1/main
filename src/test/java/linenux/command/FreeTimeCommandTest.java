@@ -16,9 +16,7 @@ import linenux.command.result.CommandResult;
 import linenux.model.Schedule;
 import linenux.model.Task;
 
-/**
- * Created by yihangho on 10/15/16.
- */
+//@@author A0144915A
 public class FreeTimeCommandTest {
     FreeTimeCommand command;
 

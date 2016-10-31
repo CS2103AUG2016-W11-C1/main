@@ -14,8 +14,9 @@ import linenux.command.result.CommandResult;
 import linenux.model.Schedule;
 import linenux.model.Task;
 
+//@@author A0140702X
 /**
- * JUnit test for view command.
+ * JUnit test for clear command.
  */
 public class ClearCommandTest {
     private Schedule schedule;

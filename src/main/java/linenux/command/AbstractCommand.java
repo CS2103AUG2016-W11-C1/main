@@ -2,9 +2,6 @@ package linenux.command;
 
 import java.util.ArrayList;
 
-/**
- * Created by yihangho on 10/22/16.
- */
 //@@author A0144915A
 public abstract class AbstractCommand implements Command {
     protected ArrayList<String> TRIGGER_WORDS = new ArrayList<>();

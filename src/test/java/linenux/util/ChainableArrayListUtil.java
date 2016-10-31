@@ -6,9 +6,7 @@ import java.util.ArrayList;
 
 import static junit.framework.TestCase.assertEquals;
 
-/**
- * Created by yihangho on 10/5/16.
- */
+//@@author A0144915A
 public class ChainableArrayListUtil {
     @Test
     public void testConstructFromArray() {
@@ -34,6 +32,17 @@ public class ChainableArrayListUtil {
         assertEquals("1 bla", list.get(0));
         assertEquals("2 bla", list.get(1));
         assertEquals("3 bla", list.get(2));
+    }
+
+    @Test
+    public void testMapWithIndex() {
+        ArrayList<Integer> list = new ArrayListUtil.ChainableArrayListUtil<>(new Integer[] {0, 0, 0})
+                .mapWithIndex((x, i) -> x + i)
+                .value();
+        assertEquals(3, list.size());
+        assertEquals(0, (int)list.get(0));
+        assertEquals(1, (int)list.get(1));
+        assertEquals(2, (int)list.get(2));
     }
 
     @Test

@@ -71,8 +71,8 @@ public class RemindCommand extends AbstractCommand {
         }
     }
 
-    @Override
     //@@author A0135788M
+    @Override
     public boolean awaitingUserResponse() {
         return requiresUserResponse;
     }

@@ -12,10 +12,8 @@ import linenux.control.ControlUnit;
 import linenux.model.State;
 import linenux.model.Task;
 import linenux.util.ArrayListUtil;
+import linenux.view.components.DeadlineCell;
 
-/**
- * Created by yihangho on 10/16/16.
- */
 //@@author A0144915A
 public class DeadlineBoxController {
     @FXML
@@ -27,6 +25,7 @@ public class DeadlineBoxController {
     @FXML
     private void initialize() {
         deadlinesList.itemsProperty().setValue(deadlines);
+        deadlinesList.setCellFactory(list -> new DeadlineCell());
     }
 
     public void setControlUnit(ControlUnit controlUnit) {

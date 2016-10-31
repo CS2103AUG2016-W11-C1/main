@@ -11,9 +11,7 @@ import linenux.helpers.BetterRobot;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-/**
- * Created by yihangho on 10/18/16.
- */
+//@@author A0144915A
 public abstract class GuiTest {
     protected BetterRobot robot;
     private Path tempDir;

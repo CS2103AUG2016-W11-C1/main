@@ -13,10 +13,10 @@ import linenux.model.Task;
 import linenux.util.RemindersListUtil;
 import linenux.util.TasksListUtil;
 
+//@@author A0135788M
 /**
  * Generates details of tasks and reminders attached to task based on userInput.
  */
-//@@author A0135788M
 public class ViewCommand extends AbstractCommand {
     private static final String TRIGGER_WORD = "view";
     private static final String DESCRIPTION = "Views details of specific task.";

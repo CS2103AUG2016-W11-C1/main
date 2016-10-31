@@ -1,11 +1,11 @@
 package linenux.model;
 
-import linenux.util.ArrayListUtil;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
+
+import linenux.util.ArrayListUtil;
 
 /**
  * Represents a task in the schedule. Only taskName is a required field and
@@ -19,13 +19,13 @@ public class Task {
     private ArrayList<String> tags;
     private ArrayList<Reminder> reminders;
 
+    //@@author A0127694U
     /**
      * Constructor for tagged To-Dos (tasks with no deadlines or predetermined
      * time slots).
      *
      * @param taskName
      */
-    //@@author A0127694U
     public Task(String taskName) {
         this(taskName, new ArrayList<String>());
     }
@@ -51,11 +51,11 @@ public class Task {
         this(taskName, startTime, endTime, new ArrayList<String>());
     }
 
+    //@@author A0135788M
     /**
      * Constructor for To-Dos (tasks with no deadlines or predetermined time
      * slots).
      */
-    //@@author A0135788M
     public Task(String taskName, ArrayList<String> tags) {
         this(taskName, false, null, null, tags, new ArrayList<Reminder>());
     }
@@ -67,10 +67,10 @@ public class Task {
         this(taskName, false, null, endTime, tags, new ArrayList<Reminder>());
     }
 
+    //@@author A0135788M
     /**
      * Constructor for Events (tasks with predetermined time slots).
      */
-    //@@author A0135788M
     public Task(String taskName, LocalDateTime startTime, LocalDateTime endTime, ArrayList<String> tags) {
         this(taskName, false, startTime, endTime, tags, new ArrayList<Reminder>());
     }
@@ -87,11 +87,11 @@ public class Task {
         this.reminders = reminders;
     }
 
+    //@@author A0144915A
     /**
      * Copy constructor.
      * @param other The other {@code Task} to copy from.
      */
-    //@@author A0144915A
     public Task(Task other) {
         this.taskName = other.taskName;
         this.isDone = other.isDone;

@@ -5,9 +5,6 @@ import java.util.ArrayList;
 import linenux.model.Reminder;
 import linenux.model.Task;
 
-/**
- * Created by yihangho on 10/5/16.
- */
 //@@author A0144915A
 public class TasksListUtil {
     /**

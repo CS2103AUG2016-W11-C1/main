@@ -2,10 +2,10 @@ package linenux.time.parser;
 
 import java.time.LocalDateTime;
 
+//@@author A0135788M
 /**
  * All time parser types must support interface methods.
  */
-//@@author A0135788M
 public interface TimeParser {
 
     /**

@@ -22,6 +22,7 @@ public class ListCommandTest {
     private Schedule schedule;
     private ListCommand listCommand;
 
+    //@@author A0144915A
     @Before
     public void setupListCommand() {
         this.schedule = new Schedule();
@@ -81,6 +82,7 @@ public class ListCommandTest {
         assertEquals(expectedFeedback, result.getFeedback());
     }
 
+    //@@author A0140702X
     /**
      * Test that list command displays multiple tasks correctly.
      */
@@ -98,6 +100,7 @@ public class ListCommandTest {
                 this.schedule.getFilteredTasks().contains(task2) && this.schedule.getFilteredTasks().contains(task3));
     }
 
+    //@@author A0127694U
     @Test
     public void testNoMatchingKeywords() {
         this.schedule.addTask(new Task("hi!"));
@@ -151,6 +154,7 @@ public class ListCommandTest {
         assertEquals(expectedFeedback, result.getFeedback());
     }
 
+    //@@author A0140702X
     /**
      * Test that list command filters by start time
      */

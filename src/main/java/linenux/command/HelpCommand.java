@@ -23,8 +23,8 @@ public class HelpCommand extends AbstractCommand {
         this.TRIGGER_WORDS.add(TRIGGER_WORD);
     }
 
-    @Override
     //@@author A0140702X
+    @Override
     public CommandResult execute(String userInput) {
         assert userInput.matches(getPattern());
 
@@ -60,8 +60,8 @@ public class HelpCommand extends AbstractCommand {
         return () -> makeHelpDescriptionForCommand(commandRequested, commandRequested.getTriggerWord().length());
     }
 
-    @Override
     //@@author A0135788M
+    @Override
     public String getTriggerWord() {
         return TRIGGER_WORD;
     }

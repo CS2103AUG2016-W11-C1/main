@@ -7,14 +7,17 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import linenux.config.Config;
 import linenux.control.ControlUnit;
 
-/**
- * Created by yihangho on 10/16/16.
- */
 //@@author A0144915A
 public class MainWindowController {
+    @FXML
+    private StackPane stackPane;
+    @FXML
+    private VBox vbox;
     @FXML
     private SplitPane splitPane;
     @FXML
@@ -31,9 +34,10 @@ public class MainWindowController {
         setupTodoBox();
         setupDeadlineBox();
         setupEventBox();
-        setupResultBox();
-        splitPane.setDividerPositions(0.25, 0.50, 0.75);
+        splitPane.setDividerPositions(0.33, 0.67);
+        setupExpandableCommandResult();
         setupCommandBox();
+        setupResultsOverlay();
     }
 
     private void setupTodoBox() {
@@ -75,20 +79,6 @@ public class MainWindowController {
         }
     }
 
-    private void setupResultBox() {
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainWindowController.class.getResource("/view/ResultBox.fxml"));
-            AnchorPane resultBox = loader.load();
-            splitPane.getItems().add(resultBox);
-            ResultBoxController controller = loader.getController();
-            controller.setControlUnit(this.controlUnit);
-            controller.displayReminder();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     private void setupCommandBox() {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -106,4 +96,30 @@ public class MainWindowController {
             e.printStackTrace();
         }
     }
+
+    private void setupExpandableCommandResult() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainWindowController.class.getResource("/view/ExpandableResultBox.fxml"));
+            VBox root = loader.load();
+            vbox.getChildren().add(1, root);
+            ExpandableResultBoxController controller = loader.getController();
+            controller.setControlUnit(this.controlUnit);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setupResultsOverlay() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainWindowController.class.getResource("/view/ResultsOverlay.fxml"));
+            this.stackPane.getChildren().add(loader.load());
+            ResultsOverlayController controller = loader.getController();
+            controller.setControlUnit(this.controlUnit);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

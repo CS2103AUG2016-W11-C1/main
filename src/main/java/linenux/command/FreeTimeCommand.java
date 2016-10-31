@@ -21,9 +21,6 @@ import linenux.util.Either;
 import linenux.util.LocalDateTimeUtil;
 import linenux.util.TimeInterval;
 
-/**
- * Created by yihangho on 10/15/16.
- */
 //@@author A0144915A
 public class FreeTimeCommand extends AbstractCommand {
     private static final String TRIGGER_WORD = "freetime";
