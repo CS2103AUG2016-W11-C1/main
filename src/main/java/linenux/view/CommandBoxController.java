@@ -7,7 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import linenux.control.ControlUnit;
-import linenux.util.TernarySearchTree;
+import linenux.util.AutoCompleter;
 
 //@@author A0144915A
 public class CommandBoxController {
@@ -15,11 +15,9 @@ public class CommandBoxController {
     private TextField textField;
 
     private ControlUnit controlUnit;
-    private TernarySearchTree tree;
+    private AutoCompleter autoCompleter;
     private ArrayList<String> history;
-    private ArrayList<String> searchResult;
     private int historyIndex;
-    private int searchIndex;
 
     @FXML
     private void initialize() {
@@ -48,23 +46,14 @@ public class CommandBoxController {
             }
 
             if (event.getCode().equals(KeyCode.TAB)) {
-                if (searchResult.isEmpty()) {
-                    String prefix = this.textField.getText();
-                    searchResult = tree.getAllStringsWithPrefix(prefix);
-                    if (!searchResult.isEmpty()) {
-                        searchIndex++;
-                        this.textField.setText(this.searchResult.get(searchIndex));
-                    }
-                } else if (searchIndex + 1 < searchResult.size()) {
-                    searchIndex++;
-                    this.textField.setText(this.searchResult.get(searchIndex));
+                if (autoCompleter.hasNoSearchResult()) {
+                    autoCompleter.findPrefix(this.textField.getText());
                 }
-
+                this.textField.setText(autoCompleter.next());
             }
 
             if (!event.getCode().equals(KeyCode.TAB)) {
-                searchIndex = -1;
-                searchResult.clear();
+                autoCompleter.clear();
             }
 
             this.textField.positionCaret(this.textField.getLength());
@@ -82,37 +71,8 @@ public class CommandBoxController {
 
     public void setControlUnit(ControlUnit controlUnit) {
         this.controlUnit = controlUnit;
-        setUpTree();
+        this.autoCompleter = new AutoCompleter(this.controlUnit.getCommandList());
         this.history = new ArrayList<>();
-        this.searchResult = new ArrayList<>();
         this.historyIndex = -1;
-        this.searchIndex = -1;
-    }
-
-    // TODO: Get from alias file
-    private void setUpTree() {
-        this.tree = new TernarySearchTree();
-        tree.addString("add");
-        tree.addString("remind");
-        tree.addString("edit");
-        tree.addString("editr");
-        tree.addString("rename");
-        tree.addString("done");
-        tree.addString("undone");
-        tree.addString("delete");
-        tree.addString("deleter");
-        tree.addString("clear");
-        tree.addString("freetime");
-        tree.addString("list");
-        tree.addString("today");
-        tree.addString("tomorrow");
-        tree.addString("view");
-        tree.addString("undo");
-        tree.addString("help");
-        tree.addString("alias");
-        tree.addString("unalias");
-        tree.addString("path");
-        tree.addString("information");
-        tree.addString("exit");
     }
 }

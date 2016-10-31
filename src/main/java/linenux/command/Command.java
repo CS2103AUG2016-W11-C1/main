@@ -1,5 +1,7 @@
 package linenux.command;
 
+import java.util.ArrayList;
+
 import linenux.command.result.CommandResult;
 
 /**
@@ -69,4 +71,6 @@ public interface Command {
     public void setAlias(String alias);
 
     public void removeAlias(String alias);
+
+    public ArrayList<String> getTriggerWords();
 }
