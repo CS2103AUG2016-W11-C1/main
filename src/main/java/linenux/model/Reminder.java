@@ -31,7 +31,7 @@ public class Reminder {
     //@@author A0140702X
     @Override
     public String toString() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd h:mma");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd h.mma");
 
         if (this.note != null) {
             return this.note + " (On " + this.timeOfReminder.format(formatter) + ")";

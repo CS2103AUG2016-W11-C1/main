@@ -117,7 +117,7 @@ public class AddCommandTest {
     public void testExecuteAddDeadline() {
         assertChangeBy(() -> this.schedule.getTaskList().size(),
                 1,
-                () -> this.addCommand.execute("add CS2103T Tutorial et/2016-01-01 5:00PM"));
+                () -> this.addCommand.execute("add CS2103T Tutorial et/2016-01-01 5.00PM"));
 
         // The new deadline has the correct name, start time, and end time
         ArrayList<Task> tasks = this.schedule.getTaskList();
@@ -134,7 +134,7 @@ public class AddCommandTest {
     public void testExecuteAddEvent() {
         assertChangeBy(() -> this.schedule.getTaskList().size(),
                 1,
-                () -> this.addCommand.execute("add CS2103T Tutorial st/2016-01-01 5:00PM et/2016-01-02 5:00PM"));
+                () -> this.addCommand.execute("add CS2103T Tutorial st/2016-01-01 5.00PM et/2016-01-02 5.00PM"));
 
         // The new event has the correct name, start time, and end time
         ArrayList<Task> tasks = this.schedule.getTaskList();
@@ -209,7 +209,7 @@ public class AddCommandTest {
         assertChangeBy(() -> this.schedule.getTaskList().size(),
                 1,
                 () -> this.addCommand
-                        .execute("add CS2103T Tutorial #/tag 1 et/2016-01-02 5:00PM #/tag 2 st/2016-01-01 5:00PM"));
+                        .execute("add CS2103T Tutorial #/tag 1 et/2016-01-02 5.00PM #/tag 2 st/2016-01-01 5.00PM"));
 
         // The new event has the correct name, start time, and end time
         ArrayList<Task> tasks = this.schedule.getTaskList();
@@ -239,8 +239,8 @@ public class AddCommandTest {
      */
     @Test
     public void testExecuteAddDeadlineResult() {
-        CommandResult result = this.addCommand.execute("add CS2103T Tutorial et/2016-01-01 5:00PM");
-        assertEquals("Added CS2103T Tutorial (Due 2016-01-01 5:00PM)", result.getFeedback());
+        CommandResult result = this.addCommand.execute("add CS2103T Tutorial et/2016-01-01 5.00PM");
+        assertEquals("Added CS2103T Tutorial (Due 2016-01-01 5.00PM)", result.getFeedback());
     }
 
     /**
@@ -248,8 +248,8 @@ public class AddCommandTest {
      */
     @Test
     public void testExecuteAddEventResult() {
-        CommandResult result = this.addCommand.execute("add CS2103T Tutorial st/2016-01-01 5:00PM et/2016-01-02 5:00PM");
-        assertEquals("Added CS2103T Tutorial (2016-01-01 5:00PM - 2016-01-02 5:00PM)", result.getFeedback());
+        CommandResult result = this.addCommand.execute("add CS2103T Tutorial st/2016-01-01 5.00PM et/2016-01-02 5.00PM");
+        assertEquals("Added CS2103T Tutorial (2016-01-01 5.00PM - 2016-01-02 5.00PM)", result.getFeedback());
     }
 
     //@@author A0127694U
@@ -357,7 +357,7 @@ public class AddCommandTest {
     @Test
     public void testStartTimeWithoutEndTime() {
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
-                () -> this.addCommand.execute("add hello st/2016-01-01 5:00PM"));
+                () -> this.addCommand.execute("add hello st/2016-01-01 5.00PM"));
 
         assertEquals("Cannot create task with start time but without end time.", result.getFeedback());
     }
@@ -369,7 +369,7 @@ public class AddCommandTest {
     @Test
     public void testEndTimeBeforeStartTime() {
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
-                () -> this.addCommand.execute("add hello st/2016-01-02 5:00PM et/2016-01-01 5:00PM"));
+                () -> this.addCommand.execute("add hello st/2016-01-02 5.00PM et/2016-01-01 5.00PM"));
 
         assertEquals("End time cannot come before start time.", result.getFeedback());
     }
