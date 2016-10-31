@@ -25,6 +25,12 @@ public class CommandBoxController {
     private void initialize() {
         Platform.runLater(() -> textField.requestFocus());
 
+        this.textField.setOnKeyPressed(event -> {
+            if (event.getCode().equals(KeyCode.TAB)) {
+                event.consume();
+            }
+        });
+
         this.textField.setOnKeyReleased(event -> {
             if (event.getCode().equals(KeyCode.UP) && historyIndex > 0) {
                 historyIndex--;
