@@ -38,6 +38,8 @@ public class TasksListUtil {
 
         builder.append(TasksListUtil.display(tasks));
 
+        builder.append("\n\n");
+
         if (reminders.size() > 0) {
             builder.append("Reminders:\n");
             builder.append(RemindersListUtil.display(reminders));
