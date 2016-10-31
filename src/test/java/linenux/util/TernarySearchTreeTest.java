@@ -1,7 +1,10 @@
 package linenux.util;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+
+import java.util.ArrayList;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -24,7 +27,7 @@ public class TernarySearchTreeTest {
         tree.addString("dog");
         tree.addString("crab");
         tree.addString("crow");
-        tree.addString("crap");
+        tree.addString("crack");
         tree.addString("crabby");
     }
 
@@ -41,7 +44,7 @@ public class TernarySearchTreeTest {
      */
     @Test
     public void testInvalidString() {
-        assertTrue(tree.getAllStringsWithPrefix("").isEmpty());
+        assertTrue(tree.getAllStringsWithPrefix(" ").isEmpty());
         assertTrue(tree.getAllStringsWithPrefix(null).isEmpty());
     }
 
@@ -52,5 +55,36 @@ public class TernarySearchTreeTest {
     public void testInvalidPrefix() {
         setUpData();
         assertTrue(tree.getAllStringsWithPrefix("z").isEmpty());
+    }
+
+    /**
+     * Test that adding string works.
+     */
+    @Test
+    public void testAddData() {
+        tree.addString("credit");
+        assertEquals("credit", tree.getAllStrings().get(0));
+    }
+
+    /**
+     * Test that adding string is case insensitive.
+     */
+    @Test
+    public void testAddDataCaseInsensitive() {
+        tree.addString("crEDit");
+        assertEquals("credit", tree.getAllStrings().get(0));
+    }
+
+    /**
+     * Test that search for prefix is correct
+     */
+    @Test
+    public void testSearchPrefix() {
+        setUpData();
+        ArrayList<String> result = tree.getAllStringsWithPrefix("cra");
+        assertEquals(3, result.size());
+        assertTrue(result.contains("crab"));
+        assertTrue(result.contains("crabby"));
+        assertTrue(result.contains("crack"));
     }
 }

@@ -26,6 +26,9 @@ public class TernarySearchTree {
         searchResult = new ArrayList<>();
     }
 
+    /**
+     * Adds a string to the tree according to TST rules.
+     */
     public void addString(String s) {
         if (s == null || s.isEmpty()) {
             return;
@@ -33,10 +36,16 @@ public class TernarySearchTree {
         root = addStringHelper(root, 0, s.toLowerCase());
     }
 
+    /**
+     * Returns a list of all strings in tree.
+     */
     public ArrayList<String> getAllStrings() {
         return searchNode(root);
     }
 
+    /**
+     * Returns a list of all strings with prefix in tree.
+     */
     public ArrayList<String> getAllStringsWithPrefix(String prefix) {
         Node prefixLastNode = getPrefixLastNode(prefix);
 
@@ -87,7 +96,7 @@ public class TernarySearchTree {
     }
 
     private Node getPrefixLastNode(String prefix) {
-        if (prefix.isEmpty() || prefix == null) {
+        if (prefix == null || prefix.isEmpty()) {
             return null;
         }
         return getPrefixLastNodeHelper(root, 0, prefix);
@@ -114,30 +123,4 @@ public class TernarySearchTree {
     public Node getRoot() {
         return root;
     }
-
-    public static void main(String[] args) {
-        TernarySearchTree tree = new TernarySearchTree();
-        tree.addString("cats");
-        tree.addString("bats");
-        tree.addString("dog");
-        tree.addString("crab");
-        tree.addString("crow");
-        tree.addString("crap");
-        tree.addString("crabby");
-
-        ArrayList<String> result = tree.getAllStrings();
-
-        for (String s : result) {
-            System.out.println(s);
-        }
-
-        System.out.println();
-
-        ArrayList<String> prefixResult = tree.getAllStringsWithPrefix("crab");
-
-        for (String s : prefixResult) {
-            System.out.println(s);
-        }
-    }
-
 }
