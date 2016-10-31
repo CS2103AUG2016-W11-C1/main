@@ -97,8 +97,17 @@ public class HelpCommand extends AbstractCommand {
 
     private String makeHelpDescriptionForCommand(Command command, int maxLength) {
         StringBuilder builder = new StringBuilder();
+        ArrayList<String> aliasList = command.getAlias();
+
 
         builder.append(command.getTriggerWord());
+        for (String alias : aliasList) {
+            if (alias.equals(command.getTriggerWord())) {
+                continue;
+            }
+
+            builder.append(", " + alias);
+        }
         builder.append(" - ");
         builder.append("\n");
 
