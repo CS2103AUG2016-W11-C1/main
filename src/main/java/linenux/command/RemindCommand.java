@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import linenux.command.parser.GenericParser;
 import linenux.command.parser.ReminderArgumentParser;
 import linenux.command.result.CommandResult;
 import linenux.command.result.PromptResults;
@@ -33,7 +34,7 @@ public class RemindCommand extends AbstractCommand {
 
     private Schedule schedule;
     private boolean requiresUserResponse;
-    private String argument;
+    private GenericParser.GenericParserResult parseResult;
     private ArrayList<Task> foundTasks;
     private TimeParserManager timeParserManager;
     private ReminderArgumentParser reminderArgumentParser;
@@ -51,22 +52,23 @@ public class RemindCommand extends AbstractCommand {
         assert userInput.matches(getPattern());
         assert this.schedule != null;
 
-        String keywords = extractKeywords(userInput);
         String argument = extractArgument(userInput);
+        GenericParser parser = new GenericParser();
+        GenericParser.GenericParserResult result = parser.parse(argument);
 
-        if (keywords.trim().isEmpty()) {
+        if (result.getKeywords().isEmpty()) {
             return makeNoKeywordsResult();
         }
 
-        ArrayList<Task> tasks = this.schedule.search(keywords);
+        ArrayList<Task> tasks = this.schedule.search(result.getKeywords());
 
         if (tasks.size() == 0) {
-            return SearchResults.makeNotFoundResult(keywords);
+            return SearchResults.makeNotFoundResult(result.getKeywords());
         } else if (tasks.size() == 1) {
             Task task = tasks.get(0);
-            return implementRemind(task, argument);
+            return implementRemind(task, result);
         } else {
-            setResponse(true, tasks, argument);
+            setResponse(true, tasks, result);
             return PromptResults.makePromptIndexResult(tasks);
         }
     }
@@ -79,7 +81,7 @@ public class RemindCommand extends AbstractCommand {
 
     @Override
     public CommandResult getUserResponse(String userInput) {
-        assert this.argument != null;
+        assert this.parseResult != null;
         assert this.foundTasks != null;
         assert this.schedule != null;
 
@@ -88,7 +90,7 @@ public class RemindCommand extends AbstractCommand {
 
             if (1 <= index && index <= this.foundTasks.size()) {
                 Task task = this.foundTasks.get(index - 1);
-                CommandResult result = implementRemind(task, this.argument);
+                CommandResult result = implementRemind(task, this.parseResult);
                 setResponse(false, null, null);
                 return result;
             } else {
@@ -118,12 +120,7 @@ public class RemindCommand extends AbstractCommand {
         return COMMAND_FORMAT;
     }
 
-    @Override
-    public String getPattern() {
-        return "(?i)^\\s*(" + this.getTriggerWordsPattern() + ")(\\s+(?<keywords>.*?)(?<arguments>((n|t)/)+?.*)?)?";
-    }
-
-    private String extractKeywords(String userInput) {
+    private String extractArgument(String userInput) {
         Matcher matcher = Pattern.compile(getPattern()).matcher(userInput);
 
         if (matcher.matches() && matcher.group("keywords") != null) {
@@ -133,18 +130,8 @@ public class RemindCommand extends AbstractCommand {
         }
     }
 
-    private String extractArgument(String userInput) {
-        Matcher matcher = Pattern.compile(getPattern()).matcher(userInput);
-
-        if (matcher.matches() && matcher.group("arguments") != null) {
-            return matcher.group("arguments");
-        } else {
-            return "";
-        }
-    }
-
-    private CommandResult implementRemind(Task original, String argument) {
-        Either<Reminder, CommandResult> result = reminderArgumentParser.parse(argument);
+    private CommandResult implementRemind(Task original, GenericParser.GenericParserResult parseResult) {
+        Either<Reminder, CommandResult> result = reminderArgumentParser.parse(parseResult);
 
         if (result.isLeft()) {
             this.schedule.updateTask(original, original.addReminder(result.getLeft()));
@@ -154,10 +141,10 @@ public class RemindCommand extends AbstractCommand {
         }
     }
 
-    private void setResponse(boolean requiresUserResponse, ArrayList<Task> foundTasks, String argument) {
+    private void setResponse(boolean requiresUserResponse, ArrayList<Task> foundTasks, GenericParser.GenericParserResult result) {
         this.requiresUserResponse = requiresUserResponse;
         this.foundTasks = foundTasks;
-        this.argument = argument;
+        this.parseResult = result;
     }
 
     private CommandResult makeNoKeywordsResult() {
