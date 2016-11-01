@@ -11,19 +11,16 @@ import javax.xml.bind.Unmarshaller;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import linenux.config.Config;
 import linenux.model.Schedule;
 import linenux.model.adapted.AdaptedSchedule;
 
 //@@author A0135788M
 public class XmlScheduleStorage implements ScheduleStorage {
-    private Path filePath;
+    private Config config;
 
-    public XmlScheduleStorage() {
-        this.filePath = Paths.get(DEFAULT_FILE_PATH + FILENAME);
-    }
-
-    public XmlScheduleStorage(String filePath) {
-        this.filePath = Paths.get(filePath);
+    public XmlScheduleStorage(Config config) {
+        this.config = config;
     }
 
     @Override
@@ -33,14 +30,13 @@ public class XmlScheduleStorage implements ScheduleStorage {
             Unmarshaller u = context.createUnmarshaller();
 
             if (!hasScheduleFile()) {
-                System.out.println("hello");
                 createFile();
             }
 
-            AdaptedSchedule aSchedule = (AdaptedSchedule) u.unmarshal(filePath.toFile());
+            AdaptedSchedule aSchedule = (AdaptedSchedule) u.unmarshal(this.getFilePath().toFile());
             return aSchedule.convertToModel();
         } catch (Exception e) {
-            Alert alert = throwAlert("Loading Error", "Could not load data from file: \n" + filePath.toString());
+            Alert alert = throwAlert("Loading Error", "Could not load data from file: \n" + this.getFilePath().toString());
             alert.showAndWait();
             return null;
         }
@@ -59,31 +55,26 @@ public class XmlScheduleStorage implements ScheduleStorage {
                 createFile();
             }
 
-            m.marshal(aSchedule, filePath.toFile());
+            m.marshal(aSchedule, this.getFilePath().toFile());
         } catch (Exception e) {
-            Alert alert = throwAlert("Saving Error", "Could not save data to file: \n" + filePath.toString());
+            Alert alert = throwAlert("Saving Error", "Could not save data to file: \n" + this.getFilePath().toString());
             alert.showAndWait();
         }
     }
 
     @Override
     public boolean hasScheduleFile() {
-        return Files.exists(filePath);
-    }
-
-    @Override
-    public void setFilePath(String filePath) {
-        this.filePath = Paths.get(filePath + FILENAME);
+        return Files.exists(this.getFilePath());
     }
 
     private void createFile() throws IOException {
         try {
-            Files.createFile(filePath);
+            Files.createFile(this.getFilePath());
         } catch (IOException i) {
-            Files.createDirectories(filePath);
+            Files.createDirectories(this.getFilePath());
             createFile();
         } catch (Exception e) {
-            Alert alert = throwAlert("Creating File Error", "Could not create file at: \n" + filePath.toString());
+            Alert alert = throwAlert("Creating File Error", "Could not create file at: \n" + this.getFilePath().toString());
             alert.showAndWait();
         }
     }
@@ -95,4 +86,7 @@ public class XmlScheduleStorage implements ScheduleStorage {
         return alert;
     }
 
+    private Path getFilePath() {
+        return Paths.get(this.config.getScheduleFilePath());
+    }
 }

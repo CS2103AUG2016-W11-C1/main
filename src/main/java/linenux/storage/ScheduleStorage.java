@@ -26,9 +26,4 @@ public interface ScheduleStorage {
      * Checks if file exist.
      */
     public boolean hasScheduleFile();
-
-    /**
-     * Set file path.
-     */
-    public void setFilePath(String filePath);
 }

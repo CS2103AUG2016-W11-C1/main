@@ -72,6 +72,11 @@ public class Config {
         }
     }
 
+    public void setScheduleFilePath(String path) {
+        this.getConfigFile().put(SCHEDULE_PATH_KEY, path);
+        this.saveConfig();
+    }
+
     public boolean hasConfigFile() {
         return Files.exists(configFilePath);
     }
