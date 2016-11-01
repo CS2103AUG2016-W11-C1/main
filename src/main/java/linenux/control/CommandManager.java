@@ -18,6 +18,7 @@ import linenux.command.InvalidCommand;
 import linenux.command.ListCommand;
 import linenux.command.RemindCommand;
 import linenux.command.RenameCommand;
+import linenux.command.SaveCommand;
 import linenux.command.TodayCommand;
 import linenux.command.TomorrowCommand;
 import linenux.command.UnaliasCommand;
@@ -25,6 +26,7 @@ import linenux.command.UndoCommand;
 import linenux.command.UndoneCommand;
 import linenux.command.ViewCommand;
 import linenux.command.result.CommandResult;
+import linenux.config.Config;
 import linenux.model.Schedule;
 
 /**
@@ -34,10 +36,14 @@ public class CommandManager {
     private ArrayList<Command> commandList;
     private Schedule schedule;
     private Command catchAllCommand;
+    private Config config;
+    private ControlUnit controlUnit;
 
     //@@author A0144915A
-    public CommandManager(Schedule schedule) {
-        this.schedule = schedule;
+    public CommandManager(ControlUnit controlUnit) {
+        this.controlUnit = controlUnit;
+        this.schedule = controlUnit.getSchedule();
+        this.config = controlUnit.getConfig();
         commandList = new ArrayList<>();
         initializeCommands();
     }
@@ -61,6 +67,8 @@ public class CommandManager {
         commandList.add(new ViewCommand(this.schedule));
         commandList.add(new TodayCommand(this.schedule));
         commandList.add(new TomorrowCommand(this.schedule));
+
+        commandList.add(new SaveCommand(this.controlUnit));
 
         commandList.add(new UndoCommand(this.schedule));
         commandList.add(new FreeTimeCommand(this.schedule));
