@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane fx:id="stackPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <SplitPane fx:id="splitPane" prefHeight="409.0" prefWidth="600.0" styleClass="mainWindowAnchor" stylesheets="@LinenuxTheme.css" VBox.vgrow="ALWAYS">
-        <items>
-        </items>
-         <VBox.margin>
-            <Insets />
-         </VBox.margin>
-      </SplitPane>
-      <AnchorPane fx:id="commandBoxContainer" styleClass="mainWindowAnchor" stylesheets="@LinenuxTheme.css" />
+      <VBox fx:id="vbox" styleClass="vBox" stylesheets="@LinenuxTheme.css">
+         <children>
+            <SplitPane fx:id="splitPane" styleClass="splitPane" stylesheets="@LinenuxTheme.css" VBox.vgrow="ALWAYS" />
+            <AnchorPane fx:id="commandBoxContainer" styleClass="mainWindowAnchor" stylesheets="@LinenuxTheme.css" />
+         </children>
+      </VBox>
    </children>
-</VBox>
+</StackPane>

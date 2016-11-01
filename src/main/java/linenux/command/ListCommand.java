@@ -6,12 +6,14 @@ import java.util.regex.Pattern;
 
 import linenux.command.filter.ListArgumentFilter;
 import linenux.command.result.CommandResult;
-import linenux.command.result.SearchResults;
 import linenux.control.TimeParserManager;
 import linenux.model.Reminder;
 import linenux.model.Schedule;
 import linenux.model.Task;
 import linenux.time.parser.ISODateWithTimeParser;
+import linenux.time.parser.StandardDateWithTimeParser;
+import linenux.time.parser.TodayWithTimeParser;
+import linenux.time.parser.TomorrowWithTimeParser;
 import linenux.util.ArrayListUtil;
 import linenux.util.Either;
 import linenux.util.TasksListUtil;
@@ -33,7 +35,7 @@ public class ListCommand extends AbstractCommand {
     //@@author A0140702X
     public ListCommand(Schedule schedule) {
         this.schedule = schedule;
-        this.timeParserManager = new TimeParserManager(new ISODateWithTimeParser());
+        this.timeParserManager = new TimeParserManager(new ISODateWithTimeParser(), new StandardDateWithTimeParser(), new TodayWithTimeParser(), new TomorrowWithTimeParser());
         this.listArgumentFilter = new ListArgumentFilter(this.timeParserManager, COMMAND_FORMAT, CALLOUTS);
         this.TRIGGER_WORDS.add(TRIGGER_WORD);
     }
@@ -45,7 +47,7 @@ public class ListCommand extends AbstractCommand {
         assert this.schedule != null;
 
         ArrayList<Task> tasks = this.schedule.getTaskList();
-        ArrayList<Task> doneTasks = new ArrayList<Task>();
+        ArrayList<Task> doneTasks = new ArrayList<>();
         ArrayList<Reminder> reminders = this.schedule.getReminderList();
 
         if (tasks.isEmpty() && reminders.isEmpty()) {
@@ -89,7 +91,8 @@ public class ListCommand extends AbstractCommand {
         }
 
         if (actualFilterTasks.size() == 0 && actualFilterReminders.size() == 0) {
-            return SearchResults.makeListNotFoundResult(keywords);
+            this.schedule.addFilterTasks(new ArrayList<Task>());
+            return makeNoTasksAndRemindersFoundResult();
         } else {
             return makeResult(actualFilterTasks, doneTasks, actualFilterReminders);
         }
@@ -168,6 +171,10 @@ public class ListCommand extends AbstractCommand {
 
     private CommandResult makeEmptyTaskListResult() {
         return () -> "You have no tasks and reminders to list!";
+    }
+
+    private CommandResult makeNoTasksAndRemindersFoundResult() {
+        return () -> "There are no tasks and reminders found based on your given inputs!";
     }
 
     private CommandResult makeResult(ArrayList<Task> tasks, ArrayList<Task> doneTasks, ArrayList<Reminder> reminders) {

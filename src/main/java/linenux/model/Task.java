@@ -1,11 +1,11 @@
 package linenux.model;
 
-import linenux.util.ArrayListUtil;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
+
+import linenux.util.ArrayListUtil;
 
 /**
  * Represents a task in the schedule. Only taskName is a required field and
@@ -103,7 +103,7 @@ public class Task {
 
     @Override
     public String toString() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd h:mma");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd h.mma");
 
         if (this.isDeadline()) {
             return taskName + " (Due " + this.endTime.format(formatter) + ")" + tagsToString();
@@ -138,8 +138,76 @@ public class Task {
     }
 
     //@@author A0140702X
+    @Override
+    public boolean equals(Object other) {
+        if (other == null || !(other instanceof Task)) {
+            return false;
+        }
+
+        Task otherTask = (Task) other;
+
+        // equality of task name should be case insensitive
+        if (!this.getTaskName().toLowerCase().equals(otherTask.getTaskName().toLowerCase())) {
+            return false;
+        }
+
+        LocalDateTime thisStartTime = this.getStartTime();
+        LocalDateTime otherStartTime = otherTask.getStartTime();
+
+        if (thisStartTime == null && otherStartTime == null) {
+            // do nothing and proceed to check other fields.
+        } else {
+            if (thisStartTime == null || otherStartTime == null) {
+                return false;
+            }
+
+            if (!thisStartTime.equals(otherStartTime)) {
+                return false;
+            }
+        }
+
+        LocalDateTime thisEndTime = this.getEndTime();
+        LocalDateTime otherEndTime = otherTask.getEndTime();
+
+        if (thisEndTime == null && otherEndTime == null) {
+            // do nothing and proceed to check other fields.
+        } else {
+            if (thisEndTime == null || otherEndTime == null) {
+                return false;
+            }
+
+            if (!thisEndTime.equals(otherEndTime)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = taskName.hashCode() ^ startTime.hashCode() ^ endTime.hashCode();
+
+        if (!tags.isEmpty()) {
+            for (String tag : tags) {
+                result = result ^ tag.hashCode();
+            }
+        }
+
+        if (!reminders.isEmpty()) {
+            for (Reminder reminder : reminders) {
+                result = result ^ reminder.hashCode();
+            }
+        }
+
+        return result;
+    }
+
+    //@@author A0140702X
     public boolean hasTag(String tag) {
-        return tags.contains(tag);
+        ArrayList<String> lowercaseTags = new ArrayListUtil.ChainableArrayListUtil<>(tags).map(String::toLowerCase)
+                .value();
+        return lowercaseTags.contains(tag.toLowerCase());
     }
 
     /* Getters */

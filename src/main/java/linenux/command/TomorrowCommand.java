@@ -1,11 +1,11 @@
 package linenux.command;
 
-import linenux.command.result.CommandResult;
-import linenux.model.Schedule;
-
 import java.time.Clock;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+
+import linenux.command.result.CommandResult;
+import linenux.model.Schedule;
 
 //@@author A0144915A
 public class TomorrowCommand extends AbstractCommand {
@@ -30,7 +30,7 @@ public class TomorrowCommand extends AbstractCommand {
 
     @Override
     public CommandResult execute(String userInput) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-M-d h:mma");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-M-d h.mma");
         LocalDateTime now = LocalDateTime.now(this.clock);
         LocalDateTime startOfTomorrow = now.withHour(0).withMinute(0).withSecond(0).plusDays(1);
         LocalDateTime endOfTomorrow = now.withHour(23).withMinute(59).withSecond(59).plusDays(1);

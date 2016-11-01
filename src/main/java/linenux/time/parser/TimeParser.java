@@ -15,7 +15,7 @@ public interface TimeParser {
      * @param userInput
      * @return true if format matches and false otherwise.
      */
-    public boolean respondTo(String userInput);
+    public boolean respondTo(String input);
 
     /**
      * Parses the userInput string to a time instance.
@@ -23,5 +23,5 @@ public interface TimeParser {
      * @param userInput
      * @return
      */
-    public LocalDateTime parse(String userInput);
+    public LocalDateTime parse(String input);
 }

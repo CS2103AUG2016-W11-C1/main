@@ -1,12 +1,13 @@
 package linenux.view;
 
+import java.util.ArrayList;
+
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import linenux.control.ControlUnit;
-
-import java.util.ArrayList;
+import linenux.util.AutoCompleter;
 
 //@@author A0144915A
 public class CommandBoxController {
@@ -14,12 +15,19 @@ public class CommandBoxController {
     private TextField textField;
 
     private ControlUnit controlUnit;
-    private ArrayList<String> history = new ArrayList<>();
-    int historyIndex = -1;
+    private AutoCompleter autoCompleter;
+    private ArrayList<String> history;
+    private int historyIndex;
 
     @FXML
     private void initialize() {
         Platform.runLater(() -> textField.requestFocus());
+
+        this.textField.setOnKeyPressed(event -> {
+            if (event.getCode().equals(KeyCode.TAB)) {
+                event.consume();
+            }
+        });
 
         this.textField.setOnKeyReleased(event -> {
             if (event.getCode().equals(KeyCode.UP) && historyIndex > 0) {
@@ -36,6 +44,19 @@ public class CommandBoxController {
                     this.textField.setText("");
                 }
             }
+
+            if (event.getCode().equals(KeyCode.TAB)) {
+                if (autoCompleter.hasNoSearchResult()) {
+                    autoCompleter.findPrefix(this.textField.getText());
+                }
+                this.textField.setText(autoCompleter.next());
+            }
+
+            if (!event.getCode().equals(KeyCode.TAB)) {
+                autoCompleter.clear();
+            }
+
+            this.textField.positionCaret(this.textField.getLength());
         });
     }
 
@@ -50,5 +71,8 @@ public class CommandBoxController {
 
     public void setControlUnit(ControlUnit controlUnit) {
         this.controlUnit = controlUnit;
+        this.autoCompleter = new AutoCompleter(this.controlUnit.getCommandList());
+        this.history = new ArrayList<>();
+        this.historyIndex = -1;
     }
 }

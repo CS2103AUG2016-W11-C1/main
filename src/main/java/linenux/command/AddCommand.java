@@ -9,6 +9,9 @@ import linenux.control.TimeParserManager;
 import linenux.model.Schedule;
 import linenux.model.Task;
 import linenux.time.parser.ISODateWithTimeParser;
+import linenux.time.parser.StandardDateWithTimeParser;
+import linenux.time.parser.TodayWithTimeParser;
+import linenux.time.parser.TomorrowWithTimeParser;
 import linenux.util.Either;
 
 /**
@@ -26,7 +29,7 @@ public class AddCommand extends AbstractCommand {
     //@@author A0144915A
     public AddCommand(Schedule schedule) {
         this.schedule = schedule;
-        this.timeParserManager = new TimeParserManager(new ISODateWithTimeParser());
+        this.timeParserManager = new TimeParserManager(new ISODateWithTimeParser(), new StandardDateWithTimeParser(), new TodayWithTimeParser(), new TomorrowWithTimeParser());
         this.addArgumentParser = new AddArgumentParser(this.timeParserManager, COMMAND_FORMAT, CALLOUTS);
         this.TRIGGER_WORDS.add(TRIGGER_WORD);
     }
@@ -40,11 +43,17 @@ public class AddCommand extends AbstractCommand {
 
         Either<Task, CommandResult> task = this.addArgumentParser.parse(argument);
 
-        if (task.isLeft()) {
-            this.schedule.addTask(task.getLeft());
-            return makeResult(task.getLeft());
-        } else {
+        if (task.isRight()) {
             return task.getRight();
+        }
+
+        Task actualTask = task.getLeft();
+
+        if (this.schedule.isUniqueTask(actualTask)) {
+            this.schedule.addTask(actualTask);
+            return makeResult(actualTask);
+        } else {
+            return makeDuplicateTaskResult(actualTask);
         }
     }
 
@@ -77,5 +86,9 @@ public class AddCommand extends AbstractCommand {
 
     private CommandResult makeResult(Task task) {
         return () -> "Added " + task.toString();
+    }
+
+    private CommandResult makeDuplicateTaskResult(Task task) {
+        return () -> task.toString() + " already exists in the schedule!";
     }
 }

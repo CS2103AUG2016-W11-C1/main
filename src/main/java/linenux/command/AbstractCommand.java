@@ -26,6 +26,11 @@ public abstract class AbstractCommand implements Command {
         return "(?i)^\\s*(" + getTriggerWordsPattern() + ")(\\s+(?<keywords>.*))?$";
     }
 
+    @Override
+    public ArrayList<String> getTriggerWords() {
+        return TRIGGER_WORDS;
+    }
+
     protected String getTriggerWordsPattern() {
         if (TRIGGER_WORDS.size() == 0) {
             return "";

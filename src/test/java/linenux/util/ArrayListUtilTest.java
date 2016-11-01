@@ -32,6 +32,17 @@ public class ArrayListUtilTest {
     }
 
     @Test
+    public void testMapWithIndex() {
+        ArrayList<Integer> numbers = ArrayListUtil.fromArray(new Integer[] {0, 0, 0});
+        ArrayList<Integer> mapped = ArrayListUtil.mapWithIndex((x, i) -> x + i, numbers);
+
+        assertEquals(3, mapped.size());
+        assertEquals(0, (int)mapped.get(0));
+        assertEquals(1, (int)mapped.get(1));
+        assertEquals(2, (int)mapped.get(2));
+    }
+
+    @Test
     public void testFilter() {
         ArrayList<String> filtered = ArrayListUtil.filter(x -> x.equals("2"), this.list);
 

@@ -9,7 +9,6 @@ import static org.junit.Assert.assertTrue;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-import linenux.util.ArrayListUtil;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -17,6 +16,7 @@ import linenux.command.result.CommandResult;
 import linenux.model.Reminder;
 import linenux.model.Schedule;
 import linenux.model.Task;
+import linenux.util.ArrayListUtil;
 
 /**
  * JUnit test for remind command.
@@ -42,7 +42,7 @@ public class RemindCommandTest {
     //@@author A0135788M
     private void setupTaskWithSameNameAndExecuteAmbiguousCommand() {
         this.schedule.addTask(new Task("Todo 2"));
-        this.remindCommand.execute("remind Todo t/2016-01-01 05:00PM n/Hey");
+        this.remindCommand.execute("remind Todo t/2016-01-01 05.00PM n/Hey");
     }
 
     private String expectedInvalidArgumentMessage() {
@@ -96,7 +96,7 @@ public class RemindCommandTest {
     @Test
     public void testExecuteAddReminderToDo() {
         assertChangeBy(() -> getSearchResult("Todo").get(0).getReminders().size(), 1,
-                () -> this.remindCommand.execute("remind Todo t/2000-01-01 05:00PM n/Attend Workshop"));
+                () -> this.remindCommand.execute("remind Todo t/2000-01-01 05.00PM n/Attend Workshop"));
         ArrayList<Reminder> reminders = getSearchResult("Todo").get(0).getReminders();
         Reminder addedReminder = reminders.get(reminders.size() - 1);
         assertEquals(LocalDateTime.of(2000, 1, 1, 17, 0), addedReminder.getTimeOfReminder());
@@ -110,7 +110,7 @@ public class RemindCommandTest {
     @Test
     public void testExecuteAddReminderWithDiffParamOrderToToDo() {
         assertChangeBy(() -> getSearchResult("Todo").get(0).getReminders().size(), 1,
-                () -> this.remindCommand.execute("remind Todo n/Attend Workshop t/2000-01-01 05:00PM"));
+                () -> this.remindCommand.execute("remind Todo n/Attend Workshop t/2000-01-01 05.00PM"));
         ArrayList<Reminder> reminders = getSearchResult("Todo").get(0).getReminders();
         Reminder addedReminder = reminders.get(reminders.size() - 1);
         assertEquals(LocalDateTime.of(2000, 1, 1, 17, 0), addedReminder.getTimeOfReminder());
@@ -124,7 +124,7 @@ public class RemindCommandTest {
     @Test
     public void testExecuteAddReminderToDeadline() {
         assertChangeBy(() -> getSearchResult("Deadline").get(0).getReminders().size(), 1,
-                () -> this.remindCommand.execute("remind deadline t/2000-01-01 05:00PM n/Attend Workshop"));
+                () -> this.remindCommand.execute("remind deadline t/2000-01-01 05.00PM n/Attend Workshop"));
         ArrayList<Reminder> reminders = getSearchResult("Deadline").get(0).getReminders();
         Reminder addedReminder = reminders.get(reminders.size() - 1);
         assertEquals(LocalDateTime.of(2000, 1, 1, 17, 0), addedReminder.getTimeOfReminder());
@@ -138,7 +138,7 @@ public class RemindCommandTest {
     @Test
     public void testExecuteAddReminderWithDiffParamOrderToDeadline() {
         assertChangeBy(() -> getSearchResult("Deadline").get(0).getReminders().size(), 1,
-                () -> this.remindCommand.execute("remind deadline n/Attend Workshop t/2000-01-01 05:00PM"));
+                () -> this.remindCommand.execute("remind deadline n/Attend Workshop t/2000-01-01 05.00PM"));
         ArrayList<Reminder> reminders = getSearchResult("Deadline").get(0).getReminders();
         Reminder addedReminder = reminders.get(reminders.size() - 1);
         assertEquals(LocalDateTime.of(2000, 1, 1, 17, 0), addedReminder.getTimeOfReminder());
@@ -152,7 +152,7 @@ public class RemindCommandTest {
     @Test
     public void testExecuteAddReminderToEvent() {
         assertChangeBy(() -> getSearchResult("Event").get(0).getReminders().size(), 1,
-                () -> this.remindCommand.execute("remind Event t/2000-01-01 05:00PM n/Attend Workshop"));
+                () -> this.remindCommand.execute("remind Event t/2000-01-01 05.00PM n/Attend Workshop"));
         ArrayList<Reminder> reminders = getSearchResult("Event").get(0).getReminders();
         Reminder addedReminder = reminders.get(reminders.size() - 1);
         assertEquals(LocalDateTime.of(2000, 1, 1, 17, 0), addedReminder.getTimeOfReminder());
@@ -166,7 +166,7 @@ public class RemindCommandTest {
     @Test
     public void testExecuteAddReminderWithDiffParamOrderToEvent() {
         assertChangeBy(() -> getSearchResult("Event").get(0).getReminders().size(), 1,
-                () -> this.remindCommand.execute("remind Event n/Attend Workshop t/2000-01-01 05:00PM"));
+                () -> this.remindCommand.execute("remind Event n/Attend Workshop t/2000-01-01 05.00PM"));
         ArrayList<Reminder> reminders = getSearchResult("Event").get(0).getReminders();
         Reminder addedReminder = reminders.get(reminders.size() - 1);
         assertEquals(LocalDateTime.of(2000, 1, 1, 17, 0), addedReminder.getTimeOfReminder());
@@ -186,7 +186,7 @@ public class RemindCommandTest {
                 size += tasks.get(i).getReminders().size();
             }
             return size;
-        }, () -> this.remindCommand.execute("remind t/2011-01-01 05:00PM n/hey"));
+        }, () -> this.remindCommand.execute("remind t/2011-01-01 05.00PM n/hey"));
         assertEquals(expectedInvalidArgumentMessage(), result.getFeedback());
     }
 
@@ -202,7 +202,7 @@ public class RemindCommandTest {
                 size += tasks.get(i).getReminders().size();
             }
             return size;
-        }, () -> this.remindCommand.execute("remind Todo t/2011-01-01 05:00PM"));
+        }, () -> this.remindCommand.execute("remind Todo t/2011-01-01 05.00PM"));
         assertEquals("Cannot create reminder without note.", result.getFeedback());
     }
 
@@ -240,7 +240,7 @@ public class RemindCommandTest {
                 size += tasks.get(i).getReminders().size();
             }
             return size;
-        }, () -> this.remindCommand.execute("remind not task t/2016-01-01 05:00PM"));
+        }, () -> this.remindCommand.execute("remind not task t/2016-01-01 05.00PM"));
         assertEquals("Cannot find task names with \"not task\".", result.getFeedback());
     }
 
@@ -251,7 +251,7 @@ public class RemindCommandTest {
     public void testCommandResultWhenMultipleMatchesFound() {
         this.schedule.addTask(new Task("todo 2"));
         CommandResult result = assertNoChange(() -> this.totalNumberOfReminders(),
-                () -> this.remindCommand.execute("remind todo t/2016-01-01 05:00PM"));
+                () -> this.remindCommand.execute("remind todo t/2016-01-01 05.00PM"));
         assertEquals("Which one? (1-2)\n1. Todo\n2. todo 2", result.getFeedback());
     }
 
@@ -285,7 +285,7 @@ public class RemindCommandTest {
         this.setupTaskWithSameNameAndExecuteAmbiguousCommand();
         CommandResult result = assertChangeBy(() -> this.schedule.getTaskList().get(0).getReminders().size(), 1,
                 () -> this.remindCommand.userResponse("1"));
-        assertEquals("Added reminder on 2016-01-01 5:00PM for Todo", result.getFeedback());
+        assertEquals("Added reminder on 2016-01-01 5.00PM for Todo", result.getFeedback());
         assertFalse(this.remindCommand.awaitingUserResponse());
     }
 
