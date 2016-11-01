@@ -1,6 +1,7 @@
 package linenux.command;
 
 import java.util.ArrayList;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -89,7 +90,7 @@ public class HelpCommand extends AbstractCommand {
 
     private String makeHelpDescriptionForCommand(Command command) {
         StringBuilder builder = new StringBuilder();
-        ArrayList<String> aliasList = command.getTriggerWords();
+        Set<String> aliasList = command.getTriggerWords();
 
 
         builder.append(command.getTriggerWord());
