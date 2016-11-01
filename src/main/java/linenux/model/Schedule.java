@@ -46,6 +46,11 @@ public class Schedule {
         addState(getMostRecentState().updateTask(originalTask, newTask));
     }
 
+    // @@author A0127694U
+    public void updateTask(ArrayList<Task> originalTasks, ArrayList<Task> newTasks) {
+        addState(getMostRecentState().updateTasks(originalTasks, newTasks));
+    }
+
     //@@author A0135788M
     /**
      * Delete the specified task.
@@ -110,12 +115,22 @@ public class Schedule {
         return getMostRecentState().search(keywords);
     }
 
-    //@@author A0127694U
+    /**
+     * Performs case-insensitive tag search using keywords.
+     *
+     * @param keywords
+     *            Search keywords
+     * @return List of {@code TagSearchResult} with tags matching the keywords.
+     */
+    // @@author A0127694U
+    public ArrayList<Task> searchTag(String tagName) {
+        return getMostRecentState().searchTag(tagName);
+    }
+
     public ArrayList<Reminder> searchReminder(String keywords) {
         return searchReminder(keywords.split("\\s+"));
     }
 
-    //@@author A0127694U
     /**
      * Performs case-insensitive reminder search using keywords.
      *

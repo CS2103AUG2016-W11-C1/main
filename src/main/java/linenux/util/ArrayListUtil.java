@@ -221,15 +221,15 @@ public class ArrayListUtil {
 
     /**
      * Returns a new list by removing repeated elements in {@code list}.
-     * @param list The input list.
-     * @param <T> The type of the list.
+     *
+     * @param list The Input list
      * @return The list with repeated elements removed.
      */
     public static <T> ArrayList<T> unique(ArrayList<T> list) {
         HashSet<T> set = new HashSet<>();
         ArrayList<T> output = new ArrayList<>();
 
-        for (T val: list) {
+        for (T val : list) {
             if (!set.contains(val)) {
                 set.add(val);
                 output.add(val);
