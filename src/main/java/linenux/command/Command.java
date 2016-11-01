@@ -72,5 +72,12 @@ public interface Command {
 
     public void removeAlias(String alias);
 
+
+    //@@author A0135788M
+    /**
+     * Returns the list of trigger words for that command.
+     * @return an ArrayList of trigger words for that command.
+     */
     public ArrayList<String> getTriggerWords();
+
 }

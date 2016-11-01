@@ -22,13 +22,13 @@ public abstract class AbstractCommand implements Command {
     }
 
     @Override
-    public String getPattern(){
-        return "(?i)^\\s*(" + getTriggerWordsPattern() + ")(\\s+(?<keywords>.*))?$";
+    public ArrayList<String> getTriggerWords() {
+        return TRIGGER_WORDS;
     }
 
     @Override
-    public ArrayList<String> getTriggerWords() {
-        return TRIGGER_WORDS;
+    public String getPattern(){
+        return "(?i)^\\s*(" + getTriggerWordsPattern() + ")(\\s+(?<keywords>.*))?$";
     }
 
     protected String getTriggerWordsPattern() {
