@@ -143,7 +143,7 @@ public class EditCommandTest {
         this.schedule.clear();
         this.schedule.addTask(new Task("hello"));
         assertChangeBy(() -> this.schedule.getTaskList().size(), 0,
-                () -> this.editCommand.execute("edit hello n/CS2103T Tutorial et/2016-01-01 5:00PM"));
+                () -> this.editCommand.execute("edit hello n/CS2103T Tutorial et/2016-01-01 5.00PM"));
 
         // The edited task has correct name
         ArrayList<Task> tasks = this.schedule.getTaskList();
@@ -167,7 +167,7 @@ public class EditCommandTest {
         this.schedule.clear();
         this.schedule.addTask(new Task("hello"));
         assertChangeBy(() -> this.schedule.getTaskList().size(), 0, () -> this.editCommand
-                .execute("edit hello n/CS2103T Tutorial st/2016-01-01 5:00PM " + "et/2016-01-01 7:00PM"));
+                .execute("edit hello n/CS2103T Tutorial st/2016-01-01 5.00PM " + "et/2016-01-01 7.00PM"));
 
         // The edited task has correct name
         ArrayList<Task> tasks = this.schedule.getTaskList();
@@ -215,7 +215,7 @@ public class EditCommandTest {
         this.schedule.clear();
         this.schedule.addTask(new Task("hello", null, LocalDateTime.of(2016, 1, 1, 17, 0)));
         assertChangeBy(() -> this.schedule.getTaskList().size(), 0,
-                () -> this.editCommand.execute("edit hello n/CS2103T Tutorial et/2016-01-01 7:00PM"));
+                () -> this.editCommand.execute("edit hello n/CS2103T Tutorial et/2016-01-01 7.00PM"));
 
         // The edited task has correct name
         ArrayList<Task> tasks = this.schedule.getTaskList();
@@ -239,7 +239,7 @@ public class EditCommandTest {
         this.schedule.clear();
         this.schedule.addTask(new Task("hello", null, LocalDateTime.of(2016, 1, 1, 17, 0)));
         assertChangeBy(() -> this.schedule.getTaskList().size(), 0, () -> this.editCommand
-                .execute("edit hello n/CS2103T Tutorial st/2016-01-01 5:00PM et/2016-01-01 7:00PM"));
+                .execute("edit hello n/CS2103T Tutorial st/2016-01-01 5.00PM et/2016-01-01 7.00PM"));
 
         // The edited task has correct name
         ArrayList<Task> tasks = this.schedule.getTaskList();
@@ -289,7 +289,7 @@ public class EditCommandTest {
         this.schedule
                 .addTask(new Task("hello", LocalDateTime.of(2016, 1, 1, 15, 0), LocalDateTime.of(2016, 1, 1, 17, 0)));
         assertChangeBy(() -> this.schedule.getTaskList().size(), 0,
-                () -> this.editCommand.execute("edit hello n/CS2103T Tutorial st/- et/2016-01-01 7:00PM"));
+                () -> this.editCommand.execute("edit hello n/CS2103T Tutorial st/- et/2016-01-01 7.00PM"));
 
         // The edited task has correct name
         ArrayList<Task> tasks = this.schedule.getTaskList();
@@ -314,7 +314,7 @@ public class EditCommandTest {
         this.schedule
                 .addTask(new Task("hello", LocalDateTime.of(2016, 1, 1, 15, 0), LocalDateTime.of(2016, 1, 1, 17, 0)));
         assertChangeBy(() -> this.schedule.getTaskList().size(), 0, () -> this.editCommand
-                .execute("edit hello n/CS2103T Tutorial st/2016-01-01 5:00PM et/2016-01-01 7:00PM"));
+                .execute("edit hello n/CS2103T Tutorial st/2016-01-01 5.00PM et/2016-01-01 7.00PM"));
 
         // The edited task has correct name
         ArrayList<Task> tasks = this.schedule.getTaskList();
@@ -513,7 +513,7 @@ public class EditCommandTest {
         this.schedule.addTask(new Task("hello"));
         assertChangeBy(() -> this.schedule.getTaskList().size(), 0, () -> this.editCommand
                 .execute(
-                        "edit hello et/2016-01-02 5:00PM n/CS2103T Tutorial #/tag1 tag2 st/2016-01-01 5:00PM #/tag3"));
+                        "edit hello et/2016-01-02 5.00PM n/CS2103T Tutorial #/tag1 tag2 st/2016-01-01 5.00PM #/tag3"));
 
         // The new event has the correct name, start time, and end time
         ArrayList<Task> tasks = this.schedule.getTaskList();
@@ -533,7 +533,7 @@ public class EditCommandTest {
         this.schedule.clear();
         this.schedule.addTask(new Task("hello"));
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
-                () -> this.editCommand.execute("edit hello st/yesterday et/2016-12-31 11:59PM"));
+                () -> this.editCommand.execute("edit hello st/yesterday et/2016-12-31 11.59PM"));
 
         assertEquals("Cannot parse \"yesterday\".", result.getFeedback());
     }
@@ -552,7 +552,7 @@ public class EditCommandTest {
     public void testEditStartTimeWithoutEndTime() {
         this.schedule.addTask(new Task("hello"));
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
-                () -> this.editCommand.execute("edit hello st/2016-01-01 5:00PM"));
+                () -> this.editCommand.execute("edit hello st/2016-01-01 5.00PM"));
 
         assertEquals("Cannot create task with start time but without end time.", result.getFeedback());
     }
@@ -561,7 +561,7 @@ public class EditCommandTest {
     public void testEndTimeBeforeStartTime() {
         this.schedule.addTask(new Task("hello"));
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
-                () -> this.editCommand.execute("edit hello st/2016-01-02 5:00PM et/2016-01-01 5:00PM"));
+                () -> this.editCommand.execute("edit hello st/2016-01-02 5.00PM et/2016-01-01 5.00PM"));
 
         assertEquals("End time cannot come before start time.", result.getFeedback());
     }

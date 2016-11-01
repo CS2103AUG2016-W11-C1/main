@@ -86,4 +86,12 @@ public class CommandManager {
 
         return this.catchAllCommand.execute(userInput);
     }
+
+    /**
+     * Getter for commandList.
+     */
+    //@@author A0135788M
+    public ArrayList<Command> getCommandList() {
+        return this.commandList;
+    }
 }
