@@ -1,6 +1,5 @@
 package linenux.command;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Set;
 
@@ -76,5 +75,10 @@ public interface Command {
 
     public void removeAlias(String alias);
 
+    //@@author A0135788M
+    /**
+     * Returns the list of trigger words for that command.
+     * @return an ArrayList of trigger words for that command.
+     */
     public Set<String> getTriggerWords();
 }

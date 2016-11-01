@@ -4,10 +4,13 @@ import static junit.framework.TestCase.assertEquals;
 import static linenux.helpers.Assert.assertNoChange;
 import static org.junit.Assert.assertTrue;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import linenux.command.util.ReminderSearchResult;
 
 /**
  * JUnit test for schedule.
@@ -85,6 +88,25 @@ public class ScheduleTest {
 
         assertEquals(beforeSize - 1, afterSize);
         assertTrue(this.schedule.getTaskList().indexOf(task) == -1);
+    }
+
+    // @@author A0127694U
+    @Test
+    public void testDeleteReminder() {
+        this.schedule.clear();
+        Task task = new Task("blah");
+        Reminder r = new Reminder("reminder", LocalDateTime.of(2016, 1, 1, 1, 0));
+        task.getReminders().add(r);
+        this.schedule.addTask(task);
+
+        assertEquals("blah", this.schedule.getTaskList().get(0).getTaskName());
+        assertEquals(1, this.schedule.getTaskList().get(0).getReminders().size());
+
+        ArrayList<Reminder> list = new ArrayList<Reminder>();
+        list.add(r);
+        ReminderSearchResult res = new ReminderSearchResult(task, list);
+        this.schedule.deleteReminder(res);
+        assertEquals(0, this.schedule.getTaskList().get(0).getReminders().size());
     }
 
     //@@author A0135788M
