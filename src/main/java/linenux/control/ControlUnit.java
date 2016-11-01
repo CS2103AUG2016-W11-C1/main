@@ -25,8 +25,8 @@ public class ControlUnit {
     public ControlUnit(Config config) {
         this.scheduleStorage = new XmlScheduleStorage(config);
         this.schedule = (this.scheduleStorage.hasScheduleFile()) ? this.scheduleStorage.loadScheduleFromFile() : new Schedule();
-        this.commandManager = new CommandManager(this);
         this.config = config;
+        this.commandManager = new CommandManager(this);
 
         this.initializeAliases();
     }
@@ -47,7 +47,7 @@ public class ControlUnit {
     }
 
     public Config getConfig() {
-        return this.config;
+        return (this.config);
     }
 
     public ObjectProperty<CommandResult> getLastCommandResultProperty() {

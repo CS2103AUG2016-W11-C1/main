@@ -14,6 +14,7 @@ import linenux.command.EditReminderCommand;
 import linenux.command.ExitCommand;
 import linenux.command.FreeTimeCommand;
 import linenux.command.HelpCommand;
+import linenux.command.InformationCommand;
 import linenux.command.InvalidCommand;
 import linenux.command.ListCommand;
 import linenux.command.LoadCommand;
@@ -78,6 +79,8 @@ public class CommandManager {
         commandList.add(new AliasCommand(this.commandList));
         commandList.add(new UnaliasCommand(this.commandList));
         commandList.add(new ExitCommand());
+
+        commandList.add(new InformationCommand(this.config));
 
         this.catchAllCommand = new InvalidCommand(this.commandList);
     }

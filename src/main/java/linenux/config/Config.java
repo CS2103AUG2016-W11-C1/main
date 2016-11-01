@@ -12,33 +12,37 @@ import java.util.Collection;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import org.json.JSONTokener;
 
 /**
  * Creates the configuration file.
  */
 public class Config {
+    public static final String VERSION_NO = "v0.5";
     public static final String DEFAULT_FILE_PATH = Paths.get(".").toAbsolutePath().toString();
     public static final String CONFIG_FILENAME = "Config.json";
     public static final String SCHEDULE_FILENAME = "Schedule.xml";
 
+    private static final String VERSION_KEY = "versionNo";
     private static final String SCHEDULE_PATH_KEY = "schedulePath";
     private static final String ALIASES_KEY = "aliases";
 
     private Path configFilePath;
     private Path scheduleFilePath;
+    private String verNo;
 
     private JSONObject configFile;
 
     //@@author A0135788M
     public Config() {
-        this(DEFAULT_FILE_PATH + CONFIG_FILENAME, DEFAULT_FILE_PATH + SCHEDULE_FILENAME);
+        this(VERSION_NO, DEFAULT_FILE_PATH + CONFIG_FILENAME, DEFAULT_FILE_PATH + SCHEDULE_FILENAME);
     }
 
-    public Config(String configFilePath, String scheduleFilePath) {
+    public Config(String verNo, String configFilePath, String scheduleFilePath) {
+        this.verNo = verNo;
         this.configFilePath = Paths.get(configFilePath);
         this.scheduleFilePath = Paths.get(scheduleFilePath);
         initialize();
@@ -56,6 +60,10 @@ public class Config {
             configFile = new JSONObject();
         }
 
+        if (!configFile.has(VERSION_KEY)) {
+            configFile.put(VERSION_KEY, verNo);
+        }
+
         if (!configFile.has(SCHEDULE_PATH_KEY)) {
             configFile.put(SCHEDULE_PATH_KEY, scheduleFilePath.toString());
         }
@@ -64,6 +72,21 @@ public class Config {
         this.saveConfig();
     }
 
+    // @@author A0127694U
+    public String getVersionNo() {
+        try {
+            return this.getConfigFile().getString(VERSION_KEY);
+        } catch (JSONException e) {
+            return VERSION_NO;
+        }
+    }
+
+    public void setVersionNo(String version) {
+        this.getConfigFile().put(VERSION_KEY, version);
+        this.saveConfig();
+    }
+
+    //@@author A0135788M
     public String getScheduleFilePath() {
         try {
             return this.getConfigFile().getString(SCHEDULE_PATH_KEY);
