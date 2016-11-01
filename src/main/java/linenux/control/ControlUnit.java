@@ -1,7 +1,10 @@
 package linenux.control;
 
+import java.util.ArrayList;
+
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import linenux.command.Command;
 import linenux.command.result.CommandResult;
 import linenux.config.Config;
 import linenux.model.Schedule;
@@ -38,5 +41,9 @@ public class ControlUnit {
 
     public ObjectProperty<CommandResult> getLastCommandResultProperty() {
         return this.lastCommandResult;
+    }
+
+    public ArrayList<Command> getCommandList() {
+        return commandManager.getCommandList();
     }
 }
