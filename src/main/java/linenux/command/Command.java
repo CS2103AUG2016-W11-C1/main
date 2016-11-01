@@ -1,6 +1,7 @@
 package linenux.command;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Set;
 
 import linenux.command.result.CommandResult;
@@ -70,6 +71,8 @@ public interface Command {
 
     //@@author A0144915A
     public void setAlias(String alias);
+
+    public void setAliases(Collection<String> aliases);
 
     public void removeAlias(String alias);
 

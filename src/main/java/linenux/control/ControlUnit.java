@@ -19,18 +19,25 @@ public class ControlUnit {
     private ScheduleStorage scheduleStorage;
     private CommandManager commandManager;
     private ObjectProperty<CommandResult> lastCommandResult = new SimpleObjectProperty<>();
+    private Config config;
 
     //@@author A0135788M
     public ControlUnit(Config config) {
-        this.scheduleStorage = new XmlScheduleStorage(config.getActualFilePath());
+        this.scheduleStorage = new XmlScheduleStorage(config.getScheduleFilePath());
         this.schedule = (this.scheduleStorage.hasScheduleFile()) ? this.scheduleStorage.loadScheduleFromFile() : new Schedule();
         this.commandManager = new CommandManager(schedule);
+        this.config = config;
+
+        this.initializeAliases();
     }
 
     public CommandResult execute(String userInput) {
         CommandResult result = commandManager.delegateCommand(userInput);
         lastCommandResult.setValue(result);
         scheduleStorage.saveScheduleToFile(schedule);
+        for (Command command: this.commandManager.getCommandList()) {
+            this.config.setAliases(command.getTriggerWord(), command.getTriggerWords());
+        }
         return result;
     }
 
@@ -45,5 +52,11 @@ public class ControlUnit {
 
     public ArrayList<Command> getCommandList() {
         return commandManager.getCommandList();
+    }
+
+    private void initializeAliases() {
+        for (Command command: this.commandManager.getCommandList()) {
+            command.setAliases(this.config.getAliases(command.getTriggerWord()));
+        }
     }
 }

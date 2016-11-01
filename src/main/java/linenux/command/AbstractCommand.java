@@ -1,5 +1,6 @@
 package linenux.command;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,6 +16,12 @@ public abstract class AbstractCommand implements Command {
     @Override
     public void setAlias(String alias) {
         this.TRIGGER_WORDS.add(alias);
+    }
+
+    @Override
+    public void setAliases(Collection<String> aliases) {
+        this.TRIGGER_WORDS = new HashSet<>(aliases);
+        this.TRIGGER_WORDS.add(this.getTriggerWord());
     }
 
     @Override
