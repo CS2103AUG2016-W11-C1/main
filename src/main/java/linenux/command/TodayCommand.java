@@ -1,13 +1,14 @@
 package linenux.command;
 
-import linenux.command.result.CommandResult;
-import linenux.model.Schedule;
-
 import java.time.Clock;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import linenux.command.result.CommandResult;
+import linenux.model.Schedule;
+
 //@@author A0144915A
+
 public class TodayCommand extends AbstractCommand {
     private static final String TRIGGER_WORD = "today";
     private static final String DESCRIPTION = "Lists tasks and reminders for today.";
@@ -30,7 +31,7 @@ public class TodayCommand extends AbstractCommand {
 
     @Override
     public CommandResult execute(String userInput) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-M-d h:mma");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-M-d h.mma");
         LocalDateTime now = LocalDateTime.now(this.clock);
         LocalDateTime startOfToday = now.withHour(0).withMinute(0).withSecond(0);
         LocalDateTime endOfToday = now.withHour(23).withMinute(59).withSecond(59);

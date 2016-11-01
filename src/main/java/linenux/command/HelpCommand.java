@@ -89,7 +89,7 @@ public class HelpCommand extends AbstractCommand {
 
     private String makeHelpDescriptionForCommand(Command command) {
         StringBuilder builder = new StringBuilder();
-        ArrayList<String> aliasList = command.getAlias();
+        ArrayList<String> aliasList = command.getTriggerWords();
 
 
         builder.append(command.getTriggerWord());

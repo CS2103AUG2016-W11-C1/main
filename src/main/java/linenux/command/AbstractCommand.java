@@ -22,7 +22,7 @@ public abstract class AbstractCommand implements Command {
     }
 
     @Override
-    public ArrayList<String> getAlias() {
+    public ArrayList<String> getTriggerWords() {
         return TRIGGER_WORDS;
     }
 

@@ -1,5 +1,6 @@
 package linenux.gui;
 
+
 import static linenux.helpers.GuiMatchers.hasCellTime;
 import static linenux.helpers.GuiMatchers.hasCellTitle;
 import static org.testfx.api.FxAssert.verifyThat;
@@ -48,26 +49,29 @@ public class AddTaskTest extends GuiTest {
         verifyThat("#eventsList", isEmpty());
 
         robot.clickOn("#textField");
-        robot.write("add deadline et/2016-01-01 5:00PM\n");
+        robot.write("add deadline et/2016-01-01 5.00PM\n");
 
         verifyThat("#todosList", isEmpty());
         verifyThat("#deadlinesList", hasItems(1));
+
         verifyThat("#deadlinesList", hasCellTitle("deadline"));
         verifyThat("#deadlinesList", hasCellTime("Due 01 Jan 2016 5.00PM"));
+
         verifyThat("#eventsList", isEmpty());
     }
 
     @Test
     public void testMarkDeadlineAsDone() {
         robot.clickOn("#textField");
-        robot.write("add deadline et/2016-01-01 5:00PM\n");
-        robot.write("add another et/2016-02-01 5:00PM\n");
+        robot.write("add deadline et/2016-01-01 5.00PM\n");
+        robot.write("add another et/2016-02-01 5.00PM\n");
 
         verifyThat("#deadlinesList", hasItems(2));
 
         robot.write("done deadline\n");
 
         verifyThat("#deadlinesList", hasItems(1));
+
         verifyThat("#deadlinesList", hasCellTitle("another"));
     }
 
@@ -78,11 +82,12 @@ public class AddTaskTest extends GuiTest {
         verifyThat("#eventsList", isEmpty());
 
         robot.clickOn("#textField");
-        robot.write("add event st/2016-01-01 5:00PM et/2016-01-01 7:00PM\n");
+        robot.write("add event st/2016-01-01 5.00PM et/2016-01-01 7.00PM\n");
 
         verifyThat("#todosList", isEmpty());
         verifyThat("#deadlinesList", isEmpty());
         verifyThat("#eventsList", hasItems(1));
+
         verifyThat("#eventsList", hasCellTitle("event"));
         verifyThat("#eventsList", hasCellTime("From 01 Jan 2016 5.00PM to 01 Jan 2016 7.00PM"));
     }

@@ -78,7 +78,7 @@ public class ListCommandTest {
         CommandResult result = this.listCommand.execute("list");
 
         String expectedFeedback = "Reminders:\n"
-                + "1. Reminder (On 2016-02-01 5:00PM)";
+                + "1. Reminder (On 2016-02-01 5.00PM)";
         assertEquals(expectedFeedback, result.getFeedback());
     }
 
@@ -107,7 +107,7 @@ public class ListCommandTest {
 
         CommandResult result = this.listCommand.execute("list hello");
 
-        String expectedFeedback = "Cannot find task or reminder names with \"hello\".";
+        String expectedFeedback = "There are no tasks and reminders found based on your given inputs!";
         assertEquals(expectedFeedback, result.getFeedback());
     }
 
@@ -127,7 +127,7 @@ public class ListCommandTest {
         ArrayList<Task> filteredTasks = this.schedule.getFilteredTasks();
         assertTrue(!filteredTasks.contains(hello));
 
-        String expectedFeedback = "Reminders:\n1. world domination (On 2016-02-01 5:00PM)\n2. hello world (On 2016-03-01 5:00PM)";
+        String expectedFeedback = "Reminders:\n1. world domination (On 2016-02-01 5.00PM)\n2. hello world (On 2016-03-01 5.00PM)";
         assertEquals(expectedFeedback, result.getFeedback());
     }
 
@@ -149,8 +149,8 @@ public class ListCommandTest {
 
         CommandResult result = this.listCommand.execute("list hello");
 
-        String expectedFeedback = "Reminders:\n" + "1. hello hello (On 2016-01-01 5:00PM)\n"
-                + "2. hello world (On 2016-03-01 5:00PM)\n" + "3. hello darkness (On 2016-04-01 5:00PM)";
+        String expectedFeedback = "Reminders:\n" + "1. hello hello (On 2016-01-01 5.00PM)\n"
+                + "2. hello world (On 2016-03-01 5.00PM)\n" + "3. hello darkness (On 2016-04-01 5.00PM)";
         assertEquals(expectedFeedback, result.getFeedback());
     }
 
@@ -183,7 +183,7 @@ public class ListCommandTest {
         this.schedule.addTask(deadlineOn);
         this.schedule.addTask(deadlineAfter);
 
-        CommandResult result = this.listCommand.execute("list st/2016-01-01 5:00PM");
+        CommandResult result = this.listCommand.execute("list st/2016-01-01 5.00PM");
 
         ArrayList<Task> filteredTasks = this.schedule.getFilteredTasks();
 
@@ -195,8 +195,8 @@ public class ListCommandTest {
         assertTrue(filteredTasks.contains(deadlineOn));
         assertTrue(filteredTasks.contains(deadlineAfter));
 
-        String expectedFeedback = "Reminders:\n" + "1. todo on (On 2016-01-01 5:00PM)\n"
-                + "2. todo after (On 2017-01-01 5:00PM)";
+        String expectedFeedback = "Reminders:\n" + "1. todo on (On 2016-01-01 5.00PM)\n"
+                + "2. todo after (On 2017-01-01 5.00PM)";
         assertEquals(expectedFeedback, result.getFeedback());
     }
 
@@ -231,7 +231,7 @@ public class ListCommandTest {
         this.schedule.addTask(deadlineOn);
         this.schedule.addTask(deadlineAfter);
 
-        CommandResult result = this.listCommand.execute("list et/2016-01-01 5:00PM");
+        CommandResult result = this.listCommand.execute("list et/2016-01-01 5.00PM");
 
         ArrayList<Task> filteredTasks = this.schedule.getFilteredTasks();
 
@@ -244,8 +244,8 @@ public class ListCommandTest {
         assertTrue(filteredTasks.contains(deadlineOn));
         assertTrue(!filteredTasks.contains(deadlineAfter));
 
-        String expectedFeedback = "Reminders:\n" + "1. todo before (On 2015-01-01 5:00PM)\n"
-                + "2. todo on (On 2016-01-01 5:00PM)";
+        String expectedFeedback = "Reminders:\n" + "1. todo before (On 2015-01-01 5.00PM)\n"
+                + "2. todo on (On 2016-01-01 5.00PM)";
         assertEquals(expectedFeedback, result.getFeedback());
     }
 
@@ -272,6 +272,37 @@ public class ListCommandTest {
         this.schedule.addTask(todo3);
 
         this.listCommand.execute("list #/hello");
+
+        ArrayList<Task> filteredTasks = this.schedule.getFilteredTasks();
+
+        assertTrue(filteredTasks.contains(todo1));
+        assertTrue(filteredTasks.contains(todo2));
+        assertTrue(!filteredTasks.contains(todo3));
+    }
+
+    /**
+     * Test that list command filters by tags is case-insensitive
+     */
+    @Test
+    public void testFilterTaskAndRemindersByTagsCaseInsensitive() {
+        ArrayList<String> tags1 = new ArrayList<>();
+        ArrayList<String> tags2 = new ArrayList<>();
+        ArrayList<String> tags3 = new ArrayList<>();
+
+        tags1.add("hello");
+        tags2.add("hello");
+        tags2.add("world");
+        tags3.add("wat");
+
+        Task todo1 = new Task("todo 1", tags1);
+        Task todo2 = new Task("todo 2", tags2);
+        Task todo3 = new Task("todo 3", tags3);
+
+        this.schedule.addTask(todo1);
+        this.schedule.addTask(todo2);
+        this.schedule.addTask(todo3);
+
+        this.listCommand.execute("list #/hElLo");
 
         ArrayList<Task> filteredTasks = this.schedule.getFilteredTasks();
 
