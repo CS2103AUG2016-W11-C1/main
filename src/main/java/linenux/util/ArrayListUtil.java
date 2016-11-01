@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
-import java.util.TreeSet;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -222,15 +222,14 @@ public class ArrayListUtil {
     /**
      * Returns a new list by removing repeated elements in {@code list}.
      *
-     * @param list
-     *            The input String list.
+     * @param list The Input list
      * @return The list with repeated elements removed.
      */
-    public static ArrayList<String> unique(ArrayList<String> list) {
-        TreeSet<String> set = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
-        ArrayList<String> output = new ArrayList<>();
+    public static <T> ArrayList<T> unique(ArrayList<T> list) {
+        HashSet<T> set = new HashSet<>();
+        ArrayList<T> output = new ArrayList<>();
 
-        for (String val : list) {
+        for (T val : list) {
             if (!set.contains(val)) {
                 set.add(val);
                 output.add(val);
