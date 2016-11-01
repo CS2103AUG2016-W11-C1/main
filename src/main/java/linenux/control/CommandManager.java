@@ -16,6 +16,7 @@ import linenux.command.FreeTimeCommand;
 import linenux.command.HelpCommand;
 import linenux.command.InvalidCommand;
 import linenux.command.ListCommand;
+import linenux.command.LoadCommand;
 import linenux.command.RemindCommand;
 import linenux.command.RenameCommand;
 import linenux.command.SaveCommand;
@@ -69,6 +70,7 @@ public class CommandManager {
         commandList.add(new TomorrowCommand(this.schedule));
 
         commandList.add(new SaveCommand(this.controlUnit));
+        commandList.add(new LoadCommand(this.controlUnit));
 
         commandList.add(new UndoCommand(this.schedule));
         commandList.add(new FreeTimeCommand(this.schedule));

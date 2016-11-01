@@ -66,6 +66,18 @@ public class ControlUnit {
         this.scheduleStorage.saveScheduleToFile(schedule);
     }
 
+    public void loadSchedule() {
+        Schedule schedule;
+
+        if (this.scheduleStorage.hasScheduleFile()) {
+            schedule = this.scheduleStorage.loadScheduleFromFile();
+        } else {
+            schedule = new Schedule();
+        }
+
+        this.schedule.update(schedule);
+    }
+
     private void initializeAliases() {
         for (Command command: this.commandManager.getCommandList()) {
             command.setAliases(this.config.getAliases(command.getTriggerWord()));

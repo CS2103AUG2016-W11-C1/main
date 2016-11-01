@@ -219,6 +219,11 @@ public class Schedule {
         return false;
     }
 
+    public void update(Schedule other) {
+        this.states.setAll(other.states);
+        this.filteredTaskList.setAll(other.filteredTaskList);
+    }
+
     //@@author A0140702X
     /**
      * Adds a new list of filtered tastes into filteredTaskList
