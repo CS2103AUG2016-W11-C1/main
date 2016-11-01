@@ -1,9 +1,8 @@
 package linenux.command;
 
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
+import linenux.command.parser.GenericParser;
 import linenux.command.result.CommandResult;
 import linenux.model.Schedule;
 import linenux.model.Task;
@@ -66,12 +65,15 @@ public class ClearCommand extends AbstractCommand {
     }
 
     private String extractTag(String argument) {
-        Matcher matcher = Pattern.compile("(^|.*? )#/(?<tag>.*?)(\\s)?").matcher(argument);
+        GenericParser parser = new GenericParser();
+        GenericParser.GenericParserResult result = parser.parse(argument);
 
-        if (matcher.matches() && matcher.group("tag") != null) {
-            return matcher.group("tag").trim(); // TODO
-        } else {
+        ArrayList<String> flags = result.getArguments("#");
+
+        if (flags.size() == 0) {
             return null;
+        } else {
+            return flags.get(0);
         }
     }
 }

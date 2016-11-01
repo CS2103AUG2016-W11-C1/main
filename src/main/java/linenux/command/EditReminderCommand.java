@@ -1,8 +1,6 @@
 package linenux.command;
 
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import linenux.command.parser.EditReminderArgumentParser;
 import linenux.command.parser.GenericParser;
@@ -137,16 +135,6 @@ public class EditReminderCommand extends AbstractCommand {
     @Override
     public String getCommandFormat() {
         return COMMAND_FORMAT;
-    }
-
-    private String extractArgument(String userInput) {
-        Matcher matcher = Pattern.compile(getPattern()).matcher(userInput);
-
-        if (matcher.matches() && matcher.group("keywords") != null) {
-            return matcher.group("keywords").trim(); //TODO
-        } else {
-            return "";
-        }
     }
 
     private CommandResult implementEditr(Task task, Reminder original, GenericParser.GenericParserResult parseResult) {

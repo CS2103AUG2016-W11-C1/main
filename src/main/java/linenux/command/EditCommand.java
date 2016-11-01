@@ -1,8 +1,6 @@
 package linenux.command;
 
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import linenux.command.parser.EditArgumentParser;
 import linenux.command.parser.GenericParser;
@@ -117,17 +115,6 @@ public class EditCommand extends AbstractCommand {
     @Override
     public String getCommandFormat() {
         return COMMAND_FORMAT;
-    }
-
-    //@@author A0135788M
-    private String extractArgument(String userInput) {
-        Matcher matcher = Pattern.compile(getPattern()).matcher(userInput);
-
-        if (matcher.matches() && matcher.group("keywords") != null) {
-            return matcher.group("keywords").trim(); //TODO
-        } else {
-            return "";
-        }
     }
 
     //@@author A0127694U

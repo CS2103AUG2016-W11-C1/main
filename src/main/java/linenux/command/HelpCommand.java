@@ -2,8 +2,6 @@ package linenux.command;
 
 import java.util.ArrayList;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import linenux.command.result.CommandResult;
 import linenux.util.StringsSimilarity;
@@ -29,7 +27,7 @@ public class HelpCommand extends AbstractCommand {
     public CommandResult execute(String userInput) {
         assert userInput.matches(getPattern());
 
-        String keywords = extractKeywords(userInput);
+        String keywords = extractArgument(userInput);
         Command commandRequested = null;
 
         if (keywords.trim().isEmpty()) {
@@ -147,16 +145,5 @@ public class HelpCommand extends AbstractCommand {
 
     private CommandResult makeResponseWithSuggestion(String suggestion) {
         return () -> "Invalid command given for help. Did you mean \'" + suggestion + "\'?";
-    }
-
-    //@@author A0140702X
-    private String extractKeywords(String userInput) {
-        Matcher matcher = Pattern.compile(getPattern()).matcher(userInput);
-
-        if (matcher.matches() && matcher.group("keywords") != null) {
-            return matcher.group("keywords").trim();
-        } else {
-            return "";
-        }
     }
 }
