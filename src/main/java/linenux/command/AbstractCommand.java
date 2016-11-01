@@ -1,10 +1,11 @@
 package linenux.command;
 
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 //@@author A0144915A
 public abstract class AbstractCommand implements Command {
-    protected ArrayList<String> TRIGGER_WORDS = new ArrayList<>();
+    protected HashSet<String> TRIGGER_WORDS = new HashSet<>();
 
     @Override
     public boolean respondTo(String userInput) {
@@ -27,24 +28,11 @@ public abstract class AbstractCommand implements Command {
     }
 
     @Override
-    public ArrayList<String> getTriggerWords() {
+    public Set<String> getTriggerWords() {
         return TRIGGER_WORDS;
     }
 
     protected String getTriggerWordsPattern() {
-        if (TRIGGER_WORDS.size() == 0) {
-            return "";
-        }
-
-        StringBuilder builder = new StringBuilder();
-
-        builder.append(TRIGGER_WORDS.get(0));
-
-        for (int i = 1; i < TRIGGER_WORDS.size(); i++) {
-            builder.append('|');
-            builder.append(TRIGGER_WORDS.get(i));
-        }
-
-        return builder.toString();
+        return String.join("|", this.TRIGGER_WORDS);
     }
 }
