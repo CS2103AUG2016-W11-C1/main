@@ -7,6 +7,7 @@ import linenux.command.AliasCommand;
 import linenux.command.ClearCommand;
 import linenux.command.Command;
 import linenux.command.DeleteCommand;
+import linenux.command.DeleterCommand;
 import linenux.command.DoneCommand;
 import linenux.command.EditCommand;
 import linenux.command.EditReminderCommand;
@@ -45,6 +46,7 @@ public class CommandManager {
     private void initializeCommands() {
         commandList.add(new AddCommand(this.schedule));
         commandList.add(new EditReminderCommand(this.schedule));
+        commandList.add(new DeleterCommand(this.schedule));
         commandList.add(new EditCommand(this.schedule));
         commandList.add(new DoneCommand(this.schedule));
         commandList.add(new RemindCommand(this.schedule));

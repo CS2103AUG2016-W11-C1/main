@@ -3,6 +3,7 @@ package linenux.model;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import linenux.command.util.ReminderSearchResult;
 import linenux.util.ArrayListUtil;
 
 //@@author A0135788M
@@ -59,6 +60,24 @@ import linenux.util.ArrayListUtil;
          output.tasks.remove(taskIndex);
          return output;
      }
+
+    /**
+     * Delete the specified reminder.
+     *
+     * @param reminder
+     *            The reminder to delete.
+     * @return The new State of the schedule.
+     */
+    // @@author A0127694U
+    public State deleteReminder(ReminderSearchResult reminder) {
+        assert (reminder.getReminders().size() == 1);
+
+        int taskIndex = this.tasks.indexOf(reminder.getTask());
+        int reminderIndex = this.tasks.get(taskIndex).getReminders().indexOf(reminder.getReminders().get(0));
+        State output = new State(this);
+        output.tasks.get(taskIndex).getReminders().remove(reminderIndex);
+        return output;
+    }
 
      /**
       * Returns the list of tasks.
@@ -128,7 +147,8 @@ import linenux.util.ArrayListUtil;
     }
 
      /**
-     * Performs case-insensitive task search using keywords to search it's remidners.
+     * Performs case-insensitive task search using keywords to search its
+     * reminders.
      *
      * @param keywords
      *            Search keywords

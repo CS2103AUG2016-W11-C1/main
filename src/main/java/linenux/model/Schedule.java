@@ -4,7 +4,9 @@ import java.util.ArrayList;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import linenux.command.util.ReminderSearchResult;
 import linenux.util.ArrayListUtil;
+
 
 /**
  * Contains all outstanding tasks.
@@ -56,9 +58,21 @@ public class Schedule {
 
     //@@author A0140702X
     /**
+     * Deletes the specified reminder.
+     *
+     * @param reminder
+     *            The reminder to delete.
+     */
+    // @@author A0127694U
+    public void deleteReminder(ReminderSearchResult reminder) {
+        addState(getMostRecentState().deleteReminder(reminder));
+    }
+
+    /**
      * Delete the specified list of tasks.
      *
-     * @param tasks The tasks to delete.
+     * @param tasks
+     *            The tasks to delete.
      */
     public void deleteTasks(ArrayList<Task> tasks) {
         State newState = getMostRecentState();
