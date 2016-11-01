@@ -631,12 +631,12 @@ public class EditCommandTest {
         CommandResult result = this.editCommand.execute("edit toedit n/todo");
         assertEquals("todo already exists in the schedule!", result.getFeedback());
 
-        CommandResult result2 = this.editCommand.execute("edit toedit n/deadline et/2016-01-01 5:00PM");
-        assertEquals("deadline (Due 2016-01-01 5:00PM) already exists in the schedule!", result2.getFeedback());
+        CommandResult result2 = this.editCommand.execute("edit toedit n/deadline et/2016-01-01 5.00PM");
+        assertEquals("deadline (Due 2016-01-01 5.00PM) already exists in the schedule!", result2.getFeedback());
 
         CommandResult result3 = this.editCommand
-                .execute("edit toedit n/event st/2016-01-01 5:00PM et/2017-01-01 5:00PM");
-        assertEquals("event (2016-01-01 5:00PM - 2017-01-01 5:00PM) already exists in the schedule!",
+                .execute("edit toedit n/event st/2016-01-01 5.00PM et/2017-01-01 5.00PM");
+        assertEquals("event (2016-01-01 5.00PM - 2017-01-01 5.00PM) already exists in the schedule!",
                 result3.getFeedback());
     }
 

@@ -393,8 +393,8 @@ public class AddCommandTest {
     public void testAddDuplicateDeadline() {
         this.schedule.addTask(new Task("deadline", LocalDateTime.of(2016, 1, 1, 17, 0)));
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
-                () -> this.addCommand.execute("add deadline et/2016-01-01 5:00PM"));
-        assertEquals("deadline (Due 2016-01-01 5:00PM) already exists in the schedule!", result.getFeedback());
+                () -> this.addCommand.execute("add deadline et/2016-01-01 5.00PM"));
+        assertEquals("deadline (Due 2016-01-01 5.00PM) already exists in the schedule!", result.getFeedback());
     }
 
     /**
@@ -405,8 +405,8 @@ public class AddCommandTest {
         this.schedule
                 .addTask(new Task("event", LocalDateTime.of(2016, 1, 1, 17, 0), LocalDateTime.of(2017, 1, 1, 17, 0)));
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
-                () -> this.addCommand.execute("add event st/2016-01-01 5:00PM et/2017-01-01 5:00PM"));
-        assertEquals("event (2016-01-01 5:00PM - 2017-01-01 5:00PM) already exists in the schedule!",
+                () -> this.addCommand.execute("add event st/2016-01-01 5.00PM et/2017-01-01 5.00PM"));
+        assertEquals("event (2016-01-01 5.00PM - 2017-01-01 5.00PM) already exists in the schedule!",
                 result.getFeedback());
     }
 
@@ -434,12 +434,12 @@ public class AddCommandTest {
                 new Task("deadline", LocalDateTime.of(2016, 1, 1, 17, 0), LocalDateTime.of(2017, 1, 1, 17, 0)));
 
         CommandResult result = assertChangeBy(() -> this.schedule.getTaskList().size(), 1,
-                () -> this.addCommand.execute("add deadline et/2017-01-01 5:00PM"));
-        assertEquals("Added deadline (Due 2017-01-01 5:00PM)", result.getFeedback());
+                () -> this.addCommand.execute("add deadline et/2017-01-01 5.00PM"));
+        assertEquals("Added deadline (Due 2017-01-01 5.00PM)", result.getFeedback());
 
         CommandResult result2 = assertChangeBy(() -> this.schedule.getTaskList().size(), 1,
-                () -> this.addCommand.execute("add deadline et/2016-01-01 5:00PM"));
-        assertEquals("Added deadline (Due 2016-01-01 5:00PM)", result2.getFeedback());
+                () -> this.addCommand.execute("add deadline et/2016-01-01 5.00PM"));
+        assertEquals("Added deadline (Due 2016-01-01 5.00PM)", result2.getFeedback());
     }
 
     /**
@@ -452,8 +452,8 @@ public class AddCommandTest {
                 new Task("event", LocalDateTime.of(2016, 1, 1, 17, 0)));
 
         CommandResult result = assertChangeBy(() -> this.schedule.getTaskList().size(), 1,
-                () -> this.addCommand.execute("add event st/2016-01-01 5:00PM et/2017-01-01 5:00PM"));
-        assertEquals("Added event (2016-01-01 5:00PM - 2017-01-01 5:00PM)", result.getFeedback());
+                () -> this.addCommand.execute("add event st/2016-01-01 5.00PM et/2017-01-01 5.00PM"));
+        assertEquals("Added event (2016-01-01 5.00PM - 2017-01-01 5.00PM)", result.getFeedback());
     }
 
 
