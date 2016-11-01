@@ -181,30 +181,6 @@ public class Task {
             }
         }
 
-        //checking tags
-        if (this.tags.size() != otherTask.getTags().size()) {
-            return false;
-        } else {
-            ArrayList<String> otherTags = otherTask.getTags();
-            for (String tag : this.tags) {
-                if (!otherTags.contains(tag)) {
-                    return false;
-                }
-            }
-        }
-
-        // checking reminders
-        if (this.reminders.size() != otherTask.getReminders().size()) {
-            return false;
-        } else {
-            ArrayList<Reminder> otherReminders = otherTask.getReminders();
-            for (Reminder reminder : this.reminders) {
-                if (!otherReminders.contains(reminder)) {
-                    return false;
-                }
-            }
-        }
-
         return true;
     }
 
