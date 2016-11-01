@@ -21,6 +21,7 @@ import linenux.command.TodayCommand;
 import linenux.command.TomorrowCommand;
 import linenux.command.UnaliasCommand;
 import linenux.command.UndoCommand;
+import linenux.command.UndoneCommand;
 import linenux.command.ViewCommand;
 import linenux.command.result.CommandResult;
 import linenux.model.Schedule;
@@ -49,6 +50,7 @@ public class CommandManager {
         commandList.add(new DeleterCommand(this.schedule));
         commandList.add(new EditCommand(this.schedule));
         commandList.add(new DoneCommand(this.schedule));
+        commandList.add(new UndoneCommand(this.schedule));
         commandList.add(new RemindCommand(this.schedule));
         commandList.add(new DeleteCommand(this.schedule));
         commandList.add(new ClearCommand(this.schedule));
