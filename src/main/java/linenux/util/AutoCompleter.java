@@ -27,6 +27,7 @@ public class AutoCompleter {
     public AutoCompleter(ArrayList<Command> commandList) {
         this();
         this.commandList = commandList;
+        buildTree();
     }
 
 
@@ -39,8 +40,6 @@ public class AutoCompleter {
      * @param prefix
      */
     public void findPrefix(String prefix) {
-        buildTree();
-
         int indexOfLastSpace = prefix.lastIndexOf(' ');
 
         //if no ' ' found
@@ -81,10 +80,20 @@ public class AutoCompleter {
     }
 
     /**
+     * Adds a given string into the search tree
+     */
+    public void addStringsToTree(String string) {
+        String[] wordArray = string.split("\\s+");
+
+        for (String word : wordArray) {
+            tree.addString(word);
+        }
+    }
+
+    /**
      * Builds a tree of triggerWords of command.
      */
     private void buildTree() {
-        this.tree = new TernarySearchTree();
         for (Command c : commandList) {
             for (String word : c.getTriggerWords()) {
                 tree.addString(word);

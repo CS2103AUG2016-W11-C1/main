@@ -65,6 +65,7 @@ public class CommandBoxController {
         String command = textField.getText();
         this.history.add(command);
         this.historyIndex = this.history.size();
+        this.autoCompleter.addStringsToTree(command);
         this.controlUnit.execute(command);
         textField.setText("");
     }
