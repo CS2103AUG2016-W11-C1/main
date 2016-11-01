@@ -4,6 +4,7 @@ import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertTrue;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import org.junit.Before;
@@ -54,7 +55,7 @@ public class DoneCommandTest {
     }
 
     /**
-     * Test that the delete command is case insensitive.
+     * Test that the done command is case insensitive.
      */
     @Test
     public void testCaseInsensitiveRespondToDoneCommand() {
@@ -62,7 +63,7 @@ public class DoneCommandTest {
     }
 
     /**
-     * Test that respondTo will return false for commands not related to delete tasks.
+     * Test that respondTo will return false for commands not related to done.
      */
     @Test
     public void testDoesNotRespondToOtherCommands() {
@@ -187,7 +188,7 @@ public class DoneCommandTest {
     @Test
     public void testSearchOnlyUndoneTasks() {
         this.schedule.addTask(new Task("hello"));
-        this.schedule.addTask(new Task("hello").markAsDone());
+        this.schedule.addTask(new Task("hello", LocalDateTime.of(2017, 1, 1, 17, 0)).markAsDone());
 
         CommandResult result = this.doneCommand.execute("done hello");
         String expectedResponse = "\"hello\" is marked as done.";

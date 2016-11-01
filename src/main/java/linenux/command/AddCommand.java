@@ -43,11 +43,17 @@ public class AddCommand extends AbstractCommand {
 
         Either<Task, CommandResult> task = this.addArgumentParser.parse(argument);
 
-        if (task.isLeft()) {
-            this.schedule.addTask(task.getLeft());
-            return makeResult(task.getLeft());
-        } else {
+        if (task.isRight()) {
             return task.getRight();
+        }
+
+        Task actualTask = task.getLeft();
+
+        if (this.schedule.isUniqueTask(actualTask)) {
+            this.schedule.addTask(actualTask);
+            return makeResult(actualTask);
+        } else {
+            return makeDuplicateTaskResult(actualTask);
         }
     }
 
@@ -80,5 +86,9 @@ public class AddCommand extends AbstractCommand {
 
     private CommandResult makeResult(Task task) {
         return () -> "Added " + task.toString();
+    }
+
+    private CommandResult makeDuplicateTaskResult(Task task) {
+        return () -> task.toString() + " already exists in the schedule!";
     }
 }

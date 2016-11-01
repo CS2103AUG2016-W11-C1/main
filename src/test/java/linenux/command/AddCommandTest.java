@@ -374,6 +374,89 @@ public class AddCommandTest {
         assertEquals("End time cannot come before start time.", result.getFeedback());
     }
 
+    //@@author A0140702X
+    /**
+     * Test that duplicate to-do is not added
+     */
+    @Test
+    public void testAddDuplicateToDo() {
+        this.schedule.addTask(new Task("todo"));
+        CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
+                () -> this.addCommand.execute("add todo"));
+        assertEquals("todo already exists in the schedule!", result.getFeedback());
+    }
+
+    /**
+     * Test that duplicate deadline is not added
+     */
+    @Test
+    public void testAddDuplicateDeadline() {
+        this.schedule.addTask(new Task("deadline", LocalDateTime.of(2016, 1, 1, 17, 0)));
+        CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
+                () -> this.addCommand.execute("add deadline et/2016-01-01 5.00PM"));
+        assertEquals("deadline (Due 2016-01-01 5.00PM) already exists in the schedule!", result.getFeedback());
+    }
+
+    /**
+     * Test that duplicate event is not added
+     */
+    @Test
+    public void testAddDuplicateEvent() {
+        this.schedule
+                .addTask(new Task("event", LocalDateTime.of(2016, 1, 1, 17, 0), LocalDateTime.of(2017, 1, 1, 17, 0)));
+        CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
+                () -> this.addCommand.execute("add event st/2016-01-01 5.00PM et/2017-01-01 5.00PM"));
+        assertEquals("event (2016-01-01 5.00PM - 2017-01-01 5.00PM) already exists in the schedule!",
+                result.getFeedback());
+    }
+
+    /**
+     * Test that similar to-do is added
+     */
+    @Test
+    public void testAddSimilarToDo() {
+        this.schedule.addTask(new Task("todo", LocalDateTime.of(2016, 1, 1, 17, 0)));
+        this.schedule
+                .addTask(new Task("todo", LocalDateTime.of(2016, 1, 1, 17, 0), LocalDateTime.of(2017, 1, 1, 17, 0)));
+        CommandResult result = assertChangeBy(() -> this.schedule.getTaskList().size(), 1,
+                () -> this.addCommand.execute("add todo"));
+        assertEquals("Added todo", result.getFeedback());
+    }
+
+    /**
+     * Test that similar deadline is added
+     */
+    @Test
+    public void testAddSimilarDeadline() {
+        this.schedule.addTask(new Task("deadline"));
+        this.schedule.addTask(new Task("deadline", LocalDateTime.of(2019, 1, 1, 17, 0)));
+        this.schedule.addTask(
+                new Task("deadline", LocalDateTime.of(2016, 1, 1, 17, 0), LocalDateTime.of(2017, 1, 1, 17, 0)));
+
+        CommandResult result = assertChangeBy(() -> this.schedule.getTaskList().size(), 1,
+                () -> this.addCommand.execute("add deadline et/2017-01-01 5.00PM"));
+        assertEquals("Added deadline (Due 2017-01-01 5.00PM)", result.getFeedback());
+
+        CommandResult result2 = assertChangeBy(() -> this.schedule.getTaskList().size(), 1,
+                () -> this.addCommand.execute("add deadline et/2016-01-01 5.00PM"));
+        assertEquals("Added deadline (Due 2016-01-01 5.00PM)", result2.getFeedback());
+    }
+
+    /**
+     * Test that similar event is added
+     */
+    @Test
+    public void testAddSimilarEvent() {
+        this.schedule.addTask(new Task("event"));
+        this.schedule.addTask(
+                new Task("event", LocalDateTime.of(2016, 1, 1, 17, 0)));
+
+        CommandResult result = assertChangeBy(() -> this.schedule.getTaskList().size(), 1,
+                () -> this.addCommand.execute("add event st/2016-01-01 5.00PM et/2017-01-01 5.00PM"));
+        assertEquals("Added event (2016-01-01 5.00PM - 2017-01-01 5.00PM)", result.getFeedback());
+    }
+
+
     //@@author A0135788M
     private String expectedInvalidArgumentMessage() {
         return "Invalid arguments.\n\n" + AddArgumentParser.COMMAND_FORMAT + "\n\n" + AddArgumentParser.CALLOUTS;

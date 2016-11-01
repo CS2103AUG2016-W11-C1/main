@@ -7,6 +7,7 @@ import linenux.command.AliasCommand;
 import linenux.command.ClearCommand;
 import linenux.command.Command;
 import linenux.command.DeleteCommand;
+import linenux.command.DeleterCommand;
 import linenux.command.DoneCommand;
 import linenux.command.EditCommand;
 import linenux.command.EditReminderCommand;
@@ -21,6 +22,7 @@ import linenux.command.TodayCommand;
 import linenux.command.TomorrowCommand;
 import linenux.command.UnaliasCommand;
 import linenux.command.UndoCommand;
+import linenux.command.UndoneCommand;
 import linenux.command.ViewCommand;
 import linenux.command.result.CommandResult;
 import linenux.model.Schedule;
@@ -46,9 +48,11 @@ public class CommandManager {
     private void initializeCommands() {
         commandList.add(new AddCommand(this.schedule));
         commandList.add(new EditReminderCommand(this.schedule));
+        commandList.add(new DeleterCommand(this.schedule));
         commandList.add(new EditCommand(this.schedule));
         commandList.add(new RenameCommand(this.schedule));
         commandList.add(new DoneCommand(this.schedule));
+        commandList.add(new UndoneCommand(this.schedule));
         commandList.add(new RemindCommand(this.schedule));
         commandList.add(new DeleteCommand(this.schedule));
         commandList.add(new ClearCommand(this.schedule));

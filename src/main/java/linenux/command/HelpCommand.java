@@ -1,6 +1,7 @@
 package linenux.command;
 
 import java.util.ArrayList;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -42,7 +43,6 @@ public class HelpCommand extends AbstractCommand {
         }
 
         for (Command command : this.commands) {
-            System.out.println("Trigger Word: " + command.getTriggerWord());
             if (command.getTriggerWord().equals(keywords)) {
                 commandRequested = command;
                 break;
@@ -57,7 +57,7 @@ public class HelpCommand extends AbstractCommand {
     }
 
     private CommandResult displaySpecificHelp(Command commandRequested) {
-        return () -> makeHelpDescriptionForCommand(commandRequested, commandRequested.getTriggerWord().length());
+        return () -> makeHelpDescriptionForCommand(commandRequested);
     }
 
     //@@author A0135788M
@@ -78,16 +78,9 @@ public class HelpCommand extends AbstractCommand {
 
     //@@author A0140702X
     private String displayAllHelp() {
-        int maxLength = 0;
-        for (Command command: this.commands) {
-            if (command.getTriggerWord().length() > maxLength) {
-                maxLength = command.getTriggerWord().length();
-            }
-        }
-
         StringBuilder builder = new StringBuilder();
         for (Command command: this.commands) {
-            builder.append(makeHelpDescriptionForCommand(command, maxLength));
+            builder.append(makeHelpDescriptionForCommand(command));
         }
 
         builder.append(CALLOUTS);
@@ -95,10 +88,19 @@ public class HelpCommand extends AbstractCommand {
         return builder.toString();
     }
 
-    private String makeHelpDescriptionForCommand(Command command, int maxLength) {
+    private String makeHelpDescriptionForCommand(Command command) {
         StringBuilder builder = new StringBuilder();
+        Set<String> aliasList = command.getTriggerWords();
+
 
         builder.append(command.getTriggerWord());
+        for (String alias : aliasList) {
+            if (alias.equals(command.getTriggerWord())) {
+                continue;
+            }
+
+            builder.append(", " + alias);
+        }
         builder.append(" - ");
         builder.append("\n");
 
@@ -133,18 +135,18 @@ public class HelpCommand extends AbstractCommand {
         }
 
         if (closestCommand == null) {
-            return makeResponse();
+            return makeInvalidCommandResponse();
         } else {
             return makeResponseWithSuggestion(closestCommand.getTriggerWord());
         }
     }
 
-    private CommandResult makeResponse() {
+    private CommandResult makeInvalidCommandResponse() {
         return () -> "Invalid command.";
     }
 
     private CommandResult makeResponseWithSuggestion(String suggestion) {
-        return () -> "Invalid command given for help. Did you mean " + suggestion + "?";
+        return () -> "Invalid command given for help. Did you mean \'" + suggestion + "\'?";
     }
 
     //@@author A0140702X

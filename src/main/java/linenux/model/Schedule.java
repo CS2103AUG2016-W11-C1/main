@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import linenux.command.util.ReminderSearchResult;
+import linenux.util.ArrayListUtil;
+
 
 /**
  * Contains all outstanding tasks.
@@ -60,9 +63,21 @@ public class Schedule {
 
     //@@author A0140702X
     /**
+     * Deletes the specified reminder.
+     *
+     * @param reminder
+     *            The reminder to delete.
+     */
+    // @@author A0127694U
+    public void deleteReminder(ReminderSearchResult reminder) {
+        addState(getMostRecentState().deleteReminder(reminder));
+    }
+
+    /**
      * Delete the specified list of tasks.
      *
-     * @param tasks The tasks to delete.
+     * @param tasks
+     *            The tasks to delete.
      */
     public void deleteTasks(ArrayList<Task> tasks) {
         State newState = getMostRecentState();
@@ -126,6 +141,23 @@ public class Schedule {
     public ArrayList<Reminder> searchReminder(String[] keywords) {
         return getMostRecentState().searchReminder(keywords);
     }
+
+    // @@author A0140702X
+    /**
+     * Checks if the task given is a unique task.
+     */
+    public boolean isUniqueTask(Task task) {
+        ArrayList<Task> taskList = getMostRecentState().getTaskList();
+        ArrayList<Task> duplicateTaskList = new ArrayListUtil.ChainableArrayListUtil<>(taskList)
+                .filter(a -> a.equals(task)).value();
+
+        if (duplicateTaskList.size() >= 1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
 
     //@@author A0135788M
     /**
