@@ -69,7 +69,7 @@ public class DeleterCommand extends AbstractCommand {
     }
 
     @Override
-    public CommandResult userResponse(String userInput) {
+    public CommandResult getUserResponse(String userInput) {
         assert this.foundReminders != null;
         assert this.schedule != null;
 

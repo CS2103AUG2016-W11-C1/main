@@ -167,7 +167,7 @@ public class EditReminderCommandTest {
     @Test
     public void testUserResponseCancel() {
         this.setupMultipleHelloRemindersAndExecuteAmbiguousCommand();
-        CommandResult result = this.editReminderCommand.userResponse("cancel");
+        CommandResult result = this.editReminderCommand.getUserResponse("cancel");
         assertEquals("OK! Not editing anything.", result.getFeedback());
         assertFalse(this.editReminderCommand.awaitingUserResponse());
     }
@@ -175,7 +175,7 @@ public class EditReminderCommandTest {
     @Test
     public void testUserResponseValidIndex() {
         this.setupMultipleHelloRemindersAndExecuteAmbiguousCommand();
-        CommandResult result = this.editReminderCommand.userResponse("1");
+        CommandResult result = this.editReminderCommand.getUserResponse("1");
 
         Task task = this.schedule.getTaskList().get(0);
         ArrayList<Reminder> reminders = task.getReminders();
@@ -191,7 +191,7 @@ public class EditReminderCommandTest {
     @Test
     public void testUserResponseInvalidIndex() {
         this.setupMultipleHelloRemindersAndExecuteAmbiguousCommand();
-        CommandResult result = this.editReminderCommand.userResponse("3");
+        CommandResult result = this.editReminderCommand.getUserResponse("3");
 
         String expectedResult = "That's not a valid index. Enter a number between 1 and 2:\n" + "Task: hello\n"
                 + "1. world (On 2016-01-01 5.00PM)\n" + "2. hello world (On 2017-01-01 5.00PM)";
@@ -201,7 +201,7 @@ public class EditReminderCommandTest {
     @Test
     public void testUserResponseInvalidResponse() {
         this.setupMultipleHelloRemindersAndExecuteAmbiguousCommand();
-        CommandResult result = this.editReminderCommand.userResponse("asd");
+        CommandResult result = this.editReminderCommand.getUserResponse("asd");
 
         String expectedResult = "I don't understand \"asd\".\nEnter a number to indicate which reminder to edit.\n"
                 + "Task: hello\n"

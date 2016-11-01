@@ -134,7 +134,7 @@ public class UndoneCommandTest {
     @Test
     public void testUserResponseCancel() {
         this.setupMultipleHelloTasksAndExecuteAmbiguousCommand();
-        CommandResult result = this.undoneCommand.userResponse("cancel");
+        CommandResult result = this.undoneCommand.getUserResponse("cancel");
         assertEquals("OK! Not marking any task as undone.", result.getFeedback());
         assertFalse(this.undoneCommand.awaitingUserResponse());
     }
@@ -148,7 +148,7 @@ public class UndoneCommandTest {
         ArrayList<Task> taskList = getSearchResult("hello");
         assertFalse(taskList.get(0).isNotDone());
 
-        CommandResult result = this.undoneCommand.userResponse("1");
+        CommandResult result = this.undoneCommand.getUserResponse("1");
         assertEquals("\"hello world\" is marked as undone.", result.getFeedback());
         taskList = getSearchResult("hello");
         assertTrue(taskList.get(0).isNotDone());
@@ -165,7 +165,7 @@ public class UndoneCommandTest {
         ArrayList<Task> taskList = getSearchResult("hello");
         assertFalse(taskList.get(0).isNotDone());
 
-        CommandResult result = this.undoneCommand.userResponse("0");
+        CommandResult result = this.undoneCommand.getUserResponse("0");
         String expectedResponse = "That's not a valid index. Enter a number between 1 and 2:\n"
                 + "1. hello world\n2. say hello from the other side";
         assertEquals(expectedResponse, result.getFeedback());
@@ -184,7 +184,7 @@ public class UndoneCommandTest {
         ArrayList<Task> taskList = getSearchResult("hello");
         assertFalse(taskList.get(0).isNotDone());
 
-        CommandResult result = this.undoneCommand.userResponse("roses are red");
+        CommandResult result = this.undoneCommand.getUserResponse("roses are red");
         String expectedResponse = "I don't understand \"roses are red\".\n"
                 + "Enter a number to indicate which task to mark as undone.\n1. hello world\n2. say hello from the other side";
         assertEquals(expectedResponse, result.getFeedback());

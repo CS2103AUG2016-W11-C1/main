@@ -42,7 +42,7 @@ public interface Command {
      * @param userInput
      * @return The result of the user response.
      */
-    default public CommandResult userResponse(String userInput) {
+    default public CommandResult getUserResponse(String userInput) {
         return null;
     }
 

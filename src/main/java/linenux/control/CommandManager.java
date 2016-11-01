@@ -80,7 +80,7 @@ public class CommandManager {
     public CommandResult delegateCommand(String userInput) {
         for (Command command : commandList) {
             if (command.awaitingUserResponse()) {
-                return command.userResponse(userInput);
+                return command.getUserResponse(userInput);
             }
         }
 

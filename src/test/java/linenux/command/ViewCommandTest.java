@@ -130,7 +130,7 @@ public class ViewCommandTest {
     @Test
     public void testUserResponseCancel() {
         this.setupMultipleHelloTaskAndExecuteAmbiguousCommand();
-        CommandResult result = this.viewCommand.userResponse("cancel");
+        CommandResult result = this.viewCommand.getUserResponse("cancel");
         assertEquals("OK! Not viewing any task.", result.getFeedback());
         assertFalse(this.viewCommand.awaitingUserResponse());
     }
@@ -141,7 +141,7 @@ public class ViewCommandTest {
     @Test
     public void testUserResponseValidIndex() {
         this.setupMultipleHelloTaskAndExecuteAmbiguousCommand();
-        CommandResult result = this.viewCommand.userResponse("1");
+        CommandResult result = this.viewCommand.getUserResponse("1");
         assertEquals("hello it's me\nReminders:\nYou have not set any reminders for this task.", result.getFeedback());
         assertFalse(this.viewCommand.awaitingUserResponse());
     }
@@ -152,7 +152,7 @@ public class ViewCommandTest {
     @Test
     public void testUserResponseInvalidIndex() {
         this.setupMultipleHelloTaskAndExecuteAmbiguousCommand();
-        CommandResult result = this.viewCommand.userResponse("0");
+        CommandResult result = this.viewCommand.getUserResponse("0");
         String expectedResponse = "That's not a valid index. Enter a number between 1 and 2:\n" +
                 "1. hello it's me\n2. hello from the other side";
         assertEquals(expectedResponse, result.getFeedback());
@@ -165,7 +165,7 @@ public class ViewCommandTest {
     @Test
     public void testUserResponseInvalidResponse() {
         this.setupMultipleHelloTaskAndExecuteAmbiguousCommand();
-        CommandResult result = this.viewCommand.userResponse("notindex");
+        CommandResult result = this.viewCommand.getUserResponse("notindex");
         String expectedResponse = "I don't understand \"notindex\".\n" + "Enter a number to indicate which task to view.\n" +
                 "1. hello it's me\n2. hello from the other side";
         assertEquals(expectedResponse, result.getFeedback());
