@@ -124,7 +124,7 @@ public class DoneCommandTest {
     @Test
     public void testUserResponseCancel() {
         this.setupMultipleHelloTasksAndExecuteAmbiguousCommand();
-        CommandResult result = this.doneCommand.userResponse("cancel");
+        CommandResult result = this.doneCommand.getUserResponse("cancel");
         assertEquals("OK! Not marking any task as done.", result.getFeedback());
         assertFalse(this.doneCommand.awaitingUserResponse());
     }
@@ -138,7 +138,7 @@ public class DoneCommandTest {
         ArrayList<Task> taskList = getSearchResult("hello");
         assertFalse(taskList.get(0).isDone());
 
-        CommandResult result = this.doneCommand.userResponse("1");
+        CommandResult result = this.doneCommand.getUserResponse("1");
         assertEquals("\"hello world\" is marked as done.", result.getFeedback());
         taskList = getSearchResult("hello");
         assertTrue(taskList.get(0).isDone());
@@ -155,7 +155,7 @@ public class DoneCommandTest {
         ArrayList<Task> taskList = getSearchResult("hello");
         assertFalse(taskList.get(0).isDone());
 
-        CommandResult result = this.doneCommand.userResponse("0");
+        CommandResult result = this.doneCommand.getUserResponse("0");
         String expectedResponse = "That's not a valid index. Enter a number between 1 and 2:\n" +
                 "1. hello world\n2. say hello from the other side";
         assertEquals(expectedResponse, result.getFeedback());
@@ -174,7 +174,7 @@ public class DoneCommandTest {
         ArrayList<Task> taskList = getSearchResult("hello");
         assertFalse(taskList.get(0).isDone());
 
-        CommandResult result = this.doneCommand.userResponse("roses are red");
+        CommandResult result = this.doneCommand.getUserResponse("roses are red");
         String expectedResponse = "I don't understand \"roses are red\".\n" +
                 "Enter a number to indicate which task to mark as done.\n1. hello world\n2. say hello from the other side";
         assertEquals(expectedResponse, result.getFeedback());

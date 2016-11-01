@@ -132,7 +132,7 @@ public class DeleteCommandTest {
     public void testUserResponseCancel() {
         this.setupMultipleHelloTasksAndExecuteAmbiguousCommand();
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
-                () -> this.deleteCommand.userResponse("cancel"));
+                () -> this.deleteCommand.getUserResponse("cancel"));
         assertEquals("OK! Not deleting anything.", result.getFeedback());
         assertFalse(this.deleteCommand.awaitingUserResponse());
     }
@@ -145,7 +145,7 @@ public class DeleteCommandTest {
         this.setupMultipleHelloTasksAndExecuteAmbiguousCommand();
         CommandResult result = assertChangeBy(() -> this.schedule.getTaskList().size(),
                 -1,
-                () -> this.deleteCommand.userResponse("1"));
+                () -> this.deleteCommand.getUserResponse("1"));
         assertEquals("Deleted \"hello world\".", result.getFeedback());
         assertFalse(this.deleteCommand.awaitingUserResponse());
     }
@@ -157,7 +157,7 @@ public class DeleteCommandTest {
     public void testUserResponseInvalidIndex() {
         this.setupMultipleHelloTasksAndExecuteAmbiguousCommand();
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
-                () -> this.deleteCommand.userResponse("0"));
+                () -> this.deleteCommand.getUserResponse("0"));
         String expectedResponse = "That's not a valid index. Enter a number between 1 and 2:\n" +
                 "1. hello world\n2. say hello";
         assertEquals(expectedResponse, result.getFeedback());
@@ -171,7 +171,7 @@ public class DeleteCommandTest {
     public void testUserResponseInvalidResponse() {
         this.setupMultipleHelloTasksAndExecuteAmbiguousCommand();
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
-                () -> this.deleteCommand.userResponse("roses are red"));
+                () -> this.deleteCommand.getUserResponse("roses are red"));
         String expectedResponse = "I don't understand \"roses are red\".\n" +
                 "Enter a number to indicate which task to delete.\n1. hello world\n2. say hello";
         assertEquals(expectedResponse, result.getFeedback());

@@ -153,7 +153,7 @@ public class DeleterCommandTest {
     public void testUserResponseCancel() {
         this.setupMultipleRemindersAndExecuteAmbiguousCommand();
         CommandResult result = assertNoChange(() -> this.schedule.getReminderList().size(),
-                () -> this.deleterCommand.userResponse("cancel"));
+                () -> this.deleterCommand.getUserResponse("cancel"));
         assertEquals("OK! Not deleting anything.", result.getFeedback());
         assertFalse(this.deleterCommand.awaitingUserResponse());
     }
@@ -165,7 +165,7 @@ public class DeleterCommandTest {
     public void testUserResponseValidIndex() {
         this.setupMultipleRemindersAndExecuteAmbiguousCommand();
         CommandResult result = assertChangeBy(() -> this.schedule.getReminderList().size(), -1,
-                () -> this.deleterCommand.userResponse("1"));
+                () -> this.deleterCommand.getUserResponse("1"));
         assertEquals("Deleted reminder \"wash up (On 2016-11-01 5.00PM)\" from task \"hello world\".",
                 result.getFeedback());
         assertFalse(this.deleterCommand.awaitingUserResponse());
@@ -178,7 +178,7 @@ public class DeleterCommandTest {
     public void testUserResponseInvalidIndex() {
         this.setupMultipleRemindersAndExecuteAmbiguousCommand();
         CommandResult result = assertNoChange(() -> this.schedule.getReminderList().size(),
-                () -> this.deleterCommand.userResponse("0"));
+                () -> this.deleterCommand.getUserResponse("0"));
         String expectedResponse = "That's not a valid index. Enter a number between 1 and 3:\n"
                 + "Task: hello world\n1. wash up (On 2016-11-01 5.00PM)\nTask: hello\n2. wash laundry (On 2016-12-01 3.00AM)\n3. wash car (On 2016-12-02 3.00AM)";
         assertEquals(expectedResponse, result.getFeedback());
@@ -192,7 +192,7 @@ public class DeleterCommandTest {
     public void testUserResponseInvalidResponse() {
         this.setupMultipleRemindersAndExecuteAmbiguousCommand();
         CommandResult result = assertNoChange(() -> this.schedule.getReminderList().size(),
-                () -> this.deleterCommand.userResponse("roses are red"));
+                () -> this.deleterCommand.getUserResponse("roses are red"));
         String expectedResponse = "I don't understand \"roses are red\".\n"
                 + "Enter a number to indicate which reminder to delete.\nTask: hello world\n1. wash up (On 2016-11-01 5.00PM)\nTask: hello\n2. wash laundry (On 2016-12-01 3.00AM)\n3. wash car (On 2016-12-02 3.00AM)";
         assertEquals(expectedResponse, result.getFeedback());

@@ -78,7 +78,7 @@ public class RemindCommand extends AbstractCommand {
     }
 
     @Override
-    public CommandResult userResponse(String userInput) {
+    public CommandResult getUserResponse(String userInput) {
         assert this.argument != null;
         assert this.foundTasks != null;
         assert this.schedule != null;

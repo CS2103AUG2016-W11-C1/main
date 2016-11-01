@@ -468,7 +468,7 @@ public class EditCommandTest {
     public void testUserResponseCancel() {
         this.setupMultipleHelloTasksAndExecuteAmbiguousCommand();
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
-                () -> this.editCommand.userResponse("cancel"));
+                () -> this.editCommand.getUserResponse("cancel"));
         assertEquals("OK! Not editing anything.", result.getFeedback());
         assertFalse(this.editCommand.awaitingUserResponse());
     }
@@ -478,7 +478,7 @@ public class EditCommandTest {
         this.schedule.clear();
         this.setupMultipleHelloTasksAndExecuteAmbiguousCommand();
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
-                () -> this.editCommand.userResponse("1"));
+                () -> this.editCommand.getUserResponse("1"));
         assertEquals("Edited \"hello world\".\nNew task details: CS2103T Tutorial", result.getFeedback());
     }
 
@@ -486,7 +486,7 @@ public class EditCommandTest {
     public void testUserResponseInvalidIndex() {
         this.setupMultipleHelloTasksAndExecuteAmbiguousCommand();
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
-                () -> this.editCommand.userResponse("0"));
+                () -> this.editCommand.getUserResponse("0"));
         String expectedResponse = "That's not a valid index. Enter a number between 1 and 2:\n"
                 + "1. hello world\n2. say hello";
         assertEquals(expectedResponse, result.getFeedback());
@@ -496,7 +496,7 @@ public class EditCommandTest {
     public void testUserResponseInvalidResponse() {
         this.setupMultipleHelloTasksAndExecuteAmbiguousCommand();
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
-                () -> this.editCommand.userResponse("roses are red"));
+                () -> this.editCommand.getUserResponse("roses are red"));
         String expectedResponse = "I don't understand \"roses are red\".\n"
                 + "Enter a number to indicate which task to edit.\n1. hello world\n2. say hello";
         assertEquals(expectedResponse, result.getFeedback());

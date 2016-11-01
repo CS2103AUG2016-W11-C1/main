@@ -89,7 +89,7 @@ public class EditReminderCommand extends AbstractCommand {
     }
 
     @Override
-    public CommandResult userResponse(String userInput) {
+    public CommandResult getUserResponse(String userInput) {
         assert this.argument != null;
         assert this.schedule != null;
         assert this.searchResults != null;

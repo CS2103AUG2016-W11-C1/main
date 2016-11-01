@@ -38,16 +38,16 @@ public class AliasCommand extends AbstractCommand {
         String command = commandNames[0];
         String alias = commandNames[1];
 
-        if (!validCommand(command)) {
+        if (!isValidCommand(command)) {
             return makeNoSuchCommandResult();
         }
 
-        if (!validAlias(alias)) {
+        if (!isValidAlias(alias)) {
             return makeInvalidAliasResult();
         }
 
         if (!isAliasAvailable(alias)) {
-            return makeAliasUsed(alias);
+            return makeAliasUsedForAnotherCommand(alias);
         }
 
         for (Command cmd: this.commands) {
@@ -88,7 +88,7 @@ public class AliasCommand extends AbstractCommand {
     }
 
     //@@author A0144915A
-    private boolean validCommand(String command) {
+    private boolean isValidCommand(String command) {
         for (Command cmd: this.commands) {
             if (cmd.respondTo(command)) {
                 return true;
@@ -98,7 +98,7 @@ public class AliasCommand extends AbstractCommand {
     }
 
     //@@author A0135788M
-    private boolean validAlias(String alias) {
+    private boolean isValidAlias(String alias) {
         Matcher matcher = Pattern.compile(ALPHANUMERIC).matcher(alias);
         return matcher.matches();
     }
@@ -128,7 +128,7 @@ public class AliasCommand extends AbstractCommand {
     }
 
     //@@author A0144915A
-    private CommandResult makeAliasUsed(String alias) {
+    private CommandResult makeAliasUsedForAnotherCommand(String alias) {
         return () -> "\"" + alias + "\" is used for another command.";
     }
 
