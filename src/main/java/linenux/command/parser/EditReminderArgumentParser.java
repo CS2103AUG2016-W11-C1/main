@@ -2,13 +2,10 @@ package linenux.command.parser;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import linenux.command.result.CommandResult;
 import linenux.control.TimeParserManager;
 import linenux.model.Reminder;
-import linenux.model.Task;
 import linenux.util.ArrayListUtil;
 import linenux.util.Either;
 
@@ -20,20 +17,18 @@ public class EditReminderArgumentParser {
     public static String CALLOUTS;
 
     private TimeParserManager timeParserManager;
-    private GenericParser genericParser;
     private GenericParser.GenericParserResult parseResult;
 
     //@@author A0140702X
     public EditReminderArgumentParser(TimeParserManager timeParserManager, String commandFormat, String callouts) {
         this.timeParserManager = timeParserManager;
-        this.genericParser = new GenericParser();
         EditArgumentParser.COMMAND_FORMAT = commandFormat;
         EditArgumentParser.CALLOUTS = callouts;
     }
 
     //@@author A0144915A
-    public Either<Reminder, CommandResult> parse(Reminder original, String argument) {
-        this.parseResult = this.genericParser.parse(argument);
+    public Either<Reminder, CommandResult> parse(Reminder original, GenericParser.GenericParserResult result) {
+        this.parseResult = result;
 
         return Either.<Reminder, CommandResult>left(original)
                 .bind(this::ensureNeedsEdit)

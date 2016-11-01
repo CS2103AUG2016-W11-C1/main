@@ -5,6 +5,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import linenux.command.parser.EditArgumentParser;
+import linenux.command.parser.GenericParser;
 import linenux.command.result.CommandResult;
 import linenux.command.result.PromptResults;
 import linenux.command.result.SearchResults;
@@ -31,7 +32,7 @@ public class EditCommand extends AbstractCommand {
 
     private Schedule schedule;
     private boolean requiresUserResponse;
-    private String argument;
+    private GenericParser.GenericParserResult parseResult;
     private ArrayList<Task> foundTasks;
     private TimeParserManager timeParserManager;
     private EditArgumentParser editArgumentParser;
@@ -50,22 +51,23 @@ public class EditCommand extends AbstractCommand {
         assert userInput.matches(getPattern());
         assert this.schedule != null;
 
-        String keywords = extractKeywords(userInput);
         String argument = extractArgument(userInput);
+        GenericParser parser = new GenericParser();
+        GenericParser.GenericParserResult result = parser.parse(argument);
 
-        if (keywords.trim().isEmpty()) {
+        if (result.getKeywords().isEmpty()) {
             return makeNoKeywordsResult();
         }
 
-        ArrayList<Task> tasks = this.schedule.search(keywords);
+        ArrayList<Task> tasks = this.schedule.search(result.getKeywords());
 
         if (tasks.size() == 0) {
-            return SearchResults.makeNotFoundResult(keywords);
+            return SearchResults.makeNotFoundResult(result.getKeywords());
         } else if (tasks.size() == 1) {
             Task task = tasks.get(0);
-            return implementEdit(task, argument);
+            return implementEdit(task, result);
         } else {
-            setResponse(true, tasks, argument);
+            setResponse(true, tasks, result);
             return PromptResults.makePromptIndexResult(tasks);
         }
     }
@@ -78,7 +80,7 @@ public class EditCommand extends AbstractCommand {
 
     @Override
     public CommandResult getUserResponse(String userInput) {
-        assert this.argument != null;
+        assert this.parseResult != null;
         assert this.foundTasks != null;
         assert this.schedule != null;
 
@@ -87,7 +89,7 @@ public class EditCommand extends AbstractCommand {
 
             if (1 <= index && index <= this.foundTasks.size()) {
                 Task task = this.foundTasks.get(index - 1);
-                CommandResult result = implementEdit(task, this.argument);
+                CommandResult result = implementEdit(task, this.parseResult);
                 setResponse(false, null, null);
                 return result;
             } else {
@@ -118,12 +120,7 @@ public class EditCommand extends AbstractCommand {
     }
 
     //@@author A0135788M
-    @Override
-    public String getPattern() {
-        return "(?i)^\\s*(" + getTriggerWordsPattern() + ")(\\s+(?<keywords>.*?)(?<arguments>((n|st|et|#)/)+?.*)?)?";
-    }
-
-    private String extractKeywords(String userInput) {
+    private String extractArgument(String userInput) {
         Matcher matcher = Pattern.compile(getPattern()).matcher(userInput);
 
         if (matcher.matches() && matcher.group("keywords") != null) {
@@ -134,18 +131,8 @@ public class EditCommand extends AbstractCommand {
     }
 
     //@@author A0127694U
-    private String extractArgument(String userInput) {
-        Matcher matcher = Pattern.compile(getPattern()).matcher(userInput);
-
-        if (matcher.matches() && matcher.group("arguments") != null) {
-            return matcher.group("arguments");
-        } else {
-            return "";
-        }
-    }
-
-    private CommandResult implementEdit(Task original, String argument) {
-        Either<Task, CommandResult> result = editArgumentParser.parse(original, argument);
+    private CommandResult implementEdit(Task original, GenericParser.GenericParserResult parseResult) {
+        Either<Task, CommandResult> result = editArgumentParser.parse(original, parseResult);
 
         if (result.isRight()) {
             return result.getRight();
@@ -164,10 +151,10 @@ public class EditCommand extends AbstractCommand {
     }
 
     //@@author A0135788M
-    private void setResponse(boolean requiresUserResponse, ArrayList<Task> foundTasks, String argument) {
+    private void setResponse(boolean requiresUserResponse, ArrayList<Task> foundTasks, GenericParser.GenericParserResult result) {
         this.requiresUserResponse = requiresUserResponse;
         this.foundTasks = foundTasks;
-        this.argument = argument;
+        this.parseResult = result;
     }
 
     private CommandResult makeNoKeywordsResult() {

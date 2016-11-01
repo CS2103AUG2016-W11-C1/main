@@ -5,6 +5,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import linenux.command.parser.EditReminderArgumentParser;
+import linenux.command.parser.GenericParser;
 import linenux.command.result.CommandResult;
 import linenux.command.result.PromptResults;
 import linenux.command.result.SearchResults;
@@ -35,7 +36,7 @@ public class EditReminderCommand extends AbstractCommand {
 
     private Schedule schedule;
     private boolean requiresUserResponse;
-    private String argument;
+    private GenericParser.GenericParserResult parseResult;
     private TimeParserManager timeParserManager;
     private EditReminderArgumentParser editReminderArgumentParser;
     private ArrayList<ReminderSearchResult> searchResults;
@@ -54,16 +55,17 @@ public class EditReminderCommand extends AbstractCommand {
         assert userInput.matches(getPattern());
         assert this.schedule != null;
 
-        String keywords = extractKeywords(userInput);
         String argument = extractArgument(userInput);
+        GenericParser parser = new GenericParser();
+        GenericParser.GenericParserResult result = parser.parse(argument);
 
-        if (keywords.trim().isEmpty()) {
+        if (result.getKeywords().isEmpty()) {
             return makeNoKeywordsResult();
         }
 
         ArrayList<ReminderSearchResult> results = new ArrayListUtil.ChainableArrayListUtil<>(this.schedule.getTaskList())
-                .map(task -> new ReminderSearchResult(task, task.searchReminder(keywords)))
-                .filter(result -> result.getReminders().size() > 0)
+                .map(task -> new ReminderSearchResult(task, task.searchReminder(result.getKeywords())))
+                .filter(r -> r.getReminders().size() > 0)
                 .value();
 
         int totalResults = new ArrayListUtil.ChainableArrayListUtil<>(results)
@@ -72,12 +74,12 @@ public class EditReminderCommand extends AbstractCommand {
                 .foldr((a, b) -> a + b, 0);
 
         if (totalResults == 0) {
-            return SearchResults.makeReminderNotFoundResult(keywords);
+            return SearchResults.makeReminderNotFoundResult(result.getKeywords());
         } else if (totalResults == 1) {
-            ReminderSearchResult result = results.get(0);
-            return implementEditr(result.getTask(), result.getReminders().get(0), argument);
+            ReminderSearchResult searchResult = results.get(0);
+            return implementEditr(searchResult.getTask(), searchResult.getReminders().get(0), result);
         } else {
-            setResponse(true, results, argument);
+            setResponse(true, results, result);
             return PromptResults.makePromptReminderIndexResult(results);
         }
     }
@@ -90,7 +92,7 @@ public class EditReminderCommand extends AbstractCommand {
 
     @Override
     public CommandResult getUserResponse(String userInput) {
-        assert this.argument != null;
+        assert this.parseResult != null;
         assert this.schedule != null;
         assert this.searchResults != null;
 
@@ -108,7 +110,7 @@ public class EditReminderCommand extends AbstractCommand {
                 Reminder reminder = remindersFound.get(index - 1);
                 Task task = ReminderSearchResult.getTaskFromReminder(this.searchResults, reminder);
 
-                CommandResult result = implementEditr(task, reminder, this.argument);
+                CommandResult result = implementEditr(task, reminder, this.parseResult);
                 setResponse(false, null, null);
                 return result;
             } else {
@@ -137,12 +139,7 @@ public class EditReminderCommand extends AbstractCommand {
         return COMMAND_FORMAT;
     }
 
-    @Override
-    public String getPattern() {
-        return "(?i)^\\s*(" + getTriggerWordsPattern() + ")((?<keywords>.*?)(?<arguments>((n|t)/)+?.*)??)";
-    }
-
-    private String extractKeywords(String userInput) {
+    private String extractArgument(String userInput) {
         Matcher matcher = Pattern.compile(getPattern()).matcher(userInput);
 
         if (matcher.matches() && matcher.group("keywords") != null) {
@@ -152,18 +149,8 @@ public class EditReminderCommand extends AbstractCommand {
         }
     }
 
-    private String extractArgument(String userInput) {
-        Matcher matcher = Pattern.compile(getPattern()).matcher(userInput);
-
-        if (matcher.matches() && matcher.group("arguments") != null) {
-            return matcher.group("arguments");
-        } else {
-            return "";
-        }
-    }
-
-    private CommandResult implementEditr(Task task, Reminder original, String argument) {
-        Either<Reminder, CommandResult> result = editReminderArgumentParser.parse(original, argument);
+    private CommandResult implementEditr(Task task, Reminder original, GenericParser.GenericParserResult parseResult) {
+        Either<Reminder, CommandResult> result = editReminderArgumentParser.parse(original, parseResult);
 
         if (result.isLeft()) {
             Reminder newReminder = result.getLeft();
@@ -175,10 +162,10 @@ public class EditReminderCommand extends AbstractCommand {
         }
     }
 
-    private void setResponse(boolean requiresUserResponse, ArrayList<ReminderSearchResult> results, String argument) {
+    private void setResponse(boolean requiresUserResponse, ArrayList<ReminderSearchResult> results, GenericParser.GenericParserResult result) {
         this.requiresUserResponse = requiresUserResponse;
         this.searchResults = results;
-        this.argument = argument;
+        this.parseResult = result;
     }
 
     private CommandResult makeNoKeywordsResult() {
