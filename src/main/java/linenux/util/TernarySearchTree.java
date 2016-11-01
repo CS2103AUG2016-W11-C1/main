@@ -50,7 +50,7 @@ public class TernarySearchTree {
         Node prefixLastNode = getPrefixLastNode(prefix);
 
         if (prefixLastNode == null) {
-            return new ArrayList<String>();
+            return ArrayListUtil.fromSingleton(prefix);
         }
 
         ArrayList<String> prefixList = new ArrayListUtil.ChainableArrayListUtil<>(searchNode(prefixLastNode))
