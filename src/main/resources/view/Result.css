@@ -1,9 +1,9 @@
 /* @@author A0144915A */
 .result {
-    -fx-background-color: #444;
+    -fx-background-color: #00838f;
     -fx-background-radius: 5px;
 }
 
 .result .label {
-    -fx-text-fill: #fff;
+    -fx-text-fill: white;
 }

@@ -7,7 +7,7 @@
 
 <HBox alignment="CENTER_RIGHT" spacing="10.0" styleClass="result" stylesheets="@Result.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label fx:id="label" stylesheets="@Result.css" text="Added &quot;Hello World&quot;." textFill="WHITE" HBox.hgrow="ALWAYS" />
+      <Label fx:id="label" maxHeight="1.7976931348623157E308" maxWidth="295.0" stylesheets="@Result.css" text="Added &quot;Hello World&quot;." textFill="WHITE" wrapText="true" HBox.hgrow="ALWAYS" />
       <Button mnemonicParsing="false" onAction="#onCloseButtonClicked" text="x" />
    </children>
    <padding>
