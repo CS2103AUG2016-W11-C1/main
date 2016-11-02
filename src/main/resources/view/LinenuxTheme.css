@@ -24,20 +24,13 @@
     -fx-focus-color:transparent;
 }
 
-.todolist {
+.todolist, .deadlineList {
     -fx-background-color: #83bdb8;
 }
 
-.todolist .list-cell:even, .todolist .list-cell:odd {
+.todolist .list-cell:even, .todolist .list-cell:odd,
+.deadlineList .list-cell:even, .deadlineList .list-cell:odd {
     -fx-background-color: #83bdb8;
-}
-
-.deadlineList .list-cell:even {
-	-fx-background-color: black;
-}
-
-.deadlineList .list-cell:odd {
-	-fx-background-color: black;
 }
 
 .eventList .list-cell:even {

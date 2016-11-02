@@ -1,0 +1,48 @@
+.deadlineCell {
+    -fx-background-color: #83bdb8;
+}
+
+.deadlineCell .container {
+    -fx-background-radius: 5px;
+    -fx-background-color: rgba(196, 255, 255, .5);
+    -fx-padding: 10px;
+}
+
+.deadlineCell.overdue .container {
+    -fx-border-radius: 5px;
+    -fx-border-width: 3px;
+    -fx-background-color: rgba(255, 212, 212, .8);
+    -fx-border-color: transparent transparent transparent red;
+}
+
+.deadlineCell.no-tags .container {
+    -fx-padding: 10px 10px -5px 10px;
+}
+
+.deadlineCell.empty .container {
+    -fx-background-color: #83bdb8;
+}
+
+.deadlineCell .name {
+    -fx-font-size: 18.72px;
+    -fx-font-weight: bold;
+}
+
+.deadlineCell.overdue .name {
+    -fx-text-fill: #b71c1c;
+}
+
+.deadlineCell .time {
+    -fx-font-size: 16px;
+    -fx-opacity: .7;
+}
+
+.deadlineCell.overdue .time {
+    -fx-text-fill: red;
+}
+
+.deadlineCell .tags {
+    -fx-alignment: center-right;
+    -fx-opacity: .5;
+    -fx-font-size: 12px;
+}
