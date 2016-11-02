@@ -1,20 +1,21 @@
-/* @@author 0135788M */
+/* @@author A0135788M */
+
 .vBox {
 	-fx-background-color: darkgray;
 }
 
 .splitPane {
-    -fx-background-color: aliceblue;
+    -fx-background-color: black;
 }
 
 .header {
 	-fx-font: 40px "AR JULIAN";
-    -fx-text-fill: steelblue;
+    -fx-text-fill: lightgreen;
 }
 
 .mainWindowAnchor {
-	-fx-background-color: white;
-	-fx-border-color: steelblue transparent transparent transparent;
+	-fx-background-color: black;
+	-fx-border-color: black transparent transparent transparent;
 	-fx-border-width: 2px;
 }
 
@@ -22,33 +23,33 @@
     -fx-font-size: 12pt;
     -fx-font-family: "Consolas";
     -fx-font-weight: bold;
-    -fx-text-fill: steelblue;
-    -fx-background-color: white;
+    -fx-text-fill: aqua;
+    -fx-background-color: black;
     -fx-focus-color:transparent;
 }
 
 .todolist .list-cell:even {
-	-fx-background-color: darkgray;
+	-fx-background-color: black;
 }
 
 .todolist .list-cell:odd {
-	-fx-background-color: silver;
+	-fx-background-color: black;
 }
 
 .deadlineList .list-cell:even {
-	-fx-background-color: silver;
+	-fx-background-color: black;
 }
 
 .deadlineList .list-cell:odd {
-	-fx-background-color: darkgray;
+	-fx-background-color: black;
 }
 
 .eventList .list-cell:even {
-	-fx-background-color: darkgray;
+	-fx-background-color: black;
 }
 
 .eventList .list-cell:odd {
-	-fx-background-color: silver;
+	-fx-background-color: black;
 }
 
 .title {
@@ -66,5 +67,5 @@
 
 
 .list-view .list-cell:empty {
-	-fx-background-color: aliceblue;
+	-fx-background-color: black;
 }
