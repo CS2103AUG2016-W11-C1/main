@@ -188,18 +188,6 @@ public class Task {
     public int hashCode() {
         int result = taskName.hashCode() ^ startTime.hashCode() ^ endTime.hashCode();
 
-        if (!tags.isEmpty()) {
-            for (String tag : tags) {
-                result = result ^ tag.hashCode();
-            }
-        }
-
-        if (!reminders.isEmpty()) {
-            for (Reminder reminder : reminders) {
-                result = result ^ reminder.hashCode();
-            }
-        }
-
         return result;
     }
 
