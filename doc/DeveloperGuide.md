@@ -11,7 +11,7 @@
     * [Model Component](#model-component)
     * [View Component](#view-component)
     * [Controller Component](#controller-component)
-    * [Activity Diagram]($activity-diagram)
+    * [Activity Diagram](#activity-diagram)
 * [Testing](#testing)
     * [In Eclipse](#in-eclipse)
     * [Using Gradle](#using-gradle)
