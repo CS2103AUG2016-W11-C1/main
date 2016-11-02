@@ -47,12 +47,12 @@ public class AutoCompleter {
             this.searchResult = tree.getAllStringsWithPrefix(prefix);
         }
 
-        String stringToLastSpace = prefix.substring(0, indexOfLastSpace + 1);
         String stringAfterLastSpace = prefix.substring(indexOfLastSpace + 1);
 
         ArrayList<String> searchResult = tree.getAllStringsWithPrefix(stringAfterLastSpace);
         ArrayList<String> finalResult = new ArrayListUtil.ChainableArrayListUtil<>(searchResult)
-                                                     .map(s -> stringToLastSpace + s)
+                                                     .map(result -> result.substring(stringAfterLastSpace.length()))
+                                                     .map(suggestedSuffix -> prefix + suggestedSuffix)
                                                      .value();
         this.searchResult = finalResult;
     }

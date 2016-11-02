@@ -51,14 +51,16 @@ public class TernarySearchTree {
         assert prefix != null;
         assert !prefix.trim().isEmpty();
 
-        Node prefixLastNode = getPrefixLastNode(prefix);
+        String prefixLowerCase = prefix.toLowerCase();
+
+        Node prefixLastNode = getPrefixLastNode(prefixLowerCase);
 
         if (prefixLastNode == null) {
-            return ArrayListUtil.fromSingleton(prefix);
+            return ArrayListUtil.fromSingleton(prefixLowerCase);
         }
 
         ArrayList<String> prefixList = new ArrayListUtil.ChainableArrayListUtil<>(searchNode(prefixLastNode))
-                .map(s -> prefix + s)
+                .map(s -> prefixLowerCase + s)
                 .value();
         return prefixList;
     }
