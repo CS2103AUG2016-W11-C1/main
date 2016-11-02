@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="linenux.view.TodoBoxController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="linenux.view.TodoBoxController">
    <children>
-      <VBox prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox prefHeight="400.0" prefWidth="600.0" spacing="10.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="13.33333" AnchorPane.topAnchor="20.0">
          <children>
-            <Label prefHeight="60.0" prefWidth="600.0" styleClass="header" stylesheets="@LinenuxTheme.css" text="To-dos"></Label>
+            <Label prefWidth="600.0" styleClass="header" stylesheets="@LinenuxTheme.css" text="To-dos">
+               <padding>
+                  <Insets left="10.0" />
+               </padding></Label>
             <ListView fx:id="todosList" centerShape="false" focusTraversable="false" mouseTransparent="false" prefHeight="340.0" prefWidth="600.0" snapToPixel="false" styleClass="todolist" stylesheets="@LinenuxTheme.css" VBox.vgrow="ALWAYS" />
          </children>
       </VBox>

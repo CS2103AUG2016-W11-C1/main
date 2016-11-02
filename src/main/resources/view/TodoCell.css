@@ -1,0 +1,32 @@
+.todoCell {
+    -fx-background-color: #83bdb8;
+}
+
+.todoCell .container {
+    -fx-background-radius: 5px;
+    -fx-background-color: rgba(255, 255, 255, .8);
+    -fx-padding: 10px;
+}
+
+.todoCell.no-tags .container {
+    -fx-padding: 10px 10px -5px 10px;
+}
+
+.todoCell.empty .container {
+    -fx-background-color: #83bdb8;
+}
+
+.todoCell .name {
+    -fx-font-size: 18.72px;
+    -fx-font-weight: bold;
+}
+
+.todoCell .tags {
+    -fx-alignment: center-right;
+    -fx-opacity: .5;
+    -fx-font-size: 12px;
+}
+
+.todoCell.no-tags .tags {
+    visibility: hidden;
+}

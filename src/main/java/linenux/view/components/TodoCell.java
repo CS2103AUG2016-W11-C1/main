@@ -7,8 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
+import javafx.scene.layout.AnchorPane;
 import linenux.model.Task;
 import linenux.util.ArrayListUtil;
 
@@ -20,6 +19,9 @@ public class TodoCell extends ListCell<Task> {
     @FXML
     private Label tags;
 
+    @FXML
+    private AnchorPane container;
+
     public TodoCell() {
         super();
 
@@ -27,7 +29,7 @@ public class TodoCell extends ListCell<Task> {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(TodoCell.class.getResource("/view/TodoCell.fxml"));
             loader.setController(this);
-            VBox result = loader.load();
+            AnchorPane result = loader.load();
             this.setGraphic(result);
         } catch (IOException ioe) {
             ioe.printStackTrace();
@@ -38,7 +40,10 @@ public class TodoCell extends ListCell<Task> {
     public void updateItem(Task task, boolean empty) {
         super.updateItem(task, empty);
 
+        this.container.getStyleClass().removeAll("no-tags", "empty");
+
         if (empty || task == null) {
+            this.container.getStyleClass().add("empty");
             this.title.setText("");
             this.tags.setText("");
         } else {
@@ -48,8 +53,10 @@ public class TodoCell extends ListCell<Task> {
 
             this.title.setText(task.getTaskName());
             this.tags.setText(String.join(", ", tagsWithHash));
-            this.title.setTextFill(Color.MINTCREAM);
-            this.tags.setTextFill(Color.MINTCREAM);
+
+            if (tagsWithHash.isEmpty()) {
+                this.container.getStyleClass().add("no-tags");
+            }
         }
     }
 }

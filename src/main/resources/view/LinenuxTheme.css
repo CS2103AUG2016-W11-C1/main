@@ -1,16 +1,12 @@
 /* @@author A0135788M */
 
 .vBox {
-	-fx-background-color: darkgray;
-}
-
-.splitPane {
-    -fx-background-color: black;
+	-fx-background-color: #83bdb8;
 }
 
 .header {
-	-fx-font: 40px "AR JULIAN";
-    -fx-text-fill: lightgreen;
+	-fx-font: 24px sans-serif;
+    -fx-text-fill: #006064;
 }
 
 .mainWindowAnchor {
@@ -28,12 +24,12 @@
     -fx-focus-color:transparent;
 }
 
-.todolist .list-cell:even {
-	-fx-background-color: black;
+.todolist {
+    -fx-background-color: #83bdb8;
 }
 
-.todolist .list-cell:odd {
-	-fx-background-color: black;
+.todolist .list-cell:even, .todolist .list-cell:odd {
+    -fx-background-color: #83bdb8;
 }
 
 .deadlineList .list-cell:even {
@@ -67,5 +63,5 @@
 
 
 .list-view .list-cell:empty {
-	-fx-background-color: black;
+	-fx-background-color: #83bdb8;
 }
