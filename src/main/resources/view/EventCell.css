@@ -1,0 +1,40 @@
+.eventCell {
+    -fx-background-color: #83bdb8;
+}
+
+.eventCell .container {
+    -fx-background-radius: 5px;
+    -fx-background-color: rgba(0, 0, 0, .16);
+    -fx-padding: 10px;
+}
+
+.eventCell.overdue .container {
+    -fx-opacity: .6;
+}
+
+.eventCell.no-tags .container {
+    -fx-padding: 10px 10px -5px 10px;
+}
+
+.eventCell.empty .container {
+    -fx-background-color: #83bdb8;
+}
+
+.eventCell .name {
+    -fx-font-size: 18.72px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+.eventCell .time {
+    -fx-font-size: 16px;
+    -fx-opacity: .7;
+    -fx-text-fill: white;
+}
+
+.eventCell .tags {
+    -fx-alignment: center-right;
+    -fx-opacity: .5;
+    -fx-font-size: 12px;
+    -fx-text-fill: white;
+}

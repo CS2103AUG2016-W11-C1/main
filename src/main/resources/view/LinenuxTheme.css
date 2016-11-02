@@ -24,36 +24,15 @@
     -fx-focus-color:transparent;
 }
 
-.todolist, .deadlineList {
+.todolist, .deadlineList, .eventList {
     -fx-background-color: #83bdb8;
 }
 
 .todolist .list-cell:even, .todolist .list-cell:odd,
-.deadlineList .list-cell:even, .deadlineList .list-cell:odd {
+.deadlineList .list-cell:even, .deadlineList .list-cell:odd,
+.eventList .list-cell:even, .eventList .list-cell:odd {
     -fx-background-color: #83bdb8;
 }
-
-.eventList .list-cell:even {
-	-fx-background-color: black;
-}
-
-.eventList .list-cell:odd {
-	-fx-background-color: black;
-}
-
-.title {
-	-fx-font: 25px "Garamond";
-	-fx-font-weight: bold;
-}
-
-.time {
-	-fx-font: 20px "Garamond";
-}
-
-.tags {
-	-fx-font: 20px "Garamond";
-}
-
 
 .list-view .list-cell:empty {
 	-fx-background-color: #83bdb8;
