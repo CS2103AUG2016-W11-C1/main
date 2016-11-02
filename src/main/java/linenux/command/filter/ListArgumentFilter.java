@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.function.Predicate;
 
 import linenux.command.result.CommandResult;
 import linenux.control.TimeParserManager;
@@ -150,6 +151,14 @@ public class ListArgumentFilter {
         }
 
         return Either.left(filteredReminders);
+    }
+
+    public ArrayList<Task> filterUndoneTasks(ArrayList<Task> tasks) {
+        ArrayList<Task> undoneTasks = new ArrayListUtil.ChainableArrayListUtil<>(tasks)
+                .filter(((Predicate<Task>) Task::isDone).negate())
+                .value();
+
+        return undoneTasks;
     }
 
     private Either<LocalDateTime, CommandResult> extractStartTime(String argument) {

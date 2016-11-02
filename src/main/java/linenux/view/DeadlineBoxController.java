@@ -41,7 +41,10 @@ public class DeadlineBoxController {
 
     private void updateDeadlines() {
         ArrayList<Task> tasks = this.controlUnit.getSchedule().getTaskList();
-        ArrayList<Task> deadlines = filterDeadlines(tasks);
+        ArrayList<Task> undoneTasks = new ArrayListUtil.ChainableArrayListUtil<>(tasks)
+                .filter(((Predicate<Task>) Task::isDone).negate())
+                .value();
+        ArrayList<Task> deadlines = filterDeadlines(undoneTasks);
         this.deadlines.setAll(deadlines);
     }
 
@@ -54,7 +57,6 @@ public class DeadlineBoxController {
     private ArrayList<Task> filterDeadlines(ArrayList<Task> tasks) {
         ArrayList<Task> deadlines = new ArrayListUtil.ChainableArrayListUtil<>(tasks)
                 .filter(Task::isDeadline)
-                .filter(((Predicate<Task>) Task::isDone).negate())
                 .sortBy(Task::getTaskName)
                 .sortBy(Task::getEndTime)
                 .value();

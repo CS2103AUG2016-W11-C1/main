@@ -54,6 +54,30 @@ public class ListCommandTest {
     }
 
     /**
+     * Test that list command response to invalid datetime.
+     */
+    @Test
+    public void testInvalidDateTimeResponse() {
+        this.schedule.addTask(new Task("todo"));
+        CommandResult result = this.listCommand.execute("list st/not time");
+        String expectedResult = "Cannot parse \"not time\".";
+
+        assertEquals(expectedResult, result.getFeedback());
+    }
+
+    /**
+     * Test that list command response to end time before start time.
+     */
+    @Test
+    public void testEndTimeBeforeStartTimeResponse() {
+        this.schedule.addTask(new Task("todo"));
+        CommandResult result = this.listCommand.execute("list st/2016-01-01 5.00PM et/2015-01-01 5.00PM");
+        String expectedResult = "End time cannot come before start time.";
+
+        assertEquals(expectedResult, result.getFeedback());
+    }
+
+    /**
      * Test that list command does not respond to other commands.
      */
     @Test
@@ -62,7 +86,8 @@ public class ListCommandTest {
     }
 
     /**
-     * Test that list without params should display all tasks and reminders
+     * Test that list without params should display all undone tasks and
+     * reminders
      */
     @Test
     public void testDisplayTheEntireList() {
@@ -250,10 +275,63 @@ public class ListCommandTest {
     }
 
     /**
-     * Test that list command filters by tags
+     * Test that list command filters by start and end time
      */
     @Test
-    public void testFilterTaskAndRemindersByTags() {
+    public void testFilterTaskAndRemindersByStartAndEndTime() {
+        Task todo = new Task("todo");
+        todo = todo.addReminder(new Reminder("todo before", LocalDateTime.of(2015, 1, 1, 17, 0)));
+        todo = todo.addReminder(new Reminder("todo after", LocalDateTime.of(2017, 1, 1, 17, 0)));
+        todo = todo.addReminder(new Reminder("todo during", LocalDateTime.of(2016, 6, 1, 17, 0)));
+
+        Task eventEndTimeBefore = new Task("event end time before", LocalDateTime.of(2015, 1, 1, 17, 0),
+                LocalDateTime.of(2015, 1, 1, 19, 0));
+        Task eventDuring1 = new Task("event during1", LocalDateTime.of(2015, 1, 1, 17, 0),
+                LocalDateTime.of(2016, 2, 1, 17, 0));
+        Task eventDuring2 = new Task("event during2", LocalDateTime.of(2016, 1, 2, 19, 0),
+                LocalDateTime.of(2016, 1, 3, 17, 0));
+        Task eventDuring3 = new Task("event during2", LocalDateTime.of(2016, 1, 2, 19, 0),
+                LocalDateTime.of(2017, 1, 3, 17, 0));
+        Task eventStartTimeAfter = new Task("event start time after", LocalDateTime.of(2017, 1, 1, 19, 0),
+                LocalDateTime.of(2018, 1, 1, 17, 0));
+
+        Task deadlineBefore = new Task("deadline before", LocalDateTime.of(2015, 1, 1, 17, 0));
+        Task deadlineDuring = new Task("deadline during", LocalDateTime.of(2016, 6, 1, 17, 0));
+        Task deadlineAfter = new Task("deadline after", LocalDateTime.of(2017, 1, 1, 17, 0));
+
+        this.schedule.addTask(todo);
+        this.schedule.addTask(eventEndTimeBefore);
+        this.schedule.addTask(eventDuring1);
+        this.schedule.addTask(eventDuring2);
+        this.schedule.addTask(eventDuring3);
+        this.schedule.addTask(eventStartTimeAfter);
+        this.schedule.addTask(deadlineBefore);
+        this.schedule.addTask(deadlineDuring);
+        this.schedule.addTask(deadlineAfter);
+
+        CommandResult result = this.listCommand.execute("list st/2016-01-01 5.00PM et/2016-12-31 5.00PM");
+
+        ArrayList<Task> filteredTasks = this.schedule.getFilteredTasks();
+
+        assertTrue(filteredTasks.contains(todo));
+        assertTrue(!filteredTasks.contains(eventEndTimeBefore));
+        assertTrue(filteredTasks.contains(eventDuring1));
+        assertTrue(filteredTasks.contains(eventDuring2));
+        assertTrue(filteredTasks.contains(eventDuring3));
+        assertTrue(!filteredTasks.contains(eventStartTimeAfter));
+        assertTrue(!filteredTasks.contains(deadlineBefore));
+        assertTrue(filteredTasks.contains(deadlineDuring));
+        assertTrue(!filteredTasks.contains(deadlineAfter));
+
+        String expectedFeedback = "Reminders:\n" + "1. todo during (On 2016-06-01 5.00PM)";
+        assertEquals(expectedFeedback, result.getFeedback());
+    }
+
+    /**
+     * Test that list command filters task by tags
+     */
+    @Test
+    public void testFilterTaskByTags() {
         ArrayList<String> tags1 = new ArrayList<>();
         ArrayList<String> tags2 = new ArrayList<>();
         ArrayList<String> tags3 = new ArrayList<>();
@@ -278,6 +356,41 @@ public class ListCommandTest {
         assertTrue(filteredTasks.contains(todo1));
         assertTrue(filteredTasks.contains(todo2));
         assertTrue(!filteredTasks.contains(todo3));
+    }
+
+    /**
+     * Test that list command filters by tags does not show reminders
+     */
+    @Test
+    public void testFilterTaskByTagsDoesNotShowReminders() {
+        ArrayList<String> tags1 = new ArrayList<>();
+        ArrayList<String> tags2 = new ArrayList<>();
+        ArrayList<String> tags3 = new ArrayList<>();
+
+        tags1.add("hello");
+        tags2.add("hello");
+        tags2.add("world");
+        tags3.add("wat");
+
+        Task todo1 = new Task("todo 1", tags1);
+        Task todo2 = new Task("todo 2", tags2);
+        Task todo3 = new Task("todo 3", tags3);
+
+        todo1.addReminder(new Reminder("reminder", LocalDateTime.of(2016, 1, 1, 17, 0)));
+
+        this.schedule.addTask(todo1);
+        this.schedule.addTask(todo2);
+        this.schedule.addTask(todo3);
+
+        CommandResult result = this.listCommand.execute("list #/hello");
+
+        ArrayList<Task> filteredTasks = this.schedule.getFilteredTasks();
+
+        assertTrue(filteredTasks.contains(todo1));
+        assertTrue(filteredTasks.contains(todo2));
+        assertTrue(!filteredTasks.contains(todo3));
+
+        assertEquals("", result.getFeedback());
     }
 
     /**
@@ -312,6 +425,27 @@ public class ListCommandTest {
     }
 
     /**
+     * Test that default list command does not show done task.
+     */
+    @Test
+    public void testDefaultListNotShowDone() {
+        Task todo1 = new Task("todo 1");
+        Task todo2 = new Task("todo 2");
+
+        todo1 = todo1.markAsDone();
+
+        this.schedule.addTask(todo1);
+        this.schedule.addTask(todo2);
+
+        this.listCommand.execute("list");
+
+        ArrayList<Task> filteredTasks = this.schedule.getFilteredTasks();
+
+        assertTrue(!filteredTasks.contains(todo1));
+        assertTrue(filteredTasks.contains(todo2));
+    }
+
+    /**
      * Test that list command field d/yes (view done only)
      */
     @Test
@@ -324,15 +458,12 @@ public class ListCommandTest {
         this.schedule.addTask(todo1);
         this.schedule.addTask(todo2);
 
-        CommandResult result = this.listCommand.execute("list d/yes");
+        this.listCommand.execute("list d/yes");
 
         ArrayList<Task> filteredTasks = this.schedule.getFilteredTasks();
 
         assertTrue(filteredTasks.contains(todo1));
         assertTrue(!filteredTasks.contains(todo2));
-
-        String expectedFeedback = "1. todo 1";
-        assertEquals(expectedFeedback, result.getFeedback());
     }
 
     /**
@@ -348,15 +479,12 @@ public class ListCommandTest {
         this.schedule.addTask(todo1);
         this.schedule.addTask(todo2);
 
-        CommandResult result = this.listCommand.execute("list d/all");
+        this.listCommand.execute("list d/all");
 
         ArrayList<Task> filteredTasks = this.schedule.getFilteredTasks();
 
         assertTrue(filteredTasks.contains(todo1));
         assertTrue(filteredTasks.contains(todo2));
-
-        String expectedFeedback = "1. todo 1";
-        assertEquals(expectedFeedback, result.getFeedback());
     }
 
     /**
