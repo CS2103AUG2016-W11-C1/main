@@ -26,6 +26,10 @@
     -fx-text-fill: white;
 }
 
+.eventCell.done .name .text {
+    -fx-strikethrough: true;
+}
+
 .eventCell .time {
     -fx-font-size: 16px;
     -fx-opacity: .7;
