@@ -1,7 +1,6 @@
 package linenux.view;
 
 import java.util.ArrayList;
-import java.util.function.Predicate;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -25,7 +24,7 @@ public class EventBoxController {
     @FXML
     private void initialize() {
         eventsList.itemsProperty().setValue(events);
-        eventsList.setCellFactory(list -> new EventCell());
+        eventsList.setCellFactory(EventCell::new);
     }
 
     public void setControlUnit(ControlUnit controlUnit) {
@@ -41,7 +40,10 @@ public class EventBoxController {
 
     private void updateEvents() {
         ArrayList<Task> tasks = this.controlUnit.getSchedule().getTaskList();
-        ArrayList<Task> events = filterEvents(tasks);
+        ArrayList<Task> undoneTasks = new ArrayListUtil.ChainableArrayListUtil<>(tasks)
+                .filter(Task::isNotDone)
+                .value();
+        ArrayList<Task> events = filterEvents(undoneTasks);
         this.events.setAll(events);
     }
 
@@ -54,7 +56,6 @@ public class EventBoxController {
     private ArrayList<Task> filterEvents(ArrayList<Task> tasks) {
         ArrayList<Task> events = new ArrayListUtil.ChainableArrayListUtil<>(tasks)
                 .filter(Task::isEvent)
-                .filter(((Predicate<Task>) Task::isDone).negate())
                 .sortBy(Task::getTaskName)
                 .sortBy(Task::getStartTime)
                 .value();

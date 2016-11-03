@@ -30,12 +30,14 @@ public class CommandBoxController {
         });
 
         this.textField.setOnKeyReleased(event -> {
+            if (!event.getCode().equals(KeyCode.TAB)) {
+                autoCompleter.clear();
+            }
+
             if (event.getCode().equals(KeyCode.UP) && historyIndex > 0) {
                 historyIndex--;
                 this.textField.setText(this.history.get(historyIndex));
-            }
-
-            if (event.getCode().equals(KeyCode.DOWN)) {
+            } else if (event.getCode().equals(KeyCode.DOWN)) {
                 if (historyIndex < this.history.size() - 1) {
                     historyIndex++;
                     this.textField.setText(this.history.get(historyIndex));
@@ -43,18 +45,15 @@ public class CommandBoxController {
                     historyIndex++;
                     this.textField.setText("");
                 }
-            }
-
-            if (event.getCode().equals(KeyCode.TAB)) {
+            } else if (event.getCode().equals(KeyCode.TAB)) {
                 if (autoCompleter.hasNoSearchResult()) {
                     autoCompleter.findPrefix(this.textField.getText());
                 }
                 this.textField.setText(autoCompleter.next());
+            } else {
+                return;
             }
 
-            if (!event.getCode().equals(KeyCode.TAB)) {
-                autoCompleter.clear();
-            }
 
             this.textField.positionCaret(this.textField.getLength());
         });

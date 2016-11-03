@@ -16,7 +16,7 @@ import linenux.time.parser.TodayWithTimeParser;
 import linenux.time.parser.TomorrowWithTimeParser;
 import linenux.util.ArrayListUtil;
 import linenux.util.Either;
-import linenux.util.TasksListUtil;
+import linenux.util.RemindersListUtil;
 
 /**
  * Generates a list of tasks based on userInput.
@@ -75,26 +75,34 @@ public class ListCommand extends AbstractCommand {
             return filterTasks.getRight();
         }
 
-        Either<ArrayList<Reminder>, CommandResult> filterReminders = this.listArgumentFilter.filterReminders(arguments, reminders);
-        if (filterReminders.isRight()) {
-            return filterReminders.getRight();
-        }
-
-
         ArrayList<Task> actualFilterTasks = filterTasks.getLeft();
-        ArrayList<Reminder> actualFilterReminders = filterReminders.getLeft();
+        ArrayList<Reminder> actualFilterReminders = new ArrayList<Reminder>();
 
-        if (actualViewDone != "") {
-            doneTasks = new ArrayListUtil.ChainableArrayListUtil<>(actualFilterTasks)
-                .filter(Task::isDone)
-                .value();
+        //If users request for done tasks only, we will not show any reminders
+        if (doneOnly) {
+            //does no search for reminders, leaves it as an empty ArrayList
+        } else {
+            Either<ArrayList<Reminder>, CommandResult> filterReminders = this.listArgumentFilter.filterReminders(arguments, reminders);
+            if (filterReminders.isRight()) {
+                return filterReminders.getRight();
+            }
+
+            actualFilterReminders = filterReminders.getLeft();
         }
+
+        //Remove all done tasks if field d/ is not yes amd all
+        if (actualViewDone.equals(VIEW_DONE) || actualViewDone.equals(VIEW_DONE_ONLY)) {
+            //no filtering of done tasks occurs.
+        } else {
+            actualFilterTasks = this.listArgumentFilter.filterUndoneTasks(actualFilterTasks);
+        }
+
 
         if (actualFilterTasks.size() == 0 && actualFilterReminders.size() == 0) {
             this.schedule.addFilterTasks(new ArrayList<Task>());
             return makeNoTasksAndRemindersFoundResult();
         } else {
-            return makeResult(actualFilterTasks, doneTasks, actualFilterReminders);
+            return makeResult(actualFilterTasks, actualFilterReminders);
         }
     }
 
@@ -177,9 +185,15 @@ public class ListCommand extends AbstractCommand {
         return () -> "There are no tasks and reminders found based on your given inputs!";
     }
 
-    private CommandResult makeResult(ArrayList<Task> tasks, ArrayList<Task> doneTasks, ArrayList<Reminder> reminders) {
+    private CommandResult makeResult(ArrayList<Task> tasks, ArrayList<Reminder> reminders) {
         this.schedule.addFilterTasks(tasks);
 
-        return () -> TasksListUtil.display(doneTasks, reminders);
+        return () -> {
+            if (reminders.isEmpty()) {
+                return "";
+            } else {
+                return "Reminders:\n" + RemindersListUtil.display(reminders);
+            }
+        };
     }
 }

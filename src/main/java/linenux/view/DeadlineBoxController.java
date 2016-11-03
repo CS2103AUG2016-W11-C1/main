@@ -1,7 +1,6 @@
 package linenux.view;
 
 import java.util.ArrayList;
-import java.util.function.Predicate;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -25,7 +24,7 @@ public class DeadlineBoxController {
     @FXML
     private void initialize() {
         deadlinesList.itemsProperty().setValue(deadlines);
-        deadlinesList.setCellFactory(list -> new DeadlineCell());
+        deadlinesList.setCellFactory(DeadlineCell::new);
     }
 
     public void setControlUnit(ControlUnit controlUnit) {
@@ -41,7 +40,10 @@ public class DeadlineBoxController {
 
     private void updateDeadlines() {
         ArrayList<Task> tasks = this.controlUnit.getSchedule().getTaskList();
-        ArrayList<Task> deadlines = filterDeadlines(tasks);
+        ArrayList<Task> undoneTasks = new ArrayListUtil.ChainableArrayListUtil<>(tasks)
+                .filter(Task::isNotDone)
+                .value();
+        ArrayList<Task> deadlines = filterDeadlines(undoneTasks);
         this.deadlines.setAll(deadlines);
     }
 
@@ -54,7 +56,6 @@ public class DeadlineBoxController {
     private ArrayList<Task> filterDeadlines(ArrayList<Task> tasks) {
         ArrayList<Task> deadlines = new ArrayListUtil.ChainableArrayListUtil<>(tasks)
                 .filter(Task::isDeadline)
-                .filter(((Predicate<Task>) Task::isDone).negate())
                 .sortBy(Task::getTaskName)
                 .sortBy(Task::getEndTime)
                 .value();
