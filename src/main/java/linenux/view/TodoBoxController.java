@@ -57,7 +57,6 @@ public class TodoBoxController {
     private ArrayList<Task> filterToDos(ArrayList<Task> tasks) {
         ArrayList<Task> todos = new ArrayListUtil.ChainableArrayListUtil<>(tasks)
                 .filter(Task::isTodo)
-                .filter(((Predicate<Task>) Task::isDone).negate())
                 .sortBy(Task::getTaskName)
                 .value();
 
