@@ -155,7 +155,7 @@ public class ListArgumentFilter {
 
     public ArrayList<Task> filterUndoneTasks(ArrayList<Task> tasks) {
         ArrayList<Task> undoneTasks = new ArrayListUtil.ChainableArrayListUtil<>(tasks)
-                .filter(((Predicate<Task>) Task::isDone).negate())
+                .filter(Task::isNotDone)
                 .value();
 
         return undoneTasks;

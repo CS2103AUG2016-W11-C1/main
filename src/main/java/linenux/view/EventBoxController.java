@@ -42,7 +42,7 @@ public class EventBoxController {
     private void updateEvents() {
         ArrayList<Task> tasks = this.controlUnit.getSchedule().getTaskList();
         ArrayList<Task> undoneTasks = new ArrayListUtil.ChainableArrayListUtil<>(tasks)
-                .filter(((Predicate<Task>) Task::isDone).negate())
+                .filter(Task::isNotDone)
                 .value();
         ArrayList<Task> events = filterEvents(undoneTasks);
         this.events.setAll(events);
