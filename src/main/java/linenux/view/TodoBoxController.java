@@ -25,7 +25,7 @@ public class TodoBoxController {
     @FXML
     private void initialize() {
         todosList.itemsProperty().setValue(todos);
-        todosList.setCellFactory(list -> new TodoCell());
+        todosList.setCellFactory(TodoCell::new);
     }
 
     public void setControlUnit(ControlUnit controlUnit) {
@@ -57,7 +57,6 @@ public class TodoBoxController {
     private ArrayList<Task> filterToDos(ArrayList<Task> tasks) {
         ArrayList<Task> todos = new ArrayListUtil.ChainableArrayListUtil<>(tasks)
                 .filter(Task::isTodo)
-                .filter(((Predicate<Task>) Task::isDone).negate())
                 .sortBy(Task::getTaskName)
                 .value();
 

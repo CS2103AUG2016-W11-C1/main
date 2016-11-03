@@ -4,9 +4,9 @@ import java.io.IOException;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import linenux.config.Config;
@@ -19,7 +19,7 @@ public class MainWindowController {
     @FXML
     private VBox vbox;
     @FXML
-    private SplitPane splitPane;
+    private GridPane gridPane;
     @FXML
     private AnchorPane commandBoxContainer;
 
@@ -34,7 +34,6 @@ public class MainWindowController {
         setupTodoBox();
         setupDeadlineBox();
         setupEventBox();
-        splitPane.setDividerPositions(0.33, 0.67);
         setupExpandableCommandResult();
         setupCommandBox();
         setupResultsOverlay();
@@ -45,7 +44,9 @@ public class MainWindowController {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainWindowController.class.getResource("/view/TodoBox.fxml"));
             AnchorPane todoBox = loader.load();
-            splitPane.getItems().add(todoBox);
+            GridPane.setRowIndex(todoBox, 0);
+            GridPane.setColumnIndex(todoBox, 0);
+            gridPane.getChildren().add(todoBox);
             TodoBoxController controller = loader.getController();
             controller.setControlUnit(this.controlUnit);
         } catch (IOException e) {
@@ -58,7 +59,9 @@ public class MainWindowController {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainWindowController.class.getResource("/view/DeadlineBox.fxml"));
             AnchorPane deadlineBox = loader.load();
-            splitPane.getItems().add(deadlineBox);
+            GridPane.setRowIndex(deadlineBox, 0);
+            GridPane.setColumnIndex(deadlineBox, 1);
+            gridPane.getChildren().add(deadlineBox);
             DeadlineBoxController controller = loader.getController();
             controller.setControlUnit(this.controlUnit);
         } catch (IOException e) {
@@ -71,7 +74,9 @@ public class MainWindowController {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainWindowController.class.getResource("/view/EventBox.fxml"));
             AnchorPane eventBox = loader.load();
-            splitPane.getItems().add(eventBox);
+            GridPane.setRowIndex(eventBox, 0);
+            GridPane.setColumnIndex(eventBox, 2);
+            gridPane.getChildren().add(eventBox);
             EventBoxController controller = loader.getController();
             controller.setControlUnit(this.controlUnit);
         } catch (IOException e) {
@@ -84,12 +89,11 @@ public class MainWindowController {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainWindowController.class.getResource("/view/CommandBox.fxml"));
             TextField field = loader.load();
-            AnchorPane.setTopAnchor(field, 2.0);
-            AnchorPane.setRightAnchor(field, 5.0);
-            AnchorPane.setBottomAnchor(field, 5.0);
-            AnchorPane.setLeftAnchor(field, 5.0);
+            AnchorPane.setTopAnchor(field, 0.0);
+            AnchorPane.setRightAnchor(field, 0.0);
+            AnchorPane.setBottomAnchor(field, 0.0);
+            AnchorPane.setLeftAnchor(field, 0.0);
             commandBoxContainer.getChildren().add(field);
-
             CommandBoxController controller = loader.getController();
             controller.setControlUnit(this.controlUnit);
         } catch (IOException e) {

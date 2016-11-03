@@ -1,7 +1,6 @@
 package linenux.view;
 
 import java.util.ArrayList;
-import java.util.function.Predicate;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -25,7 +24,7 @@ public class DeadlineBoxController {
     @FXML
     private void initialize() {
         deadlinesList.itemsProperty().setValue(deadlines);
-        deadlinesList.setCellFactory(list -> new DeadlineCell());
+        deadlinesList.setCellFactory(DeadlineCell::new);
     }
 
     public void setControlUnit(ControlUnit controlUnit) {

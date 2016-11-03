@@ -1,7 +1,6 @@
 package linenux.view;
 
 import java.util.ArrayList;
-import java.util.function.Predicate;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -25,7 +24,7 @@ public class EventBoxController {
     @FXML
     private void initialize() {
         eventsList.itemsProperty().setValue(events);
-        eventsList.setCellFactory(list -> new EventCell());
+        eventsList.setCellFactory(EventCell::new);
     }
 
     public void setControlUnit(ControlUnit controlUnit) {

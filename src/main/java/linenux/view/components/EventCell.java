@@ -8,8 +8,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
+import javafx.scene.control.ListView;
+import javafx.scene.layout.AnchorPane;
 import linenux.model.Task;
 import linenux.util.ArrayListUtil;
 import linenux.util.LocalDateTimeUtil;
@@ -25,14 +25,21 @@ public class EventCell extends ListCell<Task> {
     @FXML
     private Label tags;
 
-    public EventCell() {
+    @FXML
+    private AnchorPane container;
+
+    private ListView<Task> parent;
+
+    public EventCell(ListView<Task> parent) {
         super();
+
+        this.parent = parent;
 
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(TodoCell.class.getResource("/view/EventCell.fxml"));
             loader.setController(this);
-            VBox result = loader.load();
+            AnchorPane result = loader.load();
             this.setGraphic(result);
         } catch (IOException ioe) {
             ioe.printStackTrace();
@@ -43,26 +50,33 @@ public class EventCell extends ListCell<Task> {
     public void updateItem(Task task, boolean empty) {
         super.updateItem(task, empty);
 
+        this.container.getStyleClass().removeAll("no-tags", "overdue", "empty", "done");
+
         if (empty || task == null) {
             this.title.setText("");
             this.time.setText("");
             this.tags.setText("");
+            this.container.getStyleClass().add("empty");
         } else {
             ArrayList<String> tagsWithHash = new ArrayListUtil.ChainableArrayListUtil<>(task.getTags())
                     .map(tag -> "#" + tag).value();
 
+            if (tagsWithHash.isEmpty()) {
+                this.container.getStyleClass().add("no-tags");
+            }
+
+            if (this.isOverdue(task)) {
+                this.container.getStyleClass().add("overdue");
+            }
+
+            if (task.isDone()) {
+                this.container.getStyleClass().add("done");
+            }
+
             this.title.setText(task.getTaskName());
-            this.time.setText("From " + LocalDateTimeUtil.toString(task.getStartTime()) + " to "
+            this.time.setText(LocalDateTimeUtil.toString(task.getStartTime()) + " - "
                     + LocalDateTimeUtil.toString(task.getEndTime()));
             this.tags.setText(String.join(", ", tagsWithHash));
-
-            if (isOverdue(task)) {
-                this.time.setTextFill(Color.RED);
-            } else {
-                this.time.setTextFill(Color.MINTCREAM);
-            }
-            this.title.setTextFill(Color.MINTCREAM);
-            this.tags.setTextFill(Color.MINTCREAM);
         }
     }
 
@@ -72,5 +86,13 @@ public class EventCell extends ListCell<Task> {
             return now.isAfter(task.getEndTime());
         }
         return false;
+    }
+
+    @FXML
+    private void initialize() {
+        this.container.setMaxWidth(this.parent.getWidth());
+        this.parent.widthProperty().addListener(change -> {
+            this.container.setMaxWidth(this.parent.getWidth());
+        });
     }
 }
