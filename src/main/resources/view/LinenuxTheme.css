@@ -19,7 +19,7 @@
     -fx-font-size: 12pt;
     -fx-font-family: "Consolas";
     -fx-font-weight: bold;
-    -fx-text-fill: aqua;
+    -fx-text-fill: white;
     -fx-background-color: black;
     -fx-focus-color:transparent;
 }
