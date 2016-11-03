@@ -45,16 +45,22 @@ public class TernarySearchTree {
 
     /**
      * Returns a list of all strings with prefix in tree.
+     * Contract: input should not be null or whitespace
      */
     public ArrayList<String> getAllStringsWithPrefix(String prefix) {
-        Node prefixLastNode = getPrefixLastNode(prefix);
+        assert prefix != null;
+        assert !prefix.trim().isEmpty();
+
+        String prefixLowerCase = prefix.toLowerCase();
+
+        Node prefixLastNode = getPrefixLastNode(prefixLowerCase);
 
         if (prefixLastNode == null) {
-            return new ArrayList<String>();
+            return ArrayListUtil.fromSingleton(prefixLowerCase);
         }
 
         ArrayList<String> prefixList = new ArrayListUtil.ChainableArrayListUtil<>(searchNode(prefixLastNode))
-                .map(s -> prefix + s)
+                .map(s -> prefixLowerCase + s)
                 .value();
         return prefixList;
     }

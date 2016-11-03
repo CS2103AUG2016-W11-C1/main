@@ -24,17 +24,26 @@ public class AutoCompleteTest extends GuiTest {
         robot.pressAndRelease(KeyCode.TAB);
         verifyThat("#textField", textFieldHasText("tomorrow"));
         robot.pressAndRelease(KeyCode.ENTER);
+    }
 
-        robot.write("alias tomorrow tom");
+    /**
+     * Test that tab gives suggestion for words added into the schedule
+     */
+    @Test
+    public void testGiveSuggestionForWordsUsed() {
+        robot.write("add zebra wat\n");
         robot.pressAndRelease(KeyCode.ENTER);
 
-        robot.write("to");
+        robot.write("z");
         robot.pressAndRelease(KeyCode.TAB);
-        verifyThat("#textField", textFieldHasText("today"));
+        verifyThat("#textField", textFieldHasText("zebra"));
+
+        // to clear textField
+        robot.pressAndRelease(KeyCode.ENTER);
+
+        robot.write("w");
         robot.pressAndRelease(KeyCode.TAB);
-        verifyThat("#textField", textFieldHasText("tom"));
-        robot.pressAndRelease(KeyCode.TAB);
-        verifyThat("#textField", textFieldHasText("tomorrow"));
+        verifyThat("#textField", textFieldHasText("wat"));
     }
 
 }
