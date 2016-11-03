@@ -23,8 +23,6 @@ public class ExpandableResultBoxController {
     }
 
     @FXML
-    Button button;
-    @FXML
     TextArea textArea;
 
     private BooleanProperty expanded = new SimpleBooleanProperty(false);
@@ -64,10 +62,8 @@ public class ExpandableResultBoxController {
 
     private void render() {
         if (this.expanded.get()) {
-            this.button.setText("Hide");
             this.textArea.setPrefHeight(200);
         } else {
-            this.button.setText("Show");
             this.textArea.setPrefHeight(0);
         }
     }

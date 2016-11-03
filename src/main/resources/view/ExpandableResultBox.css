@@ -1,0 +1,21 @@
+.expandable-result-box {
+    -fx-border-color: transparent transparent #80deea transparent;
+    -fx-border-width: 3px;
+}
+
+.expandable-result-box .result {
+    -fx-text-fill: white;
+    -fx-background-color: #83bdb8;
+    -fx-border-color: #80deea transparent transparent transparent;
+}
+
+.expandable-result-box .result .content {
+    -fx-background-color: #51716e;
+    -fx-padding: 10px;
+}
+
+.expandable-result-box .btn-toggle {
+    -fx-background-color: #80deea;
+    -fx-background-radius: 3px 3px 0 0;
+    -fx-padding: -1px 5px -3px 5px;
+}
