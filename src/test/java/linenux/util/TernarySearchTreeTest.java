@@ -40,21 +40,15 @@ public class TernarySearchTreeTest {
     }
 
     /**
-     * Test that getAllStringWithPrefix() for empty string and null is empty.
-     */
-    @Test
-    public void testInvalidString() {
-        assertTrue(tree.getAllStringsWithPrefix(" ").isEmpty());
-        assertTrue(tree.getAllStringsWithPrefix(null).isEmpty());
-    }
-
-    /**
-     * Test that getAllStringWithPrefix() for invalid prefix is empty.
+     * Test that getAllStringWithPrefix() for invalid prefix returns the same
+     * string.
      */
     @Test
     public void testInvalidPrefix() {
         setUpData();
-        assertTrue(tree.getAllStringsWithPrefix("z").isEmpty());
+        ArrayList<String> searchResult = tree.getAllStringsWithPrefix("z");
+        assertEquals(searchResult.size(), 1);
+        assertTrue(searchResult.get(0).equals("z"));
     }
 
     /**
