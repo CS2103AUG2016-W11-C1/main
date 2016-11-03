@@ -40,7 +40,7 @@ public class TodoCell extends ListCell<Task> {
     public void updateItem(Task task, boolean empty) {
         super.updateItem(task, empty);
 
-        this.container.getStyleClass().removeAll("no-tags", "empty");
+        this.container.getStyleClass().removeAll("no-tags", "empty", "done");
 
         if (empty || task == null) {
             this.container.getStyleClass().add("empty");
@@ -56,6 +56,10 @@ public class TodoCell extends ListCell<Task> {
 
             if (tagsWithHash.isEmpty()) {
                 this.container.getStyleClass().add("no-tags");
+            }
+
+            if (task.isDone()) {
+                this.container.getStyleClass().add("done");
             }
         }
     }

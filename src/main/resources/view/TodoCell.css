@@ -21,6 +21,10 @@
     -fx-font-weight: bold;
 }
 
+.todoCell.done .name .text {
+    -fx-strikethrough: true;
+}
+
 .todoCell .tags {
     -fx-alignment: center-right;
     -fx-opacity: .5;
