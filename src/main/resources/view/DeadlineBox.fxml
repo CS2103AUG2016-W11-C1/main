@@ -9,7 +9,7 @@
    <children>
       <VBox prefHeight="400.0" prefWidth="600.0" spacing="10.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="6.67" AnchorPane.rightAnchor="6.67" AnchorPane.topAnchor="20.0">
          <children>
-            <Label prefWidth="600.0" styleClass="header" stylesheets="@LinenuxTheme.css" text="Deadline" />
+            <Label prefWidth="600.0" styleClass="header" stylesheets="@LinenuxTheme.css" text="Deadlines" />
             <ListView fx:id="deadlinesList" focusTraversable="false" mouseTransparent="false" prefHeight="340.0" prefWidth="600.0" styleClass="deadlineList" stylesheets="@LinenuxTheme.css" VBox.vgrow="ALWAYS" />
          </children>
       </VBox>
