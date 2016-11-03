@@ -1,6 +1,6 @@
 package linenux.gui;
 
-import linenux.config.Config;
+import linenux.config.JsonConfig;
 import org.junit.After;
 import org.junit.Before;
 import org.testfx.api.FxToolkit;
@@ -44,7 +44,7 @@ public abstract class GuiTest {
 
         public TestMain(String configFilePath, String scheduleFilePath) {
             super();
-            this.config = new Config(configFilePath, scheduleFilePath);
+            this.config = new JsonConfig(configFilePath, scheduleFilePath);
         }
     }
 }
