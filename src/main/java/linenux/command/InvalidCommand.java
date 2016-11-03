@@ -1,19 +1,26 @@
 package linenux.command;
 
-import java.util.ArrayList;
-
 import linenux.command.result.CommandResult;
+import linenux.control.ControlUnit;
 import linenux.util.StringsSimilarity;
 
 /**
  * Act as a fail-safe for invalid or unrecognized commands.
  */
 public class InvalidCommand extends AbstractCommand {
-    private ArrayList<Command> commands;
+    private ControlUnit controlUnit;
+
+    private CommandResult lastCommandResult = null;
+    private String lastCorrectedCommand = null;
 
     //@@author A0144915A
-    public InvalidCommand(ArrayList<Command> commands) {
-        this.commands = commands;
+    public InvalidCommand(ControlUnit controlUnit) {
+        this.controlUnit = controlUnit;
+        this.controlUnit.addPostExecuteListener((userInput, commandResult) -> {
+            if (commandResult != lastCommandResult) {
+                lastCorrectedCommand = null;
+            }
+        });
     }
 
     //@@author A0135788M
@@ -28,23 +35,36 @@ public class InvalidCommand extends AbstractCommand {
     //@@author A0144915A
     @Override
     public CommandResult execute(String userInput) {
+        if (userInput.trim().toLowerCase().equals("yes") && this.lastCorrectedCommand != null) {
+            CommandResult output = this.controlUnit.execute(this.lastCorrectedCommand);
+            this.lastCorrectedCommand = null;
+            this.lastCommandResult = null;
+            return output;
+        }
+
         String userCommand = extractCommand(userInput);
-        Command closestCommand = null;
+        String userArgument = extractArgument(userInput);
+        String suggestion = null;
         int bestScore = Integer.MAX_VALUE;
 
-        for (Command command: this.commands) {
-            int similarity = StringsSimilarity.compute(userCommand, command.getTriggerWord());
-            if (similarity < bestScore) {
-                closestCommand = command;
-                bestScore = similarity;
+        for (Command command: this.controlUnit.getCommandList()) {
+            for (String triggerWord: command.getTriggerWords()) {
+                int similarity = StringsSimilarity.compute(userCommand, command.getTriggerWord());
+                if (similarity < bestScore) {
+                    suggestion = triggerWord;
+                    bestScore = similarity;
+                }
             }
         }
 
-        if (closestCommand == null) {
-            return this.makeResponse();
+        if (suggestion == null) {
+            this.lastCommandResult = this.makeResponse();
         } else {
-            return this.makeResponseWithSuggestion(closestCommand.getTriggerWord());
+            this.lastCorrectedCommand = suggestion + " " + userArgument;
+            this.lastCommandResult = this.makeResponseWithSuggestion(suggestion);
         }
+
+        return this.lastCommandResult;
     }
 
     //@@author A0135788M
@@ -74,6 +94,16 @@ public class InvalidCommand extends AbstractCommand {
 
         if (parts.length > 0) {
             return parts[0];
+        } else {
+            return "";
+        }
+    }
+
+    private String extractArgument(String userInput) {
+        String[] parts = userInput.split("\\s+", 2);
+
+        if (parts.length == 2) {
+            return parts[1];
         } else {
             return "";
         }

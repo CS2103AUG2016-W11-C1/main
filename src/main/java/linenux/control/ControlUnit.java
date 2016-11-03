@@ -1,6 +1,7 @@
 package linenux.control;
 
 import java.util.ArrayList;
+import java.util.function.BiConsumer;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -43,6 +44,7 @@ public class ControlUnit {
     private CommandManager commandManager;
     private ObjectProperty<CommandResult> lastCommandResult = new SimpleObjectProperty<>();
     private Config config;
+    private ArrayList<BiConsumer<String, CommandResult>> postExecuteListeners = new ArrayList<>();
 
     //@@author A0135788M
     public ControlUnit(Config config) {
@@ -55,6 +57,12 @@ public class ControlUnit {
         this.initializeAliases();
     }
 
+    public ControlUnit(ScheduleStorage storage, Config config, CommandManager commandManager) {
+        this.scheduleStorage = storage;
+        this.config = config;
+        this.commandManager = commandManager;
+    }
+
     public CommandResult execute(String userInput) {
         CommandResult result = commandManager.delegateCommand(userInput);
         lastCommandResult.setValue(result);
@@ -62,6 +70,11 @@ public class ControlUnit {
         for (Command command: this.commandManager.getCommandList()) {
             this.config.setAliases(command.getTriggerWord(), command.getTriggerWords());
         }
+
+        for (BiConsumer<String, CommandResult> listener: this.postExecuteListeners) {
+            listener.accept(userInput, result);
+        }
+
         return result;
     }
 
@@ -102,6 +115,10 @@ public class ControlUnit {
         this.schedule.update(schedule);
     }
 
+    public void addPostExecuteListener(BiConsumer<String, CommandResult> listener) {
+        this.postExecuteListeners.add(listener);
+    }
+
     private void initializeAliases() {
         for (Command command: this.commandManager.getCommandList()) {
             command.setAliases(this.config.getAliases(command.getTriggerWord()));
@@ -135,6 +152,6 @@ public class ControlUnit {
         this.commandManager.addCommand(new UnaliasCommand(this.commandManager.getCommandList()));
         this.commandManager.addCommand(new ExitCommand());
 
-        this.commandManager.setCatchAllCommand(new InvalidCommand(this.commandManager.getCommandList()));
+        this.commandManager.setCatchAllCommand(new InvalidCommand(this));
     }
 }
