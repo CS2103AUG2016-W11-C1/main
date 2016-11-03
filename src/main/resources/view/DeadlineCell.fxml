@@ -8,9 +8,9 @@
    <children>
       <VBox styleClass="container" stylesheets="@DeadlineCell.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label fx:id="title" styleClass="name" stylesheets="@DeadlineCell.css" text="Label" />
-            <Label fx:id="time" styleClass="time" text="Label" />
-            <Label fx:id="tags" maxWidth="1.7976931348623157E308" styleClass="tags" text="Label" />
+            <Label fx:id="title" styleClass="name" stylesheets="@DeadlineCell.css" text="Label" wrapText="true" />
+            <Label fx:id="time" styleClass="time" text="Label" wrapText="true" />
+            <Label fx:id="tags" maxWidth="1.7976931348623157E308" styleClass="tags" text="Label" wrapText="true" />
          </children>
       </VBox>
    </children>

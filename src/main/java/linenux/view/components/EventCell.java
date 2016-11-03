@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
 import linenux.model.Task;
 import linenux.util.ArrayListUtil;
@@ -27,8 +28,12 @@ public class EventCell extends ListCell<Task> {
     @FXML
     private AnchorPane container;
 
-    public EventCell() {
+    private ListView<Task> parent;
+
+    public EventCell(ListView<Task> parent) {
         super();
+
+        this.parent = parent;
 
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -81,5 +86,13 @@ public class EventCell extends ListCell<Task> {
             return now.isAfter(task.getEndTime());
         }
         return false;
+    }
+
+    @FXML
+    private void initialize() {
+        this.container.setMaxWidth(this.parent.getWidth());
+        this.parent.widthProperty().addListener(change -> {
+            this.container.setMaxWidth(this.parent.getWidth());
+        });
     }
 }

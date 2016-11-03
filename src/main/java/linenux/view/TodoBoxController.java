@@ -25,7 +25,7 @@ public class TodoBoxController {
     @FXML
     private void initialize() {
         todosList.itemsProperty().setValue(todos);
-        todosList.setCellFactory(list -> new TodoCell());
+        todosList.setCellFactory(TodoCell::new);
     }
 
     public void setControlUnit(ControlUnit controlUnit) {

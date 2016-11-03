@@ -26,14 +26,23 @@
 
 .todolist, .deadlineList, .eventList {
     -fx-background-color: #83bdb8;
+    -fx-padding: 0;
 }
 
 .todolist .list-cell:even, .todolist .list-cell:odd,
 .deadlineList .list-cell:even, .deadlineList .list-cell:odd,
 .eventList .list-cell:even, .eventList .list-cell:odd {
     -fx-background-color: #83bdb8;
+    -fx-padding: 5px 0;
 }
 
 .list-view .list-cell:empty {
 	-fx-background-color: #83bdb8;
+}
+
+.list-view .scroll-bar:vertical .increment-arrow,
+.list-view .scroll-bar:vertical .decrement-arrow,
+.list-view .scroll-bar:vertical .increment-button,
+.list-view .scroll-bar:vertical .decrement-button {
+    -fx-padding:0;
 }

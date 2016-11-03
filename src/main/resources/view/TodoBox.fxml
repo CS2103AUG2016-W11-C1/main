@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -10,10 +9,7 @@
    <children>
       <VBox prefHeight="400.0" prefWidth="600.0" spacing="10.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="13.33333" AnchorPane.topAnchor="20.0">
          <children>
-            <Label prefWidth="600.0" styleClass="header" stylesheets="@LinenuxTheme.css" text="To-dos">
-               <padding>
-                  <Insets left="10.0" />
-               </padding></Label>
+            <Label prefWidth="600.0" styleClass="header" stylesheets="@LinenuxTheme.css" text="To-dos" />
             <ListView fx:id="todosList" centerShape="false" focusTraversable="false" mouseTransparent="false" prefHeight="340.0" prefWidth="600.0" snapToPixel="false" styleClass="todolist" stylesheets="@LinenuxTheme.css" VBox.vgrow="ALWAYS" />
          </children>
       </VBox>
