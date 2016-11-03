@@ -4,7 +4,30 @@ import java.util.ArrayList;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import linenux.command.AddCommand;
+import linenux.command.AliasCommand;
+import linenux.command.ClearCommand;
 import linenux.command.Command;
+import linenux.command.DeleteCommand;
+import linenux.command.DeleterCommand;
+import linenux.command.DoneCommand;
+import linenux.command.EditCommand;
+import linenux.command.EditReminderCommand;
+import linenux.command.ExitCommand;
+import linenux.command.FreeTimeCommand;
+import linenux.command.HelpCommand;
+import linenux.command.InvalidCommand;
+import linenux.command.ListCommand;
+import linenux.command.LoadCommand;
+import linenux.command.RemindCommand;
+import linenux.command.RenameCommand;
+import linenux.command.SaveCommand;
+import linenux.command.TodayCommand;
+import linenux.command.TomorrowCommand;
+import linenux.command.UnaliasCommand;
+import linenux.command.UndoCommand;
+import linenux.command.UndoneCommand;
+import linenux.command.ViewCommand;
 import linenux.command.result.CommandResult;
 import linenux.config.Config;
 import linenux.model.Schedule;
@@ -25,9 +48,10 @@ public class ControlUnit {
     public ControlUnit(Config config) {
         this.scheduleStorage = new XmlScheduleStorage(config);
         this.schedule = (this.scheduleStorage.hasScheduleFile()) ? this.scheduleStorage.loadScheduleFromFile() : new Schedule();
-        this.commandManager = new CommandManager(this);
+        this.commandManager = new CommandManager();
         this.config = config;
 
+        this.initializeCommands();
         this.initializeAliases();
     }
 
@@ -82,5 +106,35 @@ public class ControlUnit {
         for (Command command: this.commandManager.getCommandList()) {
             command.setAliases(this.config.getAliases(command.getTriggerWord()));
         }
+    }
+
+    private void initializeCommands() {
+        this.commandManager.addCommand(new AddCommand(this.schedule));
+        this.commandManager.addCommand(new EditReminderCommand(this.schedule));
+        this.commandManager.addCommand(new DeleterCommand(this.schedule));
+        this.commandManager.addCommand(new EditCommand(this.schedule));
+        this.commandManager.addCommand(new RenameCommand(this.schedule));
+        this.commandManager.addCommand(new DoneCommand(this.schedule));
+        this.commandManager.addCommand(new UndoneCommand(this.schedule));
+        this.commandManager.addCommand(new RemindCommand(this.schedule));
+        this.commandManager.addCommand(new DeleteCommand(this.schedule));
+        this.commandManager.addCommand(new ClearCommand(this.schedule));
+
+        this.commandManager.addCommand(new ListCommand(this.schedule));
+        this.commandManager.addCommand(new ViewCommand(this.schedule));
+        this.commandManager.addCommand(new TodayCommand(this.schedule));
+        this.commandManager.addCommand(new TomorrowCommand(this.schedule));
+
+        this.commandManager.addCommand(new SaveCommand(this));
+        this.commandManager.addCommand(new LoadCommand(this));
+
+        this.commandManager.addCommand(new UndoCommand(this.schedule));
+        this.commandManager.addCommand(new FreeTimeCommand(this.schedule));
+        this.commandManager.addCommand(new HelpCommand(this.commandManager.getCommandList()));
+        this.commandManager.addCommand(new AliasCommand(this.commandManager.getCommandList()));
+        this.commandManager.addCommand(new UnaliasCommand(this.commandManager.getCommandList()));
+        this.commandManager.addCommand(new ExitCommand());
+
+        this.commandManager.setCatchAllCommand(new InvalidCommand(this.commandManager.getCommandList()));
     }
 }
