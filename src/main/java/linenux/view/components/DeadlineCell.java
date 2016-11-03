@@ -45,7 +45,7 @@ public class DeadlineCell extends ListCell<Task> {
     public void updateItem(Task task, boolean empty) {
         super.updateItem(task, empty);
 
-        this.container.getStyleClass().removeAll("no-tags", "empty", "overdue");
+        this.container.getStyleClass().removeAll("no-tags", "empty", "overdue", "done");
 
         if (empty || task == null) {
             this.container.getStyleClass().add("empty");
@@ -61,7 +61,9 @@ public class DeadlineCell extends ListCell<Task> {
                 this.container.getStyleClass().add("no-tags");
             }
 
-            if (isOverdue(task)) {
+            if (task.isDone()) {
+                this.container.getStyleClass().add("done");
+            } else if (isOverdue(task)) {
                 this.container.getStyleClass().add("overdue");
             }
 

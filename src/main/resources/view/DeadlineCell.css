@@ -28,6 +28,10 @@
     -fx-font-weight: bold;
 }
 
+.deadlineCell.done .name .text {
+    -fx-strikethrough: true;
+}
+
 .deadlineCell.overdue .name {
     -fx-text-fill: #b71c1c;
 }
