@@ -42,6 +42,16 @@ public class InformationCommand extends AbstractCommand {
         return COMMAND_FORMAT;
     }
 
+    public Config getConfig() {
+        return this.config;
+    }
+
+    // @@author A0135788M
+    @Override
+    public String getPattern() {
+        return "(?i)^\\s*(" + getTriggerWordsPattern() + ")\\s*";
+    }
+
     private CommandResult makeConfigDetails() {
         StringBuilder builder = new StringBuilder();
 
