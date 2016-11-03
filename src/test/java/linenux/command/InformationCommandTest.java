@@ -11,7 +11,6 @@ import org.junit.Test;
 
 import linenux.command.result.CommandResult;
 import linenux.config.Config;
-import linenux.model.Schedule;
 
 /**
  * JUnit test for Information Command.
@@ -24,13 +23,12 @@ public class InformationCommandTest {
     public static final String SCHEDULE_FILENAME = "ScheduleTest.xml";
 
     private InformationCommand informationCommand;
-    private Schedule schedule;
     private Config config;
 
     @Before
     public void setupInformationCommand() {
-        this.schedule = new Schedule();
-        this.config = new Config();
+        this.config = new Config(VERSION_NO, DEFAULT_FILE_PATH + CONFIG_FILENAME,
+                DEFAULT_FILE_PATH + SCHEDULE_FILENAME);
         this.informationCommand = new InformationCommand(this.config);
     }
 
@@ -66,8 +64,8 @@ public class InformationCommandTest {
     @Test
     public void testInformationCommand() {
         CommandResult result = this.informationCommand.execute("information");
-        String output = "Version: " + this.config.getVersionNo() + "\nSchedule Location: \n"
-                + this.config.getScheduleFilePath() + "\n\nCurrentWorkingDirectory: \n"
+        String output = "Version: " + VERSION_NO + "\n\nSchedule Location: \n"
+                + DEFAULT_FILE_PATH + SCHEDULE_FILENAME + "\n\nCurrent Working Directory: \n"
                 + Paths.get("").toAbsolutePath().toString();
         assertEquals(output, result.getFeedback());
     }

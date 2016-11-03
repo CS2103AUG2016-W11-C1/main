@@ -18,6 +18,7 @@ public class InformationCommand extends AbstractCommand {
 
     public InformationCommand(Config config) {
         this.config = config;
+        this.TRIGGER_WORDS.add(TRIGGER_WORD);
     }
 
     @Override
@@ -42,10 +43,6 @@ public class InformationCommand extends AbstractCommand {
         return COMMAND_FORMAT;
     }
 
-    public Config getConfig() {
-        return this.config;
-    }
-
     // @@author A0135788M
     @Override
     public String getPattern() {
@@ -63,7 +60,7 @@ public class InformationCommand extends AbstractCommand {
         builder.append(config.getScheduleFilePath() + "\n");
         builder.append("\n");
 
-        builder.append("Current Working Directiory: \n");
+        builder.append("Current Working Directory: \n");
         builder.append(Paths.get("").toAbsolutePath().toString());
 
         return () -> builder.toString().trim();

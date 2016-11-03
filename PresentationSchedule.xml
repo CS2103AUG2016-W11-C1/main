@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Schedule>
+    <state>
+        <tasks>
+            <taskName>Learn Japanese</taskName>
+            <isDone>false</isDone>
+            <startTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <endTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <tags>
+                <tags>Tokyo</tags>
+            </tags>
+            <reminders/>
+        </tasks>
+        <tasks>
+            <taskName>Very Important Lunch Meeting</taskName>
+            <isDone>false</isDone>
+            <startTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <endTime>2016-11-03T12:00</endTime>
+            <tags/>
+            <reminders/>
+        </tasks>
+        <tasks>
+            <taskName>Meeting with Boss</taskName>
+            <isDone>false</isDone>
+            <startTime>2016-11-04T12:00</startTime>
+            <endTime>2016-11-04T14:00</endTime>
+            <tags/>
+            <reminders/>
+        </tasks>
+        <tasks>
+            <taskName>Play Games</taskName>
+            <isDone>false</isDone>
+            <startTime>2016-11-04T19:00</startTime>
+            <endTime>2016-11-04T20:00</endTime>
+            <tags/>
+            <reminders/>
+        </tasks>
+        <tasks>
+            <taskName>Read Newspaper</taskName>
+            <isDone>false</isDone>
+            <startTime>2016-11-04T08:00</startTime>
+            <endTime>2016-11-04T08:30</endTime>
+            <tags/>
+            <reminders/>
+        </tasks>
+        <tasks>
+            <taskName>Pack Luggage</taskName>
+            <isDone>false</isDone>
+            <startTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <endTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <tags>
+                <tags>Tokyo</tags>
+            </tags>
+            <reminders/>
+        </tasks>
+        <tasks>
+            <taskName>Read About Famous Restaurants</taskName>
+            <isDone>false</isDone>
+            <startTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <endTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <tags>
+                <tags>Tokyo</tags>
+            </tags>
+            <reminders/>
+        </tasks>
+        <tasks>
+            <taskName>Jio Friends</taskName>
+            <isDone>false</isDone>
+            <startTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <endTime>2016-12-05T00:00</endTime>
+            <tags>
+                <tags>Tokyo</tags>
+            </tags>
+            <reminders/>
+        </tasks>
+        <tasks>
+            <taskName>Discover Atlantis</taskName>
+            <isDone>false</isDone>
+            <startTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <endTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <tags/>
+            <reminders/>
+        </tasks>
+        <tasks>
+            <taskName>Find The Meaning of Life</taskName>
+            <isDone>false</isDone>
+            <startTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <endTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <tags>
+                <tags>42</tags>
+            </tags>
+            <reminders/>
+        </tasks>
+        <tasks>
+            <taskName>Spam K-Drama</taskName>
+            <isDone>false</isDone>
+            <startTime>2016-12-01T15:00</startTime>
+            <endTime>2016-12-01T18:00</endTime>
+            <tags/>
+            <reminders/>
+        </tasks>
+        <tasks>
+            <taskName>Report</taskName>
+            <isDone>false</isDone>
+            <startTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <endTime>2016-11-04T18:00</endTime>
+            <tags/>
+            <reminders/>
+        </tasks>
+        <tasks>
+            <taskName>Renew Passport</taskName>
+            <isDone>false</isDone>
+            <startTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <endTime>2016-12-12T18:00</endTime>
+            <tags>
+                <tags>tokyo</tags>
+            </tags>
+            <reminders/>
+        </tasks>
+    </state>
+</Schedule>
