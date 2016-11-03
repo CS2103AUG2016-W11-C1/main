@@ -7,3 +7,10 @@
 .result .label {
     -fx-text-fill: white;
 }
+
+.result .btn-close {
+    -fx-background-color: white;
+    -fx-text-fill: #00838f;
+    -fx-background-radius: 2px;
+    -fx-padding: 0 3px;
+}
