@@ -41,7 +41,10 @@ public class TodoBoxController {
 
     private void updateTodos() {
         ArrayList<Task> tasks = this.controlUnit.getSchedule().getTaskList();
-        ArrayList<Task> todos = filterToDos(tasks);
+        ArrayList<Task> undoneTasks = new ArrayListUtil.ChainableArrayListUtil<>(tasks)
+                .filter(((Predicate<Task>) Task::isDone).negate())
+                .value();
+        ArrayList<Task> todos = filterToDos(undoneTasks);
         this.todos.setAll(todos);
     }
 
