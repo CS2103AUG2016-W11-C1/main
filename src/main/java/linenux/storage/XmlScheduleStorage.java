@@ -17,6 +17,7 @@ import linenux.model.Schedule;
 import linenux.model.adapted.AdaptedSchedule;
 import linenux.util.LogsCenter;
 import linenux.util.ThrowableUtil;
+import linenux.view.Alerts;
 
 //@@author A0135788M
 public class XmlScheduleStorage implements ScheduleStorage {
@@ -45,8 +46,8 @@ public class XmlScheduleStorage implements ScheduleStorage {
             output = aSchedule.convertToModel();
         } catch (Exception e) {
             logger.warning(ThrowableUtil.getStackTrace(e));
-            Alert alert = throwAlert("Loading Error", "Could not load data from file: \n" + this.getFilePath().toString());
-            alert.showAndWait();
+            Alerts.alert("Error Reading Schedule", "Schedule cannot be read from\n" + this.getFilePath().toString() + "\nPlease use the load command to load another schedule.");
+            output = new Schedule();
         }
 
         logger.info("Done loading schedule from " + this.getFilePath());
@@ -71,8 +72,7 @@ public class XmlScheduleStorage implements ScheduleStorage {
             m.marshal(aSchedule, this.getFilePath().toFile());
         } catch (Exception e) {
             logger.warning(ThrowableUtil.getStackTrace(e));
-            Alert alert = throwAlert("Saving Error", "Could not save data to file: \n" + this.getFilePath().toString());
-            alert.showAndWait();
+            Alerts.alert("Error Writing Schedule", "Schedule cannot be saved to\n" + this.getFilePath().toString() + "\nPlease use the save command to specify another location.");
         }
 
         logger.info("Done saving schedule to " + this.getFilePath());
