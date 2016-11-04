@@ -1,6 +1,7 @@
 package linenux.command;
 
 import java.nio.file.Paths;
+import java.util.ArrayList;
 
 import linenux.command.result.CommandResult;
 import linenux.config.Config;
@@ -56,12 +57,19 @@ public class InformationCommand extends AbstractCommand {
         builder.append(config.getVersionNo() + "\n");
         builder.append("\n");
 
-        builder.append("Schedule Location: \n");
+        builder.append("Current Working Directory: \n");
+        builder.append(Paths.get("").toAbsolutePath().toString());
+        builder.append("\n");
+
+        builder.append("Current Schedule Location: \n");
         builder.append(config.getScheduleFilePath() + "\n");
         builder.append("\n");
 
-        builder.append("Current Working Directory: \n");
-        builder.append(Paths.get("").toAbsolutePath().toString());
+        builder.append("Saved Schedule Locations: \n");
+        ArrayList<String> savedScheduleLocations = new ArrayList<String>(config.getScheduleLocations());
+        for (String s : savedScheduleLocations) {
+            builder.append(s + "\n");
+        }
 
         return () -> builder.toString().trim();
     }

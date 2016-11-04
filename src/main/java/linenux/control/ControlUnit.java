@@ -83,4 +83,8 @@ public class ControlUnit {
             command.setAliases(this.config.getAliases(command.getTriggerWord()));
         }
     }
+
+    private void saveScheduleLocation(String newLocation) {
+
+    }
 }
