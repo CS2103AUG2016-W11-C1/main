@@ -1,6 +1,7 @@
 package linenux;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -10,14 +11,17 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import linenux.config.Config;
 import linenux.config.JsonConfig;
+import linenux.util.LogsCenter;
+import linenux.util.ThrowableUtil;
 import linenux.view.MainWindowController;
 
 /**
  * Main program for Linenux.
  */
 public class Main extends Application implements Stoppable {
-
     public static final String APP_NAME = "Linenux";
+
+    private static Logger logger = LogsCenter.getLogger(Main.class);
 
     protected Config config = new JsonConfig();
 
@@ -29,11 +33,13 @@ public class Main extends Application implements Stoppable {
     //@@author A0135788M
     @Override
     public void start(Stage primaryStage) throws Exception {
+        logger.info("Setting up main window");
         setupMainWindow(primaryStage);
     }
 
     @Override
     public void stop() throws Exception {
+        logger.info("Stopping the application");
         super.stop();
         Platform.exit();
         System.exit(0);
@@ -48,7 +54,7 @@ public class Main extends Application implements Stoppable {
             primaryStage.setScene(scene);
             primaryStage.show();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.severe(ThrowableUtil.getStackTrace(e));
         }
     }
 

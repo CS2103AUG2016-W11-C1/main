@@ -34,6 +34,7 @@ import linenux.config.Config;
 import linenux.model.Schedule;
 import linenux.storage.ScheduleStorage;
 import linenux.storage.XmlScheduleStorage;
+import linenux.util.LogsCenter;
 
 /**
  * Controls data flow for the entire application.
