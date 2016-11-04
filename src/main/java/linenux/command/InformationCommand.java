@@ -58,7 +58,7 @@ public class InformationCommand extends AbstractCommand {
         builder.append("\n");
 
         builder.append("Current Working Directory: \n");
-        builder.append(Paths.get("").toAbsolutePath().toString());
+        builder.append(Paths.get("").toAbsolutePath().toString() + "\n");
         builder.append("\n");
 
         builder.append("Current Schedule Location: \n");

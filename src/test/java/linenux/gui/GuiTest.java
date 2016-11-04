@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.testfx.api.FxToolkit;
 
 import linenux.Main;
-import linenux.config.Config;
+import linenux.config.JsonConfig;
 import linenux.gui.GuiTest.TestMain;
 import linenux.helpers.BetterRobot;
 
@@ -46,7 +46,7 @@ public abstract class GuiTest {
 
         public TestMain(String ver, String configFilePath, String scheduleFilePath) {
             super();
-            this.config = new Config(ver, configFilePath, scheduleFilePath);
+            this.config = new JsonConfig(ver, configFilePath, scheduleFilePath);
         }
     }
 }

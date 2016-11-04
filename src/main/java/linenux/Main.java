@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import linenux.config.Config;
+import linenux.config.JsonConfig;
 import linenux.view.MainWindowController;
 
 /**
@@ -18,7 +19,7 @@ public class Main extends Application implements Stoppable {
 
     public static final String APP_NAME = "Linenux";
 
-    protected Config config = new Config();
+    protected Config config = new JsonConfig();
 
     public static void main(String args) {
         launch(args);
