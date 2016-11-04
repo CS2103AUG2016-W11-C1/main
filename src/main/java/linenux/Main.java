@@ -3,7 +3,6 @@ package linenux;
 import java.util.logging.Logger;
 
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -41,6 +40,7 @@ public class Main extends Application implements Stoppable {
     public void stop() throws Exception {
         logger.info("Stopping the application");
         super.stop();
+        System.exit(0);
     }
 
     //@@author A0144915A
