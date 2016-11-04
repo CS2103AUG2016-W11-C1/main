@@ -13,13 +13,11 @@ import java.util.logging.Logger;
 
 import linenux.util.LogsCenter;
 import linenux.util.ThrowableUtil;
+import linenux.view.Alerts;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
-
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 
 /**
  * Creates the configuration file.
@@ -154,15 +152,6 @@ public class JsonConfig implements Config{
         this.saveConfig();
     }
 
-    // @@author A0135788M
-    private Alert throwAlert(String title, String message) {
-        Alert alert = new Alert(AlertType.ERROR);
-        alert.setTitle(title);
-        alert.setContentText(message);
-        return alert;
-    }
-
-    // @@author A0144915A
     private JSONObject getConfigFile() {
         if (this.configFile == null) {
             this.configFile = new JSONObject();
@@ -171,9 +160,12 @@ public class JsonConfig implements Config{
                 JSONTokener tokener = new JSONTokener(new FileReader(configFilePath.toString()));
                 this.configFile = new JSONObject(tokener);
             } catch (IOException e) {
-                throwAlert("Reading File Error", "Could not read file at: \n" + configFilePath.toString());
+                Alerts.alertAndDie("Error Reading Config File", "Config file is not readable at\n" + configFilePath.toString());
             } catch (JSONException e) {
-                throwAlert("Parsing Error", "Could not parse file at: \n" + configFilePath.toString());
+                boolean recover = Alerts.alertAndConfirm("Error Parsing Config File", "Config file cannot be parsed at\n" + configFilePath + "\nOverwrite with defaults?");
+                if (!recover) {
+                    System.exit(1);
+                }
             }
         }
 
@@ -189,7 +181,7 @@ public class JsonConfig implements Config{
             file.close();
         } catch (IOException i) {
             logger.severe(ThrowableUtil.getStackTrace(i));
-            throwAlert("Creating File Error", "Could not create file at: \n" + configFilePath.toString());
+            Alerts.alertAndDie("Error Saving Config File", "Config file cannot be saved at " + configFilePath.toString());
         }
         logger.info("Done saving config");
     }

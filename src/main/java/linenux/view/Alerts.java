@@ -1,7 +1,7 @@
 package linenux.view;
 
-import javafx.application.Platform;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 
 //@@author A0144915A
 public class Alerts {
@@ -10,6 +10,13 @@ public class Alerts {
         alert.setTitle(title);
         alert.setContentText(contentText);
         alert.showAndWait();
-        Platform.exit();
+        System.exit(1);
+    }
+
+    public static boolean alertAndConfirm(String title, String contentText) {
+        Alert alert = new Alert(Alert.AlertType.ERROR, contentText, ButtonType.YES, ButtonType.NO);
+        alert.setTitle(title);
+        return alert.showAndWait().orElse(ButtonType.NO) == ButtonType.YES;
+
     }
 }
