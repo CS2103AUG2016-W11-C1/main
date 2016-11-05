@@ -17,6 +17,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 //@@author A0144915A
+/**
+ * Controller for the overlay results, which is the set of shorter {@code CommandResult}.
+ */
 public class ResultsOverlayController {
     @FXML
     private VBox container;
@@ -26,8 +29,11 @@ public class ResultsOverlayController {
     private ObservableList<String> messages = FXCollections.observableArrayList();
     private ArrayList<TimerTask> pendingTasks = new ArrayList<>();
 
+    /**
+     * Update the application {@code ControlUnit}.
+     * @param controlUnit The new {@code ControlUnit}.
+     */
     public void setControlUnit(ControlUnit controlUnit) {
-        // TODO remove listeners from old control unit
         this.controlUnit = controlUnit;
         this.controlUnit.getLastCommandResultProperty().addListener((change) -> {
             CommandResult lastResult = this.controlUnit.getLastCommandResultProperty().get();
@@ -43,6 +49,9 @@ public class ResultsOverlayController {
         });
     }
 
+    /**
+     * Initializes subviews.
+     */
     @FXML
     private void initialize() {
         this.messages.addListener((ListChangeListener<? super String>) (change) -> {
@@ -50,6 +59,9 @@ public class ResultsOverlayController {
         });
     }
 
+    /**
+     * Ensure that the UI is in the correct state.
+     */
     private void render() {
         ArrayList<HBox> children = new ArrayListUtil.ChainableArrayListUtil<>(new ArrayList<>(messages))
                 .mapWithIndex((message, i) -> {
@@ -65,6 +77,9 @@ public class ResultsOverlayController {
         this.container.getChildren().setAll(children);
     }
 
+    /**
+     * @return A {@code TimerTask} that will remove the latest {@code CommandResult} when executed.
+     */
     private TimerTask autoRemovalTask() {
         return new TimerTask() {
             @Override

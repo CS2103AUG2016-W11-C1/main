@@ -14,7 +14,7 @@ import linenux.util.Either;
 
 //@@author A0140702X
 /**
- * Parser for the argument portion of add command.
+ * Parser for the argument portion of list command.
  **/
 public class ListArgumentFilter {
     public static String COMMAND_FORMAT;
@@ -22,12 +22,26 @@ public class ListArgumentFilter {
 
     private TimeParserManager timeParserManager;
 
+    /**
+     * Public constructor.
+     * @param timeParserManager A {@code TimeParserManager} representing all accepted time format.
+     * @param commandFormat A {@code String} representing the format of the command that is using this class.
+     * @param callouts A {@code String} representing the extra message shown to the user in case of errors.
+     */
     public ListArgumentFilter(TimeParserManager timeParserManager, String commandFormat, String callouts) {
         this.timeParserManager = timeParserManager;
         ListArgumentFilter.COMMAND_FORMAT = commandFormat;
         ListArgumentFilter.CALLOUTS = callouts;
     }
 
+    /**
+     * Filter the list of tasks based on argument specified by the user.
+     * @param argument The argument, which is part of the user input.
+     * @param tasks The search space.
+     * @param doneOnly Set this to true if and only if we are interested in only done tasks.
+     * @return An {@code Either}. If search was successful, the left slot will contain the list of filtered tasks.
+     * Otherwise, the right slot will contain a {@code CommandResult} describing the failure.
+     */
     public Either<ArrayList<Task>, CommandResult> filter(String argument, ArrayList<Task> tasks, Boolean doneOnly) {
         ArrayList<Task> filteredTasks = tasks;
 
@@ -105,6 +119,13 @@ public class ListArgumentFilter {
         return Either.left(filteredTasks);
     }
 
+    /**
+     * Filter the list of reminders based on user argument.
+     * @param argument A {@code String} representing the argument given by the user.
+     * @param reminders The list of {@code Reminder} to search from. This is the search space.
+     * @return An {@Either}. If search is successful, its left slot is a list of {@code Reminder}. Otherwise, its
+     * right slot is a {@code CommandResult} describing the failure.
+     */
     public Either<ArrayList<Reminder>, CommandResult> filterReminders(String argument, ArrayList<Reminder> reminders) {
         ArrayList<Reminder> filteredReminders = new ArrayListUtil.ChainableArrayListUtil<>(reminders)
                             .sortBy(Reminder::getTimeOfReminder)
@@ -154,6 +175,10 @@ public class ListArgumentFilter {
         return Either.left(filteredReminders);
     }
 
+    /**
+     * @param tasks An {@code ArrayList} of {@code Task}.
+     * @return Tasks that are not marked as done
+     */
     public ArrayList<Task> filterUndoneTasks(ArrayList<Task> tasks) {
         ArrayList<Task> undoneTasks = new ArrayListUtil.ChainableArrayListUtil<>(tasks)
                 .filter(Task::isNotDone)
@@ -162,6 +187,12 @@ public class ListArgumentFilter {
         return undoneTasks;
     }
 
+    /**
+     * Attempts to parse a start time string.
+     * @param argument The {@code String} to parse.
+     * @return An {@code Either}. Its left slot is a {@code LocalDateTime} if {@code argument} can be parsed. Otherwise,
+     * its right slot contains a {@code CommandResult} describing the failure.
+     */
     private Either<LocalDateTime, CommandResult> extractStartTime(String argument) {
         Matcher matcher = Pattern.compile("(^|.*? )st/(?<startTime>.*?)(\\s+(#|et)/.*)?").matcher(argument);
 
@@ -172,6 +203,12 @@ public class ListArgumentFilter {
         }
     }
 
+    /**
+     * Attempts to parse a end time string.
+     * @param argument The {@code String} to parse.
+     * @return An {@code Either}. Its left slot is a {@code LocalDateTime} if {@code argument} can be parsed. Otherwise,
+     * its right slot contains a {@code CommandResult} describing the failure.
+     */
     private Either<LocalDateTime, CommandResult> extractEndTime(String argument) {
         Matcher matcher = Pattern.compile("(^|.*? )et/(?<endTime>.*?)(\\s+(#|st)/.*)?$").matcher(argument);
 
@@ -182,6 +219,12 @@ public class ListArgumentFilter {
         }
     }
 
+    /**
+     * Attempts to extract tags from user argument.
+     * @param argument A {@code String} representing the argument given by the user.
+     * @return An {@code Either}. Its left slot is a {@code ArrayList} of {@code String} representing the tags, if
+     * parsing is successful. Otherwise, its right slot will contain a {@CommandResult} describing the failure.
+     */
     private Either<ArrayList<String>, CommandResult> extractTags(String argument) {
         Matcher matcher = Pattern.compile("(?=(^|.*? )#/(?<tags>.*?)(\\s+(st|et|#)/.*)?$)").matcher(argument);
         ArrayList<String> tagList = new ArrayList<>();
@@ -200,6 +243,12 @@ public class ListArgumentFilter {
         return Either.left(tagList);
     }
 
+    /**
+     * A generic helper used to parse a date time string.
+     * @param string A {@code string} to parse.
+     * @return An {@Either}. Its left slot is a {@code LocalDateTime} if {@code string} can be parsed. Otherwise, its
+     * right slot is a {@code CommandResult} describing the failure.
+     */
     private Either<LocalDateTime, CommandResult> parseDateTime(String string) {
         if (this.timeParserManager.canParse(string)) {
             return Either.left(this.timeParserManager.delegateTimeParser(string));
@@ -208,14 +257,24 @@ public class ListArgumentFilter {
         }
     }
 
+    /**
+     * @return A {@code CommandResult} when the given argument is invalid.
+     */
     private CommandResult makeInvalidArgumentResult() {
         return () -> "Invalid arguments.\n\n" + COMMAND_FORMAT + "\n\n" + CALLOUTS;
     }
 
+    /**
+     * @param dateTime A {@code String} extracted from user argument that is supposed to represent a date time.
+     * @return A {@code CommandResult} when {@code dateTime} is not a valid date time {@code String}.
+     */
     private CommandResult makeInvalidDateTimeResult(String dateTime) {
         return () -> "Cannot parse \"" + dateTime + "\".";
     }
 
+    /**
+     * @return A {@code CommandResult} when the end time specified by the user comes before the start time.
+     */
     private CommandResult makeEndTimeBeforeStartTimeResult() {
         return () -> "End time cannot come before start time.";
     }

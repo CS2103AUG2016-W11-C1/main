@@ -24,6 +24,10 @@ public class AddCommand extends AbstractCommand {
     private AddArgumentParser addArgumentParser;
 
     //@@author A0144915A
+    /**
+     * Constructs an {@code AddCommand}.
+     * @param schedule The {@code Schedule} to add new {@code Task} to.
+     */
     public AddCommand(Schedule schedule) {
         this.schedule = schedule;
         this.timeParserManager = new TimeParserManager(new ISODateWithTimeParser(), new StandardDateWithTimeParser(), new TodayWithTimeParser(), new TomorrowWithTimeParser());
@@ -31,6 +35,12 @@ public class AddCommand extends AbstractCommand {
         this.TRIGGER_WORDS.add(TRIGGER_WORD);
     }
 
+    /**
+     * Executes the command based on {@code userInput}. This method operates under the assumption that
+     * {@code respondTo(userInput)} is {@code true}.
+     * @param userInput A {@code String} representing the user input.
+     * @return A {@code CommandResult} representing the result of the command.
+     */
     @Override
     public CommandResult execute(String userInput) {
         assert userInput.matches(getPattern());
@@ -55,26 +65,43 @@ public class AddCommand extends AbstractCommand {
     }
 
     //@@author A0135788M
+    /**
+     * @return A {@code String} representing the default command word.
+     */
     @Override
     public String getTriggerWord() {
         return TRIGGER_WORD;
     }
 
+    /**
+     * @return A {@code String} describing what this {@code Command} does.
+     */
     @Override
     public String getDescription() {
         return DESCRIPTION;
     }
 
+    /**
+     * @return A {@code String} describing the format that this {@code Command} expects.
+     */
     @Override
     public String getCommandFormat() {
         return COMMAND_FORMAT;
     }
 
     //@@author A0144915A
+    /**
+     * @param task The newly created {@code Task}.
+     * @return A {@code CommandResult} indicating that a new {@code Task} is created.
+     */
     private CommandResult makeResult(Task task) {
         return () -> "Added " + task.toString();
     }
 
+    /**
+     * @param task The {@code Task} that the user wants to create.
+     * @return A {@code CommandResult} indicating that {@code task} is duplicated.
+     */
     private CommandResult makeDuplicateTaskResult(Task task) {
         return () -> task.toString() + " already exists in the schedule!";
     }

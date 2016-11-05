@@ -19,7 +19,7 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 /**
- * Creates the configuration file.
+ * A JSON-backed config file.
  */
 public class JsonConfig implements Config{
     public static final String VERSION_NO = "v0.5";
@@ -78,6 +78,9 @@ public class JsonConfig implements Config{
     }
 
     // @@author A0127694U
+    /**
+     * @return The version of the program that created the config file.
+     */
     @Override
     public String getVersionNo() {
         try {
@@ -88,6 +91,9 @@ public class JsonConfig implements Config{
     }
 
     // @@author A0135788M
+    /**
+     * @return The absolute path to the current schedule file.
+     */
     @Override
     public String getScheduleFilePath() {
         try {
@@ -97,18 +103,28 @@ public class JsonConfig implements Config{
         }
     }
 
+    /**
+     * @param path The absolute path to the new schedule file.
+     */
     @Override
     public void setScheduleFilePath(String path) {
         this.getConfigFile().put(SCHEDULE_PATH_KEY, path);
         this.saveConfig();
     }
 
+    /**
+     * @return Whether or not the config file is present.
+     */
     @Override
     public boolean hasConfigFile() {
         return Files.exists(configFilePath);
     }
 
     // @@author A0144915A
+    /**
+     * @param triggerWord The original trigger word of a command.
+     * @return A {@code Collection} of aliases for that command.
+     */
     @Override
     public Collection<String> getAliases(String triggerWord) {
         JSONObject configFile = this.getConfigFile();
@@ -135,6 +151,10 @@ public class JsonConfig implements Config{
         return output;
     }
 
+    /**
+     * @param triggerWord The original trigger word of a command.
+     * @param aliases A {@code Collection} of aliases for that command.
+     */
     @Override
     public void setAliases(String triggerWord, Collection<String> aliases) {
         JSONObject aliasesMap;
@@ -151,6 +171,10 @@ public class JsonConfig implements Config{
         this.saveConfig();
     }
 
+    /**
+     * Lazily instantiate the {@code configFile} object.
+     * @return A {@code JSONObject} representing the config.
+     */
     private JSONObject getConfigFile() {
         if (this.configFile == null) {
             this.configFile = new JSONObject();
@@ -171,6 +195,9 @@ public class JsonConfig implements Config{
         return this.configFile;
     }
 
+    /**
+     * Save the config into a JSON file.
+     */
     private void saveConfig() {
         logger.info("Saving config");
         try {

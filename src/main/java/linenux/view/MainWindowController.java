@@ -16,6 +16,9 @@ import linenux.util.LogsCenter;
 import linenux.util.ThrowableUtil;
 
 //@@author A0144915A
+/**
+ * Controller for the main window.
+ */
 public class MainWindowController {
     private static Logger logger = LogsCenter.getLogger(MainWindowController.class);
 
@@ -30,10 +33,17 @@ public class MainWindowController {
 
     private ControlUnit controlUnit;
 
+    /**
+     * Instatiate {@code MainWindowController} using application {@code Config}.
+     * @param config The application config.
+     */
     public MainWindowController(Config config) {
         this.controlUnit = new ControlUnit(config);
     }
 
+    /**
+     * Initializes subviews.
+     */
     @FXML
     private void initialize() {
         logger.info("Initializing MainWindowController");
@@ -52,6 +62,10 @@ public class MainWindowController {
         logger.info("Done initializing MainWindowController");
     }
 
+    /**
+     * Setup todo box.
+     * @throws Exception Thrown when setup fails.
+     */
     private void setupTodoBox() throws Exception {
         logger.info("Setting up todo box");
 
@@ -72,6 +86,10 @@ public class MainWindowController {
         logger.info("Done setting up todo box");
     }
 
+    /**
+     * Setup deadline box.
+     * @throws Exception Thrown when setup fails.
+     */
     private void setupDeadlineBox() throws Exception {
         logger.info("Setting up deadline box");
 
@@ -92,6 +110,10 @@ public class MainWindowController {
         logger.info("Done setting up deadline box");
     }
 
+    /**
+     * Setup event box.
+     * @throws Exception Thrown when setup fails.
+     */
     private void setupEventBox() throws Exception {
         logger.info("Setting up event box");
 
@@ -112,6 +134,10 @@ public class MainWindowController {
         logger.info("Done setting up event box");
     }
 
+    /**
+     * Setup command box.
+     * @throws Exception Thrown when setup fails.
+     */
     private void setupCommandBox() throws Exception {
         logger.info("Setting up command box");
 
@@ -134,6 +160,10 @@ public class MainWindowController {
         logger.info("Done setting up command box");
     }
 
+    /**
+     * Setup expandable command result box.
+     * @throws Exception Thrown when setup fails.
+     */
     private void setupExpandableCommandResult() throws Exception {
         logger.info("Setting up expandable command result");
 
@@ -152,6 +182,10 @@ public class MainWindowController {
         logger.info("Done setting up expandable command result");
     }
 
+    /**
+     * Setup results overlay.
+     * @throws Exception Thrown when setup fails.
+     */
     private void setupResultsOverlay() throws Exception {
         logger.info("Setting up results overlay");
 

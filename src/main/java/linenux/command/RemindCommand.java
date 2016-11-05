@@ -46,6 +46,12 @@ public class RemindCommand extends AbstractCommand {
     }
 
     @Override
+    /**
+     * Executes the command based on {@code userInput}. This method operates under the assumption that
+     * {@code respondTo(userInput)} is {@code true}.
+     * @param userInput A {@code String} representing the user input.
+     * @return A {@code CommandResult} representing the result of the command.
+     */
     public CommandResult execute(String userInput) {
         assert userInput.matches(getPattern());
         assert this.schedule != null;
@@ -72,11 +78,19 @@ public class RemindCommand extends AbstractCommand {
     }
 
     //@@author A0135788M
+    /**
+     * @return {@code true} if and only if this {@code Command} is awaiting for user response.
+     */
     @Override
     public boolean awaitingUserResponse() {
         return requiresUserResponse;
     }
 
+    /**
+     * Process the response given by the user.
+     * @param userInput {@code String} representing the user response.
+     * @return A {@code CommandResult}, which is the result of processing {@code userInput}.
+     */
     @Override
     public CommandResult getUserResponse(String userInput) {
         assert this.parseResult != null;
@@ -103,16 +117,25 @@ public class RemindCommand extends AbstractCommand {
     }
 
     //@@author A0135788M
+    /**
+     * @return A {@code String} representing the default command word.
+     */
     @Override
     public String getTriggerWord() {
         return TRIGGER_WORD;
     }
 
+    /**
+     * @return A {@code String} describing what this {@code Command} does.
+     */
     @Override
     public String getDescription() {
         return DESCRIPTION;
     }
 
+    /**
+     * @return A {@code String} describing the format that this {@code Command} expects.
+     */
     @Override
     public String getCommandFormat() {
         return COMMAND_FORMAT;
@@ -129,12 +152,21 @@ public class RemindCommand extends AbstractCommand {
         }
     }
 
+    /**
+     * Updates the user response status.
+     * @param requiresUserResponse Whether or not this {@code Command} is expecting user response.
+     * @param foundTasks An {@code ArrayList} of {@code Task} matching some search criteria.
+     * @param result The result of parsing user argument.
+     */
     private void setResponse(boolean requiresUserResponse, ArrayList<Task> foundTasks, GenericParser.GenericParserResult result) {
         this.requiresUserResponse = requiresUserResponse;
         this.foundTasks = foundTasks;
         this.parseResult = result;
     }
 
+    /**
+     * @return A {@code CommandResult} indicating that the user does not specify a keywords.
+     */
     private CommandResult makeNoKeywordsResult() {
         return () -> "Invalid arguments.\n\n" + COMMAND_FORMAT + "\n\n" + CALLOUTS;
     }
@@ -146,10 +178,17 @@ public class RemindCommand extends AbstractCommand {
                 + task.getTaskName();
     }
 
+    /**
+     * @return A {@code CommandResult} indicating that the remind operation is cancelled.
+     */
     private CommandResult makeCancelledResult() {
         return () -> "OK! Not adding new reminder.";
     }
 
+    /**
+     * @param userInput A {@code String} representing the user response.
+     * @return A {@code CommandResult} indicating that {@code userInput} is invalid.
+     */
     private CommandResult makeInvalidUserResponse(String userInput) {
         return () -> {
             StringBuilder builder = new StringBuilder();

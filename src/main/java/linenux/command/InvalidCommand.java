@@ -33,6 +33,12 @@ public class InvalidCommand extends AbstractCommand {
     }
 
     //@@author A0144915A
+    /**
+     * Executes the command based on {@code userInput}. This method operates under the assumption that
+     * {@code respondTo(userInput)} is {@code true}.
+     * @param userInput A {@code String} representing the user input.
+     * @return A {@code CommandResult} representing the result of the command.
+     */
     @Override
     public CommandResult execute(String userInput) {
         if (userInput.trim().toLowerCase().equals("yes") && this.lastCorrectedCommand != null) {
@@ -68,16 +74,25 @@ public class InvalidCommand extends AbstractCommand {
     }
 
     //@@author A0135788M
+    /**
+     * @return A {@code String} representing the default command word.
+     */
     @Override
     public String getTriggerWord() {
         return null;
     }
 
+    /**
+     * @return A {@code String} describing what this {@code Command} does.
+     */
     @Override
     public String getDescription() {
         return null;
     }
 
+    /**
+     * @return A {@code String} describing the format that this {@code Command} expects.
+     */
     @Override
     public String getCommandFormat() {
         return null;
@@ -89,6 +104,11 @@ public class InvalidCommand extends AbstractCommand {
     }
 
     //@@author A0144915A
+    /**
+     * Extract the command trigger word from {@code userInput}.
+     * @param userInput A {@code String} representing the user input.
+     * @return A {@code String}, which is the command trigger word.
+     */
     private String extractCommand(String userInput) {
         String[] parts = userInput.split(" ");
 

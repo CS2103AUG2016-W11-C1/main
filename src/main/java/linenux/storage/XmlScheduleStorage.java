@@ -21,15 +21,25 @@ import linenux.util.ThrowableUtil;
 import linenux.view.Alerts;
 
 //@@author A0135788M
+/**
+ * An XML-backed implementation of schedule storage.
+ */
 public class XmlScheduleStorage implements ScheduleStorage {
     private static Logger logger = LogsCenter.getLogger(XmlScheduleStorage.class);
 
     private Config config;
 
+    /**
+     * Instantiate using the application config.
+     * @param config
+     */
     public XmlScheduleStorage(Config config) {
         this.config = config;
     }
 
+    /**
+     * Reads schedule from file.
+     */
     @Override
     public Schedule loadScheduleFromFile() {
         logger.info("Loading schedule from " + this.getFilePath());
@@ -55,6 +65,9 @@ public class XmlScheduleStorage implements ScheduleStorage {
         return output;
     }
 
+    /**
+     * Writes schedule to file.
+     */
     @Override
     public void saveScheduleToFile(Schedule schedule) {
         logger.info("Saving schedule to " + this.getFilePath());
@@ -79,12 +92,19 @@ public class XmlScheduleStorage implements ScheduleStorage {
         logger.info("Done saving schedule to " + this.getFilePath());
     }
 
+    /**
+     * Checks if file exist.
+     */
     @Override
     public boolean hasScheduleFile() {
         return Files.exists(this.getFilePath());
     }
 
-    private void createFile() throws IOException {
+    /**
+     * Creates an XML file at the path specified in the config class.
+     * @throws IOException when there is problem with creating the file.
+     */
+    private void createFile() {
         logger.info("Creating " + this.getFilePath());
 
         try {
@@ -94,20 +114,15 @@ public class XmlScheduleStorage implements ScheduleStorage {
             createFile();
         } catch (Exception e) {
             logger.warning(ThrowableUtil.getStackTrace(e));
-            Alert alert = throwAlert("Creating File Error", "Could not create file at: \n" + this.getFilePath().toString());
-            alert.showAndWait();
+            Alerts.alert("Error Writing Schedule", "Schedule cannot be saved to\n" + this.getFilePath().toString() + "\nPlease use the save command to specify another location.");
         }
 
         logger.info("Done creating " + this.getFilePath());
     }
 
-    private Alert throwAlert(String title, String message) {
-        Alert alert = new Alert(AlertType.ERROR);
-        alert.setTitle(title);
-        alert.setContentText(message);
-        return alert;
-    }
-
+    /**
+     * @return The path to where the XML file is located.
+     */
     private Path getFilePath() {
         return Paths.get(this.config.getScheduleFilePath());
     }

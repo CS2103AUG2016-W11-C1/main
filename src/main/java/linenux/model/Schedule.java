@@ -118,15 +118,19 @@ public class Schedule {
     /**
      * Performs case-insensitive tag search using keywords.
      *
-     * @param keywords
-     *            Search keywords
-     * @return List of {@code TagSearchResult} with tags matching the keywords.
+     * @param tagName Tag name to look for.
+     * @return List of {@code Task} with tags matching the keywords.
      */
     // @@author A0127694U
     public ArrayList<Task> searchTag(String tagName) {
         return getMostRecentState().searchTag(tagName);
     }
 
+    /**
+     * Search reminders based on keywords.
+     * @param keywords The keywords to search for.
+     * @return An {@code ArrayList} of {@code Reminder} matching the keywords.
+     */
     public ArrayList<Reminder> searchReminder(String keywords) {
         return searchReminder(keywords.split("\\s+"));
     }
@@ -134,9 +138,8 @@ public class Schedule {
     /**
      * Performs case-insensitive reminder search using keywords.
      *
-     * @param keywords
-     *            Search keywords
-     * @return List of {@code Task} matching the keywords.
+     * @param keywords Search keywords
+     * @return List of {@code Reminder} matching the keywords.
      */
     public ArrayList<Reminder> searchReminder(String[] keywords) {
         return getMostRecentState().searchReminder(keywords);
@@ -219,6 +222,9 @@ public class Schedule {
         return false;
     }
 
+    /**
+     * Replace the content of the schedule with another schedule.
+     */
     public void update(Schedule other) {
         this.states.setAll(other.states);
         this.filteredTaskList.setAll(other.filteredTaskList);

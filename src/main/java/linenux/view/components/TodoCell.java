@@ -13,6 +13,9 @@ import linenux.model.Task;
 import linenux.util.ArrayListUtil;
 
 //@@author A0144915A
+/**
+ * View component used to display a single todo.
+ */
 public class TodoCell extends ListCell<Task> {
     @FXML
     private Label title;
@@ -25,6 +28,10 @@ public class TodoCell extends ListCell<Task> {
 
     private ListView<Task> parent;
 
+    /**
+     * Instantiate a {@code TodoCell}.
+     * @param parent The {@code ListView} that uses this cell.
+     */
     public TodoCell(ListView<Task> parent) {
         super();
 
@@ -41,6 +48,11 @@ public class TodoCell extends ListCell<Task> {
         }
     }
 
+    /**
+     * Callback when the {@code Task} is updated.
+     * @param task The new {@code Task}.
+     * @param empty Whether the cell is empty.
+     */
     @Override
     public void updateItem(Task task, boolean empty) {
         super.updateItem(task, empty);
@@ -69,6 +81,10 @@ public class TodoCell extends ListCell<Task> {
         }
     }
 
+    /**
+     * Callback to initialize the component when various children are ready.
+     * Here we make sure that the container does not grow wider than the list.
+     */
     @FXML
     private void initialize() {
         this.container.setMaxWidth(this.parent.getWidth());

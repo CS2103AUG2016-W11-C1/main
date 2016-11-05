@@ -15,6 +15,9 @@ import linenux.util.ArrayListUtil;
 import linenux.view.components.TodoCell;
 
 //@@author A0144915A
+/**
+ * Controller for the todo box, which displays all the todos
+ */
 public class TodoBoxController {
     @FXML
     private ListView<Task> todosList;
@@ -22,12 +25,19 @@ public class TodoBoxController {
     private ControlUnit controlUnit;
     private ObservableList<Task> todos = FXCollections.observableArrayList();
 
+    /**
+     * Initializes subviews.
+     */
     @FXML
     private void initialize() {
         todosList.itemsProperty().setValue(todos);
         todosList.setCellFactory(TodoCell::new);
     }
 
+    /**
+     * Update the application {@code ControlUnit}.
+     * @param controlUnit The new {@code ControlUnit}.
+     */
     public void setControlUnit(ControlUnit controlUnit) {
         this.controlUnit = controlUnit;
         updateTodos();
@@ -39,6 +49,9 @@ public class TodoBoxController {
         });
     }
 
+    /**
+     * Render new todos.
+     */
     private void updateTodos() {
         ArrayList<Task> tasks = this.controlUnit.getSchedule().getTaskList();
         ArrayList<Task> undoneTasks = new ArrayListUtil.ChainableArrayListUtil<>(tasks)
@@ -48,12 +61,20 @@ public class TodoBoxController {
         this.todos.setAll(todos);
     }
 
+    /**
+     * Render filtered todos.
+     */
     private void updateFilteredTodos() {
         ArrayList<Task> filteredTasks = this.controlUnit.getSchedule().getFilteredTasks();
         ArrayList<Task> todos = filterToDos(filteredTasks);
         this.todos.setAll(todos);
     }
 
+    /**
+     * Sieve out only todos.
+     * @param tasks The original {@code ArrayList} of {@code Task}.
+     * @return An {@code ArrayList} of {@code Task} which are todos.
+     */
     private ArrayList<Task> filterToDos(ArrayList<Task> tasks) {
         ArrayList<Task> todos = new ArrayListUtil.ChainableArrayListUtil<>(tasks)
                 .filter(Task::isTodo)

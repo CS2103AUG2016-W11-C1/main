@@ -6,7 +6,7 @@ import linenux.command.Command;
 import linenux.command.result.CommandResult;
 
 /**
- * Assigns commands based on user input.
+ * A collection class to contain all commands that the program can handle.
  */
 public class CommandManager {
     private ArrayList<Command> commands = new ArrayList<>();
@@ -33,19 +33,27 @@ public class CommandManager {
         return this.catchAllCommand.execute(userInput);
     }
 
-    /**
-     * Getter for commandList.
-     */
     //@@author A0135788M
+    /**
+     * @return An {@code ArrayList} of {@code Command}.
+     */
     public ArrayList<Command> getCommandList() {
         return this.commands;
     }
 
     //@@author A0144915A
+    /**
+     * Add a new {@code Command} into the manager.
+     * @param command The new {@code Command} to add.
+     */
     public void addCommand(Command command) {
         this.commands.add(command);
     }
 
+    /**
+     * Set the catch all command which will be used when no other commands can handle some input.
+     * @param command A {@code Command} that can handle any user input.
+     */
     public void setCatchAllCommand(Command command) {
         this.catchAllCommand = command;
     }

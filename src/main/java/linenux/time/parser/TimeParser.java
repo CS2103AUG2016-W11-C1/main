@@ -18,10 +18,9 @@ public interface TimeParser {
     public boolean respondTo(String input);
 
     /**
-     * Parses the userInput string to a time instance.
-     * Contract: use respondTo to check before calling execute
-     * @param input
-     * @return
+     * Parses the userInput string to a time instance. This method assumes that {@code respondTo} returns {@code true}.
+     * @param input The input to parse.
+     * @return The {@code LocalDateTime}, which is the result of parsing {@code input}.
      */
     public LocalDateTime parse(String input);
 }

@@ -29,10 +29,19 @@ public class FreeTimeCommand extends AbstractCommand {
     private TimeParserManager timeParserManager;
     private FreeTimeArgumentParser argumentParser;
 
+    /**
+     * Constructs an {@code FreeTimeCommand}.
+     * @param schedule The {@code Schedule} to look for free time.
+     */
     public FreeTimeCommand(Schedule schedule) {
         this(schedule, Clock.systemDefaultZone());
     }
 
+    /**
+     * Constructs an {@code FreeTimeCommand}.
+     * @param schedule The {@code Schedule} to look for free time.
+     * @param clock The {@code Clock} used to determine the current time.
+     */
     public FreeTimeCommand(Schedule schedule, Clock clock) {
         this.schedule = schedule;
         this.timeParserManager = new TimeParserManager(new ISODateWithTimeParser(), new StandardDateWithTimeParser(), new TodayWithTimeParser(), new TomorrowWithTimeParser());
@@ -40,6 +49,12 @@ public class FreeTimeCommand extends AbstractCommand {
         this.TRIGGER_WORDS.add(TRIGGER_WORD);
     }
 
+    /**
+     * Executes the command based on {@code userInput}. This method operates under the assumption that
+     * {@code respondTo(userInput)} is {@code true}.
+     * @param userInput A {@code String} representing the user input.
+     * @return A {@code CommandResult} representing the result of the command.
+     */
     @Override
     public CommandResult execute(String userInput) {
         assert userInput.matches(getPattern());
@@ -61,21 +76,35 @@ public class FreeTimeCommand extends AbstractCommand {
         }
     }
 
+    /**
+     * @return A {@code String} representing the default command word.
+     */
     @Override
     public String getTriggerWord() {
         return TRIGGER_WORD;
     }
 
+    /**
+     * @return A {@code String} describing what this {@code Command} does.
+     */
     @Override
     public String getDescription() {
         return DESCRIPTION;
     }
 
+    /**
+     * @return A {@code String} describing the format that this {@code Command} expects.
+     */
     @Override
     public String getCommandFormat() {
         return COMMAND_FORMAT;
     }
 
+    /**
+     * Compute available free time in the {@code queryInterval}.
+     * @param queryInterval The {@code TimeInterval} to look for free time.
+     * @return An {@code ArrayList} of free time represented by {@code TimeInterval}.
+     */
     private ArrayList<TimeInterval> getFreeTime(TimeInterval queryInterval) {
         ArrayList<TimeInterval> eventIntervals = eventIntervals(queryInterval, this.schedule.getTaskList());
         ArrayList<TimeInterval> busyIntervals = flattenIntervals(eventIntervals);
@@ -162,6 +191,10 @@ public class FreeTimeCommand extends AbstractCommand {
         return output;
     }
 
+    /**
+     * @param freetimes The {@code ArrayList} of free time.
+     * @return A {@code CommandResult} displaying {@code freetimes}.
+     */
     private CommandResult makeResult(ArrayList<TimeInterval> freetimes) {
         return () -> {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd h.mma");
@@ -178,6 +211,9 @@ public class FreeTimeCommand extends AbstractCommand {
         };
     }
 
+    /**
+     * @return A {@code CommandResult} indicating that the user has no free time.
+     */
     private CommandResult makeNoFreeTimeResult() {
         return () -> "You don't have any free time in that period.";
     }

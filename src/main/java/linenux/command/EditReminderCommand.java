@@ -40,6 +40,10 @@ public class EditReminderCommand extends AbstractCommand {
     private ArrayList<ReminderSearchResult> searchResults;
 
     //@@author A0140702X
+    /**
+     * Constructs an {@code EditReminderCommand}.
+     * @param schedule The {@code Schedule} to search and edit {@code Reminder} from.
+     */
     public EditReminderCommand(Schedule schedule) {
         this.schedule = schedule;
         this.timeParserManager = new TimeParserManager(new ISODateWithTimeParser(), new StandardDateWithTimeParser(), new TodayWithTimeParser(), new TomorrowWithTimeParser());
@@ -48,6 +52,12 @@ public class EditReminderCommand extends AbstractCommand {
     }
 
     //@@author A0144915A
+    /**
+     * Executes the command based on {@code userInput}. This method operates under the assumption that
+     * {@code respondTo(userInput)} is {@code true}.
+     * @param userInput A {@code String} representing the user input.
+     * @return A {@code CommandResult} representing the result of the command.
+     */
     @Override
     public CommandResult execute(String userInput) {
         assert userInput.matches(getPattern());
@@ -83,11 +93,19 @@ public class EditReminderCommand extends AbstractCommand {
     }
 
     //@@author A0140702X
+    /**
+     * @return {@code true} if and only if this {@code Command} is awaiting for user response.
+     */
     @Override
     public boolean awaitingUserResponse() {
         return requiresUserResponse;
     }
 
+    /**
+     * Process the response given by the user.
+     * @param userInput {@code String} representing the user response.
+     * @return A {@code CommandResult}, which is the result of processing {@code userInput}.
+     */
     @Override
     public CommandResult getUserResponse(String userInput) {
         assert this.parseResult != null;
@@ -122,16 +140,25 @@ public class EditReminderCommand extends AbstractCommand {
         }
     }
 
+    /**
+     * @return A {@code String} representing the default command word.
+     */
     @Override
     public String getTriggerWord() {
         return TRIGGER_WORD;
     }
 
+    /**
+     * @return A {@code String} describing what this {@code Command} does.
+     */
     @Override
     public String getDescription() {
         return DESCRIPTION;
     }
 
+    /**
+     * @return A {@code String} describing the format that this {@code Command} expects.
+     */
     @Override
     public String getCommandFormat() {
         return COMMAND_FORMAT;
@@ -150,24 +177,45 @@ public class EditReminderCommand extends AbstractCommand {
         }
     }
 
+    /**
+     * Updates the user response status.
+     * @param requiresUserResponse Whether or not this {@code Command} is expecting user response.
+     * @param results An {@code ArrayList} of {@code ReminderSearchResult} representing the search results.
+     * @param result The result of parsing user argument.
+     */
     private void setResponse(boolean requiresUserResponse, ArrayList<ReminderSearchResult> results, GenericParser.GenericParserResult result) {
         this.requiresUserResponse = requiresUserResponse;
         this.searchResults = results;
         this.parseResult = result;
     }
 
+    /**
+     * @return A {@code CommandResult} indicating that the user does not specify a keywords.
+     */
     private CommandResult makeNoKeywordsResult() {
         return () -> "Invalid arguments.\n\n" + COMMAND_FORMAT + "\n\n" + CALLOUTS;
     }
 
+    /**
+     * @param original The {@code Reminder} before being edited.
+     * @param reminder The updated {@code Reminder}.
+     * @return A {@code CommandResult} informing the user that {@code original} has been updated to {@code reminder}.
+     */
     private CommandResult makeEditedReminder(Reminder original, Reminder reminder) {
         return () -> "Edited \"" + original.getNote() + "\".\nNew reminder details: " + reminder.toString();
     }
 
+    /**
+     * @return A {@code CommandResult} indicating that the edit reminder operation is cancelled.
+     */
     private CommandResult makeCancelledResult() {
         return () -> "OK! Not editing anything.";
     }
 
+    /**
+     * @param userInput A {@code String} representing the user response.
+     * @return A {@code CommandResult} indicating that {@code userInput} is invalid.
+     */
     private CommandResult makeInvalidUserResponse(String userInput) {
         return () -> {
             StringBuilder builder = new StringBuilder();

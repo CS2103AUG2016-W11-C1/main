@@ -15,6 +15,9 @@ import linenux.util.ArrayListUtil;
 import linenux.util.LocalDateTimeUtil;
 
 //@@author A0135788M
+/**
+ * View component used to display a single event.
+ */
 public class EventCell extends ListCell<Task> {
     @FXML
     private Label title;
@@ -30,6 +33,10 @@ public class EventCell extends ListCell<Task> {
 
     private ListView<Task> parent;
 
+    /**
+     * Instantiate a {@code EventCell}.
+     * @param parent The {@code ListView} that uses this cell.
+     */
     public EventCell(ListView<Task> parent) {
         super();
 
@@ -46,6 +53,11 @@ public class EventCell extends ListCell<Task> {
         }
     }
 
+    /**
+     * Callback when the {@code Task} is updated.
+     * @param task The new {@code Task}.
+     * @param empty Whether the cell is empty.
+     */
     @Override
     public void updateItem(Task task, boolean empty) {
         super.updateItem(task, empty);
@@ -80,6 +92,11 @@ public class EventCell extends ListCell<Task> {
         }
     }
 
+    /**
+     * Check if a {@code Task} is overdue.
+     * @param task The {@code Task} to check.
+     * @return {@code true} if and only if {@code task} is overdue.
+     */
     private boolean isOverdue(Task task) {
         if (task.isDeadline() || task.isEvent()) {
             LocalDateTime now = LocalDateTime.now();
@@ -88,6 +105,10 @@ public class EventCell extends ListCell<Task> {
         return false;
     }
 
+    /**
+     * Callback to initialize the component when various children are ready.
+     * Here we make sure that the container does not grow wider than the list.
+     */
     @FXML
     private void initialize() {
         this.container.setMaxWidth(this.parent.getWidth());

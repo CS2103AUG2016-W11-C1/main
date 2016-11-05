@@ -30,7 +30,9 @@ public class AutoCompleter {
         buildTree();
     }
 
-
+    /**
+     * @return {@code true} if and only if there is no suggestion.
+     */
     public boolean hasNoSearchResult() {
         return searchResult.isEmpty();
     }
