@@ -117,20 +117,20 @@ This brings up the list of Linenux commands with their description and format. I
 
 | Command                 		| Description                               | Format                                                        	 	         |
 |-------------------------------|-------------------------------------------|--------------------------------------------------------------------------------|
-| [`add`](#add) 		  		| Adding a task.	   	     	  		    | `add` TASK_NAME... [st/START_TIME] [et/END_TIME] [#/TAG...]...   	 		     |
-| [`remind`](#remind) 	  		| Setting a reminder for a task.  	      	| `remind` KEYWORD... t/TIME n/NOTE...                        	 		         |
-| [`edit`](#edit) 		  		| Editing a task.   	  		            | `edit` KEYWORD... [n/TASK_NAME...] [st/START_TIME] [et/END_TIME] [#/TAG...]... |
-| [`editr`](#editr)       		| Editing a reminder.                       | `editr` KEYWORD... [t/TIME] [n/NOTE...]                      	 	 	         |
-| [`rename`](#rename)	  		| Renaming a tag.						    | `rename` TAG_NAME... #/TAG...												     |
-| [`done`](#done) 	      		| Marking a task as done.       	  	 	| `done` KEYWORD...										             	         |
-| [`undone`](#undone)     		| Marking a task as undone.                 | `undone` KEYWORD...                                                            |
-| [`delete`](#delete) 	  		| Deleting a task. 	                        | `delete` KEYWORD... 										      		         |
-| [`deleter`](#deleter)   		| Deleting a reminder.                      | `deleter` KEYWORD...                                                           |
-| [`clear`](#clear)       		| Clearing a set of tasks.		            | `clear` [#/TAG...]											       		     |
-| [`list`](#list) 		  		| Listing tasks and reminders.              | `list` [KEYWORD...] [st/START_TIME] [et/END_TIME] [#/TAG...] [d/DONE] 	     |
+| [`add`](#add) 		  		| Adding a task.	   	     	  		    | `add` TASK_NAME [st/START_TIME] [et/END_TIME] [#/TAG_NAME]...   	 		     |
+| [`remind`](#remind) 	  		| Setting a reminder for a task.  	      	| `remind` KEYWORDS t/TIME n/NOTE...                        	 		         |
+| [`edit`](#edit) 		  		| Editing a task.   	  		            | `edit` KEYWORDS [n/TASK_NAME...] [st/START_TIME] [et/END_TIME] [#/TAG_NAME]... |
+| [`editr`](#editr)       		| Editing a reminder.                       | `editr` KEYWORDS [t/TIME] [n/NOTE...]                      	 	 	         |
+| [`rename`](#rename)	  		| Renaming a tag.						    | `rename` TAG_NAME #/TAG_NAME												     |
+| [`done`](#done) 	      		| Marking a task as done.       	  	 	| `done` KEYWORDS										             	         |
+| [`undone`](#undone)     		| Marking a task as undone.                 | `undone` KEYWORDS                                                              |
+| [`delete`](#delete) 	  		| Deleting a task. 	                        | `delete` KEYWORDS 										      		         |
+| [`deleter`](#deleter)   		| Deleting a reminder.                      | `deleter` KEYWORDS                                                             |
+| [`clear`](#clear)       		| Clearing a set of tasks.		            | `clear` [#/TAG_NAME]											       		     |
+| [`list`](#list) 		  		| Listing tasks and reminders.              | `list` [KEYWORDS] [st/START_TIME] [et/END_TIME] [#/TAG_NAME] [d/DONE] 	     |
 | [`today`](#today)       		| Listing tasks and reminders for today.    | `today` 													        	         |
 | [`tomorrow`](#tomorrow) 		| Listing tasks and reminders for tomorrow. | `tomorrow` 													 		         |
-| [`view`](#view)         		| Viewing details around a task.            | `view` KEYWORD...                                                              |
+| [`view`](#view)         		| Viewing details around a task.            | `view` KEYWORDS                                                                |
 | [`freetime`](#freetime) 		| Finding a free timeslot.   	  	 	    | `freetime` [st/START_TIME] et/END_TIME 				                         |
 | [`undo`](#undo) 		  		| Undoing the previous command.          	| `undo` 				   									     		         |
 | [`alias`](#alias)       		| Making aliases for the commands.          | `alias` COMMMAND_NAME NEW_NAME                               		             |
@@ -197,7 +197,7 @@ Setting reminders is as simple as adding a task. Just specify the appropriate fi
 
 *Format:*
 
-`remind KEYWORD... t/TIME n/NOTE...`
+`remind KEYWORDS t/TIME n/NOTE...`
 
 *Examples:*
 
@@ -234,7 +234,7 @@ Also, to remove fields, we will use a dash as shown in the examples below. You c
 
 *Format:*
 
-` edit KEYWORD... [n/TASK_NAME...] [st/START_TIME] [et/END_TIME] [#/TAG...]...`
+` edit KEYWORDS [n/TASK_NAME...] [st/START_TIME] [et/END_TIME] [#/TAG...]...`
 
 *Examples:*
 
@@ -266,7 +266,7 @@ Also, to remove fields, we will use a dash as shown in the examples below. You c
 
 *Format:*
 
-`editr KEYWORD... [t/TIME] [n/NOTE...]`
+`editr KEYWORDS [t/TIME] [n/NOTE...]`
 
 *Examples:*
 
@@ -336,7 +336,7 @@ At times, tasks or reminders might become redundant. For example, a scheduled me
 *Format:*
 
 ```
-delete KEYWORD...
+delete KEYWORDS
 ```
 
 *Example:*
@@ -394,7 +394,7 @@ Also, if you need to see the tasks that you have completed, simply add the `d/DO
 
 *Format:*
 
-`list [KEYWORD...] [st/START_TIME] [et/END_TIME] [#/TAG...] [d/DONE]`
+`list [KEYWORDS] [st/START_TIME] [et/END_TIME] [#/TAG_NAME] [d/DONE]`
 
 *Examples:*
 
