@@ -1,5 +1,11 @@
 # Hello from the other side
 
+#### Muthu Kumar Chandrasekaran [@cmkumar87](https://github.com/cmkumar87)
+
+<img src="https://lh5.googleusercontent.com/swdvryeX53Wc7dCEh1Owfz6PmATQWo87AF6lr_J2qL7rrcTW8Nego1_YFdu2TSoxyQBpJ42I_X5n31AVF6O3nQV_ECVZvQN9xbFMa_fDHV03azyXHdSNJMaSGCw-VWUNJVuIsVNh" width="150">
+
+1. Project Mentor
+
 #### Kai Ling [@Kaiiiii](https://github.com/Kaiiiii)
 
 ![Kaiiiii](https://github.com/Kaiiiii.png?size=150)
@@ -8,9 +14,9 @@
 2. Documentation - Ensures that project documentations are in order.
 3. Features Implemented:
   - [Edit](https://github.com/CS2103AUG2016-W11-C1/main/blob/master/doc/UserGuide.md#edit)
-4. Code Written [[functional code](https://github.com/CS2103AUG2016-W11-C1/main/blob/master/collated/main/A0127694U.md)]
-5. Other Major Contribution: 
-  - searching reminders 
+4. Code Written [[functional code](https://github.com/CS2103AUG2016-W11-C1/main/blob/master/collated/main/A0127694U.md)] [[test code](https://github.com/CS2103AUG2016-W11-C1/main/tree/master/collated/test/A0127694U.md)] [docs]
+5. Other Major Contribution:
+  - searching reminders
   - implemented tags
 
 #### Charlton [@cadmusthefounder](https://github.com/cadmusthefounder)
@@ -23,15 +29,15 @@
 3. Features Implemented:
   - [Done](https://github.com/CS2103AUG2016-W11-C1/main/blob/master/doc/UserGuide.md#done)
   - [Delete](https://github.com/CS2103AUG2016-W11-C1/main/blob/master/doc/UserGuide.md#delete)
-  - [Remind](https://github.com/CS2103AUG2016-W11-C1/main/blob/master/doc/UserGuide.md#remind)
   - [Undo](https://github.com/CS2103AUG2016-W11-C1/main/blob/master/doc/UserGuide.md#undo)
   - [Alias](https://github.com/CS2103AUG2016-W11-C1/main/blob/master/doc/UserGuide.md#alias)
   - [Exit](https://github.com/CS2103AUG2016-W11-C1/main/blob/master/doc/UserGuide.md#exit)
-5. Code Written [[functional code](https://github.com/CS2103AUG2016-W11-C1/main/blob/master/doc/UserGuide.md#view)]
-6. Other Major Contributions: 
-  - initial refactoring from Addressbook 3 
-  - storage to file 
-  - most model classes
+5. Code Written [[functional code](https://github.com/CS2103AUG2016-W11-C1/main/blob/master/collated/main/A0135788M.md)] [[test code](https://github.com/CS2103AUG2016-W11-C1/main/tree/master/collated/test/A0135788M.md)] [docs]
+6. Other Major Contributions:
+  - Initial refactoring from Addressbook 3
+  - Storage to file
+  - Most model classes
+  - TimeParser Interface
 
 #### Rong Hua [@Roahhh](https://github.com/Roahhh)
 
@@ -45,7 +51,8 @@
   - [Clear](https://github.com/CS2103AUG2016-W11-C1/main/blob/master/doc/UserGuide.md#clear)
   - [View](https://github.com/CS2103AUG2016-W11-C1/main/blob/master/doc/UserGuide.md#view)
   - [Help](https://github.com/CS2103AUG2016-W11-C1/main/blob/master/doc/UserGuide.md#help)
-5. Code Written [[functional code](https://github.com/CS2103AUG2016-W11-C1/main/blob/master/collated/main/A1234567A.md)]
+  - [Remind](https://github.com/CS2103AUG2016-W11-C1/main/blob/master/doc/UserGuide.md#remind)
+5. Code Written [[functional code](https://github.com/CS2103AUG2016-W11-C1/main/blob/master/collated/main/A0140702X.md)] [[test code](https://github.com/CS2103AUG2016-W11-C1/main/tree/master/collated/test/A0140702X.md)] [docs]
 
 #### Yi Hang [@yihangho](https://github.com/yihangho)
 
@@ -54,11 +61,15 @@
 1. Code Quality - Ensures adherence to coding standards.
 2. Integration - In charge of versioning and code maintainence.
 3. Git Expert - Advisor for other members with regards to Git.
-4. Features Implemented: 
+4. Features Implemented:
   - [Add](https://github.com/CS2103AUG2016-W11-C1/main/blob/master/doc/UserGuide.md#add)
-  - [List](https://github.com/CS2103AUG2016-W11-C1/main/blob/master/doc/UserGuide.md#list)
+  - [Editr](https://github.com/CS2103AUG2016-W11-C1/main/blob/master/doc/UserGuide.md#editr)
+  - [Delete](https://github.com/CS2103AUG2016-W11-C1/main/blob/master/doc/UserGuide.md#delete)
   - [Alias](https://github.com/CS2103AUG2016-W11-C1/main/blob/master/doc/UserGuide.md#alias)
+  - [Unalias](https://github.com/CS2103AUG2016-W11-C1/main/blob/master/doc/UserGuide.md#unalias)
+  - [Today](https://github.com/CS2103AUG2016-W11-C1/main/blob/master/doc/UserGuide.md#today)
+  - [Tomorrow](https://github.com/CS2103AUG2016-W11-C1/main/blob/master/doc/UserGuide.md#tomorrow)
   - [Freetime](https://github.com/CS2103AUG2016-W11-C1/main/blob/master/doc/UserGuide.md#freetime)
-5. Code Written [[functional code](https://github.com/CS2103AUG2016-W11-C1/main/blob/master/collated/main/A0144915A.md)]
-6. Other Major Contributions: 
-  - model and abstract classes
+5. Code Written [[functional code](https://github.com/CS2103AUG2016-W11-C1/main/blob/master/collated/main/A0144915A.md)] [[test code](https://github.com/CS2103AUG2016-W11-C1/main/tree/master/collated/test/A0144915A.md)] [docs]
+6. Other Major Contributions:
+  - Model and Abstract classes

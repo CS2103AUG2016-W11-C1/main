@@ -11,6 +11,7 @@
     * [Model Component](#model-component)
     * [View Component](#view-component)
     * [Controller Component](#controller-component)
+    * [Activity Diagram](#activity-diagram)
 * [Testing](#testing)
     * [In Eclipse](#in-eclipse)
     * [Using Gradle](#using-gradle)
@@ -27,8 +28,8 @@
     * [Appendix E: Product Survey](#appendix-e--product-survey)
 
 ## Introduction
-Linenux is a command-line, task manager application designed for consumers who are quick at typing. Being an open-source project, we understand that there are developers (yes, you) who wants to contribute to the project but do not know where to begin. Thus, we have written this guide to inform newcomers to the project on the key design considerations and the overall software architecture. We hope that by the end of this developer guide, you will in a better position to start working on improving Linenux.
-
+Linenux is a command-line, task manager application designed for consumers who are quick at typing. Being an open-source project, we understand that there are developers (yes, you) who want to contribute to the project but do not know where to begin. Thus, we have written this guide to inform newcomers to the project on the key design considerations and the overall software architecture. We hope that by the end of this developer guide, you will in a better position to start working on improving Linenux.
+<br>
 ## Setting up
 
 #### Prerequisites
@@ -75,6 +76,8 @@ To ensure code readablity on Github, please follow the following instructions to
     * Reason: Eclipse fails to detect the changes made to your project during `git pull`.
     * Solution: Refresh your project in Eclipse by clicking on it in the package explorer window and pressing `F5`.
 
+<br>
+
 ## Design
 
 #### Architecture
@@ -93,16 +96,108 @@ Linenux follows the Model-View-Controller (MVC) pattern which is made up of 3 ma
 <img src="images/modelDiagram.png">
 > Figure 4: Model Diagram
 
+##### *Schedule class*
+
 The **Schedule** class stores a collection of states. A **State** is an immutable class that is created whenever a task or reminder is added or deleted from the **Schedule**. This design allows users to `undo` their previous command.
 
-The **Task** class is made up of the name of the task, a start time, an end time and a list of reminders. There are 3 types of tasks:
+We have made all the models except **Schedule** immutable, thus any command that mutates data should do so through the Schedule model. Specifically, we have exposed three mutation methods:
+
+1. `addTask`
+2. `updateTask`
+3. `deleteTask` / `deleteTasks`
+
+*Notable APIs:* [`Schedule.java`](https://github.com/CS2103AUG2016-W11-C1/main/blob/master/src/main/java/linenux/model/Schedule.java)
+
+| Return type           | Method and Description |
+| --------------------- | ---------------------- |
+| void                  | `addTask(Task task)`: Adds the task into the schedule. |
+| void                  | `updateTask(Task originalTask, Task newTask)`: Updates the original task in the schedule with the new task. |
+| void                  | `deleteTask(Task task)`: Deletes the task from the schedule. |
+| void                  | `deleteTasks(ArrayList<Task> tasks)`: Deletes all the tasks in the list from the schedule. |
+| void                  | `clear()`: Deletes all tasks from the schedule. |
+| ArrayList<Task>       | `search(String keywords)`: Search and returns tasks based on given keywords. |
+| ArrayList<Reminder>   | `searchReminder(String keywords)`: Search and return reminders based on given keywords. |
+| ObservableList<State> | `getState()`: Returns list of state. |
+| ArrayList<Task>       | `getTaskList()`: Returns list of tasks in schedule. |
+| ObservableList<ArrayList<Task>> | `getFilteredTaskList()`: Returns list of ArrayList of filtered tasks. |
+| ArrayList<Task>       | `getFilterTasks()`: Returns the current filtered task |
+| void                  | `addFilterTasks(ArrayList<Task> filteredTasks)`: Will first clear the current filteredTaskList add the given list of tasks into it. |
+| ArrayList<Reminder>   | `getReminderList()`: Returns all the reminders in the schedule. |
+| Boolean               | `popState()`: Returns true and removes the most recent true if the list of states is not empty. Returns false otherwise. |
+| State                 | `getMostRecentState()`: Returns the most recent state of schedule. |
+| void                  | `addState(State)`: Adds a new state into the list of states. |
+
+##### *State Class*
+
+The **State** class represents an immutable snapshot in time of the schedule.
+
+*Notable APIs:* [`State.java`](https://github.com/CS2103AUG2016-W11-C1/main/blob/master/src/main/java/linenux/model/State.java)
+
+| Return type | Method and Description |
+| ----------- | ---------------------- |
+| State       | `addTask(Task task)`: creates and returns a copy of the current state, with the task added into the copied state. |
+| State       | `updateTask(Task original, Task newTask)`: creates and returns a copy of the current state, where the original task is updated with the new task in the copied state. |
+| State       | `deleteTask(Task task)`: creates and returns a copy of the current state, deleting the task specified in the copied state. |
+| State       | `getTaskList()`: returns the task list in the current state. |
+
+##### *Task Class*
+
+The immutable **Task** class is made up of the name of the task, a start time, an end time and a list of reminders. There are 3 types of tasks:
+
 1. **Deadlines** - tasks that have an end time but no start time.
 2. **Events** - tasks that have both start and end times.
 3. **To-dos** - tasks that have neither start nor end times.
 
-The **Reminder** class allows our users to set one or more reminders for their tasks.
+*Notable APIs:* [`Task.java`](https://github.com/CS2103AUG2016-W11-C1/main/blob/master/src/main/java/linenux/model/Task.java)
 
-The **Storage** class allows the in-memory data to persist after the application is closed. The state of the **Schedule** is stored as an XML file called **XMLScheduleStorage**.
+| Return type | Method and Description |
+| ----------- | ---------------------- |
+| String      | `toString()`: returns the String representation of a Task. |
+| Boolean     | `isTodo()`: checks if Task is a todo. |
+| Boolean     | `isDeadline()`: checks if Task is a deadline. |
+| Boolean     | `isEvent()`: checks if Task is an event. |
+| Boolean     | `isDone()`: checks if Task is marked as done. |
+| Boolean     | `isNotDone()`: checks if Task is not marked as done. |
+| Boolean     | `hasTag(String tag)`: checks if Task contains a tag (case-insensitive). |
+| String      | `getTaskName()`: returns the name of the Task. |
+| LocalDateTime | `getStartTime()`: returns the start time of the Task. |
+| LocalDateTime | `getEndTime()`: returns the end time of the Task. |
+| ArrayList<String> | `getTags()`: returns all the tags of the Task in an arraylist. |
+| ArrayList<Reminder> | `getReminders()`: returns all the reminders of the Task in an arraylist. |
+| Task        | `setTaskName(String taskName)`: creates and returns a copy of the current Task with the new task name. |
+| Task        | `setStartTime(LocalDateTime startTime)`: creates and returns a copy of the current Task with the new start time. |
+| Task        | `setEndTime(LocalDateTime endTime)`: creates and returns a copy of the current Task with the new end time. |
+| Task        | `markAsDone()`: creates and returns a copy of the current Task, with it set to Done. |
+| Task        | `addReminder(Reminder reminder)`: creates and return a copy of the current Task, adding reminder into it's list of reminders. |
+| Task        | `setTags(ArrayList<String> tags)`: creates and returns a copy of the current Task, replacing all the original tags with the new tags. |
+
+
+##### *Reminder Class*
+
+The immutable **Reminder** class allows our users to set one or more reminders for their tasks.
+
+*Notable APIs:* [`Reminder.java`](https://github.com/CS2103AUG2016-W11-C1/main/blob/master/src/main/java/linenux/model/Reminder.java)
+
+| Return type | Method and Description |
+| ----------- | ---------------------- |
+| String      | `toString()`: returns the String representation of a Reminder. |
+| String      | `getNote()`: returns the note of the reminder. |
+| LocalDateTime | `getTimeOfReminder()`: returns the time of reminder. |
+| Reminder    | `setNote(String newNote)`: creates and returns a copy of the current Reminder with the new note. |
+| Reminder    | `setTimeOfReminder(LocalDateTime newTimeOfReminder)`: creates and returns a copy of the current Reminder with the new time of reminder. |
+
+##### *Storage*
+
+The **ScheduleStorage** interface lists all the methods that our `Controller` will require to save the schedule into a file format to ensure that in-memory data persists after the application is stored. The methods are:
+
+| Return type | Method and Description |
+| ----------- | ---------------------- |
+| Schedule    | `loadScheduleFromFile()`: reads a file and returns the schedule from the file. |
+| void        | `saveScheduleToFile(Schedule schedule)`: writes the given schedule into the file. |
+| Boolean     | `hasScheduleFile()`: checks if the schedule file exits. |
+| void        | `setFilePath(String filePath)`: sets a new file path.   |
+
+Currently, we have implemented **XMLScheduleStorage** class, which will save the schedule into an XML file. Thus, if you would like to implement saving to another file format, make sure you implement the **ScheduleStorage** interface.
 
 #### View Component
 <img src="images/viewDiagram.png">
@@ -114,7 +209,11 @@ The **View Component** follows the JavaFx UI framework. Each of the classes (**M
 <img src="images/controllerDiagram.png">
 > Figure 6: Controller Diagram
 
-The **ConsoleController** takes the user input and sends it to the "brain" of Linenux, the "ControlUnit" class. The "ControlUnit" class is in charge of retrieving the appropriate schedule from storage and passing it over to the **CommandManager** class. The **CommandManager** class then delegates the right command based on the user input.
+##### *Overview*
+
+The **MainWindowController** takes the user input and sends it to the "brain" of Linenux, the **ControlUnit** class. The **ControlUnit** class is in charge of retrieving the appropriate schedule from storage and passing it over to the **CommandManager** class. The **CommandManager** class then delegates the right command based on the user input.
+
+##### *CommandManager Class*
 
 ``` java
 public CommandResult delegateCommand(String userInput) {
@@ -133,24 +232,64 @@ public CommandResult delegateCommand(String userInput) {
     return this.catchAllCommand.execute(userInput);
 }
 ```
-The above code shows how the **CommandManager** class delegates the right command based on the user input. Every command class must implement the **Command** interface. At any point in time, only 1 command is awaiting user response. If there are none, then each command will check if the user input corresponds to the command format.
+The above code shows how the **CommandManager** class delegates the right command based on the user input. Every command class must implement the **Command** interface.
 
-``` java
-public boolean canParse(String userInput) {
-    for (TimeParser parser: parserList) {
-        if (parser.respondTo(userInput)) {
-            return true;
-        }
-    }
+<img src="images/sequenceDiagramGeneric.png">
+> Figure 7: Sequence Diagram for executing a Generic Command
 
-    return false;
-}
-```
-Similarly, the same pattern is used if the command has to parse the time. These commands will have their own **TimeParserManager** and they can pick and choose which **TimeParser** format they want to support.
+The sequence diagram above shows the flow of a typical command.
+
+However, we understand that some commands would require some form of user response. For example, our `delete` command requires user to choose which task to delete if more than one task is found. Thus, in the case where you require user response, you can set the command as awaiting response and the next user input will be delegated to that command (as seen in the code snippet above).
+
+However, do take note that at any point in time, only one command is awaiting user response. Thus, once your command is resolved, ensure that it is not awaiting for any user response.
+
+##### *Command Interface*
+
+**Command** interface lists all the required method that a command must have, so, to implement a new command, you will need to ensure that it implements the **Command** interface. The methods are:
+
+| Return type | Method and Description |
+| ----------- | ---------------------- |
+| Boolean     | `respondTo(String userInput)`: checks if command responds to userInput. |
+| CommandResult | `execute(String userInput)`: executes the command. <br> Contract: use respondTo to check before calling execute. |
+| Boolean     | `awaitingUserResponse()`: checks if the command is awaiting for a response from the user. |
+| CommandResult | `userResponse(String userInput)`: carries out user response. |
+| String      | `getTriggerWord()`: returns command word. |
+| String      | `getDescription()`: returns description of command. |
+| String      | `getCommandFormat()`: returns command format. |
+| String      | `getPattern()`: returns regex pattern. |
+| void        | `setAlias(String alias)`: set a new alias for the command. |
+| void        | `removeAlias(String alias)`: removes an alias for the command. |
+
+*Important!!*
+> As seen in Figure 7, whenever an input is given by the user, the **CommandManager** will loop through a list of Commands that it is keeping track of.
+
+> Thus, when you implement a new command, make sure that you add your command into **CommandManager**'s commandList through the it's initializeCommands() mathod.
+
+##### *AbstractCommand Class*
+
+As many of the commands are similar in their implementation of some of the interface methods, we have abstracted the implementation into the **AbstractCommand** class. The methods are:
+
+1. `respondTo`
+2. `setAlias`
+3. `removeAlias`
+4. `getPattern`
+
+Thus, when you implement a new command, for convenience, you can make your command inherit the **AbstractCommand** class for the implementation the above listed methods.
+
+*Important!!*
+> When your command extends AbstractCommand, ensure that in your command's constructor, the command's trigger word is added into TRIGGER_WORDS, an ArrayList<String> that is instantiated in AbstractCommand.
+
+#### Activity Diagram
+<img src="images/activityDiagram.png">
+> Figure 8: Acitivity Diagram of Linenux
+
+The above activity diagram shows the generic flow of activities in Linenux.
+
+<br>
 
 ## Testing
 
-Tests can be found in the `./src/test/java` folder.
+Tests can be found in the `./src/test/java` folder. We have done unit testing on every command implemented, so make sure to add unit test whenever you implement a new command.
 
 #### In Eclipse
 
@@ -161,31 +300,37 @@ Tests can be found in the `./src/test/java` folder.
 
 * To run all tests, run `gradle test` command in the terminal.
 
+<br>
+
 ## Dev Ops
 
 #### Build Automation
 
 Gradle is a build automation tool. It can automate build-related tasks such as:
 * Running tests
-* Managing library dependecies
+* Managing library dependencies
 * Analysing code for style compliance
 
 The gradle configuration for this project is defined in the build script `build.gradle`.
 
 #### Continuous Integration
 
-Travis CI is a Continuous Integration platform for GitHub projects. It runs the projects' tests automatically whenever new code is pushed to the repo. This ensures that existing functionality and features  have not been broken by the changes.
+Travis CI is a Continuous Integration platform for GitHub projects. It runs the projects' tests automatically whenever new code is pushed to the repo. This ensures that existing functionality and features have not been broken by the changes.
 
-The current Travis CI set up performs the following things whenever someone push code to the repo:
-* Runs the `./gradlew test` command.
+Whenever you push code to the repository, the current Travis CI set up will:
+* Runs the `./gradlew test` command
 
 #### Making a Release
 
-Linenux automatically creates a new release by using Travis. This can be done by pushing tagged commits to GitHub.
+Linenux automatically creates a new release by using Travis. To create a new release, you can push a tagged commit to GitHub.
 
 #### Managing Dependecies
 
-A project often depends on third-party libraries. Linenux manages these dependencies using Gradle. Gradle will automatically download all the required dependencies when any Gradle command is invoked.
+A project often depends on third-party libraries. Linenux manages these dependencies using Gradle.
+
+Gradle will automatically download all the required dependencies when any Gradle command is invoked so you do not have to worry about managing these dependencies manually.
+
+<br>
 
 ## Appendices
 
@@ -221,13 +366,16 @@ Priority | As a ...  | I want to ...                             | So that I can
 
 #### Appendix B : Use Cases
 
-##### Use Case: Add task
+##### *Use Case 1: Add task*
+
 *MSS*
+
 1. User requests to add task.
 2. Linenux adds task into schedule and shows message indicating successful add, including details of added task.
 Use Case ends.
 
 *Extensions*
+
 1a. User provides start time without end time.
 > 1a1. TaskManager shows error message to indicate that task is not a valid task.
 > Use Case ends.
@@ -253,24 +401,30 @@ Use Case ends.
 > 1e1a1. Linenux shows that task is not added.
 > Use Case ends.
 
-##### Use Case: List tasks
+##### *Use Case 2: List tasks*
+
 *MSS*
+
 1. User requests to list tasks giving certain parameters.
 2. Linenux filters all the tasks based given parameters and shows the filtered list of tasks to the User.
 Use Case ends.
 
 *Extensions*
+
 1a. User provides no parameters.
 > 1a1. Linenux will show all tasks and reminders for the next 7 days to the User.
 > Use Case ends.
 
-##### Use Case: Using commands which has a search parameter.
+##### *Use Case 3: Using commands which has a search parameter.*
+
 *MSS*
+
 1. User uses a command which has a search parameter(e.g remind, edit, view etc).
 2. Linenux will search all task names and perform the command on the found task.
 Use Case ends.
 
 *Extensions*
+
 2a. More than one task found with the given search parameter.
 > 2a1. Linenux will show the list of tasks, each with their index, found to the user and prompt the user for the index of the task to perform the command on.
 > 2a2. User provides the index of the task to perform the command on.
@@ -289,51 +443,65 @@ Use Case ends.
 > 2b1. Linenux shows error that no tasks were found.
 > Use Case ends.
 
-##### Use Case: Add reminder to task
+##### *Use Case 4: Add reminder to task*
+
 *MSS*
+
 1. User requests to add reminder to task, providing search parameters for task.
 2. Linenux searches for the task (See Use Case for commands with search).
 3. Linenux adds reminder to the found task and shows message indicating successful add, including details of reminder and task that reminder was added to.
 Use Case ends.
 
-##### Use Case: Delete task
+##### *Use Case 5: Delete task*
+
 *MSS*
+
 1. User requests to delete task, providing search parameters for task.
 2. Linenux searches for the task (See Use Case for commands with search)l
 3. TaskManager deletes specific task from schedule and shows message indicating successful delete, including details of task deleted.
 Use Case ends.
 
-##### Use Case: Mark task as done.
+##### *Use Case 6: Mark task as done.*
+
 *MSS*
+
 1. User requests to mark task as done, providing search parameters for task.
 2. Linenux marks found task as done, and shows message indicating task is marked as done, including details of task.
 Use Case ends.
 
-##### Use Case: Undo
+##### *Use Case 7: Undo*
+
 *MSS*
+
 1. User requests to undo to previous state.
 2. Linenux undos to previous state.
 Use case ends.
 
 *Extensions*
+
 1a. No previous state to undo to.
 > 1a1. Linenux shows error indicating unable to undo.
 > Use Case ends
 
-##### Use Case: Edit
+##### *Use Case 8: Edit*
+
 *MSS*
+
 1. User requests to edit task, providing search parameters and changes to be made.
 2. Linenux searches for the task (See Use Case for commands with search).
 3. Linenux processes changes and shows changes made.
 Use Case ends.
 
 *Extensions*
+
 1a. Specified changes are invalid.
 > 1c1. Linenux shows error message indicating invalid changes.
 > Use case ends.
 
-##### Use Case: Exit
+##### *Use Case 9: Exit*
+
 *MSS*
+
 1. User requests to exit application.
 2. Linenux prompts user to confirm application exit.
 3. User confirms exit.
@@ -341,6 +509,7 @@ Use Case ends.
 Use case ends.
 
 *Extensions*
+
 2a. User cancels exit operation.
 > Use Case ends.
 
@@ -370,34 +539,41 @@ Tasks are split into 3 different sub-categories:
 
 Tasks **cannot** be created with start dates only.
 
-##### Commands Summary
+##### *Commands Summary*
 
 *Legend:*
 
-1. *Optional fields are enclosed in square brackets `[]`.*
-2. *The notation `...` means that multiple words can be used for that field.*
+1. *The `command` word must be the first word in the sentence.*
+2. *Optional fields are enclosed in square brackets `[]`.*
+3. *All commands and their respective fields are case-insensitive.*
+4. *The order of the fields do not matter.*
+5. *The notation `...` means that you can have more than one instance of that field.*
 
-| Command    | Description                               | Format                                                                          |
-|------------|-------------------------------------------|---------------------------------------------------------------------------------|
-| `add`      | Adding a task.                            | `add` TASK_NAME... [st/START_TIME] [et/END_TIME] [#/TAG...]...                  |
-| `remind`   | Setting a reminder for a task.            | `remind` KEYWORDS... t/TIME n/NOTE...                                           |
-| `edit`     | Editing a task.                           | `edit` KEYWORDS... [n/TASK_NAME...] [st/START_TIME] [et/END_TIME] [#/TAG...]... |
-| `editr`    | Editing a reminder.                       | `editr` KEYWORDS... [t/TIME] [n/NOTE...]                                        |
-| `rename`   | Rename a tag.                             | `rename` KEYWORDS... #/TAG...                                                   |
-| `done`     | Marking a task as done.                   | `done` KEYWORDS...                                                              |
-| `delete`   | Deleting a task or reminder.              | `delete` KEYWORDS...                                                            |
-| `clear`    | Clearing a set of tasks.                  | `clear` [#/TAG...]                                                              |
-| `freetime` | Finding a free timeslot.                  | `freetime` [st/START_TIME] et/END_TIME                                          |
-| `list`     | Listing tasks and reminders.              | `list` [KEYWORDS...] [st/START_TIME] [et/END_TIME] [#/TAG...]                   |
-| `today`    | Listing tasks and reminders for today.    | `today`                                                                         |
-| `tomorrow` | Listing tasks and reminders for tomorrow. | `tomorrow`                                                                      |
-| `view`     | Viewing details around a task.            | `view` KEYWORDS...                                                              |
-| `undo`     | Undoing the previous command.             | `undo`                                                                          |
-| `help`     | Seeking help.                             | `help` [COMMMAND_NAME]                                                          |
-| `alias`    | Making aliases for the commands.          | `alias` COMMMAND_NAME n/NEW_NAME                                                |
-| `exit`     | Exiting Linenux.                          | `exit`                                                                          |
+| Command                 | Description                               | Format                                                                  |
+|-------------------------|-------------------------------------------|-------------------------------------------------------------------------|
+| [`add`](#add)           | Adding a task.                            | `add` TASK_NAME [st/START_TIME] [et/END_TIME] [#/TAG]...                |
+| [`remind`](#remind)     | Setting a reminder for a task.            | `remind` KEYWORD t/TIME n/NOTE                                          |
+| [`edit`](#edit)         | Editing a task.                           | `edit` KEYWORDS [n/TASK_NAME] [st/START_TIME] [et/END_TIME] [#/TAG]...  |
+| [`editr`](#editr)       | Editing a reminder.                       | `editr` KEYWORDS [t/TIME] [n/NOTE...]                                   |
+| [`rename`](#rename)     | Renaming a tag.                           | `rename` KEYWORDS #/TAG                                                 |
+| [`done`](#done)         | Marking a task as done.                   | `done` KEYWORDS                                                         |
+| [`undone`](#undone)     | Marking a task as undone.                 | `undone` KEYWORDS                                                       |
+| [`delete`](#delete)     | Deleting a task.                          | `delete` KEYWORDS                                                       |
+| [`deleter`](#deleter)   | Deleting a reminder.                      | `deleter` KEYWORDS                                                      |
+| [`clear`](#clear)       | Clearing a set of tasks.                  | `clear` [#/TAG]                                                         |
+| [`freetime`](#freetime) | Finding a free timeslot.                  | `freetime` [st/START_TIME] et/END_TIME                                  |
+| [`list`](#list)         | Listing tasks and reminders.              | `list` [KEYWORDS] [st/START_TIME] [et/END_TIME] [#/TAG...] [d/DONE]     |
+| [`today`](#today)       | Listing tasks and reminders for today.    | `today`                                                                 |
+| [`tomorrow`](#tomorrow) | Listing tasks and reminders for tomorrow. | `tomorrow`                                                              |
+| [`view`](#view)         | Viewing details around a task.            | `view` KEYWORDS                                                         |
+| [`undo`](#undo)         | Undoing the previous command.             | `undo`                                                                  |
+| [`help`](#help)         | Seeking help.                             | `help` [COMMMAND_NAME]                                                  |
+| [`alias`](#alias)       | Making aliases for the commands.          | `alias` COMMMAND_NAME n/NEW_NAME                                        |
+| [`unalias`](#unalias)   | Removing aliases for the commands.        | `unalias` ALIAS                                                         |
+| [`path`](#path)         | Changing the filepath of the schedule.    | `path` NEW_PATH                                                         |
+| [`exit`](#exit)         | Exiting Linenux.                          | `exit`                                                                  |
 
-##### Supported Time Formats
+##### *Supported Time Formats*
 
 *All of the examples below have the equivalent meaning to the time 26 October 2016, 5.50pm*
 
@@ -408,11 +584,31 @@ Tasks **cannot** be created with start dates only.
 | ddMMyyyy HHmm      | 16102016 1750          |
 
 #### Appendix E : Product Survey
-##### Pros of Products Surveyed
-<img src="images/ProductSurveyPros.jpeg"/>
-> Figure 7 Pros of Products Surveyed
 
-##### Cons of Products Surveyed:
+##### Things we learnt:
+
+Our group has surveyed 4 different task managers, Google Calendar, Todoist, Wunderlist and Fantastical. Below is a summary of what we have found:
+
+*UI*
+
+All the 4 task managers had great and easy to understand UIs. The main issue is that none of them are catered for users like Jim who prefer typing. For example, Google Calendar allows users to quick add a task, but other functionalities such as editing tasks still requires user to click and navigate through pages. For Jim who accesses the app so frequently and who is more proficient in typing, it is inefficient to need to navigate through many pages and require so many mouse clicks to handle one action.
+
+*Functionalities*
+
+Generally, the 4 task managers share the same basic functionalities to add and maintain tasks. After trying out the additional features that each of the application had, we decided to included the following features:
+
+1. Searching for freetime.
+2. Reminders.
+
+Noting that Jim follows the Inbox Zero email management plan and how he will be adding all his tasks into the application, we would be able to look at all his events to judge when he is free. Hence, we believe that adding this feature would be able to help Jim better manage his tasks as he would be able to rasily find his free timeslots and schedule his work accordingly.
+
+We decided to add reminders as Jim can use it to remind himself about his important deadlines and events, especially in the case where his task list is flooded. Furthermore, he can use reminders as a way to remind himself to clear certain pre-requisites to a task.
+
+##### *Pros of Products Surveyed*
+<img src="images/ProductSurveyPros.jpeg"/>
+> Figure 9 Pros of Products Surveyed
+
+##### *Cons of Products Surveyed:*
 *Google Calendar*
 * Keyboard shortcuts needs to be discovered.
 * CLI commands is only for the addition of tasks.

@@ -8,6 +8,7 @@ Linenux is a CLI (Command Line Interface) Task Manager application written in Ja
 **Useful Links**
 * [User Guide](doc/UserGuide.md)
 * [Developer Guide](doc/DeveloperGuide.md)
+* [About Us](doc/AboutUs.md)
 
 # Upcoming Features
 
