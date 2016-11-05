@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.function.Predicate;
 
 import linenux.command.result.CommandResult;
 import linenux.control.TimeParserManager;
@@ -39,6 +38,7 @@ public class ListArgumentFilter {
 
         Either<LocalDateTime, CommandResult> endTime = extractEndTime(argument);
         if (endTime.isRight()) {
+
             return Either.right(endTime.getRight());
         }
 
@@ -70,7 +70,8 @@ public class ListArgumentFilter {
                             if (task.isEvent()) {
                                 LocalDateTime taskStartTime = task.getStartTime();
                                 return checker || taskStartTime.isEqual(actualStartTime) || taskStartTime.isEqual(actualEndTime)
-                                || (taskStartTime.isAfter(actualStartTime) && taskStartTime.isBefore(actualEndTime));
+                            || (taskStartTime.isAfter(actualStartTime) && taskStartTime.isBefore(actualEndTime))
+                            || (taskStartTime.isBefore(actualStartTime) && task.getEndTime().isAfter(actualEndTime));
                             }
                             return checker; })
                         .value();

@@ -36,7 +36,7 @@ public class TodayCommand extends AbstractCommand {
         LocalDateTime startOfToday = now.withHour(0).withMinute(0).withSecond(0);
         LocalDateTime endOfToday = now.withHour(23).withMinute(59).withSecond(59);
 
-        return this.listCommand.execute("list st/" + startOfToday.format(formatter) + " et/" + endOfToday.format(formatter));
+        return this.listCommand.execute("list et/" + endOfToday.format(formatter));
     }
 
     @Override
