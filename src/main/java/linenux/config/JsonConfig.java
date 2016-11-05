@@ -9,7 +9,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.logging.Logger;
 
+import linenux.util.LogsCenter;
+import linenux.util.ThrowableUtil;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,6 +33,7 @@ public class JsonConfig implements Config{
     private static final String VERSION_KEY = "versionNo";
     private static final String SCHEDULE_PATH_KEY = "schedulePath";
     private static final String ALIASES_KEY = "aliases";
+    private static final Logger logger = LogsCenter.getLogger(JsonConfig.class);
 
     private Path configFilePath;
     private Path scheduleFilePath;
@@ -53,6 +57,7 @@ public class JsonConfig implements Config{
      * Initializes configuration file with default values;
      */
     private void initialize() {
+        logger.info("Initializing config");
         JSONObject configFile;
 
         if (hasConfigFile()) {
@@ -66,11 +71,13 @@ public class JsonConfig implements Config{
         }
 
         if (!configFile.has(SCHEDULE_PATH_KEY)) {
+            logger.info("Initializing default schedule path");
             configFile.put(SCHEDULE_PATH_KEY, scheduleFilePath.toString());
         }
 
         this.configFile = configFile;
         this.saveConfig();
+        logger.info("Done initializing config");
     }
 
     // @@author A0127694U
@@ -174,13 +181,16 @@ public class JsonConfig implements Config{
     }
 
     private void saveConfig() {
+        logger.info("Saving config");
         try {
             FileWriter file = new FileWriter(configFilePath.toString());
             file.write(configFile.toString());
             file.flush();
             file.close();
         } catch (IOException i) {
+            logger.severe(ThrowableUtil.getStackTrace(i));
             throwAlert("Creating File Error", "Could not create file at: \n" + configFilePath.toString());
         }
+        logger.info("Done saving config");
     }
 }
