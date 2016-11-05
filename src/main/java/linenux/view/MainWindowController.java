@@ -37,17 +37,24 @@ public class MainWindowController {
     @FXML
     private void initialize() {
         logger.info("Initializing MainWindowController");
-        setupTodoBox();
-        setupDeadlineBox();
-        setupEventBox();
-        setupExpandableCommandResult();
-        setupCommandBox();
-        setupResultsOverlay();
+
+        try {
+            setupTodoBox();
+            setupDeadlineBox();
+            setupEventBox();
+            setupExpandableCommandResult();
+            setupCommandBox();
+            setupResultsOverlay();
+        } catch (Exception e) {
+            Alerts.alertAndDie("Fatal Error", "Unable to initialize the application.");
+        }
+
         logger.info("Done initializing MainWindowController");
     }
 
-    private void setupTodoBox() {
+    private void setupTodoBox() throws Exception {
         logger.info("Setting up todo box");
+
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainWindowController.class.getResource("/view/TodoBox.fxml"));
@@ -57,15 +64,17 @@ public class MainWindowController {
             gridPane.getChildren().add(todoBox);
             TodoBoxController controller = loader.getController();
             controller.setControlUnit(this.controlUnit);
-        } catch (IOException e) {
+        } catch (Exception e) {
             logger.severe(ThrowableUtil.getStackTrace(e));
-            e.printStackTrace();
+            throw e;
         }
+
         logger.info("Done setting up todo box");
     }
 
-    private void setupDeadlineBox() {
+    private void setupDeadlineBox() throws Exception {
         logger.info("Setting up deadline box");
+
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainWindowController.class.getResource("/view/DeadlineBox.fxml"));
@@ -77,13 +86,15 @@ public class MainWindowController {
             controller.setControlUnit(this.controlUnit);
         } catch (IOException e) {
             logger.severe(ThrowableUtil.getStackTrace(e));
-            e.printStackTrace();
+            throw e;
         }
+
         logger.info("Done setting up deadline box");
     }
 
-    private void setupEventBox() {
+    private void setupEventBox() throws Exception {
         logger.info("Setting up event box");
+
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainWindowController.class.getResource("/view/EventBox.fxml"));
@@ -93,15 +104,17 @@ public class MainWindowController {
             gridPane.getChildren().add(eventBox);
             EventBoxController controller = loader.getController();
             controller.setControlUnit(this.controlUnit);
-        } catch (IOException e) {
+        } catch (Exception e) {
             logger.severe(ThrowableUtil.getStackTrace(e));
-            e.printStackTrace();
+            throw e;
         }
+
         logger.info("Done setting up event box");
     }
 
-    private void setupCommandBox() {
+    private void setupCommandBox() throws Exception {
         logger.info("Setting up command box");
+
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainWindowController.class.getResource("/view/CommandBox.fxml"));
@@ -115,13 +128,15 @@ public class MainWindowController {
             controller.setControlUnit(this.controlUnit);
         } catch (IOException e) {
             logger.severe(ThrowableUtil.getStackTrace(e));
-            e.printStackTrace();
+            throw e;
         }
+
         logger.info("Done setting up command box");
     }
 
-    private void setupExpandableCommandResult() {
+    private void setupExpandableCommandResult() throws Exception {
         logger.info("Setting up expandable command result");
+
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainWindowController.class.getResource("/view/ExpandableResultBox.fxml"));
@@ -131,13 +146,15 @@ public class MainWindowController {
             controller.setControlUnit(this.controlUnit);
         } catch (IOException e) {
             logger.severe(ThrowableUtil.getStackTrace(e));
-            e.printStackTrace();
+            throw e;
         }
+
         logger.info("Done setting up expandable command result");
     }
 
-    private void setupResultsOverlay() {
+    private void setupResultsOverlay() throws Exception {
         logger.info("Setting up results overlay");
+
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainWindowController.class.getResource("/view/ResultsOverlay.fxml"));
@@ -146,9 +163,9 @@ public class MainWindowController {
             controller.setControlUnit(this.controlUnit);
         } catch (IOException e) {
             logger.severe(ThrowableUtil.getStackTrace(e));
-            e.printStackTrace();
+            throw e;
         }
+
         logger.info("Done setting up results overlay");
     }
-
 }
