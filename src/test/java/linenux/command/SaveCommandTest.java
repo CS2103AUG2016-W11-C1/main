@@ -19,22 +19,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 //@@author A0144915A
-public class SaveCommandTest {
-    private Path tempDir;
-    private ScheduleStorage storage;
-    private Config config;
-    private ControlUnit controlUnit;
-    private SaveCommand saveCommand;
-
-    @Before
-    public void setupTestEnvironment() throws Exception {
-        this.tempDir = Files.createTempDirectory("tmp").toAbsolutePath();
-        this.storage = new MockStorage();
-        this.config = new MockConfig();
-        this.controlUnit = new ControlUnit(this.storage, this.config, null);
-        this.saveCommand = new SaveCommand(this.controlUnit, this.tempDir);
-    }
-
+public class SaveCommandTest extends FileCommandsTest {
     @Test
     public void testWritableNewFileByAbsolutePath() throws Exception {
         // Save to a writable, but non-existent file by absolute path.
@@ -158,53 +143,4 @@ public class SaveCommandTest {
         assertEquals(expectedFeedback, result.getFeedback());
     }
 
-    private static class MockStorage implements ScheduleStorage {
-        @Override
-        public Schedule loadScheduleFromFile() {
-            return null;
-        }
-
-        @Override
-        public void saveScheduleToFile(Schedule schedule) {
-        }
-
-        @Override
-        public boolean hasScheduleFile() {
-            return true;
-        }
-    }
-
-    private static class MockConfig implements Config {
-        private String scheduleFilePath = "existingPath";
-
-        @Override
-        public String getVersionNo() {
-            return "test";
-        }
-
-        @Override
-        public String getScheduleFilePath() {
-            return this.scheduleFilePath;
-        }
-
-        @Override
-        public void setScheduleFilePath(String path) {
-            this.scheduleFilePath = path;
-        }
-
-        @Override
-        public boolean hasConfigFile() {
-            return true;
-        }
-
-        @Override
-        public Collection<String> getAliases(String triggerWords) {
-            return null;
-        }
-
-        @Override
-        public void setAliases(String triggerWord, Collection<String> aliases) {
-
-        }
-    }
 }
