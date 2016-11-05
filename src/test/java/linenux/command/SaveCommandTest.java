@@ -1,17 +1,18 @@
 package linenux.command;
 
-import linenux.command.result.CommandResult;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import org.junit.Before;
+import org.junit.Test;
+
+import linenux.command.result.CommandResult;
 
 //@@author A0144915A
 public class SaveCommandTest extends FileCommandsTest {
@@ -144,7 +145,7 @@ public class SaveCommandTest extends FileCommandsTest {
     public void testInvalidArgument() {
         CommandResult result = this.saveCommand.execute("save");
         String expectedFeedback = "Invalid arguments.\n\n" +
-                "save PATH\n\n" +
+                "save NEW_PATH\n\n" +
                 "* Non-compulsory fields are in square brackets.\n" +
                 "* Arguments are case insensitive.";
         assertEquals(expectedFeedback, result.getFeedback());
