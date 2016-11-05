@@ -16,7 +16,6 @@ abstract public class FileCommandsTest {
     protected ScheduleStorage storage;
     protected Config config;
     protected ControlUnit controlUnit;
-    protected SaveCommand saveCommand;
 
     @Before
     public void setupTestEnvironment() throws Exception {
@@ -24,13 +23,12 @@ abstract public class FileCommandsTest {
         this.storage = new MockStorage();
         this.config = new MockConfig();
         this.controlUnit = new ControlUnit(this.storage, this.config, null);
-        this.saveCommand = new SaveCommand(this.controlUnit, this.tempDir);
     }
 
     protected static class MockStorage implements ScheduleStorage {
         @Override
         public Schedule loadScheduleFromFile() {
-            return null;
+            return new Schedule();
         }
 
         @Override

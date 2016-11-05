@@ -1,10 +1,6 @@
 package linenux.command;
 
 import linenux.command.result.CommandResult;
-import linenux.config.Config;
-import linenux.control.ControlUnit;
-import linenux.model.Schedule;
-import linenux.storage.ScheduleStorage;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -12,7 +8,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Collection;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -20,6 +15,15 @@ import static org.junit.Assert.assertTrue;
 
 //@@author A0144915A
 public class SaveCommandTest extends FileCommandsTest {
+    private SaveCommand saveCommand;
+
+    @Before
+    @Override
+    public void setupTestEnvironment() throws Exception {
+        super.setupTestEnvironment();
+        this.saveCommand = new SaveCommand(this.controlUnit, this.tempDir);
+    }
+
     @Test
     public void testWritableNewFileByAbsolutePath() throws Exception {
         // Save to a writable, but non-existent file by absolute path.

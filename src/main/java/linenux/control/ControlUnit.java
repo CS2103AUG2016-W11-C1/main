@@ -61,6 +61,7 @@ public class ControlUnit {
 
     public ControlUnit(ScheduleStorage storage, Config config, CommandManager commandManager) {
         this.scheduleStorage = storage;
+        this.schedule = this.scheduleStorage.loadScheduleFromFile();
         this.config = config;
         this.commandManager = commandManager;
     }
