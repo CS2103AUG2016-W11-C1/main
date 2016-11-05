@@ -4,8 +4,6 @@ import java.time.Clock;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import linenux.command.parser.FreeTimeArgumentParser;
 import linenux.command.result.CommandResult;
@@ -76,16 +74,6 @@ public class FreeTimeCommand extends AbstractCommand {
     @Override
     public String getCommandFormat() {
         return COMMAND_FORMAT;
-    }
-
-    private String extractArgument(String userInput) {
-        Matcher matcher = Pattern.compile(getPattern()).matcher(userInput);
-
-        if (matcher.matches() && matcher.group("keywords") != null) {
-            return matcher.group("keywords");
-        } else {
-            return "";
-        }
     }
 
     private ArrayList<TimeInterval> getFreeTime(TimeInterval queryInterval) {

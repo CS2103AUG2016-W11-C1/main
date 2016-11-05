@@ -2,7 +2,6 @@ package linenux.command.parser;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashSet;
 
 import linenux.command.result.CommandResult;
 import linenux.control.TimeParserManager;
@@ -18,20 +17,18 @@ public class EditArgumentParser {
     public static String CALLOUTS;
 
     private TimeParserManager timeParserManager;
-    private GenericParser genericParser;
     private GenericParser.GenericParserResult parseResult;
 
     //@@author A0135788M
     public EditArgumentParser(TimeParserManager timeParserManager, String commandFormat, String callouts) {
         this.timeParserManager = timeParserManager;
-        this.genericParser = new GenericParser();
         EditArgumentParser.COMMAND_FORMAT = commandFormat;
         EditArgumentParser.CALLOUTS = callouts;
     }
 
     //@@author A0144915A
-    public Either<Task, CommandResult> parse(Task original, String argument) {
-        this.parseResult = this.genericParser.parse(argument);
+    public Either<Task, CommandResult> parse(Task original, GenericParser.GenericParserResult result) {
+        this.parseResult = result;
 
         return Either.<Task, CommandResult>left(original)
                 .bind(this::ensureNeedsEdit)

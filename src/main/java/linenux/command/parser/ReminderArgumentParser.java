@@ -12,20 +12,18 @@ public class ReminderArgumentParser {
     public static String CALLOUTS;
 
     private TimeParserManager timeParserManager;
-    private GenericParser genericParser;
     private GenericParser.GenericParserResult parseResult;
 
     //@@author A0135788M
     public ReminderArgumentParser(TimeParserManager timeParserManager, String commandFormat, String callouts) {
         this.timeParserManager = timeParserManager;
-        this.genericParser = new GenericParser();
         ReminderArgumentParser.COMMAND_FORMAT = commandFormat;
         ReminderArgumentParser.CALLOUTS = callouts;
     }
 
     //@@author A0144915A
-    public Either<Reminder, CommandResult> parse(String argument) {
-        this.parseResult = this.genericParser.parse(argument);
+    public Either<Reminder, CommandResult> parse(GenericParser.GenericParserResult result) {
+        this.parseResult = result;
 
         return Either.<Reminder, CommandResult>left(new Reminder())
                 .bind(this::extractTime)

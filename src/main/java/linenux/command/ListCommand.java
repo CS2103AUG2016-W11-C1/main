@@ -1,10 +1,9 @@
 package linenux.command;
 
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import linenux.command.filter.ListArgumentFilter;
+import linenux.command.parser.GenericParser;
 import linenux.command.result.CommandResult;
 import linenux.control.TimeParserManager;
 import linenux.model.Reminder;
@@ -54,17 +53,18 @@ public class ListCommand extends AbstractCommand {
             return makeEmptyTaskListResult();
         }
 
-        String keywords = extractKeywords(userInput);
         String arguments = extractArgument(userInput);
-        Either<String, CommandResult> viewDone = extractViewDone(arguments);
+        GenericParser parser = new GenericParser();
+        GenericParser.GenericParserResult result = parser.parse(arguments);
+        Either<String, CommandResult> viewDone = extractViewDone(result);
 
         if (viewDone.isRight()) {
             return viewDone.getRight();
         }
 
-        if (!keywords.trim().isEmpty()) {
-            tasks = this.schedule.search(keywords);
-            reminders = this.schedule.searchReminder(keywords);
+        if (!result.getKeywords().isEmpty()) {
+            tasks = this.schedule.search(result.getKeywords());
+            reminders = this.schedule.searchReminder(result.getKeywords());
         }
 
         String actualViewDone = viewDone.getLeft();
@@ -99,7 +99,7 @@ public class ListCommand extends AbstractCommand {
 
 
         if (actualFilterTasks.size() == 0 && actualFilterReminders.size() == 0) {
-            this.schedule.addFilterTasks(new ArrayList<Task>());
+            this.schedule.addFilterTasks(new ArrayList<>());
             return makeNoTasksAndRemindersFoundResult();
         } else {
             return makeResult(actualFilterTasks, actualFilterReminders);
@@ -124,40 +124,13 @@ public class ListCommand extends AbstractCommand {
     }
 
     //@@author A0140702X
-    @Override
-    public String getPattern() {
-        return "(?i)^\\s*(" + getTriggerWordsPattern() + ")((?<keywords>.*?)(?<arguments>((st|et|#|d)/)+?.*)??)";
-    }
+    private Either<String, CommandResult> extractViewDone(GenericParser.GenericParserResult result) {
+        ArrayList<String> flags = result.getArguments("d");
 
-    //@@author A0135788M
-    private String extractKeywords(String userInput) {
-        Matcher matcher = Pattern.compile(getPattern()).matcher(userInput);
-
-        if (matcher.matches() && matcher.group("keywords") != null) {
-            return matcher.group("keywords").trim();
-        } else {
-            return "";
-        }
-    }
-
-    //@@author A0140702X
-    private String extractArgument(String userInput) {
-        Matcher matcher = Pattern.compile(getPattern()).matcher(userInput);
-
-        if (matcher.matches() && matcher.group("arguments") != null) {
-            return matcher.group("arguments");
-        } else {
-            return "";
-        }
-    }
-
-    private Either<String, CommandResult> extractViewDone(String argument) {
-        Matcher matcher = Pattern.compile("(?i)(^|.*? )d/(?<done>.*?)(\\s+(#|st|et)/.*)?$").matcher(argument);
-
-        if (matcher.matches() && matcher.group("done") != null) {
-            return parseViewDone(matcher.group("done").trim());
-        } else {
+        if (flags.size() == 0) {
             return Either.left("");
+        } else {
+            return parseViewDone(flags.get(0));
         }
     }
 

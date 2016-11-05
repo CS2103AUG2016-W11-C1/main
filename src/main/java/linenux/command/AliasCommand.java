@@ -28,7 +28,7 @@ public class AliasCommand extends AbstractCommand {
     public CommandResult execute(String userInput) {
         assert userInput.matches(getPattern());
 
-        String arguments = extractArguments(userInput);
+        String arguments = extractArgument(userInput);
         String[] commandNames = arguments.trim().split("\\s+");
 
         if (commandNames.length != 2) {
@@ -74,17 +74,6 @@ public class AliasCommand extends AbstractCommand {
     @Override
     public String getCommandFormat() {
         return COMMAND_FORMAT;
-    }
-
-    //@@author A0135788M
-    private String extractArguments(String userInput) {
-        Matcher matcher = Pattern.compile(getPattern()).matcher(userInput);
-
-        if (matcher.matches() && matcher.group("keywords") != null) {
-            return matcher.group("keywords").trim();
-        } else {
-            return "";
-        }
     }
 
     //@@author A0144915A

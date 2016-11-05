@@ -3,6 +3,8 @@ package linenux.command;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 //@@author A0144915A
 public abstract class AbstractCommand implements Command {
@@ -36,11 +38,21 @@ public abstract class AbstractCommand implements Command {
 
     @Override
     public String getPattern(){
-        return "(?i)^\\s*(" + getTriggerWordsPattern() + ")(\\s+(?<keywords>.*))?$";
+        return "(?i)^\\s*(" + getTriggerWordsPattern() + ")(\\s+(?<argument>.*))?$";
 
     }
 
     protected String getTriggerWordsPattern() {
         return String.join("|", this.TRIGGER_WORDS);
+    }
+
+    protected String extractArgument(String userInput) {
+        Matcher matcher = Pattern.compile(getPattern()).matcher(userInput);
+
+        if (matcher.matches() && matcher.group("argument") != null) {
+            return matcher.group("argument").trim();
+        } else {
+            return "";
+        }
     }
 }
