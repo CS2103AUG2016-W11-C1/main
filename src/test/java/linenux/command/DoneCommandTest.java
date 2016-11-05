@@ -105,7 +105,7 @@ public class DoneCommandTest {
         this.schedule.addTask(new Task("hello world"));
         this.schedule.addTask(new Task("say hello"));
         CommandResult result = this.doneCommand.execute("done hello");
-        assertEquals("Which one? (1-2)\n1. hello world\n2. say hello", result.getFeedback());
+        assertEquals("Which one? (1-2, \"cancel\" to cancel the current operation)\n1. hello world\n2. say hello", result.getFeedback());
     }
 
     /**
@@ -156,7 +156,7 @@ public class DoneCommandTest {
         assertFalse(taskList.get(0).isDone());
 
         CommandResult result = this.doneCommand.getUserResponse("0");
-        String expectedResponse = "That's not a valid index. Enter a number between 1 and 2:\n" +
+        String expectedResponse = "That's not a valid index. Enter a number between 1 and 2, or \"cancel\" to cancel the current operation:\n" +
                 "1. hello world\n2. say hello from the other side";
         assertEquals(expectedResponse, result.getFeedback());
         taskList = getSearchResult("hello");

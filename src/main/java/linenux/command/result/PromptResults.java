@@ -14,7 +14,7 @@ public class PromptResults {
             StringBuilder builder = new StringBuilder();
             builder.append("Which one? (1-");
             builder.append(tasks.size());
-            builder.append(")\n");
+            builder.append(", \"cancel\" to cancel the current operation)\n");
 
             builder.append(TasksListUtil.display(tasks));
 
@@ -29,7 +29,7 @@ public class PromptResults {
             StringBuilder builder = new StringBuilder();
             builder.append("Which one? (1-");
             builder.append(totalResults);
-            builder.append(")\n");
+            builder.append(", \"cancel\" to cancel the current operation)\n");
             builder.append(RemindersListUtil.displaySearchResults(results));
 
             return builder.toString().trim();
@@ -41,7 +41,7 @@ public class PromptResults {
             StringBuilder builder = new StringBuilder();
             builder.append("That's not a valid index. Enter a number between 1 and ");
             builder.append(tasks.size());
-            builder.append(":\n");
+            builder.append(", or \"cancel\" to cancel the current operation:\n");
             builder.append(TasksListUtil.display(tasks));
             return builder.toString();
         };
@@ -54,7 +54,7 @@ public class PromptResults {
             StringBuilder builder = new StringBuilder();
             builder.append("That's not a valid index. Enter a number between 1 and ");
             builder.append(totalReminders);
-            builder.append(":\n");
+            builder.append(", or \"cancel\" to cancel the current operation:\n");
             builder.append(RemindersListUtil.displaySearchResults(results));
 
             return builder.toString().trim();

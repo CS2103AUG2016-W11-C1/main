@@ -112,7 +112,7 @@ public class DeleteCommandTest {
         this.schedule.addTask(new Task("say hello"));
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
                 () -> this.deleteCommand.execute("delete hello"));
-        assertEquals("Which one? (1-2)\n1. hello world\n2. say hello", result.getFeedback());
+        assertEquals("Which one? (1-2, \"cancel\" to cancel the current operation)\n1. hello world\n2. say hello", result.getFeedback());
     }
 
     /**
@@ -158,7 +158,7 @@ public class DeleteCommandTest {
         this.setupMultipleHelloTasksAndExecuteAmbiguousCommand();
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
                 () -> this.deleteCommand.getUserResponse("0"));
-        String expectedResponse = "That's not a valid index. Enter a number between 1 and 2:\n" +
+        String expectedResponse = "That's not a valid index. Enter a number between 1 and 2, or \"cancel\" to cancel the current operation:\n" +
                 "1. hello world\n2. say hello";
         assertEquals(expectedResponse, result.getFeedback());
         assertTrue(this.deleteCommand.awaitingUserResponse());
