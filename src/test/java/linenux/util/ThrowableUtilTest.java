@@ -1,8 +1,8 @@
 package linenux.util;
 
-import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
 
 //@@author A0144915A
 public class ThrowableUtilTest {
@@ -15,7 +15,7 @@ public class ThrowableUtilTest {
         String trace = ThrowableUtil.getStackTrace(throwable);
         String expectedTrace = "java.lang.Throwable: hello\n" +
                 "\tat this class.this method(this file:1)\n" +
-                "\tat that class.that method(that file:2)\n";
-        assertEquals(trace, expectedTrace);
+                "\tat that class.that method(that file:2)\n\n";
+        assertEquals(expectedTrace, trace);
     }
 }

@@ -1,17 +1,18 @@
 package linenux.command;
 
-import linenux.model.Schedule;
-import linenux.model.Task;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.time.Clock;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import org.junit.Before;
+import org.junit.Test;
+
+import linenux.model.Schedule;
+import linenux.model.Task;
 
 //@@author A0144915A
 public class TodayCommandTest {
@@ -25,6 +26,7 @@ public class TodayCommandTest {
     private Task eventTomorrow;
     private Task eventYesterdayToday;
     private Task eventTodayTomorrow;
+    private Task eventYesterdayTomorrow;
 
     @Before
     public void setupCommand() {
@@ -39,6 +41,7 @@ public class TodayCommandTest {
         this.eventTomorrow = new Task("event 2", LocalDateTime.of(2016, 1, 2, 10, 0), LocalDateTime.of(2016, 1, 2, 12, 0));
         this.eventYesterdayToday = new Task("event 3", LocalDateTime.of(2015, 12, 31, 10, 0), LocalDateTime.of(2016, 1, 1, 10, 0));
         this.eventTodayTomorrow = new Task("event 4", LocalDateTime.of(2016, 1, 1, 10, 0), LocalDateTime.of(2016, 1, 2, 10, 0));
+        this.eventYesterdayTomorrow = new Task("event 5", LocalDateTime.of(2015, 12, 31, 10, 0), LocalDateTime.of(2016, 1, 2, 10, 0));
 
         this.schedule.addTask(this.todo);
         this.schedule.addTask(this.deadlineToday);
@@ -47,6 +50,7 @@ public class TodayCommandTest {
         this.schedule.addTask(this.eventTomorrow);
         this.schedule.addTask(this.eventYesterdayToday);
         this.schedule.addTask(this.eventTodayTomorrow);
+        this.schedule.addTask(this.eventYesterdayTomorrow);
     }
 
     @Test
@@ -69,9 +73,10 @@ public class TodayCommandTest {
         assertTrue(this.schedule.getFilteredTasks().contains(this.todo));
         assertTrue(this.schedule.getFilteredTasks().contains(this.deadlineToday));
         assertFalse(this.schedule.getFilteredTasks().contains(this.deadlineTomorrow));
-        assertFalse(this.schedule.getFilteredTasks().contains(this.eventYesterday));
+        assertTrue(this.schedule.getFilteredTasks().contains(this.eventYesterday));
         assertFalse(this.schedule.getFilteredTasks().contains(this.eventTomorrow));
         assertTrue(this.schedule.getFilteredTasks().contains(this.eventYesterdayToday));
         assertTrue(this.schedule.getFilteredTasks().contains(this.eventTodayTomorrow));
+        assertTrue(this.schedule.getFilteredTasks().contains(this.eventYesterdayTomorrow));
     }
 }
