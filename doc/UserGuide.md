@@ -210,7 +210,7 @@ Setting reminders is as simple as adding a task. Just specify the appropriate fi
 
 *Did you know?*
 
-Have you wondered why we use the word `KEYWORD` rather than `TASK_NAME`? This is because the `remind` command actually searches for task names containing those keywords! For example, consider the scenario below :
+Have you wondered why we use the word `KEYWORDS` rather than `TASK`? This is because the `remind` command actually searches for task names containing those keywords! For example, consider the scenario below :
 
 ```
 > add cs2101 assignment et/tomorrow 11.59pm
@@ -220,7 +220,7 @@ Have you wondered why we use the word `KEYWORD` rather than `TASK_NAME`? This is
 
 <img src="images/userGuide/multipleResult.png">
 
-In this scenario, since there are multiple task names with the keyword `assignment`, both results are returned and you get to choose, via specifying an index, which task is the reminder for. This searching mechanism is implemented for all commands with the field `KEYWORD`. How cool is that?
+In this scenario, since there are multiple task names with the keyword `assignment`, both results are returned and you get to choose, via specifying an index, which task is the reminder for. This searching mechanism is implemented for all commands with the field `KEYWORDS`. How cool is that?
 
 #### Editing Tasks and Reminders
 
