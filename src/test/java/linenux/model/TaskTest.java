@@ -18,7 +18,7 @@ public class TaskTest {
      * Test that todo task is correctly labeled.
      */
     @Test
-    public void testIsTodo() {
+    public void isTodo_todo_true() {
         Task task = new Task("bla", null, null, new ArrayList<String>());
         assertTrue(task.isTodo());
         assertFalse(task.isDeadline());
@@ -29,7 +29,7 @@ public class TaskTest {
      * Test that deadline task is correctly labeled.
      */
     @Test
-    public void testIsDeadline() {
+    public void isDeadline_deadline_false() {
         Task task = new Task("bla", null, LocalDateTime.of(2016, 1, 1, 0, 0));
         assertTrue(task.isDeadline());
         assertFalse(task.isTodo());
@@ -40,7 +40,7 @@ public class TaskTest {
      * Test that event task is correctly labeled.
      */
     @Test
-    public void testIsEvent() {
+    public void isEvent_event_true() {
         Task task = new Task("bla", LocalDateTime.of(2016, 1, 1, 0, 0), LocalDateTime.of(2016, 1, 1, 0, 0));
         assertTrue(task.isEvent());
         assertFalse(task.isTodo());
@@ -51,7 +51,7 @@ public class TaskTest {
      * Test that todo task is correctly converted to string.
      */
     @Test
-    public void testTodoToString() {
+    public void toString_todo_stringRepresentationMatchesExpected() {
         Task task = new Task("hello", null, null, new ArrayList<String>());
         assertEquals("hello", task.toString());
     }
@@ -60,7 +60,7 @@ public class TaskTest {
      * Test that deadline task is correctly converted to string.
      */
     @Test
-    public void testDeadlineToString() {
+    public void toString_deadline_stringRepresentationMatchesExpected() {
         Task task = new Task("hello", null, LocalDateTime.of(2016, 1, 1, 17, 0));
         assertEquals("hello (Due 2016-01-01 5.00PM)", task.toString());
     }
@@ -69,13 +69,13 @@ public class TaskTest {
      * Test that event task is correctly converted to string.
      */
     @Test
-    public void testEventToString() {
+    public void toString_event_stringRepresentationMatchesExpected() {
         Task task = new Task("hello", LocalDateTime.of(2016, 1, 1, 17, 0), LocalDateTime.of(2016, 1, 2, 17, 0));
         assertEquals("hello (2016-01-01 5.00PM - 2016-01-02 5.00PM)", task.toString());
     }
 
     @Test
-    public void testCategoryToString() {
+    public void toString_todoWithTags_stringRepresentationMatchesExpected() {
         ArrayList<String> tags = new ArrayList<>();
         tags.add("tag");
         Task task = new Task("hello", null, null, tags);

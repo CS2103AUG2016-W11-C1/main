@@ -22,7 +22,7 @@ public class TodayWithTimeParserTest {
      * Test that parser responds to valid format.
      */
     @Test
-    public void testRespondToValidFormat() {
+    public void respondTo_validInputFormat_trueReturned() {
         assertTrue(this.parser.respondTo("today 2.05PM"));
     }
 
@@ -30,28 +30,36 @@ public class TodayWithTimeParserTest {
      * Test that parser responds to lowercase am and pm.
      */
     @Test
-    public void testRespondToSmallAmPm() {
+    public void respondTo_lowerCaseAmPm_trueReturned() {
         assertTrue(this.parser.respondTo("today 2.05am"));
-    }
-
-    /**
-     * Test that parser responds to invalid format.
-     */
-    @Test
-    public void testDoesNotRespondToInValidFormat() {
-        assertFalse(this.parser.respondTo("Jan 1, 2016 2:05PM"));
-        assertFalse(this.parser.respondTo("yesterday"));
-        assertFalse(this.parser.respondTo("2:05PM"));
-        assertFalse(this.parser.respondTo("2016-01-01"));
-        assertFalse(this.parser.respondTo("2016-01-01 14:00"));
+        assertTrue(this.parser.respondTo("today 2.06pm"));
     }
 
     /**
      * Test that parser responds to uppercase today.
      */
     @Test
-    public void testRespondToUppercaseMonth() {
+    public void respondTo_upperCaseToday_trueReturned() {
         assertTrue(this.parser.respondTo("TODAY 2.05am"));
     }
 
+    /**
+     * Test that parser responds to mixed case today.
+     */
+    @Test
+    public void respondTo_mixedCaseToday_trueReturned() {
+        assertTrue(this.parser.respondTo("TodAy 2.05am"));
+    }
+
+    /**
+     * Test that parser responds to invalid format.
+     */
+    @Test
+    public void respondTo_invalidInputFormat_falseReturned() {
+        assertFalse(this.parser.respondTo("Jan 1, 2016 2:05PM"));
+        assertFalse(this.parser.respondTo("yesterday"));
+        assertFalse(this.parser.respondTo("2:05PM"));
+        assertFalse(this.parser.respondTo("2016-01-01"));
+        assertFalse(this.parser.respondTo("2016-01-01 14:00"));
+    }
 }

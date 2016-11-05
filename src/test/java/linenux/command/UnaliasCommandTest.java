@@ -28,7 +28,7 @@ public class UnaliasCommandTest {
     }
 
     @Test
-    public void testRespondTo() {
+    public void respondTo_inputThatBeginsWithUnalias_trueReturned() {
         assertTrue(this.unaliasCommand.respondTo("unalias"));
         assertTrue(this.unaliasCommand.respondTo("unalias bla"));
         assertTrue(this.unaliasCommand.respondTo("unalias foo bar"));
@@ -36,14 +36,14 @@ public class UnaliasCommandTest {
     }
 
     @Test
-    public void testNotRespondTo() {
+    public void respondTo_otherCommands_falseReturned() {
         assertFalse(this.unaliasCommand.respondTo("notalias"));
         assertFalse(this.unaliasCommand.respondTo("aunalias"));
         assertFalse(this.unaliasCommand.respondTo("unaliasa"));
     }
 
     @Test
-    public void testUnaliasingPreviousAlias() {
+    public void execute_validInput_aliasRemoved() {
         assertTrue(this.addCommand.respondTo("a"));
         CommandResult result = this.unaliasCommand.execute("unalias a");
         String expectedResult = "\"a\" is removed as an alias.";
@@ -52,7 +52,7 @@ public class UnaliasCommandTest {
     }
 
     @Test
-    public void testUnaliasingNonExistentAlias() {
+    public void execute_nonExistentAlias_commandResultReturned() {
         CommandResult result = this.unaliasCommand.execute("unalias b");
         String expectedResult = "\"b\" is not an alias.";
         assertEquals(expectedResult, result.getFeedback());
@@ -61,7 +61,7 @@ public class UnaliasCommandTest {
     }
 
     @Test
-    public void testUnaliasingDefaultCommand() {
+    public void execute_defaultCommand_commandResultReturned() {
         CommandResult result = this.unaliasCommand.execute("unalias delete");
         String expectedResult = "\"delete\" cannot be removed as an alias.";
         assertEquals(expectedResult, result.getFeedback());

@@ -54,21 +54,21 @@ public class TodayCommandTest {
     }
 
     @Test
-    public void testRespondTo() {
+    public void respondTo_inputThatBeginsWithToday_trueReturned() {
         assertTrue(this.todayCommand.respondTo("today"));
         assertTrue(this.todayCommand.respondTo("today hello"));
         assertTrue(this.todayCommand.respondTo("toDay"));
     }
 
     @Test
-    public void testNotRespondTo() {
+    public void respondTo_otherCommands_falseReturned() {
         assertFalse(this.todayCommand.respondTo("atoday"));
         assertFalse(this.todayCommand.respondTo("todaya"));
         assertFalse(this.todayCommand.respondTo("toda"));
     }
 
     @Test
-    public void testExecute() {
+    public void execute_commandResultReturned() {
         this.todayCommand.execute("today");
         assertTrue(this.schedule.getFilteredTasks().contains(this.todo));
         assertTrue(this.schedule.getFilteredTasks().contains(this.deadlineToday));

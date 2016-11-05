@@ -1,18 +1,18 @@
 package linenux.util;
 
-import org.junit.Test;
-
-import java.util.NoSuchElementException;
-import java.util.function.Function;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.NoSuchElementException;
+import java.util.function.Function;
+
+import org.junit.Test;
+
 //@@author A0144915A
 public class EitherTest {
     @Test
-    public void testLeft() {
+    public void getLeft_eitherWithLeftValue_expectedValueReturned() {
         Either<Integer, String> either = Either.left(1);
         assertTrue(either.isLeft());
         assertFalse(either.isRight());
@@ -20,7 +20,7 @@ public class EitherTest {
     }
 
     @Test
-    public void testRight() {
+    public void getRight_eitherWithRightValue_expectedValueReturned() {
         Either<Integer, String> either = Either.right("hello");
         assertFalse(either.isLeft());
         assertTrue(either.isRight());
@@ -28,17 +28,17 @@ public class EitherTest {
     }
 
     @Test(expected=NoSuchElementException.class)
-    public void testGetLeftShouldThrow() {
+    public void getLeft_noLeftValue_noSuchElementExceptionThrown() {
         Either.right("hello").getLeft();
     }
 
     @Test(expected=NoSuchElementException.class)
-    public void testGetRightShouldThrow() {
+    public void getRight_noRightValue_noSuchElementExceptionThrown() {
         Either.left("hello").getRight();
     }
 
     @Test
-    public void testIsLeftBindReturnsLeft() {
+    public void bind_bindLeftValueToLeft_leftValueModifiedAndBoundToLeft() {
         Either<Integer, Integer> either = Either.left(1);
         Either<Integer, Integer> result = either.bind(i -> Either.left(i + 1));
 
@@ -47,7 +47,7 @@ public class EitherTest {
     }
 
     @Test
-    public void testIsLeftBindReturnsRight() {
+    public void bind_bindLeftValueToRight_leftValueModifiedAndBoundToRight() {
         Either<Integer, Integer> either = Either.left(1);
         Either<Integer, Integer> result = either.bind(i -> Either.right(i + 1));
 
@@ -70,7 +70,7 @@ public class EitherTest {
     }
 
     @Test
-    public void testIsRightBind() {
+    public void bind_bindRightValueToRight_rightValueModifiedAndBoundToRight() {
         MockLambda fn = new MockLambda();
         Either<Integer, Integer> either = Either.right(1);
         Either<Integer, Integer> result = either.bind(fn);

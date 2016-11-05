@@ -12,7 +12,7 @@ import org.junit.Test;
 //@@author A0144915A
 public class AddTaskTest extends GuiTest {
     @Test
-    public void testAddTodo() {
+    public void add_addTodo_todoAddedToTodosList() {
         verifyThat("#todosList", isEmpty());
         verifyThat("#deadlinesList", isEmpty());
         verifyThat("#eventsList", isEmpty());
@@ -27,7 +27,7 @@ public class AddTaskTest extends GuiTest {
     }
 
     @Test
-    public void testMarkTodoAsDone() {
+    public void done_markTodoAsDone_todoRemovedFromTodosList() {
         robot.clickOn("#textField");
         robot.write("add hello\n");
         robot.write("add world\n");
@@ -43,7 +43,7 @@ public class AddTaskTest extends GuiTest {
     }
 
     @Test
-    public void testAddDeadline() {
+    public void add_addDeadline_deadlineAddedToDeadlinesList() {
         verifyThat("#todosList", isEmpty());
         verifyThat("#deadlinesList", isEmpty());
         verifyThat("#eventsList", isEmpty());
@@ -61,7 +61,7 @@ public class AddTaskTest extends GuiTest {
     }
 
     @Test
-    public void testMarkDeadlineAsDone() {
+    public void done_markDeadlineAsDone_deadlineRemovedFromDeadlinesList() {
         robot.clickOn("#textField");
         robot.write("add deadline et/2016-01-01 5.00PM\n");
         robot.write("add another et/2016-02-01 5.00PM\n");
@@ -76,7 +76,7 @@ public class AddTaskTest extends GuiTest {
     }
 
     @Test
-    public void testAddEvent() {
+    public void add_addEvent_eventAddedToEventsList() {
         verifyThat("#todosList", isEmpty());
         verifyThat("#deadlinesList", isEmpty());
         verifyThat("#eventsList", isEmpty());

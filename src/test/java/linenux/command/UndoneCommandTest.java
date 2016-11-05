@@ -50,7 +50,7 @@ public class UndoneCommandTest {
      * return true even if the format of the arguments are invalid.
      */
     @Test
-    public void testRespondToUndoneCommand() {
+    public void respondTo_inputThatBeginsWithUndone_trueReturned() {
         assertTrue(this.undoneCommand.respondTo("undone"));
         assertTrue(this.undoneCommand.respondTo("undone       "));
         assertTrue(this.undoneCommand.respondTo("undone hey"));
@@ -60,7 +60,7 @@ public class UndoneCommandTest {
      * Test that the undone command is case insensitive.
      */
     @Test
-    public void testCaseInsensitiveRespondToUndoneCommand() {
+    public void respondTo_upperCase_trueReturned() {
         assertTrue(this.undoneCommand.respondTo("uNdOnE hello"));
     }
 
@@ -68,7 +68,7 @@ public class UndoneCommandTest {
      * Test that respondTo will return false for commands not related to undone.
      */
     @Test
-    public void testDoesNotRespondToOtherCommands() {
+    public void respondTo_otherCommand_falseReturned() {
         assertFalse(this.undoneCommand.respondTo("donedone"));
     }
 
@@ -76,7 +76,7 @@ public class UndoneCommandTest {
      * Test the feedback when no match is found.
      */
     @Test
-    public void testCommandResultWhenNoMatchFound() {
+    public void execute_noMatch_commandResultReturned() {
         this.schedule.addTask(new Task("Shot through the heart"));
         CommandResult result = this.undoneCommand.execute("undone and you are to blame");
         assertEquals("Cannot find task names with \"and you are to blame\".", result.getFeedback());
@@ -86,7 +86,7 @@ public class UndoneCommandTest {
      * Test the feedback when only one match is found.
      */
     @Test
-    public void testCommandResultWhenOnlyOneMatchFound() {
+    public void execute_oneMatch_taskMarkAsDone() {
         Task task1 = new Task("Live like we are dying");
         task1 = task1.markAsDone();
         this.schedule.addTask(task1);
@@ -105,7 +105,7 @@ public class UndoneCommandTest {
      * Test the feedback when multiple matches are found.
      */
     @Test
-    public void testCommandResultWhenMultipleMatchesFound() {
+    public void exeucte_multipleMatches_commandResultReturned() {
         Task task1 = new Task("hello world");
         Task task2 = new Task("say hello");
 
@@ -123,7 +123,7 @@ public class UndoneCommandTest {
      * found.
      */
     @Test
-    public void testAwaitingUserResponse() {
+    public void isAwaitingUserResponse_multipleMatches_trueReturned() {
         assertFalse(this.undoneCommand.isAwaitingUserResponse());
         this.setupMultipleHelloTasksAndExecuteAmbiguousCommand();
         assertTrue(this.undoneCommand.isAwaitingUserResponse());
@@ -133,7 +133,7 @@ public class UndoneCommandTest {
      * Test that cancel works properly.
      */
     @Test
-    public void testUserResponseCancel() {
+    public void processingUserResponse_cancel_isNotAwaitingUserResponse() {
         this.setupMultipleHelloTasksAndExecuteAmbiguousCommand();
         CommandResult result = this.undoneCommand.processUserResponse("cancel");
         assertEquals("OK! Not marking any task as undone.", result.getFeedback());
@@ -144,7 +144,7 @@ public class UndoneCommandTest {
      * Test that task is marked as done if user selects a valid index.
      */
     @Test
-    public void testUserResponseValidIndex() {
+    public void processingUserResponse_validIndex_taskMarkUndone() {
         this.setupMultipleHelloTasksAndExecuteAmbiguousCommand();
         ArrayList<Task> taskList = getSearchResult("hello");
         assertFalse(taskList.get(0).isNotDone());
@@ -161,7 +161,7 @@ public class UndoneCommandTest {
      * Test that task is not marked as done if user selects an invalid index.
      */
     @Test
-    public void testUserResponseInvalidIndex() {
+    public void processUserResponse_invalidIndex_commandResultReturned() {
         this.setupMultipleHelloTasksAndExecuteAmbiguousCommand();
         ArrayList<Task> taskList = getSearchResult("hello");
         assertFalse(taskList.get(0).isNotDone());
@@ -180,7 +180,7 @@ public class UndoneCommandTest {
      * Test that task is not marked as done if user types an invalid response.
      */
     @Test
-    public void testUserResponseInvalidResponse() {
+    public void processUserResponse_invalidResponse_commandResultReturned() {
         this.setupMultipleHelloTasksAndExecuteAmbiguousCommand();
         ArrayList<Task> taskList = getSearchResult("hello");
         assertFalse(taskList.get(0).isNotDone());
@@ -200,7 +200,7 @@ public class UndoneCommandTest {
      */
 
     @Test
-    public void testSearchOnlyDoneTasks() {
+    public void execute_validArguments_looksForDoneTasksOnly() {
         this.schedule.addTask(new Task("hello"));
         this.schedule.addTask(new Task("hello", LocalDateTime.of(2017, 1, 1, 17, 0)).markAsDone());
 

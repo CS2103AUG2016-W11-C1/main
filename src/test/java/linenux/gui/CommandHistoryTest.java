@@ -1,15 +1,16 @@
 package linenux.gui;
 
-import javafx.scene.input.KeyCode;
-import org.junit.Test;
-
 import static linenux.helpers.GuiMatchers.textFieldHasText;
 import static org.testfx.api.FxAssert.verifyThat;
 
-//@@author A0127694U
+import org.junit.Test;
+
+import javafx.scene.input.KeyCode;
+
+//@@author A0144915A
 public class CommandHistoryTest extends GuiTest {
     @Test
-    public void testUpKeyPreviousCommand() {
+    public void commandHistory_browseCommandHistory_commandHistoryShown() {
         robot.write("add hello\n");
         robot.write("add world\n");
 

@@ -2,7 +2,6 @@ package linenux.command;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import org.junit.Before;
@@ -40,19 +39,19 @@ public class InvalidCommandTest {
      * Test correct response with suggestions.
      */
     @Test
-    public void testResponseWithSuggestion() {
+    public void execute_withArgument_commandResultWithSuggestion() {
         CommandResult result = this.invalidCommand.execute("eit");
         assertEquals("Invalid command. Did you mean exit?", result.getFeedback());
     }
 
     @Test
-    public void testYes() {
+    public void execute_yes_commandResultWithSuggestion() {
         CommandResult result = this.controlUnit.execute("yes");
         assertEquals("Invalid command. Did you mean list?", result.getFeedback());
     }
 
     @Test
-    public void testFollowUp() {
+    public void execute_followUpWithYes_suggestionExecuted() {
         CommandResult result = this.controlUnit.execute("ls");
         assertEquals("Invalid command. Did you mean list?", result.getFeedback());
         result = this.controlUnit.execute("yes");
@@ -62,7 +61,7 @@ public class InvalidCommandTest {
     }
 
     @Test
-    public void testNoFollowUp() {
+    public void execute_noFollowUp_suggestionDiscarded() {
         this.controlUnit.execute("ls");
         CommandResult result = this.controlUnit.execute("exit");
         assertEquals("exit", result.getFeedback());
@@ -74,7 +73,7 @@ public class InvalidCommandTest {
      * Test correct response without any suggestions.
      */
     @Test
-    public void testResponseWithoutSuggestions() {
+    public void execute_noSuggestion_commandResultReturned() {
         this.invalidCommand = new InvalidCommand(new ControlUnit(new MockStorage(), new MockConfig(), new CommandManager()));
         CommandResult result = this.invalidCommand.execute("eit");
         assertEquals("Invalid command.", result.getFeedback());

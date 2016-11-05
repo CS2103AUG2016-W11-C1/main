@@ -22,7 +22,7 @@ public class TomorrowWithTimeParserTest {
      * Test that parser responds to valid format.
      */
     @Test
-    public void testRespondToValidFormat() {
+    public void respondTo_validInputFormat_trueReturned() {
         assertTrue(this.parser.respondTo("tomorrow 2.05PM"));
     }
 
@@ -30,28 +30,36 @@ public class TomorrowWithTimeParserTest {
      * Test that parser responds to lowercase am and pm.
      */
     @Test
-    public void testRespondToSmallAmPm() {
+    public void respondTo_lowerCaseAmPm_trueReturned() {
         assertTrue(this.parser.respondTo("tomorrow 2.05am"));
+        assertTrue(this.parser.respondTo("tomorrow 2.05pm"));
+    }
+
+    /**
+     * Test that parser responds to uppercase tomorrow.
+     */
+    @Test
+    public void respondTo_upperCaseTomorrow_trueReturned() {
+        assertTrue(this.parser.respondTo("TOMORROW 2.05am"));
+    }
+
+    /**
+     * Test that parser responds to mixed case tomorrow.
+     */
+    @Test
+    public void respondTo_mixedCaseTomorrow_trueReturned() {
+        assertTrue(this.parser.respondTo("ToMorrOw 2.05am"));
     }
 
     /**
      * Test that parser responds to invalid format.
      */
     @Test
-    public void testDoesNotRespondToInValidFormat() {
+    public void respondTo_invalidInputFormat_falseReturned() {
         assertFalse(this.parser.respondTo("Jan 1, 2016 2:05PM"));
         assertFalse(this.parser.respondTo("yesterday"));
         assertFalse(this.parser.respondTo("2:05PM"));
         assertFalse(this.parser.respondTo("2016-01-01"));
         assertFalse(this.parser.respondTo("2016-01-01 14:00"));
     }
-
-    /**
-     * Test that parser responds to uppercase today.
-     */
-    @Test
-    public void testRespondToUppercaseMonth() {
-        assertTrue(this.parser.respondTo("TOMORROW 2.05am"));
-    }
-
 }

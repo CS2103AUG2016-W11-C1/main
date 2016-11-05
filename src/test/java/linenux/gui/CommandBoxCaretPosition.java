@@ -1,15 +1,16 @@
 package linenux.gui;
 
-import javafx.scene.input.KeyCode;
-import org.junit.Test;
-
 import static linenux.helpers.GuiMatchers.textFieldHasText;
 import static org.testfx.api.FxAssert.verifyThat;
 
-//@@author A0127694U
+import org.junit.Test;
+
+import javafx.scene.input.KeyCode;
+
+//@@author A0144915A
 public class CommandBoxCaretPosition extends GuiTest {
     @Test
-    public void testLeftAndRight() {
+    public void leftAndRightKey_moveCaretAndModifyText() {
         robot.clickOn("#textField");
         robot.write("add hello");
 
@@ -20,10 +21,18 @@ public class CommandBoxCaretPosition extends GuiTest {
         robot.write("b");
 
         verifyThat("#textField", textFieldHasText("add bhello"));
+
+        for (int i = 0; i < 5; i++) {
+            robot.pressAndRelease(KeyCode.RIGHT);
+        }
+
+        robot.write("c");
+
+        verifyThat("#textField", textFieldHasText("add bhelloc"));
     }
 
     @Test
-    public void testUpHistory() {
+    public void upKey_pressUpKeyAndModifyText() {
         robot.clickOn("#textField");
         robot.write("add hello\n");
         robot.pressAndRelease(KeyCode.UP);
@@ -32,7 +41,7 @@ public class CommandBoxCaretPosition extends GuiTest {
     }
 
     @Test
-    public void testDownHistory() {
+    public void downKey_browseCommandHistoryAndModifyText() {
         robot.clickOn("#textField");
         robot.write("add hello\n");
         robot.write("add world\n");
@@ -44,7 +53,7 @@ public class CommandBoxCaretPosition extends GuiTest {
     }
 
     @Test
-    public void testAutoComplete() {
+    public void autoComplete_tabOnCommandWord_commandWordSuggested() {
         robot.clickOn("#textField");
         robot.write("a");
         robot.pressAndRelease(KeyCode.TAB);

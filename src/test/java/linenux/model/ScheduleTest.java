@@ -25,7 +25,7 @@ public class ScheduleTest {
     }
 
     @Test
-    public void testAddTask() {
+    public void addTaskToTaskList() {
         int beforeSize = this.schedule.getTaskList().size();
         this.schedule.addTask(new Task("bla"));
         int afterSize = this.schedule.getTaskList().size();
@@ -34,7 +34,7 @@ public class ScheduleTest {
     }
 
     @Test
-    public void testClear() {
+    public void clear_taskListNotEmpty_taskListEmpty() {
         Task task1 = new Task("hello");
         Task task2 = new Task("blah");
         this.schedule.addTask(task1);
@@ -48,7 +48,7 @@ public class ScheduleTest {
     }
 
     @Test
-    public void testSearch() {
+    public void search_searchByKeywords_expectedTaskReturned() {
         String[] keywords = {"hello", "WoRlD"};
         Task match1 = new Task("Say Hello");
         Task match2 = new Task("Around the world");
@@ -64,7 +64,7 @@ public class ScheduleTest {
     }
 
     @Test
-    public void testEdit() {
+    public void edit_modifyTask_modifiedTaskMatchesExpected() {
         this.schedule.clear();
         Task originalTask = new Task("hello");
         this.schedule.addTask(originalTask);
@@ -75,7 +75,7 @@ public class ScheduleTest {
     }
 
     @Test
-    public void testDelete() {
+    public void delete_taskInTaskList_taskListDoesNotContainDeletedTask() {
         Task task = new Task("bla");
         this.schedule.addTask(task);
         int beforeSize = this.schedule.getTaskList().size();
@@ -87,7 +87,7 @@ public class ScheduleTest {
     }
 
     @Test
-    public void testDeleteReminder() {
+    public void deleteReminder_taskWithSingleReminder_remindersIsEmpty() {
         this.schedule.clear();
         Task task = new Task("blah");
         Reminder r = new Reminder("reminder", LocalDateTime.of(2016, 1, 1, 1, 0));
@@ -105,7 +105,7 @@ public class ScheduleTest {
     }
 
     @Test
-    public void testMaxStates() {
+    public void states_maxStates_statesDoesNotExceedMax() {
         for (int i = 0; i < Schedule.MAX_STATES; i++) {
             this.schedule.addTask(new Task("task" + Integer.toString(i)));
         }

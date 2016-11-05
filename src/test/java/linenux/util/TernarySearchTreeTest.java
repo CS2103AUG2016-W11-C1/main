@@ -35,7 +35,7 @@ public class TernarySearchTreeTest {
      * Test that getAllString() is never null.
      */
     @Test
-    public void testGetAllStringsNotNull() {
+    public void getAllStrings_noSetUp_nullNeverReturned() {
         assertNotNull(tree.getAllStrings());
     }
 
@@ -44,7 +44,7 @@ public class TernarySearchTreeTest {
      * string.
      */
     @Test
-    public void testInvalidPrefix() {
+    public void getAllStringsWithPrefix_invalidPrefix_inputStringReturned() {
         setUpData();
         ArrayList<String> searchResult = tree.getAllStringsWithPrefix("z");
         assertEquals(searchResult.size(), 1);
@@ -55,7 +55,7 @@ public class TernarySearchTreeTest {
      * Test that adding string works.
      */
     @Test
-    public void testAddData() {
+    public void addString_newString_stringAddedToFrontOfTree() {
         tree.addString("credit");
         assertEquals("credit", tree.getAllStrings().get(0));
     }
@@ -64,7 +64,7 @@ public class TernarySearchTreeTest {
      * Test that adding string is case insensitive.
      */
     @Test
-    public void testAddDataCaseInsensitive() {
+    public void addString_mixedCaseString_lowerCaseStringAddedToTree() {
         tree.addString("crEDit");
         assertEquals("credit", tree.getAllStrings().get(0));
     }
@@ -73,7 +73,7 @@ public class TernarySearchTreeTest {
      * Test that search for prefix is correct
      */
     @Test
-    public void testSearchPrefix() {
+    public void getAllStringsWithPrefix_validPrefix_allStringsWithPrefixReturned() {
         setUpData();
         ArrayList<String> result = tree.getAllStringsWithPrefix("cra");
         assertEquals(3, result.size());

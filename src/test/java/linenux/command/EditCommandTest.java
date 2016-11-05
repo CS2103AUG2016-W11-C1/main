@@ -42,7 +42,7 @@ public class EditCommandTest {
      * return true even if the format of the arguments are invalid.
      */
     @Test
-    public void testRespondToEditTaskCommand() {
+    public void respondTo_inputThatStartsWithEdit_trueReturned() {
         assertTrue(this.editCommand.respondTo("edit"));
         assertTrue(this.editCommand.respondTo("edit #/"));
         assertTrue(this.editCommand.respondTo("edit #/tag"));
@@ -95,7 +95,7 @@ public class EditCommandTest {
      * Test that respondTo is case-insensitive.
      */
     @Test
-    public void testCaseInsensitiveEditTaskCommand() {
+    public void respondTo_upperCase_trueReturned() {
         assertTrue(this.editCommand.respondTo("EdIT CS2103T Tutorial N/hello"));
     }
 
@@ -104,7 +104,7 @@ public class EditCommandTest {
      * tasks.
      */
     @Test
-    public void testNotRespondToOtherCommands() {
+    public void respondTo_otherCommands_falseReturned() {
         assertFalse(this.editCommand.respondTo("halp"));
         assertFalse(this.editCommand.respondTo("editr"));
     }
@@ -115,7 +115,7 @@ public class EditCommandTest {
      *
      */
     @Test
-    public void testEditTodoToTodoWhenSingleTodoFound() {
+    public void execute_editTodoName_taskUpdated() {
         this.schedule.clear();
         this.schedule.addTask(new Task("hello"));
         assertChangeBy(() -> this.schedule.getTaskList().size(), 0,
@@ -139,7 +139,7 @@ public class EditCommandTest {
      *
      */
     @Test
-    public void testEditTodoToDeadlineWhenSingleTodoFound() {
+    public void execute_addEndTimeToTodo_taskUpdated() {
         this.schedule.clear();
         this.schedule.addTask(new Task("hello"));
         assertChangeBy(() -> this.schedule.getTaskList().size(), 0,
@@ -163,7 +163,7 @@ public class EditCommandTest {
      *
      */
     @Test
-    public void testEditTodoToEventWhenSingleTodoFound() {
+    public void execute_addStartTimeAndEndTime_taskUpdated() {
         this.schedule.clear();
         this.schedule.addTask(new Task("hello"));
         assertChangeBy(() -> this.schedule.getTaskList().size(), 0, () -> this.editCommand
@@ -187,7 +187,7 @@ public class EditCommandTest {
      *
      */
     @Test
-    public void testEditDeadlineToTodoWhenSingleDeadlineFound() {
+    public void execute_removeEndTimeFromDeadline_taskUpdated() {
         this.schedule.clear();
         this.schedule.addTask(new Task("hello", null, LocalDateTime.of(2016, 1, 1, 17, 0)));
         assertChangeBy(() -> this.schedule.getTaskList().size(), 0,
@@ -211,7 +211,7 @@ public class EditCommandTest {
      *
      */
     @Test
-    public void testEditDeadlineToDeadlineWhenSingleDeadlineFound() {
+    public void execute_updateDeadline_taskUpdated() {
         this.schedule.clear();
         this.schedule.addTask(new Task("hello", null, LocalDateTime.of(2016, 1, 1, 17, 0)));
         assertChangeBy(() -> this.schedule.getTaskList().size(), 0,
@@ -235,7 +235,7 @@ public class EditCommandTest {
      *
      */
     @Test
-    public void testEditDeadlineToEventWhenSingleDeadlineFound() {
+    public void execute_editEvent_taskUpdated() {
         this.schedule.clear();
         this.schedule.addTask(new Task("hello", null, LocalDateTime.of(2016, 1, 1, 17, 0)));
         assertChangeBy(() -> this.schedule.getTaskList().size(), 0, () -> this.editCommand
@@ -259,7 +259,7 @@ public class EditCommandTest {
      *
      */
     @Test
-    public void testEditEventToTodoWhenSingleEventFound() {
+    public void execute_removeStartTimeAndEndTimeFromEvent_taskUpdated() {
         this.schedule.clear();
         this.schedule
                 .addTask(new Task("hello", LocalDateTime.of(2016, 1, 1, 15, 0), LocalDateTime.of(2016, 1, 1, 17, 0)));
@@ -284,7 +284,7 @@ public class EditCommandTest {
      *
      */
     @Test
-    public void testEditEventToDeadlineWhenSingleEventFound() {
+    public void execute_removeStartTimeFromEvent_taskUpdated() {
         this.schedule.clear();
         this.schedule
                 .addTask(new Task("hello", LocalDateTime.of(2016, 1, 1, 15, 0), LocalDateTime.of(2016, 1, 1, 17, 0)));
@@ -309,7 +309,7 @@ public class EditCommandTest {
      *
      */
     @Test
-    public void testEditEventToEventWhenSingleEventFound() {
+    public void execute_updateEvent_taskUpdated() {
         this.schedule.clear();
         this.schedule
                 .addTask(new Task("hello", LocalDateTime.of(2016, 1, 1, 15, 0), LocalDateTime.of(2016, 1, 1, 17, 0)));
@@ -334,7 +334,7 @@ public class EditCommandTest {
      *
      */
     @Test
-    public void testEditAddTag() {
+    public void execute_addTag_taskUpdated() {
         this.schedule.clear();
         this.schedule.addTask(new Task("hello"));
         assertNoChange(() -> this.schedule.getTaskList().size(),
@@ -352,7 +352,7 @@ public class EditCommandTest {
      *
      */
     @Test
-    public void testEditRemoveTags() {
+    public void execute_removeTag_taskUpdated() {
         this.schedule.clear();
         ArrayList<String> existingCatList = new ArrayList<>();
         existingCatList.add("blah");
@@ -372,7 +372,7 @@ public class EditCommandTest {
      *
      */
     @Test
-    public void testEditModifySingleTag() {
+    public void execute_updateTag_taskUpdated() {
         this.schedule.clear();
         ArrayList<String> existingCatList = new ArrayList<>();
         existingCatList.add("blah");
@@ -393,7 +393,7 @@ public class EditCommandTest {
      *
      */
     @Test
-    public void testEditModifyMultipleTags() {
+    public void execute_updateTags_taskUpdated() {
         this.schedule.clear();
         ArrayList<String> existingCatList = new ArrayList<>();
         existingCatList.add("blah");
@@ -415,7 +415,7 @@ public class EditCommandTest {
      *
      */
     @Test
-    public void testEditUnchangedTags() {
+    public void execute_noUpdateToTags_tagsNotUpdated() {
         this.schedule.clear();
         ArrayList<String> existingCatList = new ArrayList<>();
         existingCatList.add("blah");
@@ -435,7 +435,7 @@ public class EditCommandTest {
      *
      */
     @Test
-    public void testEditTagModificationMessage() {
+    public void execute_editTag_commandResultReturned() {
         ArrayList<String> existingCatList = new ArrayList<>();
         existingCatList.add("tag");
         this.schedule.addTask(new Task("hello", existingCatList));
@@ -447,7 +447,7 @@ public class EditCommandTest {
     }
 
     @Test
-    public void testCommandResultWhenMultipleMatchesFound() {
+    public void execute_multipleMatches_commandResultReturned() {
         this.schedule.addTask(new Task("hello world"));
         this.schedule.addTask(new Task("say hello"));
 
@@ -458,14 +458,14 @@ public class EditCommandTest {
     }
 
     @Test
-    public void testAwaitingUserResponse() {
+    public void isAwaitingUserResponse_multipleMatches_trueReturned() {
         assertFalse(this.editCommand.isAwaitingUserResponse());
         this.setupMultipleHelloTasksAndExecuteAmbiguousCommand();
         assertTrue(this.editCommand.isAwaitingUserResponse());
     }
 
     @Test
-    public void testUserResponseCancel() {
+    public void processUserResponse_cancel_isNotAwaitingUserResponse() {
         this.setupMultipleHelloTasksAndExecuteAmbiguousCommand();
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
                 () -> this.editCommand.processUserResponse("cancel"));
@@ -474,7 +474,7 @@ public class EditCommandTest {
     }
 
     @Test
-    public void testUserResponseValidIndex() {
+    public void processUserResponse_validIndex_taskUpdated() {
         this.schedule.clear();
         this.setupMultipleHelloTasksAndExecuteAmbiguousCommand();
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
@@ -483,7 +483,7 @@ public class EditCommandTest {
     }
 
     @Test
-    public void testUserResponseInvalidIndex() {
+    public void processUserResponse_invalidIndex_commandResultReturned() {
         this.setupMultipleHelloTasksAndExecuteAmbiguousCommand();
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
                 () -> this.editCommand.processUserResponse("0"));
@@ -493,7 +493,7 @@ public class EditCommandTest {
     }
 
     @Test
-    public void testUserResponseInvalidResponse() {
+    public void processUserResponse_invalidResponse_commandResultReturned() {
         this.setupMultipleHelloTasksAndExecuteAmbiguousCommand();
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
                 () -> this.editCommand.processUserResponse("roses are red"));
@@ -508,7 +508,7 @@ public class EditCommandTest {
      *
      */
     @Test
-    public void testEditIgnoringOrderOfArguments() {
+    public void execute_flagsSuffled_taskUpdated() {
         this.schedule.clear();
         this.schedule.addTask(new Task("hello"));
         assertChangeBy(() -> this.schedule.getTaskList().size(), 0, () -> this.editCommand
@@ -529,7 +529,7 @@ public class EditCommandTest {
     }
 
     @Test
-    public void testEditInvalidStartTime() {
+    public void execute_invalidStartTime_commandResultReturned() {
         this.schedule.clear();
         this.schedule.addTask(new Task("hello"));
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
@@ -539,7 +539,7 @@ public class EditCommandTest {
     }
 
     @Test
-    public void testEditInvalidEndTime() {
+    public void execute_invalidEndTime_commandResultReturned() {
         this.schedule.clear();
         this.schedule.addTask(new Task("hello"));
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
@@ -549,7 +549,7 @@ public class EditCommandTest {
     }
 
     @Test
-    public void testEditStartTimeWithoutEndTime() {
+    public void execute_startTimeWithoutEndTime_commandResultReturned() {
         this.schedule.addTask(new Task("hello"));
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
                 () -> this.editCommand.execute("edit hello st/2016-01-01 5.00PM"));
@@ -558,7 +558,7 @@ public class EditCommandTest {
     }
 
     @Test
-    public void testEndTimeBeforeStartTime() {
+    public void execute_endTimeBeforeStartTime_commandResultReturned() {
         this.schedule.addTask(new Task("hello"));
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
                 () -> this.editCommand.execute("edit hello st/2016-01-02 5.00PM et/2016-01-01 5.00PM"));
@@ -572,7 +572,7 @@ public class EditCommandTest {
      *
      */
     @Test
-    public void testCommandResultWhenNoKeywords() {
+    public void execute_noKeywords_commandResultReturned() {
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
                 () -> this.editCommand.execute("edit "));
         assertEquals(expectedInvalidArgumentMessage() , result.getFeedback());
@@ -584,7 +584,7 @@ public class EditCommandTest {
      *
      */
     @Test
-    public void testCommandResultWhenNoArguments() {
+    public void execute_noFlags_taskNotUpdated() {
         this.schedule.addTask(new Task("hello"));
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
                 () -> this.editCommand.execute("edit hello "));
@@ -595,7 +595,7 @@ public class EditCommandTest {
      * Test the result when the task name consists of only empty spaces
      */
     @Test
-    public void testTaskNameIsEmptyCommandResult() {
+    public void execute_emptyUpdatedName_commandResultReturned() {
         this.schedule.addTask(new Task("hello"));
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
                 () -> this.editCommand.execute("edit hello n/            "));
@@ -607,7 +607,7 @@ public class EditCommandTest {
      * keywords.
      */
     @Test
-    public void testCommandResultWhenNoMatchFound() {
+    public void execute_noMatch_commandResultReturned() {
         this.schedule.addTask(new Task("flkasdjfaklsdfjaldf"));
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
                 () -> this.editCommand.execute("edit that nasty todo n/new name"));
@@ -619,7 +619,7 @@ public class EditCommandTest {
      * Test that ensures command will not edit will not create duplicate task.
      */
     @Test
-    public void testEditToAnotherTask() {
+    public void execute_deplicatedTasks_commandResultReturned() {
         this.schedule.addTask(new Task("todo"));
         this.schedule.addTask(new Task("deadline", LocalDateTime.of(2016, 1, 1, 17, 0)));
         this.schedule

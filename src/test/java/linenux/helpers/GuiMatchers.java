@@ -40,6 +40,15 @@ public class GuiMatchers {
         return typeSafeMatcher(ListView.class, time, node -> listHasCellTime(node, time));
     }
 
+    /**
+     * Check if ListView node has the specified title.
+     *
+     * @param node
+     *            The node to check.
+     * @param title
+     *            The specified title.
+     * @return True if the node has the specified title, false otherwise.
+     */
     private static boolean listHasCellTitle(ListView node, String title) {
         NodeFinder finder = FxAssert.assertContext().getNodeFinder();
         NodeQuery query = finder.from(node);
@@ -56,6 +65,15 @@ public class GuiMatchers {
                 .isPresent();
     }
 
+    /**
+     * Check if the ListView node has the specified time.
+     *
+     * @param node
+     *            The node to check.
+     * @param time
+     *            The specified time.
+     * @return True if the node has the specified time, false otherwise.
+     */
     private static boolean listHasCellTime(ListView node, String time) {
         NodeFinder finder = FxAssert.assertContext().getNodeFinder();
         NodeQuery query = finder.from(node);
@@ -80,10 +98,22 @@ public class GuiMatchers {
                 .isPresent();
     }
 
+    /**
+     * Returns the current selected {@code Node}.
+     *
+     * @return
+     */
     public static Matcher<Node> isFocused() {
         return baseMatcher("is focused", node -> node.focusedProperty().get());
     }
 
+    /**
+     * Returns the node with the specified text.
+     *
+     * @param text
+     *            The specified text.
+     * @return
+     */
     public static Matcher<Node> textFieldHasText(String text) {
         return typeSafeMatcher(TextField.class, text, node -> node.getText().equals(text));
     }
