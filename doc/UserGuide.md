@@ -54,7 +54,7 @@ Double-click on the file to launch Linenux. Wait for a few seconds for the main 
 2. **Deadline Panel** - shows deadlines.
 3. **Event Panel** - shows events.
 4. **Display Panel** - shows reminders, help page and search results.
-5.. **Command Box** - where you enter the command.
+5. **Command Box** - where you enter the command.
 
 *The list of deadlines, events and reminders are always ordered according to their urgency.*
 
@@ -64,31 +64,31 @@ Double-click on the file to launch Linenux. Wait for a few seconds for the main 
 
 *Step 1: Adding a task.*
 
-The date is October 17, 2016. You have to buy groceries from the local supermarket but you are only free to do so on a weekend. You decide to remind youself with the aid of Linenux. Type the following line in the command box:
+You have to buy groceries from the local supermarket today as your relatives are coming to visit for the weekend. You decide to remind youself with the aid of Linenux. Type the following line in the command box:
 
-`> add buy groceries et/2016-10-22 8:00AM`
+`> add buy groceries et/today 7.00pm`
 
 *Step 2: Setting a reminder.*
 
-You worry that you might not have enough cash to buy groceries and decide to withdraw money from a nearby ATM machine on the way home from work on Friday. Type the following line in the command box:
+You worry that you might not have enough cash to buy groceries and decide to withdraw money from a nearby ATM machine at your workplace. Type the following line in the command box:
 
-`> remind buy groceries n/withdraw money et/2016-10-21 6:00pm`
+`> remind buy groceries n/withdraw money et/today 6.00pm`
 
-*Step 3: Listing tasks for the day.*
+*Step 3: Making spelling mistakes*
 
-Time flies and it is already Friday. You wonder what needs to be done for the day. Type the following line in the command box:
+Linenux provides a quick way to fix typing mistakes. Type the following line in the command box:
 
-`> list et/2016-10-21 11:59PM`
+`> addd play the piano`
 
-or more simply,
+Typing the above line with the spelling mistake will cause a prompt to appear on the bottom-right corner of the window.
 
-`> today`
+`> yes `
 
-This will show you the list of tasks and reminders to be done for the day.
+Replying yes to the prompt will add the task 'play the piano' without having to type everything again. How convenient!
 
 *Step 4: Marking a task as done.*
 
-You repeat step 3 on Saturday and realised that you needed to buy the groceries. You hastily went out to buy them, thus completing all of your work for the day. Type the following line in the command box:
+It is 8.00pm already and you have just finished buying the groceries. Type the following line in the command box:
 
 `> done buy groceries`
 
@@ -104,7 +104,7 @@ This brings up the list of Linenux commands with their description and format. I
 
 ## Commands Summary
 
-*Legend:*
+*Notes:*
 
 1. *The `command` word must be the first word in the sentence.*
 2. *Optional fields are enclosed in square brackets `[]`.*
@@ -112,50 +112,50 @@ This brings up the list of Linenux commands with their description and format. I
 4. *The order of the fields do not matter.*
 5. *The notation `...` means that you can have more than one instance of that field.*
 
-| Command                 | Description                               | Format                                                        	 		|
-|-------------------------|-------------------------------------------|-------------------------------------------------------------------------|
-| [`add`](#add) 		  | Adding a task.	   	     	  		      | `add` TASK_NAME [st/START_TIME] [et/END_TIME] [#/TAG]...   	 		  	|
-| [`remind`](#remind) 	  | Setting a reminder for a task.  	      | `remind` KEYWORD t/TIME n/NOTE                        	 		        |
-| [`edit`](#edit) 		  | Editing a task.   	  		              | `edit` KEYWORDS [n/TASK_NAME] [st/START_TIME] [et/END_TIME] [#/TAG]...  |
-| [`editr`](#editr)       | Editing a reminder.                       | `editr` KEYWORDS [t/TIME] [n/NOTE...]                      	 	 	    |
-| [`rename`](#rename)	  | Renaming a tag.						      | `rename` KEYWORDS #/TAG													|
-| [`done`](#done) 	      | Marking a task as done.       	  	 	  | `done` KEYWORDS 										             	|
-| [`undone`](#undone)     | Marking a task as undone.                 | `undone` KEYWORDS                                                       |
-| [`delete`](#delete) 	  | Deleting a task. 	                      | `delete` KEYWORDS 										      		 	|
-| [`deleter`](#deleter)   | Deleting a reminder.                      | `deleter` KEYWORDS                                                      |
-| [`clear`](#clear)       | Clearing a set of tasks.		          | `clear` [#/TAG]											       		 	|
-| [`freetime`](#freetime) | Finding a free timeslot.   	  	 	      | `freetime` [st/START_TIME] et/END_TIME 				                 	|
-| [`list`](#list) 		  | Listing tasks and reminders.              | `list` [KEYWORDS] [st/START_TIME] [et/END_TIME] [#/TAG...] [d/DONE] 	|
-| [`today`](#today)       | Listing tasks and reminders for today.    | `today` 													        	|
-| [`tomorrow`](#tomorrow) | Listing tasks and reminders for tomorrow. | `tomorrow` 													 		 	|
-| [`view`](#view)         | Viewing details around a task.            | `view` KEYWORDS                                                         |
-| [`undo`](#undo) 		  | Undoing the previous command.          	  | `undo` 				   									     		 	|
-| [`help`](#help) 		  | Seeking help.			                  | `help` [COMMMAND_NAME]    									 		 	|
-| [`alias`](#alias)       | Making aliases for the commands.          | `alias` COMMMAND_NAME n/NEW_NAME                               		 	|
-| [`unalias`](#unalias)   | Removing aliases for the commands.        | `unalias` ALIAS                                                         |
-| [`path`](#path)         | Changing the filepath of the schedule.    | `path` NEW_PATH                                                         |
-| [`exit`](#exit) 	   	  | Exiting Linenux. 			              | `exit` 			       									     			|
+| Command                 		| Description                               | Format                                                        	 	      |
+|-------------------------------|-------------------------------------------|-----------------------------------------------------------------------------|
+| [`add`](#add) 		  		| Adding a task.	   	     	  		    | `add` TASK_NAME... [st/START_TIME] [et/END_TIME] [#/TAG...]...   	 		  |
+| [`remind`](#remind) 	  		| Setting a reminder for a task.  	      	| `remind` KEYWORD... t/TIME n/NOTE                        	 		          |
+| [`edit`](#edit) 		  		| Editing a task.   	  		            | `edit` KEYWORD... [n/TASK_NAME] [st/START_TIME] [et/END_TIME] [#/TAG...]... |
+| [`editr`](#editr)       		| Editing a reminder.                       | `editr` KEYWORD... [t/TIME] [n/NOTE...]                      	 	 	      |
+| [`rename`](#rename)	  		| Renaming a tag.						    | `rename` KEYWORD... #/TAG...												  |
+| [`done`](#done) 	      		| Marking a task as done.       	  	 	| `done` KEYWORD...										             	      |
+| [`undone`](#undone)     		| Marking a task as undone.                 | `undone` KEYWORD...                                                         |
+| [`delete`](#delete) 	  		| Deleting a task. 	                        | `delete` KEYWORD... 										      		      |
+| [`deleter`](#deleter)   		| Deleting a reminder.                      | `deleter` KEYWORD...                                                        |
+| [`clear`](#clear)       		| Clearing a set of tasks.		            | `clear` [#/TAG...]											       		  |
+| [`freetime`](#freetime) 		| Finding a free timeslot.   	  	 	    | `freetime` [st/START_TIME] et/END_TIME 				                      |
+| [`list`](#list) 		  		| Listing tasks and reminders.              | `list` [KEYWORD...] [st/START_TIME] [et/END_TIME] [#/TAG...] [d/DONE] 	  |
+| [`today`](#today)       		| Listing tasks and reminders for today.    | `today` 													        	      |
+| [`tomorrow`](#tomorrow) 		| Listing tasks and reminders for tomorrow. | `tomorrow` 													 		      |
+| [`view`](#view)         		| Viewing details around a task.            | `view` KEYWORD...                                                           |
+| [`undo`](#undo) 		  		| Undoing the previous command.          	| `undo` 				   									     		      |
+| [`help`](#help) 		  		| Seeking help.			                    | `help` [COMMMAND_NAME]    									 		      |
+| [`alias`](#alias)       		| Making aliases for the commands.          | `alias` COMMMAND_NAME n/NEW_NAME                               		      |
+| [`unalias`](#unalias)   		| Removing aliases for the commands.        | `unalias` ALIAS                                                             |
+| [`save`](#save)         		| Saving the schedule to another folder.    | `save` NEW_PATH                                                             |
+| [`load`](#load)               | Loading a schedule from another folder.   | `load` PATH                                                                 |
+| [`information`](#information) | Getting information about the program.    | `information`                                                               |
+| [`exit`](#exit) 	   	        | Exiting Linenux. 			                | `exit` 			       									     		      |
 
 ## Supported Time Formats
 
-*All of the examples below are equivalent to 16 October 2016, 5.50pm*
-
-| Format             | Example                |
-|--------------------|------------------------|
-| dd month yy hh.mma | 16 October 2016 5.50pm |
-| yyyy-MM-dd hh:mma  | 2016-10-16 5:50pm      |
-| ddMMyyyy HHmm      | 16102016 1750          |
+| Format               | Example                |
+|----------------------|------------------------|
+| dd MMMM yyyy hh.mma  | 01 Jan 2016 5.50pm     |
+| yyyy-MM-dd hh.mma    | 2016-10-16 5.50pm      |
+| today 5.50pm         | today 5.50pm           |
+| tomorrow 5.50pm      | tommorrow 5.50pm       |
 
 ## Commands
 
-*Things to note:*
+*Notes:*
 
 1. *The `command` word must be the first word in the sentence.*
 2. *All commands and their respective fields are case-insensitive.*
 3. *The order of the fields do not matter.*
 4. *Optional fields are enclosed in square brackets `[]`.*
 5. *The notation `...` means that you can have more than one instance of that field.*
-
 
 #### Adding Tasks and Reminders
 
