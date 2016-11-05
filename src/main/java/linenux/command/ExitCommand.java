@@ -20,7 +20,6 @@ public class ExitCommand extends AbstractCommand {
     public CommandResult execute(String userInput) {
         assert userInput.matches(getPattern());
 
-        // TODO: Platform.exit();
         System.exit(0);
         return null;
     }

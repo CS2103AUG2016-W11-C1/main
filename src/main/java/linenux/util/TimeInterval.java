@@ -13,10 +13,6 @@ public class TimeInterval {
         this(null, null);
     }
 
-    public TimeInterval(TimeInterval other) {
-        this(other.from, other.to);
-    }
-
     public TimeInterval(LocalDateTime from, LocalDateTime to) {
         this.from = from;
         this.to = to;

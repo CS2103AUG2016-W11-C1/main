@@ -1,8 +1,6 @@
 package linenux.command;
 
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import linenux.command.result.CommandResult;
 import linenux.command.result.PromptResults;
@@ -38,7 +36,7 @@ public class DeleterCommand extends AbstractCommand {
         assert userInput.matches(getPattern());
         assert this.schedule != null;
 
-        String keywords = extractKeywords(userInput);
+        String keywords = extractArgument(userInput);
 
         if (keywords.trim().isEmpty()) {
             return makeNoKeywordsResult();
@@ -107,16 +105,6 @@ public class DeleterCommand extends AbstractCommand {
     @Override
     public String getCommandFormat() {
         return COMMAND_FORMAT;
-    }
-
-    private String extractKeywords(String userInput) {
-        Matcher matcher = Pattern.compile(getPattern()).matcher(userInput);
-
-        if (matcher.matches() && matcher.group("keywords") != null) {
-            return matcher.group("keywords");
-        } else {
-            return "";
-        }
     }
 
     private void setResponse(boolean requiresUserResponse, ArrayList<ReminderSearchResult> reminders) {

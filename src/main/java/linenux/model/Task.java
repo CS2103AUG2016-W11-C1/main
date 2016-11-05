@@ -48,7 +48,7 @@ public class Task {
      * @param endTime
      */
     public Task(String taskName, LocalDateTime startTime, LocalDateTime endTime) {
-        this(taskName, startTime, endTime, new ArrayList<String>());
+        this(taskName, startTime, endTime, new ArrayList<>());
     }
 
     //@@author A0135788M
@@ -57,14 +57,14 @@ public class Task {
      * slots).
      */
     public Task(String taskName, ArrayList<String> tags) {
-        this(taskName, false, null, null, tags, new ArrayList<Reminder>());
+        this(taskName, false, null, null, tags, new ArrayList<>());
     }
 
     /**
      * Constructor for Deadlines (tasks with deadlines only).
      */
     public Task(String taskName, LocalDateTime endTime, ArrayList<String> tags) {
-        this(taskName, false, null, endTime, tags, new ArrayList<Reminder>());
+        this(taskName, false, null, endTime, tags, new ArrayList<>());
     }
 
     //@@author A0135788M
@@ -72,7 +72,7 @@ public class Task {
      * Constructor for Events (tasks with predetermined time slots).
      */
     public Task(String taskName, LocalDateTime startTime, LocalDateTime endTime, ArrayList<String> tags) {
-        this(taskName, false, startTime, endTime, tags, new ArrayList<Reminder>());
+        this(taskName, false, startTime, endTime, tags, new ArrayList<>());
     }
 
     /**

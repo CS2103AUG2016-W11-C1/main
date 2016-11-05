@@ -3,8 +3,9 @@ package linenux.command;
 import linenux.command.result.CommandResult;
 import linenux.control.ControlUnit;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 //@@author A0144915A
 public class LoadCommand extends AbstractCommand {
@@ -13,21 +14,39 @@ public class LoadCommand extends AbstractCommand {
     private static final String COMMAND_FORMAT = "load PATH";
 
     private ControlUnit controlUnit;
+    private Path basePath;
 
     public LoadCommand(ControlUnit controlUnit) {
+        this(controlUnit, Paths.get("").toAbsolutePath());
+    }
+
+    public LoadCommand(ControlUnit controlUnit, Path basePath) {
         this.controlUnit = controlUnit;
+        this.basePath = basePath;
+        this.TRIGGER_WORDS.add(TRIGGER_WORD);
     }
 
     @Override
     public CommandResult execute(String userInput) {
-        String path = this.extractArgument(userInput);
+        String relativePath = this.extractArgument(userInput);
 
-        if (path.isEmpty()) {
+        if (relativePath.isEmpty()) {
             return this.makeInvalidArgumentResult();
         }
 
-        this.controlUnit.setScheduleFilePath(path);
-        this.controlUnit.loadSchedule();
+        String path = this.basePath.resolve(relativePath).toString();
+        File f = new File(path);
+
+        if (!f.exists()) {
+            return this.makeFileNotFoundResult(path);
+        } else if (!f.isFile()) {
+            return this.makeNotAFileResult(path);
+        } else if (!f.canRead()) {
+            return this.makeFileNotReadableResult(path);
+        } else {
+            this.controlUnit.setScheduleFilePath(path);
+            this.controlUnit.loadSchedule();
+        }
 
         return this.makeResult(path);
     }
@@ -47,18 +66,20 @@ public class LoadCommand extends AbstractCommand {
         return COMMAND_FORMAT;
     }
 
-    private String extractArgument(String userInput) {
-        Matcher matcher = Pattern.compile(getPattern()).matcher(userInput);
-
-        if (matcher.matches() && matcher.group("keywords") != null) {
-            return matcher.group("keywords").trim();
-        } else {
-            return "";
-        }
-    }
-
     private CommandResult makeResult(String path) {
         return () -> "Loaded from " + path;
+    }
+
+    private CommandResult makeFileNotFoundResult(String path) {
+        return () -> path + " does not exist.";
+    }
+
+    private CommandResult makeFileNotReadableResult(String path) {
+        return () -> path + " is not readable.";
+    }
+
+    private CommandResult makeNotAFileResult(String path) {
+        return () -> path + " is not a file.";
     }
 
     private CommandResult makeInvalidArgumentResult() {
