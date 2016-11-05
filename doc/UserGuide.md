@@ -38,8 +38,8 @@ Without further ado, let's get started!
 #### Download
 
 1. Ensure that you have Java 8 installed on your computer.
-2. Download the latest linenux.jar from the [releases](https://github.com/CS2103AUG2016-W11-C1/main/releases) tab.
-<img src="images/releases.png">
+2. Download the latest linenux.jar from the [releases](https://github.com/CS2103AUG2016-W11-C1/main/releases) tab on our github page.
+<img src="images/userGuide/release.png">
 3. Copy the file to the folder that you want to use as the home folder for Linenux.
 
 #### Launch
@@ -48,14 +48,13 @@ Double-click on the file to launch Linenux. Wait for a few seconds for the main 
 
 #### Visual Walkthrough
 
-<img src="images/mainWindowDiagram.png">
-> Figure 1: Main Window of Linenux
+<img src="images/userGuide/mainWindow.png">
 
-1. **Command Box** - where you enter the command.
-2. **To-do Panel** - shows to-dos.
-3. **Deadline Panel** - shows deadlines.
-4. **Event Panel** - shows events.
-5. **Display Panel** - shows reminders and search results.
+1. **To-do Panel** - shows to-dos.
+2. **Deadline Panel** - shows deadlines.
+3. **Event Panel** - shows events.
+4. **Display Panel** - shows reminders, help page and search results.
+5.. **Command Box** - where you enter the command.
 
 *The list of deadlines, events and reminders are always ordered according to their urgency.*
 
