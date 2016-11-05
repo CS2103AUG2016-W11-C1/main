@@ -567,24 +567,58 @@ After setting an alias for a command, you can remove it with the `unalias` comma
 > unalias tmr
 ```
 
-#### Changing Path For Storage File
+#### Saving and Loading Storage File
 
-##### *Path*
+##### *Save*
 
 You might want to store the schedule file in a separate folder. You can do so by specifying the full path location.
 
 *Format:*
 
-`path NEW_PATH`
+`save NEW_PATH`
 
 *Example*
 
 ```
-* Changing the storage location of the schedule file.
-> path C:\Users\User\Documents\Modules\Hackers
+* Saving the schedule file to the Downloads folder.
+> save C:\Users\Jim\Downloads\MySchedule.xml
 ```
 
-#### Help
+##### *Load*
+
+Similarly, you can load a schedule file from another folder by specifying the full path location.
+
+*Format:*
+
+`load PATH`
+
+*Example*
+
+```
+* Loading a schedule file from the Documents folder.
+> load C:\Users\Jim\Documents\.Schedule.xml
+```
+
+#### Getting Program Information
+
+##### *Information*
+
+Provides program information.
+
+*Format:*
+
+`information`
+
+*Example*
+
+```
+* Gets program information.
+> information
+```
+
+<img src="images/userGuide/information.png">
+
+#### Seeking Help
 
 ##### *Help*
 
