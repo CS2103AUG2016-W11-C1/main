@@ -30,12 +30,10 @@ public class JsonConfig implements Config{
     private static final String VERSION_KEY = "versionNo";
     private static final String SCHEDULE_PATH_KEY = "schedulePath";
     private static final String ALIASES_KEY = "aliases";
-    private static final String SCHEDULE_LOCATIONS_KEY = "scheduleLocations";
 
     private Path configFilePath;
     private Path scheduleFilePath;
     private String verNo;
-    private ArrayList<String> scheduleLocations;
 
     private JSONObject configFile;
 
@@ -49,7 +47,6 @@ public class JsonConfig implements Config{
         this.configFilePath = Paths.get(configFilePath);
         this.scheduleFilePath = Paths.get(scheduleFilePath);
         initialize();
-        scheduleLocations = initializeScheduleLocations();
     }
 
     /**
@@ -77,34 +74,6 @@ public class JsonConfig implements Config{
     }
 
     // @@author A0127694U
-    private ArrayList<String> initializeScheduleLocations() {
-        JSONObject configFile = this.getConfigFile();
-        JSONArray schedulesArray;
-
-        if (configFile.has(SCHEDULE_LOCATIONS_KEY)) {
-            schedulesArray = configFile.getJSONArray(SCHEDULE_LOCATIONS_KEY);
-        } else {
-            schedulesArray = new JSONArray();
-        }
-
-        ArrayList<String> output = new ArrayList<>();
-        for (int i = 0; i < schedulesArray.length(); i++) {
-            try {
-                output.add(schedulesArray.getString(i));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-
-        if (!output.contains(this.scheduleFilePath.toString())) {
-            output.add(this.scheduleFilePath.toString());
-            configFile.put(SCHEDULE_LOCATIONS_KEY, output);
-        }
-
-        this.saveConfig();
-        return output;
-    }
-
     @Override
     public String getVersionNo() {
         try {
@@ -112,11 +81,6 @@ public class JsonConfig implements Config{
         } catch (JSONException e) {
             return VERSION_NO;
         }
-    }
-
-    public void setVersionNo(String version) {
-        this.getConfigFile().put(VERSION_KEY, version);
-        this.saveConfig();
     }
 
     // @@author A0135788M
@@ -133,7 +97,6 @@ public class JsonConfig implements Config{
     public void setScheduleFilePath(String path) {
         this.getConfigFile().put(SCHEDULE_PATH_KEY, path);
         this.saveConfig();
-        this.addScheduleLocations(path);
     }
 
     @Override
@@ -181,34 +144,6 @@ public class JsonConfig implements Config{
         aliasesMap.put(triggerWord, aliases);
         this.configFile.put(ALIASES_KEY, aliasesMap);
 
-        this.saveConfig();
-    }
-
-    // @@author A0127694U
-    @Override
-    public Collection<String> getScheduleLocations() {
-        return this.scheduleLocations;
-    }
-
-    private void addScheduleLocations(String newLocation) {
-        File temp = new File(newLocation);
-        try {
-            newLocation = temp.getCanonicalPath();
-        } catch (IOException ioe) {
-            throwAlert("File Path Error", "Could not access file at: \n" + newLocation);
-            return;
-        }
-
-        ArrayList<String> scheduleLocations = this.scheduleLocations;
-
-        if (scheduleLocations.contains(newLocation)) {
-            return;
-        }
-
-        scheduleLocations.add(newLocation);
-        this.configFile.put(SCHEDULE_LOCATIONS_KEY, scheduleLocations);
-
-        this.scheduleLocations = scheduleLocations;
         this.saveConfig();
     }
 
