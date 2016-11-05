@@ -11,6 +11,7 @@ import linenux.time.parser.TodayWithTimeParser;
 import linenux.time.parser.TomorrowWithTimeParser;
 import linenux.util.Either;
 
+//@@author A0144915A
 /**
  * Adds a task to the schedule.
  */
@@ -23,7 +24,6 @@ public class AddCommand extends AbstractCommand {
     private TimeParserManager timeParserManager;
     private AddArgumentParser addArgumentParser;
 
-    //@@author A0144915A
     /**
      * Constructs an {@code AddCommand}.
      * @param schedule The {@code Schedule} to add new {@code Task} to.
@@ -64,7 +64,6 @@ public class AddCommand extends AbstractCommand {
         }
     }
 
-    //@@author A0135788M
     /**
      * @return A {@code String} representing the default command word.
      */
@@ -89,7 +88,6 @@ public class AddCommand extends AbstractCommand {
         return COMMAND_FORMAT;
     }
 
-    //@@author A0144915A
     /**
      * @param task The newly created {@code Task}.
      * @return A {@code CommandResult} indicating that a new {@code Task} is created.

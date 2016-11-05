@@ -14,7 +14,7 @@ import java.time.Clock;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-//@@author A0144915A
+//@@author A0135788M
 /**
  * Controller for expandable result box, which is used to show longer command results.
  */

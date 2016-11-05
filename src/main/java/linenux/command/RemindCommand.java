@@ -19,6 +19,7 @@ import linenux.time.parser.TomorrowWithTimeParser;
 import linenux.util.ArrayListUtil;
 import linenux.util.Either;
 
+//@@author A0140702X
 /**
  * Adds a reminder to a task in the schedule
  */
@@ -37,7 +38,6 @@ public class RemindCommand extends AbstractCommand {
     private TimeParserManager timeParserManager;
     private ReminderArgumentParser reminderArgumentParser;
 
-    //@@author A0135788M
     public RemindCommand(Schedule schedule) {
         this.schedule = schedule;
         this.timeParserManager = new TimeParserManager(new ISODateWithTimeParser(), new StandardDateWithTimeParser(), new TodayWithTimeParser(), new TomorrowWithTimeParser());
@@ -77,7 +77,6 @@ public class RemindCommand extends AbstractCommand {
         }
     }
 
-    //@@author A0135788M
     /**
      * @return {@code true} if and only if this {@code Command} is awaiting for user response.
      */
@@ -116,7 +115,6 @@ public class RemindCommand extends AbstractCommand {
         }
     }
 
-    //@@author A0135788M
     /**
      * @return A {@code String} representing the default command word.
      */

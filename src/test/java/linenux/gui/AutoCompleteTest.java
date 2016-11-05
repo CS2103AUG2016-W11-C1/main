@@ -7,10 +7,10 @@ import org.junit.Test;
 
 import javafx.scene.input.KeyCode;
 
+//@@author A0135788M
 /**
  * JUnit test for autocomplete.
  */
-//@@author A0135788M
 public class AutoCompleteTest extends GuiTest {
 
     /**

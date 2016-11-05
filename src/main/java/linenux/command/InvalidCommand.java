@@ -4,6 +4,7 @@ import linenux.command.result.CommandResult;
 import linenux.control.ControlUnit;
 import linenux.util.StringsSimilarity;
 
+//@@author A0144915A
 /**
  * Act as a fail-safe for invalid or unrecognized commands.
  */
@@ -13,7 +14,6 @@ public class InvalidCommand extends AbstractCommand {
     private CommandResult lastCommandResult = null;
     private String lastCorrectedCommand = null;
 
-    //@@author A0144915A
     public InvalidCommand(ControlUnit controlUnit) {
         this.controlUnit = controlUnit;
         this.controlUnit.addPostExecuteListener((userInput, commandResult) -> {
@@ -23,7 +23,6 @@ public class InvalidCommand extends AbstractCommand {
         });
     }
 
-    //@@author A0135788M
     /**
      * @return true for all user inputs.
      */
@@ -32,7 +31,6 @@ public class InvalidCommand extends AbstractCommand {
         return true;
     }
 
-    //@@author A0144915A
     /**
      * Executes the command based on {@code userInput}. This method operates under the assumption that
      * {@code respondTo(userInput)} is {@code true}.
@@ -73,7 +71,6 @@ public class InvalidCommand extends AbstractCommand {
         return this.lastCommandResult;
     }
 
-    //@@author A0135788M
     /**
      * @return A {@code String} representing the default command word.
      */
@@ -103,7 +100,6 @@ public class InvalidCommand extends AbstractCommand {
         return null;
     }
 
-    //@@author A0144915A
     /**
      * Extract the command trigger word from {@code userInput}.
      * @param userInput A {@code String} representing the user input.

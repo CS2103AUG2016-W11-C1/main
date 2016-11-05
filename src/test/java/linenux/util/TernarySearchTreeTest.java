@@ -9,10 +9,10 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
+//@@author A0135788M
 /**
  * JUnit test for Ternary Search Tree
  */
-//@@author A0135788M
 public class TernarySearchTreeTest {
     private TernarySearchTree tree;
 

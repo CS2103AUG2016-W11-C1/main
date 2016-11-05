@@ -5,10 +5,10 @@ import java.nio.file.Paths;
 import linenux.command.result.CommandResult;
 import linenux.config.Config;
 
+//@@author A0127694U
 /**
  * Displays current working information about Linenux.
  */
-// @@author A0127694U
 public class InformationCommand extends AbstractCommand {
     private static final String TRIGGER_WORD = "information";
     private static final String DESCRIPTION = "Displays current working information about Linenux.";
@@ -27,7 +27,6 @@ public class InformationCommand extends AbstractCommand {
         return makeConfigDetails();
     }
 
-    // @@author A0135788M
     @Override
     public String getTriggerWord() {
         return TRIGGER_WORD;
@@ -43,7 +42,6 @@ public class InformationCommand extends AbstractCommand {
         return COMMAND_FORMAT;
     }
 
-    // @@author A0135788M
     @Override
     public String getPattern() {
         return "(?i)^\\s*(" + getTriggerWordsPattern() + ")\\s*";

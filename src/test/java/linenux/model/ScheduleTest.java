@@ -12,13 +12,13 @@ import org.junit.Test;
 
 import linenux.command.util.ReminderSearchResult;
 
+//@@author A0135788M
 /**
  * JUnit test for schedule.
  */
 public class ScheduleTest {
     private Schedule schedule;
 
-    //@@author A0144915A
     @Before
     public void setupSchedule() {
         this.schedule = new Schedule();
@@ -33,7 +33,6 @@ public class ScheduleTest {
         assertEquals(beforeSize + 1, afterSize);
     }
 
-    //@@author A0127694U
     @Test
     public void testClear() {
         Task task1 = new Task("hello");
@@ -48,7 +47,6 @@ public class ScheduleTest {
         assertEquals(originalSize - 2, endSize);
     }
 
-    //@@author A0144915A
     @Test
     public void testSearch() {
         String[] keywords = {"hello", "WoRlD"};
@@ -65,7 +63,6 @@ public class ScheduleTest {
         assertEquals(2, tasks.size());
     }
 
-    //@@author A0127694U
     @Test
     public void testEdit() {
         this.schedule.clear();
@@ -77,7 +74,6 @@ public class ScheduleTest {
         assertEquals(this.schedule.getTaskList().get(0), editedTask);
     }
 
-    //@@author A0144915A
     @Test
     public void testDelete() {
         Task task = new Task("bla");
@@ -90,7 +86,6 @@ public class ScheduleTest {
         assertTrue(this.schedule.getTaskList().indexOf(task) == -1);
     }
 
-    // @@author A0127694U
     @Test
     public void testDeleteReminder() {
         this.schedule.clear();
@@ -109,7 +104,6 @@ public class ScheduleTest {
         assertEquals(0, this.schedule.getTaskList().get(0).getReminders().size());
     }
 
-    //@@author A0135788M
     @Test
     public void testMaxStates() {
         for (int i = 0; i < Schedule.MAX_STATES; i++) {

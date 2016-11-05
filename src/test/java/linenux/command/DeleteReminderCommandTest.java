@@ -16,10 +16,10 @@ import linenux.model.Reminder;
 import linenux.model.Schedule;
 import linenux.model.Task;
 
+//@@author A0127694U
 /**
  * JUnit test for deleter command.
  */
-// @@author A0127694U
 public class DeleteReminderCommandTest {
     private Schedule schedule;
     private DeleteReminderCommand deleteReminderCommand;

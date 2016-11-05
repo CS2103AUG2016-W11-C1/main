@@ -20,6 +20,7 @@ import linenux.util.ArrayListUtil;
 import linenux.util.Either;
 import linenux.util.RemindersListUtil;
 
+//@@author A0140702X
 /**
  * Edits a task in the schedule.
  */
@@ -39,7 +40,6 @@ public class EditReminderCommand extends AbstractCommand {
     private EditReminderArgumentParser editReminderArgumentParser;
     private ArrayList<ReminderSearchResult> searchResults;
 
-    //@@author A0140702X
     /**
      * Constructs an {@code EditReminderCommand}.
      * @param schedule The {@code Schedule} to search and edit {@code Reminder} from.
@@ -51,7 +51,6 @@ public class EditReminderCommand extends AbstractCommand {
         this.TRIGGER_WORDS.add(TRIGGER_WORD);
     }
 
-    //@@author A0144915A
     /**
      * Executes the command based on {@code userInput}. This method operates under the assumption that
      * {@code respondTo(userInput)} is {@code true}.
@@ -92,7 +91,6 @@ public class EditReminderCommand extends AbstractCommand {
         }
     }
 
-    //@@author A0140702X
     /**
      * @return {@code true} if and only if this {@code Command} is awaiting for user response.
      */

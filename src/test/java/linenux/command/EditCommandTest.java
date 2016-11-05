@@ -640,7 +640,6 @@ public class EditCommandTest {
                 result3.getFeedback());
     }
 
-    //@@author A0135788M
     private String expectedInvalidArgumentMessage() {
         return "Invalid arguments.\n\n" + this.editCommand.getCommandFormat() + "\n\n" + Command.CALLOUTS;
     }

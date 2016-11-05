@@ -2,7 +2,7 @@ package linenux.util;
 
 import java.time.LocalDateTime;
 
-//@@author A0144915A
+//@@author A0127694U
 /**
  * Represents a time interval represented by a pair of {@code LocalDateTime}.
  */

@@ -6,6 +6,7 @@ import java.util.Set;
 import linenux.command.result.CommandResult;
 import linenux.util.StringsSimilarity;
 
+//@@author A0140702X
 /**
  * Displays available command and their formats.
  */
@@ -16,13 +17,11 @@ public class HelpCommand extends AbstractCommand {
 
     private ArrayList<Command> commands;
 
-    //@@author A0144915A
     public HelpCommand(ArrayList<Command> commands) {
         this.commands = commands;
         this.TRIGGER_WORDS.add(TRIGGER_WORD);
     }
 
-    //@@author A0140702X
     /**
      * Executes the command based on {@code userInput}. This method operates under the assumption that
      * {@code respondTo(userInput)} is {@code true}.
@@ -64,7 +63,6 @@ public class HelpCommand extends AbstractCommand {
         return () -> makeHelpDescriptionForCommand(commandRequested);
     }
 
-    //@@author A0135788M
     /**
      * @return A {@code String} representing the default command word.
      */
@@ -89,7 +87,6 @@ public class HelpCommand extends AbstractCommand {
         return COMMAND_FORMAT;
     }
 
-    //@@author A0140702X
     private String displayAllHelp() {
         StringBuilder builder = new StringBuilder();
         for (Command command: this.commands) {

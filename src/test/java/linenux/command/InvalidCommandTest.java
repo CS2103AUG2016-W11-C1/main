@@ -15,6 +15,7 @@ import linenux.control.ControlUnit;
 import linenux.model.Schedule;
 import linenux.storage.ScheduleStorage;
 
+//@@author A0144915A
 /**
  * JUnit test for invalid command.
  */
@@ -22,7 +23,6 @@ public class InvalidCommandTest {
     private ControlUnit controlUnit;
     private Command invalidCommand;
 
-    //@@author A0144915A
     @Before
     public void setupInvalidCommand() {
         CommandManager manager = new CommandManager();
@@ -91,20 +91,17 @@ public class InvalidCommandTest {
             return null;
         }
 
-        //@@author A0135788M
         @Override
         public String getCommandFormat() {
             return null;
         }
 
-        //@@author A0144915A
         @Override
         public CommandResult execute(String input) {
             return this::getTriggerWord;
         }
     }
 
-    //@@author A0144915A
     private static class ListCommand extends BaseMockCommand {
         public ListCommand() {
             this.TRIGGER_WORDS.add("list");

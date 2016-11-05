@@ -9,11 +9,11 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
+//@@author A0135788M
 /**
  * JUnit test for task model.
  */
 public class TaskTest {
-    //@@author A0144915A
     /**
      * Test that todo task is correctly labeled.
      */
@@ -25,7 +25,6 @@ public class TaskTest {
         assertFalse(task.isEvent());
     }
 
-    //@@author A0144915A
     /**
      * Test that deadline task is correctly labeled.
      */
@@ -75,7 +74,6 @@ public class TaskTest {
         assertEquals("hello (2016-01-01 5.00PM - 2016-01-02 5.00PM)", task.toString());
     }
 
-    //@@author A0127694U
     @Test
     public void testCategoryToString() {
         ArrayList<String> tags = new ArrayList<>();

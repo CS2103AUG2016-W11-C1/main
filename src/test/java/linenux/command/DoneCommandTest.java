@@ -184,7 +184,6 @@ public class DoneCommandTest {
         assertTrue(this.doneCommand.isAwaitingUserResponse());
     }
 
-    //@@author A0144915A
     @Test
     public void testSearchOnlyUndoneTasks() {
         this.schedule.addTask(new Task("hello"));

@@ -8,7 +8,7 @@ import linenux.model.Task;
 import linenux.util.ArrayListUtil;
 import linenux.util.Either;
 
-//@@author A0135788M
+//@@author A0144915A
 /**
  * Parser for the argument portion of add command.
  **/
@@ -18,7 +18,6 @@ public class AddArgumentParser extends BaseArgumentParser {
     public String commandFormat;
     public String callouts;
 
-    //@@author A0135788M
     /**
      * The public constructor for {@code AddArgumentParser}.
      * @param timeParserManager A {@code TimeParserManager} used to parse any date time string.
@@ -31,7 +30,6 @@ public class AddArgumentParser extends BaseArgumentParser {
         this.callouts = callouts;
     }
 
-    //@@author A0144915A
     /**
      * Attempts to parse an argument given by the user.
      * @param argument A {@code String}, which is part of the user input.
@@ -144,7 +142,6 @@ public class AddArgumentParser extends BaseArgumentParser {
         }
     }
 
-    //@@author A0135788M
     /**
      * @return A {@code CommandResult} when the user argument is invalid.
      */
@@ -152,7 +149,6 @@ public class AddArgumentParser extends BaseArgumentParser {
         return () -> "Invalid arguments.\n\n" + commandFormat + "\n\n" + callouts;
     }
 
-    //@@author A0144915A
     /**
      * @return A {@code CommandResult} describing that a {@code Task} cannot have a start time without an end time.
      */

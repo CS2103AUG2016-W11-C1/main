@@ -6,10 +6,10 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
+//@@author A0135788M
 /**
  * JUnit test for StandardDateWithTime time format.
  */
-//@@author A0135788M
 public class StandardDateWithTimeParserTest {
     TimeParser parser;
 

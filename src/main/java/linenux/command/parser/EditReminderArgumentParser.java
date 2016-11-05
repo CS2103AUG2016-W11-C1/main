@@ -8,12 +8,13 @@ import linenux.model.Reminder;
 import linenux.util.ArrayListUtil;
 import linenux.util.Either;
 
+//@@author A0140702X
 /**
  * Parses new details of reminder to be edited.
  */
 public class EditReminderArgumentParser extends BaseArgumentParser {
     private GenericParser.GenericParserResult parseResult;
-    //@@author A0140702X
+
     /**
      * The public constructor for {@code EditReminderArgumentParser}.
      * @param timeParserManager A {@code TimeParserManager} used to parse any date time string.
@@ -22,7 +23,6 @@ public class EditReminderArgumentParser extends BaseArgumentParser {
         this.timeParserManager = timeParserManager;
     }
 
-    //@@author A0144915A
     /**
      * Attempts to parse an argument given by the user.
      * @param original A {@code Reminder}, the original {@code Reminder} object.
@@ -90,7 +90,6 @@ public class EditReminderArgumentParser extends BaseArgumentParser {
         }
     }
 
-    //@@author A0140702X
     /**
      * @return A {@code CommandResult} indicating that there is no instructions for change.
      */

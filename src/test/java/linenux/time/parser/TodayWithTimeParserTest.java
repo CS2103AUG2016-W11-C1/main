@@ -6,10 +6,10 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
+//@@author A0140702X
 /**
  * JUnit test for TodayWithTime time format.
  */
-//@@author A0135788M
 public class TodayWithTimeParserTest {
     TimeParser parser;
 

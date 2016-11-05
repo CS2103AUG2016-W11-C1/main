@@ -13,6 +13,7 @@ import linenux.command.result.CommandResult;
 import linenux.model.Schedule;
 import linenux.model.Task;
 
+//@@author A0127694U
 /**
  * JUnit test for delete command.
  */
@@ -20,7 +21,6 @@ public class DeleteCommandTest {
     private Schedule schedule;
     private DeleteCommand deleteCommand;
 
-    //@@author A0144915A
     @Before
     public void setupDeleteCommand() {
         this.schedule = new Schedule();
@@ -33,7 +33,6 @@ public class DeleteCommandTest {
         this.deleteCommand.execute("delete hello");
     }
 
-    //@@author A0135788M
     /**
      * Test that respondTo detects various versions of the commands. It should return true even if
      * the format of the arguments are invalid.
@@ -45,7 +44,6 @@ public class DeleteCommandTest {
         assertTrue(this.deleteCommand.respondTo("delete hello"));
     }
 
-    //@@author A0144915A
     /**
      * Test that the delete command is case insensitive.
      */
@@ -62,7 +60,6 @@ public class DeleteCommandTest {
         assertFalse(this.deleteCommand.respondTo("walala"));
     }
 
-    //@@author A0135788M
     /**
      * Test invalid arguments.
      */
@@ -77,7 +74,6 @@ public class DeleteCommandTest {
         assertEquals(expectedInvalidArgumentMessage(), result3.getFeedback());
     }
 
-    //@@author A0144915A
     /**
      * Test the feedback when no match is found.
      */
@@ -89,7 +85,6 @@ public class DeleteCommandTest {
         assertEquals("Cannot find task names with \"that nasty todo\".", result.getFeedback());
     }
 
-    //@@author A0144915A
     /**
      * Test the feedback when only one match is found.
      */
@@ -178,7 +173,6 @@ public class DeleteCommandTest {
         assertTrue(this.deleteCommand.isAwaitingUserResponse());
     }
 
-    //@@author A0135788M
     private String expectedInvalidArgumentMessage() {
         return "Invalid arguments.\n\n" + this.deleteCommand.getCommandFormat() + "\n\n" + Command.CALLOUTS;
     }

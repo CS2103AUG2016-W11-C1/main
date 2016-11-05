@@ -6,7 +6,7 @@ import org.junit.Test;
 import static linenux.helpers.GuiMatchers.textFieldHasText;
 import static org.testfx.api.FxAssert.verifyThat;
 
-//@@author A0144915A
+//@@author A0127694U
 public class CommandBoxCaretPosition extends GuiTest {
     @Test
     public void testLeftAndRight() {

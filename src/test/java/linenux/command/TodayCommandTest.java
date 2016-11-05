@@ -14,7 +14,7 @@ import org.junit.Test;
 import linenux.model.Schedule;
 import linenux.model.Task;
 
-//@@author A0144915A
+//@@author A0127694U
 public class TodayCommandTest {
     private TodayCommand todayCommand;
 

@@ -8,10 +8,10 @@ import linenux.command.result.SearchResults;
 import linenux.model.Schedule;
 import linenux.model.Task;
 
+//@@author A0127694U
 /**
  * Renames all instances of a specified tag in schedule.
  */
-// @@author A0127694U
 public class RenameCommand extends AbstractCommand {
     private static final String TRIGGER_WORD = "rename";
     private static final String DESCRIPTION = "Changes the name of specified tag in all tasks.";
@@ -48,7 +48,6 @@ public class RenameCommand extends AbstractCommand {
         }
     }
 
-    // @@author A0135788M
     @Override
     public String getTriggerWord() {
         return TRIGGER_WORD;

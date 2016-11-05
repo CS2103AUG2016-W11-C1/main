@@ -3,11 +3,11 @@ package linenux.util;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+//@@author A0144915A
 /**
  * Static functions for LocalDateTime.
  */
 public class LocalDateTimeUtil {
-    //@@author A0144915A
     /**
      * Return the earlier of two instances of {@code LocalDateTime}.
      * @param a The first {@code LocalDateTime}.
@@ -28,7 +28,6 @@ public class LocalDateTimeUtil {
         return a.compareTo(b) > 0 ? a : b;
     }
 
-    //@@author A0135788M
     /**
      * Formats a LocalDateTime of format "dd MMM yyyy h.mma".
      */

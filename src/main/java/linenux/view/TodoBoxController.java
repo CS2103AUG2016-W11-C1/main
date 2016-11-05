@@ -14,7 +14,7 @@ import linenux.model.Task;
 import linenux.util.ArrayListUtil;
 import linenux.view.components.TodoCell;
 
-//@@author A0144915A
+//@@author A0127694U
 /**
  * Controller for the todo box, which displays all the todos
  */

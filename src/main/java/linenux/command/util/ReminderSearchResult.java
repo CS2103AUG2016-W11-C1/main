@@ -6,8 +6,7 @@ import linenux.util.ArrayListUtil;
 
 import java.util.ArrayList;
 
-//@author A0144915A
-
+//@@author A0144915A
 /**
  * The class of an object used to represent the result of searching for {@code Reminder}.
  */

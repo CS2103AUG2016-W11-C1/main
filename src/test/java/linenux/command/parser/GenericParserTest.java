@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
-//@@author A0144915A
+//@@author A0127694U
 public class GenericParserTest {
     private GenericParser parser;
 

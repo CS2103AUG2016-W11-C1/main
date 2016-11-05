@@ -5,13 +5,13 @@ import linenux.time.parser.TimeParser;
 import java.util.ArrayList;
 import java.time.LocalDateTime;
 
+//@@author A0127694U
 /**
  * Assigns time parsers based on user input.
  */
 public class TimeParserManager {
     private ArrayList<TimeParser> parserList;
 
-    //@@author A0135788M
     public TimeParserManager(TimeParser... parsers) {
         parserList = new ArrayList<>();
         for (TimeParser parser: parsers){
@@ -19,7 +19,6 @@ public class TimeParserManager {
         }
     }
 
-    //@@author A0144915A
     /**
      * Check if the manager can parse some string
      * @param userInput The string to check
@@ -35,7 +34,6 @@ public class TimeParserManager {
         return false;
     }
 
-    //@@author A0135788M
     /**
      * Assigns the appropriate time parser to the user input.
      */

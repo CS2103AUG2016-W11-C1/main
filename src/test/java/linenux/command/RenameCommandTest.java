@@ -13,11 +13,10 @@ import linenux.model.Schedule;
 import linenux.model.Task;
 import linenux.util.ArrayListUtil;
 
-
+//@@author A0127694U
 /**
  * JUnit test for rename command.
  */
-//@@author A0135788M
 public class RenameCommandTest {
     private Schedule schedule;
     private RenameCommand renameCommand;
@@ -103,7 +102,6 @@ public class RenameCommandTest {
         assertTrue(taskList.get(1).getTags().contains("tragedy"));
     }
 
-    //@@author A0135788M
     private String expectedInvalidArgumentMessage() {
         return "Invalid arguments.\n\n" + RenameCommand.COMMAND_FORMAT + "\n\n" + Command.CALLOUTS;
     }

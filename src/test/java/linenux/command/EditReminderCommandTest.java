@@ -15,6 +15,7 @@ import linenux.model.Reminder;
 import linenux.model.Schedule;
 import linenux.model.Task;
 
+//@@author A0140702X
 /**
  * JUnit test for edit reminder command.
  */
@@ -22,7 +23,6 @@ public class EditReminderCommandTest {
     private Schedule schedule;
     private EditReminderCommand editReminderCommand;
 
-    //@@author A0140702X
     @Before
     public void setupEditrCommand() {
         this.schedule = new Schedule();
@@ -41,12 +41,10 @@ public class EditReminderCommandTest {
         this.editReminderCommand.execute("editr world n/wat t/2018-01-01 5.00PM");
     }
 
-    //@@author A0144915A
     private String expectedInvalidArgumentMessage() {
         return "Invalid arguments.\n\n" + this.editReminderCommand.getCommandFormat() + "\n\n" + Command.CALLOUTS;
     }
 
-    //@@author A0140702X
     /**
      * Test that respondTo detects various versions of the commands. It should
      * return true even if the format of the arguments are invalid.
@@ -64,7 +62,6 @@ public class EditReminderCommandTest {
         assertTrue(this.editReminderCommand.respondTo("editr reminder n/note t/2016-01-01 5.00PM"));
     }
 
-    //@@author A0144915A
     /**
      * Test that respondTo is case-insensitive.
      */
@@ -81,7 +78,6 @@ public class EditReminderCommandTest {
         assertFalse(this.editReminderCommand.respondTo("halp"));
     }
 
-    //@@author A0140702X
     /**
      * Test that executing the edit reminder command will correctly edit existing
      * reminder in schedule.

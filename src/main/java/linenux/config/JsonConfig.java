@@ -18,6 +18,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+//@@author A0135788M
 /**
  * A JSON-backed config file.
  */
@@ -38,7 +39,6 @@ public class JsonConfig implements Config{
 
     private JSONObject configFile;
 
-    // @@author A0135788M
     public JsonConfig() {
         this(VERSION_NO, DEFAULT_FILE_PATH + CONFIG_FILENAME, DEFAULT_FILE_PATH + SCHEDULE_FILENAME);
     }
@@ -77,7 +77,6 @@ public class JsonConfig implements Config{
         logger.info("Done initializing config");
     }
 
-    // @@author A0127694U
     /**
      * @return The version of the program that created the config file.
      */
@@ -90,7 +89,6 @@ public class JsonConfig implements Config{
         }
     }
 
-    // @@author A0135788M
     /**
      * @return The absolute path to the current schedule file.
      */
@@ -120,7 +118,6 @@ public class JsonConfig implements Config{
         return Files.exists(configFilePath);
     }
 
-    // @@author A0144915A
     /**
      * @param triggerWord The original trigger word of a command.
      * @return A {@code Collection} of aliases for that command.

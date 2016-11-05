@@ -12,6 +12,7 @@ import org.junit.Test;
 import linenux.command.result.CommandResult;
 import linenux.model.Schedule;
 
+//@@author A0135788M
 /**
  * JUnit test for alias command.
  */
@@ -21,7 +22,6 @@ public class AliasCommandTest {
     private DeleteCommand deleteCommand;
     private Schedule schedule;
 
-    //@@author A0144915A
     @Before
     public void setupAliasCommand() {
         this.schedule = new Schedule();
@@ -30,7 +30,6 @@ public class AliasCommandTest {
         this.aliasCommand = new AliasCommand(ArrayListUtil.fromArray(new Command[] {this.addCommand, this.deleteCommand}));
     }
 
-    //@@author A0135788M
     /**
      * Test that respondTo detects various versions of the commands. It should return true even if
      * the format of the arguments are invalid.
@@ -88,7 +87,6 @@ public class AliasCommandTest {
         assertEquals("Alias must be alphanumeric.", result.getFeedback());
     }
 
-    //@@author A0144915A
     /**
      * Test alias creates an alias.
      */

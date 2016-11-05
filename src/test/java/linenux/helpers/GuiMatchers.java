@@ -15,6 +15,7 @@ import javafx.scene.control.TextField;
 import linenux.model.Task;
 import linenux.util.LocalDateTimeUtil;
 
+//@@author A0144915A
 /**
  * Class to check if information is displayed correctly.
  */
@@ -25,7 +26,6 @@ public class GuiMatchers {
      * @param title
      * @return
      */
-    //@@A0135788M
     public static Matcher<Node> hasCellTitle(String title) {
         return typeSafeMatcher(ListView.class, title, node -> listHasCellTitle(node, title));
     }

@@ -18,10 +18,10 @@ import linenux.command.result.CommandResult;
 import linenux.model.Schedule;
 import linenux.model.Task;
 
+//@@author A0144915A
 /**
  * JUnit test for add command.
  */
-//@@author A0144915A
 public class AddCommandTest {
     private Schedule schedule;
     private AddCommand addCommand;
@@ -32,7 +32,6 @@ public class AddCommandTest {
         this.addCommand = new AddCommand(this.schedule);
     }
 
-    //@@author A0127694U
     /**
      * Test that respondTo detects various versions of the commands. It should return true even if
      * the format of the arguments are invalid.
@@ -72,7 +71,6 @@ public class AddCommandTest {
         assertTrue(this.addCommand.respondTo("add CS2103T Tutorial st2016-01-01 et2016-01-01 #category #tag"));
     }
 
-    //@@author A0144915A
     /**
      * Test that respondTo is case-insensitive.
      */
@@ -144,7 +142,6 @@ public class AddCommandTest {
         assertEquals(LocalDateTime.of(2016, 1, 2, 17, 0), addedTask.getEndTime());
     }
 
-    //@@author A0127694U
     /**
      * Test that executing the add task command will correctly add a tagged Todo
      * with a single tag to schedule.
@@ -200,7 +197,6 @@ public class AddCommandTest {
         assertEquals("tag", addedTask.getTags().get(0));
     }
 
-    //@@author A0144915A
     /**
      * Test that order of times do not matter.
      */
@@ -252,7 +248,6 @@ public class AddCommandTest {
         assertEquals("Added CS2103T Tutorial (2016-01-01 5.00PM - 2016-01-02 5.00PM)", result.getFeedback());
     }
 
-    //@@author A0127694U
     /**
      * Test that adding a new Todo with a single tag returns the correct result
      * message.
@@ -264,7 +259,6 @@ public class AddCommandTest {
         assertEquals("Added CS2103T Tutorial [Tags: \"tag1 tag2\" ]", result.getFeedback());
     }
 
-    //@@author A0144915A
     /**
      * Test the result when running without a task name
      *
@@ -306,7 +300,6 @@ public class AddCommandTest {
         assertEquals(expectedInvalidArgumentMessage(), result.getFeedback());
     }
 
-    //@@author A0127694U
     /**
      * Test that invalid time formats are not accepted.
      */
@@ -317,7 +310,6 @@ public class AddCommandTest {
         assertEquals(expectedInvalidArgumentMessage(), result.getFeedback());
     }
 
-    //@@author A0144915A
     @Test
     public void testInvalidStartTime() {
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
@@ -337,7 +329,6 @@ public class AddCommandTest {
         assertEquals("Cannot parse \"tomorrow\".", result.getFeedback());
     }
 
-    //@@author A0127694U
     /**
      * Test that adding tag with empty spaces in category will return an error.
      */
@@ -349,7 +340,6 @@ public class AddCommandTest {
         assertEquals(expectedInvalidArgumentMessage(), result.getFeedback());
     }
 
-    //@@author A0144915A
     /**
      * Test that no tasks are created with start time only.
      *
@@ -362,7 +352,6 @@ public class AddCommandTest {
         assertEquals("Cannot create task with start time but without end time.", result.getFeedback());
     }
 
-    //@@author A0144915A
     /**
      * Test that end time cannot be before start time.
      */
@@ -374,7 +363,6 @@ public class AddCommandTest {
         assertEquals("End time cannot come before start time.", result.getFeedback());
     }
 
-    //@@author A0140702X
     /**
      * Test that duplicate to-do is not added
      */
@@ -457,7 +445,6 @@ public class AddCommandTest {
     }
 
 
-    //@@author A0135788M
     private String expectedInvalidArgumentMessage() {
         return "Invalid arguments.\n\n" + this.addCommand.getCommandFormat() + "\n\n" + Command.CALLOUTS;
     }

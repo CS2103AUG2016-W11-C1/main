@@ -6,10 +6,7 @@ import org.junit.Test;
 import static linenux.helpers.GuiMatchers.textFieldHasText;
 import static org.testfx.api.FxAssert.verifyThat;
 
-/**
- * I notice some inconsistencies while running these tests. Not sure what's the problem.
- */
-//@@author A0144915A
+//@@author A0127694U
 public class CommandHistoryTest extends GuiTest {
     @Test
     public void testUpKeyPreviousCommand() {
