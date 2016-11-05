@@ -115,31 +115,31 @@ This brings up the list of Linenux commands with their description and format. I
 4. *The order of the fields do not matter.*
 5. *The notation `...` means that you can have more than one instance of that field.*
 
-| Command                 		| Description                               | Format                                                        	 	      |
-|-------------------------------|-------------------------------------------|-----------------------------------------------------------------------------|
-| [`add`](#add) 		  		| Adding a task.	   	     	  		    | `add` TASK_NAME... [st/START_TIME] [et/END_TIME] [#/TAG...]...   	 		  |
-| [`remind`](#remind) 	  		| Setting a reminder for a task.  	      	| `remind` KEYWORD... t/TIME n/NOTE                        	 		          |
-| [`edit`](#edit) 		  		| Editing a task.   	  		            | `edit` KEYWORD... [n/TASK_NAME] [st/START_TIME] [et/END_TIME] [#/TAG...]... |
-| [`editr`](#editr)       		| Editing a reminder.                       | `editr` KEYWORD... [t/TIME] [n/NOTE...]                      	 	 	      |
-| [`rename`](#rename)	  		| Renaming a tag.						    | `rename` KEYWORD... #/TAG...												  |
-| [`done`](#done) 	      		| Marking a task as done.       	  	 	| `done` KEYWORD...										             	      |
-| [`undone`](#undone)     		| Marking a task as undone.                 | `undone` KEYWORD...                                                         |
-| [`delete`](#delete) 	  		| Deleting a task. 	                        | `delete` KEYWORD... 										      		      |
-| [`deleter`](#deleter)   		| Deleting a reminder.                      | `deleter` KEYWORD...                                                        |
-| [`clear`](#clear)       		| Clearing a set of tasks.		            | `clear` [#/TAG...]											       		  |
-| [`list`](#list) 		  		| Listing tasks and reminders.              | `list` [KEYWORD...] [st/START_TIME] [et/END_TIME] [#/TAG...] [d/DONE] 	  |
-| [`today`](#today)       		| Listing tasks and reminders for today.    | `today` 													        	      |
-| [`tomorrow`](#tomorrow) 		| Listing tasks and reminders for tomorrow. | `tomorrow` 													 		      |
-| [`view`](#view)         		| Viewing details around a task.            | `view` KEYWORD...                                                           |
-| [`freetime`](#freetime) 		| Finding a free timeslot.   	  	 	    | `freetime` [st/START_TIME] et/END_TIME 				                      |
-| [`undo`](#undo) 		  		| Undoing the previous command.          	| `undo` 				   									     		      |
-| [`alias`](#alias)       		| Making aliases for the commands.          | `alias` COMMMAND_NAME n/NEW_NAME                               		      |
-| [`unalias`](#unalias)   		| Removing aliases for the commands.        | `unalias` ALIAS                                                             |
-| [`save`](#save)         		| Saving the schedule to another folder.    | `save` NEW_PATH                                                             |
-| [`load`](#load)               | Loading a schedule from another folder.   | `load` PATH                                                                 |
-| [`information`](#information) | Getting information about the program.    | `information`                                                               |
-| [`help`](#help) 		  		| Seeking help.			                    | `help` [COMMMAND_NAME]    									 		      |
-| [`exit`](#exit) 	   	        | Exiting Linenux. 			                | `exit` 			       									     		      |
+| Command                 		| Description                               | Format                                                        	 	         |
+|-------------------------------|-------------------------------------------|--------------------------------------------------------------------------------|
+| [`add`](#add) 		  		| Adding a task.	   	     	  		    | `add` TASK_NAME... [st/START_TIME] [et/END_TIME] [#/TAG...]...   	 		     |
+| [`remind`](#remind) 	  		| Setting a reminder for a task.  	      	| `remind` KEYWORD... t/TIME n/NOTE...                        	 		         |
+| [`edit`](#edit) 		  		| Editing a task.   	  		            | `edit` KEYWORD... [n/TASK_NAME...] [st/START_TIME] [et/END_TIME] [#/TAG...]... |
+| [`editr`](#editr)       		| Editing a reminder.                       | `editr` KEYWORD... [t/TIME] [n/NOTE...]                      	 	 	         |
+| [`rename`](#rename)	  		| Renaming a tag.						    | `rename` TAG_NAME... #/TAG...												     |
+| [`done`](#done) 	      		| Marking a task as done.       	  	 	| `done` KEYWORD...										             	         |
+| [`undone`](#undone)     		| Marking a task as undone.                 | `undone` KEYWORD...                                                            |
+| [`delete`](#delete) 	  		| Deleting a task. 	                        | `delete` KEYWORD... 										      		         |
+| [`deleter`](#deleter)   		| Deleting a reminder.                      | `deleter` KEYWORD...                                                           |
+| [`clear`](#clear)       		| Clearing a set of tasks.		            | `clear` [#/TAG...]											       		     |
+| [`list`](#list) 		  		| Listing tasks and reminders.              | `list` [KEYWORD...] [st/START_TIME] [et/END_TIME] [#/TAG...] [d/DONE] 	     |
+| [`today`](#today)       		| Listing tasks and reminders for today.    | `today` 													        	         |
+| [`tomorrow`](#tomorrow) 		| Listing tasks and reminders for tomorrow. | `tomorrow` 													 		         |
+| [`view`](#view)         		| Viewing details around a task.            | `view` KEYWORD...                                                              |
+| [`freetime`](#freetime) 		| Finding a free timeslot.   	  	 	    | `freetime` [st/START_TIME] et/END_TIME 				                         |
+| [`undo`](#undo) 		  		| Undoing the previous command.          	| `undo` 				   									     		         |
+| [`alias`](#alias)       		| Making aliases for the commands.          | `alias` COMMMAND_NAME NEW_NAME                               		             |
+| [`unalias`](#unalias)   		| Removing aliases for the commands.        | `unalias` ALIAS                                                                |
+| [`save`](#save)         		| Saving the schedule to another folder.    | `save` NEW_PATH                                                                |
+| [`load`](#load)               | Loading a schedule from another folder.   | `load` PATH                                                                    |
+| [`information`](#information) | Getting information about the program.    | `information`                                                                  |
+| [`help`](#help) 		  		| Seeking help.			                    | `help` [COMMMAND_NAME]    									 		         |
+| [`exit`](#exit) 	   	        | Exiting Linenux. 			                | `exit` 			       									     		         |
 
 ## Supported Time Formats
 
@@ -174,7 +174,7 @@ Adding a task has never been this easy. Just indicate the appropriate fields and
 
 *Format:*
 
-`add TASK_NAME [st/START_TIME] [et/END_TIME] [#/TAG]...`
+`add TASK_NAME... [st/START_TIME] [et/END_TIME] [#/TAG...]...`
 
 *Examples:*
 
@@ -234,7 +234,7 @@ Also, to remove fields, we will use a dash as shown in the examples below. You c
 
 *Format:*
 
-` edit KEYWORDS [n/TASK_NAME] [st/START_TIME] [et/END_TIME] [#/TAG]...`
+` edit KEYWORD... [n/TASK_NAME...] [st/START_TIME] [et/END_TIME] [#/TAG...]...`
 
 *Examples:*
 
@@ -262,20 +262,20 @@ Also, to remove fields, we will use a dash as shown in the examples below. You c
 
 ##### *Editr*
 
-`editr` is the `edit` command for reminders. It works similar to the `edit` command, with the same fuzzy searching mechanism which searches for a reminder by its note. However, since both the time and note fields are compulsory, you will not be able to remove any of the fields.
+`editr` is the `edit` command for reminders. It works similar to the `edit` command, with the same earching mechanism which searches for a reminder by its note. However, since both the time and note fields are compulsory, you will not be able to remove any of the fields.
 
 *Format:*
 
-`editr KEYWORDS [t/TIME] [n/NOTE]`
+`editr KEYWORD... [t/TIME] [n/NOTE...]`
 
 *Examples:*
 
 ```
 * Setting a reminder for the event 'house warming' with the note 'buy groceries'.
-> remind house warming t/2016-10-16 07:00am n/buy groceries
+> remind house warming t/tomorrow 7.00am n/buy groceries
 
 * Changing the time of a reminder with note.
-> editr buy groceries t/2016-10-16 06:00am
+> editr buy groceries t/tomorrow 6:00am
 ```
 
 #### Renaming Tags
@@ -286,7 +286,7 @@ Renaming a tag will change all tasks with that tag to the new tag.
 
 *Format:*
 
-`rename KEYWORDS #/TAG`
+`rename TAG_NAME... #/TAG...`
 
 *Examples:*
 
@@ -303,7 +303,7 @@ Yes! You’ve just completed a task. Since it’s completed, you wouldn’t want
 
 *Format:*
 
-`done KEYWORDS`
+`done KEYWORD...`
 
 *Examples:*
 
@@ -318,7 +318,7 @@ In cases where we accidentally mark an incomplete task as done, we can use the `
 
 *Format:*
 
-`undone KEYWORDS`
+`undone KEYWORD...`
 
 *Examples:*
 
@@ -336,7 +336,7 @@ At times, tasks or reminders might become redundant. For example, a scheduled me
 *Format:*
 
 ```
-delete KEYWORDS
+delete KEYWORD...
 ```
 
 *Example:*
@@ -381,30 +381,6 @@ To delete multiple tasks in the same category, the `clear` command can be used. 
 > clear #/assignment
 ```
 
-#### Finding Freetime
-
-##### *Freetime*
-
-Sometimes we might need to know when we are free. The `freetime` command shows you all the time slots that are not occupied by events.
-
-*Format:*
-
-`freetime [st/START_TIME] et/END_TIME`
-
-*Examples:*
-
-```
-* Finding all free time slots from now to 25 December 2016, 11.59pm.
-  (Assuming now is some time before 25 Decemeber 2016.)
-> freetime et/2016-12-25 11:59pm
-
-* Finding all free time slots on 16 October 2016 between 7am to 9pm.
-> freetime st/2016-10-16 7:00am et/2016-10-16 9:00pm
-```
-
-<img src="images/userGuide/freetimeCommand.png">
-> Figure 5: Showing free time slots
-
 #### Listing Tasks and Reminders
 
 ##### *List*
@@ -431,10 +407,10 @@ Also, if you need to see the tasks that you have completed, simply add the `d/DO
 
 * List all incomplete tasks and reminders from now to 25 December 2016, 11.59pm.
   (Assuming now is some time before 25 Decemeber 2016.)
-> list et/2016-12-25 11:59pm
+> list et/2016-12-25 11.59pm
 
 * List all incomplete tasks and reminders from 16 October 2016, 12.00am to 25 December 2016, 11.59pm.
-> list st/2016-10-16 12:00am et/2016-12-25 11:59pm
+> list st/2016-10-16 12.00am et/2016-12-25 11.59pm
 
 * List all completed tasks.
 > list d/yes
@@ -446,15 +422,16 @@ Also, if you need to see the tasks that you have completed, simply add the `d/DO
 > list #/assignment
 
 * List all incomplete tasks from 16 October 2016, 12.00am to 25 December 2016, 11.59pm and with tags 'assignment'.
-> list st/2016-10-16 12:00am et/2016-12-25 11:59pm #/assignment
+> list st/2016-10-16 12.00am et/2016-12-25 11.59pm #/assignment
 ```
 
-<img src="images/userGuide/listCommand.png">
-> Figure 6: Before and After List Command
+<img src="images/userGuide/listAll.png">
+
+<img src="images/userGuide/listTag.png">
 
 ##### *Today*
 
-Seeing as how you might want to know today's tasks frequently, instead of typing `list st/2016-10-16 12:00am et/2016-10-16 11:59pm`, we made it into a command itself! Your events that occur today will be shown as well.
+Seeing as how you might want to know today's tasks frequently, instead of typing `list st/today 12.00am et/today 11.59pm`, we made it into a command itself! Your events that occur today will be shown as well.
 
 *Format:*
 
@@ -463,13 +440,13 @@ Seeing as how you might want to know today's tasks frequently, instead of typing
 *Example:*
 
 ```
-* List all tasks from now to 11.59pm that same day.
+* List all tasks today.
 > today
 ```
 
 ##### *Tomorrow*
 
-Similar as the command `today`, this is a syntactic sugar which is equivalent to `list st/2016-10-16 12:00am et/2016-10-16 11:59pm`, assuming that the date tomorrow is 16 October 2016. Your events that occur tomorrow will be shown as well.
+Similar as the command `today`, this is a syntactic sugar which is equivalent to `list st/tomorrow 12.00am et/tomorrow 11:59pm`. Your events that occur tomorrow will be shown as well.
 
 *Format:*
 
@@ -481,7 +458,6 @@ Similar as the command `today`, this is a syntactic sugar which is equivalent to
 * List all tasks the next day.
 > tomorrow
 ```
-
 #### Viewing a Task
 
 ##### *View*
@@ -496,13 +472,34 @@ The command `list` only provides the general details surrounding a task. To see 
 
 ```
 * View details regarding the deadline.
-> view cs2101 assignment
+> view CS2101 assignment
 ```
 
-<img src="images/userGuide/viewCommand.png">
-> Figure 7: Viewing a task
+<img src="images/userGuide/view.png">
 
-#### Undo
+#### Finding Freetime
+
+##### *Freetime*
+
+Sometimes we might need to know when we are free. The `freetime` command shows you all the time slots that are not occupied by events.
+
+*Format:*
+
+`freetime [st/START_TIME] et/END_TIME`
+
+*Examples:*
+
+```
+* Finding all free time slots from tomorrow 3.00pm to tomorrow 10.00pm.
+> freetime st/tomorrow 3.00pm et/tomorrow 10.00pm
+
+* Finding all free time slots from now to tomorrow 9.00pm.
+> freetime et/tomorrow 9.00pm
+```
+
+<img src="images/userGuide/freetime.png">
+
+#### Undoing Previous Command
 
 ##### *Undo*
 
@@ -516,9 +513,10 @@ We all make mistakes in life, but we believe in second chances. After all, we ar
 4. `editr`
 5. `rename`
 6. `done`
-7. `delete`
-8. `deleter`
-9. `clear`
+7. `undone`
+8. `delete`
+9. `deleter`
+10. `clear`
 
 You can undo up to ten such commands.
 
@@ -533,11 +531,11 @@ You can undo up to ten such commands.
 > undo
 ```
 
-#### Alias for Commands
+#### Making Aliases for Commands
 
 ##### *Alias*
 
-Ever felt that the command `tomorrow` is too long to type? Or if you have a better name for a command? Well, the `alias` command allows you to create aliases for commands. Do note that creating aliases does not remove the original command word, but rather you can alternate between both. Note that the alias has to be a single word consisting of only letters and numbers.
+Ever felt that the command `tomorrow` is too long to type? Or if you have a better name for a command? Well, the `alias` command allows you to create aliases for commands. A command can have multiple aliases, but no two commands can have the same alias. Furthermore, an alias has to be a single word consisting of only letters and numbers.
 
 *Format:*
 
@@ -555,6 +553,7 @@ Ever felt that the command `tomorrow` is too long to type? Or if you have a bett
 * Original command tomorrow should still work.
 > tomorrow
 ```
+
 ##### *Unalias*
 
 After setting an alias for a command, you can remove it with the `unalias` command. Note that you cannot remove the original command word.
@@ -567,7 +566,6 @@ After setting an alias for a command, you can remove it with the `unalias` comma
 * Removing alias tmr from tomorrow
 > unalias tmr
 ```
-
 
 #### Changing Path For Storage File
 
