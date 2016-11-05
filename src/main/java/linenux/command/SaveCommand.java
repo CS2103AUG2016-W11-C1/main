@@ -95,16 +95,6 @@ public class SaveCommand extends AbstractCommand {
         return COMMAND_FORMAT;
     }
 
-    private String extractArgument(String userInput) {
-        Matcher matcher = Pattern.compile(getPattern()).matcher(userInput);
-
-        if (matcher.matches() && matcher.group("keywords") != null) {
-            return matcher.group("keywords").trim();
-        } else {
-            return "";
-        }
-    }
-
     private CommandResult validateAndUpdate(File file) {
         if (file.canWrite()) {
             this.controlUnit.setScheduleFilePath(file.toString());

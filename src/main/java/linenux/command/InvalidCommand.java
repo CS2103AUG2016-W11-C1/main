@@ -43,7 +43,7 @@ public class InvalidCommand extends AbstractCommand {
         }
 
         String userCommand = extractCommand(userInput);
-        String userArgument = extractArgument(userInput);
+        String userArgument = parseArgument(userInput);
         String suggestion = null;
         int bestScore = Integer.MAX_VALUE;
 
@@ -99,7 +99,7 @@ public class InvalidCommand extends AbstractCommand {
         }
     }
 
-    private String extractArgument(String userInput) {
+    private String parseArgument(String userInput) {
         String[] parts = userInput.split("\\s+", 2);
 
         if (parts.length == 2) {
