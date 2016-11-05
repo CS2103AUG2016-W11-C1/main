@@ -1,8 +1,6 @@
 package linenux.command;
 
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import linenux.command.result.CommandResult;
 import linenux.command.result.PromptResults;
@@ -35,7 +33,7 @@ public class UndoneCommand extends AbstractCommand {
         assert userInput.matches(getPattern());
         assert this.schedule != null;
 
-        String keywords = extractKeywords(userInput);
+        String keywords = extractArgument(userInput);
 
         if (keywords.trim().isEmpty()) {
             return makeNoKeywordsResult();
@@ -105,15 +103,6 @@ public class UndoneCommand extends AbstractCommand {
     private void setResponse(boolean requiresUserResponse, ArrayList<Task> foundTasks) {
         this.foundTasks = foundTasks;
         this.requiresUserResponse = requiresUserResponse;
-    }
-    private String extractKeywords(String userInput) {
-        Matcher matcher = Pattern.compile(getPattern()).matcher(userInput);
-
-        if (matcher.matches() && matcher.group("keywords") != null) {
-            return matcher.group("keywords");
-        } else {
-            return "";
-        }
     }
 
     private CommandResult makeNoKeywordsResult() {

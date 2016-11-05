@@ -122,7 +122,7 @@ public class FreeTimeCommandTest {
     @Test
     public void testNoFreeTime() {
         CommandResult result = this.command.execute("freetime st/2016-01-01 5.00PM et/2016-01-01 7.00PM");
-        String expectedResult = "You are free at the following time slots:\n";
+        String expectedResult = "You don't have any free time in that period.";
         assertEquals(expectedResult, result.getFeedback());
     }
 
@@ -139,7 +139,7 @@ public class FreeTimeCommandTest {
         assertEquals(expectedResult, result.getFeedback());
 
         result = this.command.execute("freetime st/2016-01-01 5.30PM et/2016-01-01 6.30PM");
-        expectedResult = "You are free at the following time slots:\n";
+        expectedResult = "You don't have any free time in that period.";
         assertEquals(expectedResult, result.getFeedback());
     }
 }

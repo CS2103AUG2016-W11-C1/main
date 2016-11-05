@@ -1,8 +1,5 @@
 package linenux.command;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import linenux.command.parser.AddArgumentParser;
 import linenux.command.result.CommandResult;
 import linenux.control.TimeParserManager;
@@ -13,7 +10,6 @@ import linenux.time.parser.StandardDateWithTimeParser;
 import linenux.time.parser.TodayWithTimeParser;
 import linenux.time.parser.TomorrowWithTimeParser;
 import linenux.util.Either;
-import linenux.util.LogsCenter;
 
 /**
  * Adds a task to the schedule.
@@ -75,16 +71,6 @@ public class AddCommand extends AbstractCommand {
     }
 
     //@@author A0144915A
-    private String extractArgument(String userInput) {
-        Matcher matcher = Pattern.compile(getPattern()).matcher(userInput);
-
-        if (matcher.matches() && matcher.group("keywords") != null) {
-            return matcher.group("keywords");
-        } else {
-            return "";
-        }
-    }
-
     private CommandResult makeResult(Task task) {
         return () -> "Added " + task.toString();
     }

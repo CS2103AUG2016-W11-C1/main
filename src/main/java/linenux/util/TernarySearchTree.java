@@ -2,10 +2,10 @@ package linenux.util;
 
 import java.util.ArrayList;
 
+//@@author A0135788M
 /**
  * Ternary Search Tree data structure.
  */
-//@@author A0135788M
 public class TernarySearchTree {
     private class Node {
         private char character;
@@ -124,9 +124,5 @@ public class TernarySearchTree {
         } else {
             return current.center;
         }
-    }
-
-    public Node getRoot() {
-        return root;
     }
 }

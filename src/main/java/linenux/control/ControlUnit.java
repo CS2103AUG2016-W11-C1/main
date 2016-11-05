@@ -35,7 +35,6 @@ import linenux.config.Config;
 import linenux.model.Schedule;
 import linenux.storage.ScheduleStorage;
 import linenux.storage.XmlScheduleStorage;
-import linenux.util.LogsCenter;
 
 /**
  * Controls data flow for the entire application.
@@ -61,6 +60,7 @@ public class ControlUnit {
 
     public ControlUnit(ScheduleStorage storage, Config config, CommandManager commandManager) {
         this.scheduleStorage = storage;
+        this.schedule = this.scheduleStorage.loadScheduleFromFile();
         this.config = config;
         this.commandManager = commandManager;
     }

@@ -1,9 +1,8 @@
 package linenux.command;
 
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
+import linenux.command.parser.GenericParser;
 import linenux.command.result.CommandResult;
 import linenux.command.result.SearchResults;
 import linenux.model.Schedule;
@@ -18,9 +17,6 @@ public class RenameCommand extends AbstractCommand {
     private static final String DESCRIPTION = "Changes the name of specified tag in all tasks.";
     public static final String COMMAND_FORMAT = "rename TAG_NAME... #/TAG...";
 
-    private static final String NUMBER_PATTERN = "^\\d+$";
-    private static final String CANCEL_PATTERN = "^cancel$";
-
     private Schedule schedule;
 
     public RenameCommand(Schedule schedule) {
@@ -33,8 +29,11 @@ public class RenameCommand extends AbstractCommand {
         assert userInput.matches(getPattern());
         assert this.schedule != null;
 
-        String tagName = extractTagName(userInput);
-        String newName = extractNewName(userInput);
+        String argument = extractArgument(userInput);
+        GenericParser parser = new GenericParser();
+        GenericParser.GenericParserResult result = parser.parse(argument);
+        String tagName = result.getKeywords();
+        String newName = result.getArguments("#").size() > 0 ? result.getArguments("#").get(0) : "";
 
         if (tagName.trim().isEmpty() || newName.trim().isEmpty()) {
             return makeNoKeywordsResult();
@@ -63,34 +62,6 @@ public class RenameCommand extends AbstractCommand {
     @Override
     public String getCommandFormat() {
         return COMMAND_FORMAT;
-    }
-
-    // @@author A0127694U
-    @Override
-    public String getPattern() {
-        return "(?i)^\\s*(" + getTriggerWordsPattern() + ")(\\s+(?<tagName>.*?)(#/(?<newName>.*)?)?)?";
-    }
-
-    // @@author A0135788M
-    private String extractTagName(String userInput) {
-        Matcher matcher = Pattern.compile(getPattern()).matcher(userInput);
-
-        if (matcher.matches() && matcher.group("tagName") != null) {
-            return matcher.group("tagName").trim(); // TODO
-        } else {
-            return "";
-        }
-    }
-
-    // @@author A0127694U
-    private String extractNewName(String userInput) {
-        Matcher matcher = Pattern.compile(getPattern()).matcher(userInput);
-
-        if (matcher.matches() && matcher.group("newName") != null) {
-            return matcher.group("newName");
-        } else {
-            return "";
-        }
     }
 
     private CommandResult implementRename(ArrayList<Task> original, String originalName, String newName) {

@@ -1,5 +1,6 @@
 package linenux.storage;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -33,7 +34,7 @@ public class XmlScheduleStorage implements ScheduleStorage {
     public Schedule loadScheduleFromFile() {
         logger.info("Loading schedule from " + this.getFilePath());
 
-        Schedule output = null;
+        Schedule output;
         try {
             JAXBContext context = JAXBContext.newInstance(AdaptedSchedule.class);
             Unmarshaller u = context.createUnmarshaller();
@@ -89,7 +90,7 @@ public class XmlScheduleStorage implements ScheduleStorage {
         try {
             Files.createFile(this.getFilePath());
         } catch (IOException i) {
-            Files.createDirectories(this.getFilePath());
+            new File(this.getFilePath().getParent().toString()).mkdirs();
             createFile();
         } catch (Exception e) {
             logger.warning(ThrowableUtil.getStackTrace(e));

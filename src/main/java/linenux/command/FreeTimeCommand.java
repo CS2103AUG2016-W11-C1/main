@@ -4,8 +4,6 @@ import java.time.Clock;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import linenux.command.parser.FreeTimeArgumentParser;
 import linenux.command.result.CommandResult;
@@ -29,7 +27,6 @@ public class FreeTimeCommand extends AbstractCommand {
 
     private Schedule schedule;
     private TimeParserManager timeParserManager;
-    private Clock clock;
     private FreeTimeArgumentParser argumentParser;
 
     public FreeTimeCommand(Schedule schedule) {
@@ -40,7 +37,6 @@ public class FreeTimeCommand extends AbstractCommand {
         this.schedule = schedule;
         this.timeParserManager = new TimeParserManager(new ISODateWithTimeParser(), new StandardDateWithTimeParser(), new TodayWithTimeParser(), new TomorrowWithTimeParser());
         this.argumentParser = new FreeTimeArgumentParser(this.timeParserManager, clock);
-        this.clock = clock;
         this.TRIGGER_WORDS.add(TRIGGER_WORD);
     }
 
@@ -58,7 +54,11 @@ public class FreeTimeCommand extends AbstractCommand {
 
         ArrayList<TimeInterval> freetime = getFreeTime(queryInterval.getLeft());
 
-        return makeResult(freetime);
+        if (freetime.isEmpty()) {
+            return this.makeNoFreeTimeResult();
+        } else {
+            return makeResult(freetime);
+        }
     }
 
     @Override
@@ -74,16 +74,6 @@ public class FreeTimeCommand extends AbstractCommand {
     @Override
     public String getCommandFormat() {
         return COMMAND_FORMAT;
-    }
-
-    private String extractArgument(String userInput) {
-        Matcher matcher = Pattern.compile(getPattern()).matcher(userInput);
-
-        if (matcher.matches() && matcher.group("keywords") != null) {
-            return matcher.group("keywords");
-        } else {
-            return "";
-        }
     }
 
     private ArrayList<TimeInterval> getFreeTime(TimeInterval queryInterval) {
@@ -186,5 +176,9 @@ public class FreeTimeCommand extends AbstractCommand {
             }
             return builder.toString();
         };
+    }
+
+    private CommandResult makeNoFreeTimeResult() {
+        return () -> "You don't have any free time in that period.";
     }
 }

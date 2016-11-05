@@ -12,7 +12,7 @@ public interface TimeParser {
      * Checks if the user input corresponds to the format of the respective
      * time parser.
      *
-     * @param userInput
+     * @param input
      * @return true if format matches and false otherwise.
      */
     public boolean respondTo(String input);
@@ -20,7 +20,7 @@ public interface TimeParser {
     /**
      * Parses the userInput string to a time instance.
      * Contract: use respondTo to check before calling execute
-     * @param userInput
+     * @param input
      * @return
      */
     public LocalDateTime parse(String input);
