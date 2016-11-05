@@ -38,6 +38,7 @@ public class ListArgumentFilter {
 
         Either<LocalDateTime, CommandResult> endTime = extractEndTime(argument);
         if (endTime.isRight()) {
+
             return Either.right(endTime.getRight());
         }
 
@@ -69,7 +70,8 @@ public class ListArgumentFilter {
                             if (task.isEvent()) {
                                 LocalDateTime taskStartTime = task.getStartTime();
                                 return checker || taskStartTime.isEqual(actualStartTime) || taskStartTime.isEqual(actualEndTime)
-                                || (taskStartTime.isAfter(actualStartTime) && taskStartTime.isBefore(actualEndTime));
+                            || (taskStartTime.isAfter(actualStartTime) && taskStartTime.isBefore(actualEndTime))
+                            || (taskStartTime.isBefore(actualStartTime) && task.getEndTime().isAfter(actualEndTime));
                             }
                             return checker; })
                         .value();

@@ -290,8 +290,10 @@ public class ListCommandTest {
                 LocalDateTime.of(2016, 2, 1, 17, 0));
         Task eventDuring2 = new Task("event during2", LocalDateTime.of(2016, 1, 2, 19, 0),
                 LocalDateTime.of(2016, 1, 3, 17, 0));
-        Task eventDuring3 = new Task("event during2", LocalDateTime.of(2016, 1, 2, 19, 0),
+        Task eventDuring3 = new Task("event during3", LocalDateTime.of(2016, 1, 2, 19, 0),
                 LocalDateTime.of(2017, 1, 3, 17, 0));
+        Task eventDuring4 = new Task("event during4", LocalDateTime.of(2014, 1, 1, 17, 0),
+                LocalDateTime.of(2017, 1, 1, 17, 0));
         Task eventStartTimeAfter = new Task("event start time after", LocalDateTime.of(2017, 1, 1, 19, 0),
                 LocalDateTime.of(2018, 1, 1, 17, 0));
 
@@ -304,6 +306,7 @@ public class ListCommandTest {
         this.schedule.addTask(eventDuring1);
         this.schedule.addTask(eventDuring2);
         this.schedule.addTask(eventDuring3);
+        this.schedule.addTask(eventDuring4);
         this.schedule.addTask(eventStartTimeAfter);
         this.schedule.addTask(deadlineBefore);
         this.schedule.addTask(deadlineDuring);
@@ -318,6 +321,7 @@ public class ListCommandTest {
         assertTrue(filteredTasks.contains(eventDuring1));
         assertTrue(filteredTasks.contains(eventDuring2));
         assertTrue(filteredTasks.contains(eventDuring3));
+        assertTrue(filteredTasks.contains(eventDuring4));
         assertTrue(!filteredTasks.contains(eventStartTimeAfter));
         assertTrue(!filteredTasks.contains(deadlineBefore));
         assertTrue(filteredTasks.contains(deadlineDuring));
