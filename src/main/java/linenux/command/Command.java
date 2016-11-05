@@ -32,7 +32,7 @@ public interface Command {
     /**
      * @return {@code true} if and only if this {@code Command} is awaiting for user response.
      */
-    default public boolean awaitingUserResponse() {
+    default public boolean isAwaitingUserResponse() {
         return false;
     }
 
@@ -41,7 +41,7 @@ public interface Command {
      * @param userInput {@code String} representing the user response.
      * @return A {@code CommandResult}, which is the result of processing {@code userInput}.
      */
-    default public CommandResult getUserResponse(String userInput) {
+    default public CommandResult processUserResponse(String userInput) {
         return null;
     }
 

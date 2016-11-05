@@ -8,8 +8,7 @@ import linenux.command.result.SearchResults;
 import linenux.model.Reminder;
 import linenux.model.Schedule;
 import linenux.model.Task;
-import linenux.util.RemindersListUtil;
-import linenux.util.TasksListUtil;
+import linenux.util.ArrayListUtil;
 
 //@@author A0135788M
 /**
@@ -66,7 +65,7 @@ public class ViewCommand extends AbstractCommand {
      * @return {@code true} if and only if this {@code Command} is awaiting for user response.
      */
     @Override
-    public boolean awaitingUserResponse() {
+    public boolean isAwaitingUserResponse() {
         return requiresUserResponse;
     }
 
@@ -76,7 +75,7 @@ public class ViewCommand extends AbstractCommand {
      * @return A {@code CommandResult}, which is the result of processing {@code userInput}.
      */
     @Override
-    public CommandResult getUserResponse(String userInput) {
+    public CommandResult processUserResponse(String userInput) {
         assert this.foundTasks != null;
         assert this.schedule != null;
 
@@ -150,7 +149,7 @@ public class ViewCommand extends AbstractCommand {
         if (reminders.size() == 0) {
             builder.append("You have not set any reminders for this task.");
         } else {
-            builder.append(RemindersListUtil.display(reminders));
+            builder.append(ArrayListUtil.display(reminders));
         }
 
         return () -> builder.toString().trim();
@@ -173,7 +172,7 @@ public class ViewCommand extends AbstractCommand {
             StringBuilder builder = new StringBuilder();
             builder.append("I don't understand \"" + userInput + "\".\n");
             builder.append("Enter a number to indicate which task to view.\n");
-            builder.append(TasksListUtil.display(this.foundTasks));
+            builder.append(ArrayListUtil.display(this.foundTasks));
             return builder.toString();
         };
     }

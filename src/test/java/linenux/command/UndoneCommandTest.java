@@ -123,9 +123,9 @@ public class UndoneCommandTest {
      */
     @Test
     public void testAwaitingUserResponse() {
-        assertFalse(this.undoneCommand.awaitingUserResponse());
+        assertFalse(this.undoneCommand.isAwaitingUserResponse());
         this.setupMultipleHelloTasksAndExecuteAmbiguousCommand();
-        assertTrue(this.undoneCommand.awaitingUserResponse());
+        assertTrue(this.undoneCommand.isAwaitingUserResponse());
     }
 
     /**
@@ -134,9 +134,9 @@ public class UndoneCommandTest {
     @Test
     public void testUserResponseCancel() {
         this.setupMultipleHelloTasksAndExecuteAmbiguousCommand();
-        CommandResult result = this.undoneCommand.getUserResponse("cancel");
+        CommandResult result = this.undoneCommand.processUserResponse("cancel");
         assertEquals("OK! Not marking any task as undone.", result.getFeedback());
-        assertFalse(this.undoneCommand.awaitingUserResponse());
+        assertFalse(this.undoneCommand.isAwaitingUserResponse());
     }
 
     /**
@@ -148,12 +148,12 @@ public class UndoneCommandTest {
         ArrayList<Task> taskList = getSearchResult("hello");
         assertFalse(taskList.get(0).isNotDone());
 
-        CommandResult result = this.undoneCommand.getUserResponse("1");
+        CommandResult result = this.undoneCommand.processUserResponse("1");
         assertEquals("\"hello world\" is marked as undone.", result.getFeedback());
         taskList = getSearchResult("hello");
         assertTrue(taskList.get(0).isNotDone());
 
-        assertFalse(this.undoneCommand.awaitingUserResponse());
+        assertFalse(this.undoneCommand.isAwaitingUserResponse());
     }
 
     /**
@@ -165,14 +165,14 @@ public class UndoneCommandTest {
         ArrayList<Task> taskList = getSearchResult("hello");
         assertFalse(taskList.get(0).isNotDone());
 
-        CommandResult result = this.undoneCommand.getUserResponse("0");
+        CommandResult result = this.undoneCommand.processUserResponse("0");
         String expectedResponse = "That's not a valid index. Enter a number between 1 and 2, or \"cancel\" to cancel the current operation:\n"
                 + "1. hello world\n2. say hello from the other side";
         assertEquals(expectedResponse, result.getFeedback());
         taskList = getSearchResult("hello");
         assertFalse(taskList.get(0).isNotDone());
 
-        assertTrue(this.undoneCommand.awaitingUserResponse());
+        assertTrue(this.undoneCommand.isAwaitingUserResponse());
     }
 
     /**
@@ -184,14 +184,14 @@ public class UndoneCommandTest {
         ArrayList<Task> taskList = getSearchResult("hello");
         assertFalse(taskList.get(0).isNotDone());
 
-        CommandResult result = this.undoneCommand.getUserResponse("roses are red");
+        CommandResult result = this.undoneCommand.processUserResponse("roses are red");
         String expectedResponse = "I don't understand \"roses are red\".\n"
                 + "Enter a number to indicate which task to mark as undone.\n1. hello world\n2. say hello from the other side";
         assertEquals(expectedResponse, result.getFeedback());
         taskList = getSearchResult("hello");
         assertFalse(taskList.get(0).isNotDone());
 
-        assertTrue(this.undoneCommand.awaitingUserResponse());
+        assertTrue(this.undoneCommand.isAwaitingUserResponse());
     }
 
     /**

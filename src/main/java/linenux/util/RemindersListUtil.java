@@ -8,24 +8,6 @@ import linenux.model.Reminder;
 //@@author A0140702X
 public class RemindersListUtil {
     /**
-     * Display the list of reminders as a string.
-     * @param reminders The list of reminders to display.
-     * @return A string representing the tasks.
-     */
-    public static String display(ArrayList<Reminder> reminders) {
-        StringBuilder builder = new StringBuilder();
-
-        for (int i = 0; i < reminders.size(); i++) {
-            builder.append(i + 1);
-            builder.append(". ");
-            builder.append(reminders.get(i).toString());
-            builder.append('\n');
-        }
-
-        return builder.toString().trim();
-    }
-
-    /**
      * Display the list of {@code ReminderSearchResult}.
      * @param results An {@code ArrayList} of {@code ReminderSearchResult} to display.
      * @return A {@code String} representing {@code results}.

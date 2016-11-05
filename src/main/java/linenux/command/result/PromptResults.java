@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 import linenux.command.util.ReminderSearchResult;
 import linenux.model.Task;
+import linenux.util.ArrayListUtil;
 import linenux.util.RemindersListUtil;
-import linenux.util.TasksListUtil;
 
 //@@author A0144915A
 /**
@@ -24,7 +24,7 @@ public class PromptResults {
             builder.append(tasks.size());
             builder.append(", \"cancel\" to cancel the current operation)\n");
 
-            builder.append(TasksListUtil.display(tasks));
+            builder.append(ArrayListUtil.display(tasks));
 
             return builder.toString();
         };
@@ -60,7 +60,7 @@ public class PromptResults {
             builder.append("That's not a valid index. Enter a number between 1 and ");
             builder.append(tasks.size());
             builder.append(", or \"cancel\" to cancel the current operation:\n");
-            builder.append(TasksListUtil.display(tasks));
+            builder.append(ArrayListUtil.display(tasks));
             return builder.toString();
         };
     }

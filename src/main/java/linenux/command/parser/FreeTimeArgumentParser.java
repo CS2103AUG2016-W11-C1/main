@@ -12,8 +12,7 @@ import linenux.util.TimeInterval;
 /**
  * A helper class used to parse the arguments to the free time command.
  */
-public class FreeTimeArgumentParser {
-    private TimeParserManager timeParserManager;
+public class FreeTimeArgumentParser extends BaseArgumentParser {
     private GenericParser genericParser;
     private GenericParser.GenericParserResult parseResult;
     private Clock clock;
@@ -88,28 +87,6 @@ public class FreeTimeArgumentParser {
         } else {
             return Either.right(makeEndTimeBeforeStartTimeResult());
         }
-    }
-
-    /**
-     * Attempts to parse a date time string.
-     * @param string The {@code String} to parse.
-     * @return An {@code Either}. Its left slot is a {@code LocalDateTime} if {@code string} can be parsed. Otherwise,
-     * its right slot contains a {@code CommandResult} describing the error.
-     */
-    private Either<LocalDateTime, CommandResult> parseDateTime(String string) {
-        if (this.timeParserManager.canParse(string)) {
-            return Either.left(this.timeParserManager.delegateTimeParser(string));
-        } else {
-            return Either.right(makeCannotParseTimeResult(string));
-        }
-    }
-
-    /**
-     * @param string The {@code String} that should represent a date time.
-     * @return A {@code CommandResult} indicating that {@code string} does not represent a date time.
-     */
-    private CommandResult makeCannotParseTimeResult(String string) {
-        return () -> "Cannot parse \"" + string + "\"." ;
     }
 
     /**

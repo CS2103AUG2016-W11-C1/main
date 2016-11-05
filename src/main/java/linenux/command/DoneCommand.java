@@ -8,7 +8,6 @@ import linenux.command.result.SearchResults;
 import linenux.model.Schedule;
 import linenux.model.Task;
 import linenux.util.ArrayListUtil;
-import linenux.util.TasksListUtil;
 
 /**
  * Marks task as done.
@@ -74,7 +73,7 @@ public class DoneCommand extends AbstractCommand {
      * @return {@code true} if and only if this {@code Command} is awaiting for user response.
      */
     @Override
-    public boolean awaitingUserResponse() {
+    public boolean isAwaitingUserResponse() {
         return requiresUserResponse;
     }
 
@@ -84,7 +83,7 @@ public class DoneCommand extends AbstractCommand {
      * @return A {@code CommandResult}, which is the result of processing {@code userInput}.
      */
     @Override
-    public CommandResult getUserResponse(String userInput) {
+    public CommandResult processUserResponse(String userInput) {
         assert this.foundTasks != null;
         assert this.schedule != null;
 
@@ -175,7 +174,7 @@ public class DoneCommand extends AbstractCommand {
             StringBuilder builder = new StringBuilder();
             builder.append("I don't understand \"" + userInput + "\".\n");
             builder.append("Enter a number to indicate which task to mark as done.\n");
-            builder.append(TasksListUtil.display(this.foundTasks));
+            builder.append(ArrayListUtil.display(this.foundTasks));
             return builder.toString();
         };
     }

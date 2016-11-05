@@ -13,8 +13,8 @@ import linenux.time.parser.ISODateWithTimeParser;
 import linenux.time.parser.StandardDateWithTimeParser;
 import linenux.time.parser.TodayWithTimeParser;
 import linenux.time.parser.TomorrowWithTimeParser;
+import linenux.util.ArrayListUtil;
 import linenux.util.Either;
-import linenux.util.RemindersListUtil;
 
 /**
  * Generates a list of tasks based on userInput.
@@ -174,7 +174,7 @@ public class ListCommand extends AbstractCommand {
             if (reminders.isEmpty()) {
                 return "";
             } else {
-                return "Reminders:\n" + RemindersListUtil.display(reminders);
+                return "Reminders:\n" + ArrayListUtil.display(reminders);
             }
         };
     }

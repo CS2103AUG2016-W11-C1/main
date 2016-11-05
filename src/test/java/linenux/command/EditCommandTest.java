@@ -459,18 +459,18 @@ public class EditCommandTest {
 
     @Test
     public void testAwaitingUserResponse() {
-        assertFalse(this.editCommand.awaitingUserResponse());
+        assertFalse(this.editCommand.isAwaitingUserResponse());
         this.setupMultipleHelloTasksAndExecuteAmbiguousCommand();
-        assertTrue(this.editCommand.awaitingUserResponse());
+        assertTrue(this.editCommand.isAwaitingUserResponse());
     }
 
     @Test
     public void testUserResponseCancel() {
         this.setupMultipleHelloTasksAndExecuteAmbiguousCommand();
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
-                () -> this.editCommand.getUserResponse("cancel"));
+                () -> this.editCommand.processUserResponse("cancel"));
         assertEquals("OK! Not editing anything.", result.getFeedback());
-        assertFalse(this.editCommand.awaitingUserResponse());
+        assertFalse(this.editCommand.isAwaitingUserResponse());
     }
 
     @Test
@@ -478,7 +478,7 @@ public class EditCommandTest {
         this.schedule.clear();
         this.setupMultipleHelloTasksAndExecuteAmbiguousCommand();
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
-                () -> this.editCommand.getUserResponse("1"));
+                () -> this.editCommand.processUserResponse("1"));
         assertEquals("Edited \"hello world\".\nNew task details: CS2103T Tutorial", result.getFeedback());
     }
 
@@ -486,7 +486,7 @@ public class EditCommandTest {
     public void testUserResponseInvalidIndex() {
         this.setupMultipleHelloTasksAndExecuteAmbiguousCommand();
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
-                () -> this.editCommand.getUserResponse("0"));
+                () -> this.editCommand.processUserResponse("0"));
         String expectedResponse = "That's not a valid index. Enter a number between 1 and 2, or \"cancel\" to cancel the current operation:\n"
                 + "1. hello world\n2. say hello";
         assertEquals(expectedResponse, result.getFeedback());
@@ -496,7 +496,7 @@ public class EditCommandTest {
     public void testUserResponseInvalidResponse() {
         this.setupMultipleHelloTasksAndExecuteAmbiguousCommand();
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
-                () -> this.editCommand.getUserResponse("roses are red"));
+                () -> this.editCommand.processUserResponse("roses are red"));
         String expectedResponse = "I don't understand \"roses are red\".\n"
                 + "Enter a number to indicate which task to edit.\n1. hello world\n2. say hello";
         assertEquals(expectedResponse, result.getFeedback());

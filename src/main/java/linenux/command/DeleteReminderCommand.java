@@ -14,7 +14,7 @@ import linenux.util.RemindersListUtil;
  * Handles deletion of reminders from schedule.
  */
 // @@author A0127694U
-public class DeleterCommand extends AbstractCommand {
+public class DeleteReminderCommand extends AbstractCommand {
     private static final String TRIGGER_WORD = "deleter";
     private static final String DESCRIPTION = "Deletes a task reminder from the schedule.";
     private static final String COMMAND_FORMAT = "deleter KEYWORDS";
@@ -27,10 +27,10 @@ public class DeleterCommand extends AbstractCommand {
     private ArrayList<ReminderSearchResult> foundReminders;
 
     /**
-     * Constructs a {@code DeleterCommand}.
+     * Constructs a {@code DeleteReminderCommand}.
      * @param schedule The {@code Schedule} to search and delete {@code Reminder} from.
      */
-    public DeleterCommand(Schedule schedule) {
+    public DeleteReminderCommand(Schedule schedule) {
         this.schedule = schedule;
         this.TRIGGER_WORDS.add(TRIGGER_WORD);
     }
@@ -75,7 +75,7 @@ public class DeleterCommand extends AbstractCommand {
      * @return {@code true} if and only if this {@code Command} is awaiting for user response.
      */
     @Override
-    public boolean awaitingUserResponse() {
+    public boolean isAwaitingUserResponse() {
         return requiresUserResponse;
     }
 
@@ -85,7 +85,7 @@ public class DeleterCommand extends AbstractCommand {
      * @return A {@code CommandResult}, which is the result of processing {@code userInput}.
      */
     @Override
-    public CommandResult getUserResponse(String userInput) {
+    public CommandResult processUserResponse(String userInput) {
         assert this.foundReminders != null;
         assert this.schedule != null;
 
