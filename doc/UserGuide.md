@@ -174,7 +174,7 @@ Adding a task has never been this easy. Just indicate the appropriate fields and
 
 *Format:*
 
-`add TASK_NAME [st/START_TIME] [et/END_TIME] [#/TAG_NAME]...`
+`add TASK [st/START_TIME] [et/END_TIME] [#/TAG]...`
 
 *Examples:*
 
@@ -234,7 +234,7 @@ Also, to remove fields, we will use a dash as shown in the examples below. You c
 
 *Format:*
 
-` edit KEYWORDS [n/TASK_NAME] [st/START_TIME] [et/END_TIME] [#/TAG_NAME]...`
+` edit KEYWORDS [n/TASK] [st/START_TIME] [et/END_TIME] [#/TAG]...`
 
 *Examples:*
 
@@ -266,7 +266,7 @@ Also, to remove fields, we will use a dash as shown in the examples below. You c
 
 *Format:*
 
-`editr KEYWORDS [t/TIME] [n/NOTE...]`
+`editr KEYWORDS [t/TIME] [n/NOTE]`
 
 *Examples:*
 
@@ -286,7 +286,7 @@ Renaming a tag will change all tasks with that tag to the new tag.
 
 *Format:*
 
-`rename TAG_NAME... #/TAG...`
+`rename OLD_TAG #/NEW_TAG`
 
 *Examples:*
 
@@ -303,7 +303,7 @@ Yes! You’ve just completed a task. Since it’s completed, you wouldn’t want
 
 *Format:*
 
-`done KEYWORD...`
+`done KEYWORDS`
 
 *Examples:*
 
@@ -318,7 +318,7 @@ In cases where we accidentally mark an incomplete task as done, we can use the `
 
 *Format:*
 
-`undone KEYWORD...`
+`undone KEYWORDS`
 
 *Examples:*
 
@@ -394,7 +394,7 @@ Also, if you need to see the tasks that you have completed, simply add the `d/DO
 
 *Format:*
 
-`list [KEYWORDS] [st/START_TIME] [et/END_TIME] [#/TAG_NAME] [d/DONE]`
+`list [KEYWORDS] [st/START_TIME] [et/END_TIME] [#/TAG] [d/DONE]`
 
 *Examples:*
 
@@ -466,7 +466,7 @@ The command `list` only provides the general details surrounding a task. To see 
 
 *Format:*
 
-`view KEYWORD...`
+`view KEYWORDS`
 
 *Example:*
 
@@ -584,23 +584,6 @@ You might want to store the schedule file in a separate folder. You can do so by
 > path C:\Users\User\Documents\Modules\Hackers
 ```
 
-#### Exiting Linenux
-
-##### *Exit*
-
-When you are done for the day, to exit the program, you can just type `exit`!
-
-*Format:*
-
-`exit`
-
-*Example:*
-
-```
-* Exits the program.
-> exit
-```
-
 #### Help
 
 ##### *Help*
@@ -619,6 +602,23 @@ We all need a helping hand every once in a while. Lucky for you, we are with you
 
 * Help for add command.
 > help add
+```
+
+#### Exiting Linenux
+
+##### *Exit*
+
+When you are done for the day, to exit the program, you can just type `exit`!
+
+*Format:*
+
+`exit`
+
+*Example:*
+
+```
+* Exits the program.
+> exit
 ```
 
 ## Shortcut Keys
