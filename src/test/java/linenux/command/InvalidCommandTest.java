@@ -171,10 +171,5 @@ public class InvalidCommandTest {
         @Override
         public void setAliases(String triggerWord, Collection<String> aliases) {
         }
-
-        @Override
-        public Collection<String> getScheduleLocations() {
-            return new ArrayList<String>();
-        }
     }
 }

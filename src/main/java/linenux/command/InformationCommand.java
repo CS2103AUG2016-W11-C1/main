@@ -65,12 +65,6 @@ public class InformationCommand extends AbstractCommand {
         builder.append(config.getScheduleFilePath() + "\n");
         builder.append("\n");
 
-        builder.append("Saved Schedule Locations: \n");
-        ArrayList<String> savedScheduleLocations = new ArrayList<String>(config.getScheduleLocations());
-        for (String s : savedScheduleLocations) {
-            builder.append(s + "\n");
-        }
-
         return () -> builder.toString().trim();
     }
 }

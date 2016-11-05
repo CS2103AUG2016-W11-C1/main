@@ -68,7 +68,6 @@ public class InformationCommandTest {
         CommandResult result = this.informationCommand.execute("information");
         String output = "Version: " + VERSION_NO + "\n\nCurrent Working Directory: \n"
                 + Paths.get("").toAbsolutePath().toString() + "\n\nCurrent Schedule Location: \n" + DEFAULT_FILE_PATH
-                + SCHEDULE_FILENAME + "\n\nSaved Schedule Locations: \n" + DEFAULT_FILE_PATH
                 + SCHEDULE_FILENAME;
         assertEquals(output, result.getFeedback());
     }

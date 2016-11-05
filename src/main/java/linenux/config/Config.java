@@ -12,5 +12,4 @@ public interface Config {
     public boolean hasConfigFile();
     public Collection<String> getAliases(String triggerWord);
     public void setAliases(String triggerWord, Collection<String> aliases);
-    public Collection<String> getScheduleLocations();
 }
