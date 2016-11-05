@@ -550,7 +550,7 @@ Ever felt that the command `tomorrow` is too long to type? Or if you have a bett
 * Listing all incomplete tasks and reminders for the next day.
 > tmr
 
-* Original command tomorrow should still work.
+* Original command tomorrow will still work.
 > tomorrow
 ```
 
