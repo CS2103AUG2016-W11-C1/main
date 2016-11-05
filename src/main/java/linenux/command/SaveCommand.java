@@ -1,10 +1,10 @@
 package linenux.command;
 
-import linenux.command.result.CommandResult;
-import linenux.control.ControlUnit;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import linenux.command.result.CommandResult;
+import linenux.control.ControlUnit;
 
 //@@author A0144915A
 public class SaveCommand extends AbstractCommand {
@@ -26,8 +26,8 @@ public class SaveCommand extends AbstractCommand {
             return this.makeInvalidArgumentResult();
         }
 
-        this.controlUnit.setScheduleFilePath(path);
         this.controlUnit.saveSchedule();
+        this.controlUnit.setScheduleFilePath(path);
 
         return makeResult(path);
     }

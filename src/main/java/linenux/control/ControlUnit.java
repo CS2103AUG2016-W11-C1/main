@@ -17,6 +17,7 @@ import linenux.command.EditReminderCommand;
 import linenux.command.ExitCommand;
 import linenux.command.FreeTimeCommand;
 import linenux.command.HelpCommand;
+import linenux.command.InformationCommand;
 import linenux.command.InvalidCommand;
 import linenux.command.ListCommand;
 import linenux.command.LoadCommand;
@@ -84,7 +85,7 @@ public class ControlUnit {
     }
 
     public Config getConfig() {
-        return this.config;
+        return (this.config);
     }
 
     public ObjectProperty<CommandResult> getLastCommandResultProperty() {
@@ -151,6 +152,7 @@ public class ControlUnit {
         this.commandManager.addCommand(new AliasCommand(this.commandManager.getCommandList()));
         this.commandManager.addCommand(new UnaliasCommand(this.commandManager.getCommandList()));
         this.commandManager.addCommand(new ExitCommand());
+        this.commandManager.addCommand(new InformationCommand(this.config));
 
         this.commandManager.setCatchAllCommand(new InvalidCommand(this));
     }

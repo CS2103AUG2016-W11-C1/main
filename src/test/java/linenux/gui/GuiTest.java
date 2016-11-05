@@ -1,15 +1,16 @@
 package linenux.gui;
 
-import linenux.config.JsonConfig;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
 import org.junit.After;
 import org.junit.Before;
 import org.testfx.api.FxToolkit;
 
 import linenux.Main;
+import linenux.config.JsonConfig;
+import linenux.gui.GuiTest.TestMain;
 import linenux.helpers.BetterRobot;
-
-import java.nio.file.Files;
-import java.nio.file.Path;
 
 //@@author A0144915A
 public abstract class GuiTest {
@@ -22,9 +23,10 @@ public abstract class GuiTest {
 
         FxToolkit.registerPrimaryStage();
         FxToolkit.setupApplication(() -> {
+            String version = "v0.0";
             String configPath = tempDir.resolve("config.json").toString();
             String schedulePath = tempDir.resolve("schedule.xml").toString();
-            return new TestMain(configPath, schedulePath);
+            return new TestMain(version, configPath, schedulePath);
         });
         FxToolkit.showStage();
         this.robot = new BetterRobot();
@@ -42,9 +44,9 @@ public abstract class GuiTest {
             launch(args);
         }
 
-        public TestMain(String configFilePath, String scheduleFilePath) {
+        public TestMain(String ver, String configFilePath, String scheduleFilePath) {
             super();
-            this.config = new JsonConfig(configFilePath, scheduleFilePath);
+            this.config = new JsonConfig(ver, configFilePath, scheduleFilePath);
         }
     }
 }

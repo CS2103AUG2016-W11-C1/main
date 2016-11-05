@@ -5,15 +5,15 @@ import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import org.junit.Before;
+import org.junit.Test;
+
+import linenux.command.result.CommandResult;
 import linenux.config.Config;
 import linenux.control.CommandManager;
 import linenux.control.ControlUnit;
 import linenux.model.Schedule;
 import linenux.storage.ScheduleStorage;
-import org.junit.Before;
-import org.junit.Test;
-
-import linenux.command.result.CommandResult;
 
 /**
  * JUnit test for invalid command.
@@ -145,6 +145,11 @@ public class InvalidCommandTest {
 
     private static class MockConfig implements Config {
         @Override
+        public String getVersionNo() {
+            return "fakeVersion";
+        }
+
+        @Override
         public String getScheduleFilePath() {
             return "fakepath";
         }
@@ -165,6 +170,11 @@ public class InvalidCommandTest {
 
         @Override
         public void setAliases(String triggerWord, Collection<String> aliases) {
+        }
+
+        @Override
+        public Collection<String> getScheduleLocations() {
+            return new ArrayList<String>();
         }
     }
 }

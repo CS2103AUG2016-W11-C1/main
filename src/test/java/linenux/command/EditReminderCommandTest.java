@@ -24,7 +24,7 @@ public class EditReminderCommandTest {
 
     //@@author A0140702X
     @Before
-    public void setupeditrCommand() {
+    public void setupEditrCommand() {
         this.schedule = new Schedule();
         this.editReminderCommand = new EditReminderCommand(this.schedule);
     }
