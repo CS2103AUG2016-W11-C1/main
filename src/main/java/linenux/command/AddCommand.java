@@ -10,7 +10,6 @@ import linenux.time.parser.StandardDateWithTimeParser;
 import linenux.time.parser.TodayWithTimeParser;
 import linenux.time.parser.TomorrowWithTimeParser;
 import linenux.util.Either;
-import linenux.util.LogsCenter;
 
 /**
  * Adds a task to the schedule.

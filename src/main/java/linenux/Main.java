@@ -17,7 +17,7 @@ import linenux.view.MainWindowController;
 /**
  * Main program for Linenux.
  */
-public class Main extends Application implements Stoppable {
+public class Main extends Application {
     public static final String APP_NAME = "Linenux";
 
     private static Logger logger = LogsCenter.getLogger(Main.class);

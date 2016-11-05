@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 import linenux.command.Command;
 
+//@@author A0135788M
 /**
  * Stateful class that autocompletes.
  */
-//@@author A0135788M
 public class AutoCompleter {
     private TernarySearchTree tree;
     private ArrayList<Command> commandList;

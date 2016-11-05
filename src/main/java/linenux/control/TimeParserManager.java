@@ -13,7 +13,7 @@ public class TimeParserManager {
 
     //@@author A0135788M
     public TimeParserManager(TimeParser... parsers) {
-        parserList = new ArrayList<TimeParser>();
+        parserList = new ArrayList<>();
         for (TimeParser parser: parsers){
             parserList.add(parser);
         }

@@ -1,7 +1,6 @@
 package linenux.command;
 
 import java.nio.file.Paths;
-import java.util.ArrayList;
 
 import linenux.command.result.CommandResult;
 import linenux.config.Config;

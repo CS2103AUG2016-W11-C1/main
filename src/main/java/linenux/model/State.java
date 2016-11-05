@@ -6,7 +6,6 @@ import java.util.Collections;
 import linenux.command.util.ReminderSearchResult;
 import linenux.util.ArrayListUtil;
 
-//@@author A0135788M
 /**
  * Represents a snapshot in time of a schedule. The State class is immutable.
  */
@@ -49,15 +48,15 @@ import linenux.util.ArrayListUtil;
          return output;
      }
 
+    // @@author A0127694U
      /**
      * Updates the specified task.
      *
-     * @param originalTask
+     * @param originalTasks
      *            The original version of the specified task.
-     * @param newTask
+     * @param newTasks
      *            The edited version of the specified task.
      */
-    // @@author A0127694U
     public State updateTasks(ArrayList<Task> originalTasks, ArrayList<Task> newTasks) {
         State output = new State(this);
         for (int i = 0; i < originalTasks.size(); i++) {
@@ -67,6 +66,7 @@ import linenux.util.ArrayListUtil;
         return output;
     }
 
+    // @@author A0135788M
     /**
      * Delete the specified task.
      *
@@ -74,7 +74,6 @@ import linenux.util.ArrayListUtil;
      *            The task to delete.
      * @return The new State of the schedule.
      */
-    // @@author A0135788M
      public State deleteTask(Task task) {
          int taskIndex = tasks.indexOf(task);
          State output = new State(this);
@@ -82,6 +81,7 @@ import linenux.util.ArrayListUtil;
          return output;
      }
 
+    // @@author A0127694U
     /**
      * Delete the specified reminder.
      *
@@ -89,7 +89,6 @@ import linenux.util.ArrayListUtil;
      *            The reminder to delete.
      * @return The new State of the schedule.
      */
-    // @@author A0127694U
     public State deleteReminder(ReminderSearchResult reminder) {
         assert (reminder.getReminders().size() == 1);
 
@@ -146,16 +145,6 @@ import linenux.util.ArrayListUtil;
         return result;
     }
 
-    public ArrayList<Reminder> searchReminder(String[] keywords, ArrayList<Task> tasks) {
-        ArrayList<Reminder> result = new ArrayList<>();
-
-        for (Task t : tasks) {
-            result.addAll(searchReminder(keywords, t));
-        }
-
-        return result;
-    }
-
     public ArrayList<Reminder> searchReminder(String[] keywords, Task task) {
         ArrayList<String> keywordsList = new ArrayListUtil.ChainableArrayListUtil<>(keywords)
                 .map(String::toLowerCase).value();
@@ -167,14 +156,14 @@ import linenux.util.ArrayListUtil;
         }).value();
     }
 
+    // @@author A0127694U
     /**
      * Performs case-insensitive tag search using keywords.
      *
-     * @param keywords
+     * @param tagName
      *            Search keywords
      * @return List of {@code Task} matching the keywords.
      */
-    // @@author A0127694U
     public ArrayList<Task> searchTag(String tagName) {
         ArrayList<Task> result = this.tasks;
 
@@ -182,33 +171,4 @@ import linenux.util.ArrayListUtil;
 
         return result;
     }
-
-    // @@author A0135788M
-     /**
-     * Performs case-insensitive task search using keywords to search its
-     * reminders.
-     *
-     * @param keywords
-     *            Search keywords
-     * @return List of {@code Task} matching the keywords.
-     */
-     public ArrayList<Task> searchByReminder(String[] keywords) {
-         ArrayList<String> keywordsList = new ArrayListUtil.ChainableArrayListUtil<>(keywords)
-                                                           .map(String::toLowerCase)
-                                                           .value();
-
-         return new ArrayListUtil.ChainableArrayListUtil<>(this.tasks)
-                 .filter(task -> {
-                     ArrayList<Reminder> filteredReminders = new ArrayListUtil.ChainableArrayListUtil<>(task.getReminders())
-                             .filter(reminder -> {
-                                 ArrayList<String> reminderKeywords = new ArrayListUtil.ChainableArrayListUtil<>(reminder.getNote().split("\\s+"))
-                                         .map(String::toLowerCase)
-                                         .value();
-                                 return !Collections.disjoint(keywordsList, reminderKeywords);
-                             })
-                             .value();
-                     return !filteredReminders.isEmpty();
-                 })
-                 .value();
-     }
 }

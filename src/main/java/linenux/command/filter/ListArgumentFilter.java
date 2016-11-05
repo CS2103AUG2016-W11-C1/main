@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.function.Predicate;
 
 import linenux.command.result.CommandResult;
 import linenux.control.TimeParserManager;

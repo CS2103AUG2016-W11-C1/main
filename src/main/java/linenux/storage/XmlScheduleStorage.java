@@ -34,7 +34,7 @@ public class XmlScheduleStorage implements ScheduleStorage {
     public Schedule loadScheduleFromFile() {
         logger.info("Loading schedule from " + this.getFilePath());
 
-        Schedule output = null;
+        Schedule output;
         try {
             JAXBContext context = JAXBContext.newInstance(AdaptedSchedule.class);
             Unmarshaller u = context.createUnmarshaller();

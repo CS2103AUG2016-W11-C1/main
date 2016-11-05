@@ -11,10 +11,6 @@ public class SearchResults {
         return () -> "Cannot find reminders with \"" + keywords + "\".";
     }
 
-    public static CommandResult makeListNotFoundResult(String keywords) {
-        return () -> "Cannot find task or reminder names with \"" + keywords + "\".";
-    }
-
     public static CommandResult makeTagNotFoundResult(String keywords) {
         return () -> "Cannot find tasks with tag \"" + keywords + "\".";
     }
