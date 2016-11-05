@@ -56,7 +56,10 @@ public class LoadCommandTest extends FileCommandsTest {
         String target = this.tempDir.resolve("hello.xml").toString();
         File f = new File(target);
         new FileOutputStream(f).close();
-        f.setReadable(false);
+        boolean updated = f.setReadable(false);
+        if (!updated) { // Windows does not support this.
+            return;
+        }
 
         CommandResult result = this.loadCommand.execute("load hello.xml");
         String expectedFeedback = target + " is not readable.";

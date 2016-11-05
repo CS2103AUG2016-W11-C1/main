@@ -108,7 +108,10 @@ public class SaveCommandTest extends FileCommandsTest {
     @Test
     public void testNonWritableParent() {
         File f = new File(this.tempDir.toString());
-        f.setWritable(false);
+        boolean updated = f.setWritable(false); // Windows does not support this.
+        if (!updated) {
+            return;
+        }
 
         CommandResult result = this.saveCommand.execute("save notWritable.xml");
         String expectedPath = this.tempDir.resolve("notWritable.xml").toString();
