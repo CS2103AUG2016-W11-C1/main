@@ -20,14 +20,14 @@ import linenux.model.Task;
  * JUnit test for deleter command.
  */
 // @@author A0127694U
-public class DeleterCommandTest {
+public class DeleteReminderCommandTest {
     private Schedule schedule;
-    private DeleterCommand deleterCommand;
+    private DeleteReminderCommand deleteReminderCommand;
 
     @Before
     public void setupDeleterCommand() {
         this.schedule = new Schedule();
-        this.deleterCommand = new DeleterCommand(this.schedule);
+        this.deleteReminderCommand = new DeleteReminderCommand(this.schedule);
     }
 
     private void setupMultipleRemindersAndExecuteAmbiguousCommand() {
@@ -38,7 +38,7 @@ public class DeleterCommandTest {
         task2.getReminders().add(new Reminder("wash laundry", LocalDateTime.of(2016, 12, 1, 3, 0)));
         task2.getReminders().add(new Reminder("wash car", LocalDateTime.of(2016, 12, 2, 3, 0)));
         this.schedule.addTask(task2);
-        this.deleterCommand.execute("deleter wash");
+        this.deleteReminderCommand.execute("deleter wash");
     }
 
     /**
@@ -47,9 +47,9 @@ public class DeleterCommandTest {
      */
     @Test
     public void testRespondToDeleterCommand() {
-        assertTrue(this.deleterCommand.respondTo("deleter"));
-        assertTrue(this.deleterCommand.respondTo("deleter    "));
-        assertTrue(this.deleterCommand.respondTo("deleter hello"));
+        assertTrue(this.deleteReminderCommand.respondTo("deleter"));
+        assertTrue(this.deleteReminderCommand.respondTo("deleter    "));
+        assertTrue(this.deleteReminderCommand.respondTo("deleter hello"));
     }
 
     /**
@@ -57,7 +57,7 @@ public class DeleterCommandTest {
      */
     @Test
     public void testCaseInsensitiveRespondToDeleteCommand() {
-        assertTrue(this.deleterCommand.respondTo("dElEteR hello"));
+        assertTrue(this.deleteReminderCommand.respondTo("dElEteR hello"));
     }
 
     /**
@@ -66,7 +66,7 @@ public class DeleterCommandTest {
      */
     @Test
     public void testDoesNotRespondToOtherCommands() {
-        assertFalse(this.deleterCommand.respondTo("walala"));
+        assertFalse(this.deleteReminderCommand.respondTo("walala"));
     }
 
     /**
@@ -74,9 +74,9 @@ public class DeleterCommandTest {
      */
     @Test
     public void testInvalidArguments() {
-        CommandResult result1 = this.deleterCommand.execute("deleter");
-        CommandResult result2 = this.deleterCommand.execute("deleter ");
-        CommandResult result3 = this.deleterCommand.execute("deleter      ");
+        CommandResult result1 = this.deleteReminderCommand.execute("deleter");
+        CommandResult result2 = this.deleteReminderCommand.execute("deleter ");
+        CommandResult result3 = this.deleteReminderCommand.execute("deleter      ");
 
         assertEquals(expectedInvalidArgumentMessage(), result1.getFeedback());
         assertEquals(expectedInvalidArgumentMessage(), result2.getFeedback());
@@ -92,7 +92,7 @@ public class DeleterCommandTest {
         this.schedule.getTaskList().add(new Task("task!"));
 
         CommandResult result = assertNoChange(() -> this.schedule.getReminderList().size(),
-                () -> this.deleterCommand.execute("deleter that nasty reminder"));
+                () -> this.deleteReminderCommand.execute("deleter that nasty reminder"));
         assertEquals("Cannot find reminders with \"that nasty reminder\".", result.getFeedback());
     }
 
@@ -109,7 +109,7 @@ public class DeleterCommandTest {
         task2.getReminders().add(new Reminder("begins", LocalDateTime.of(2016, 12, 3, 2, 0)));
 
         CommandResult result = assertChangeBy(() -> this.schedule.getReminderList().size(), -1,
-                () -> this.deleterCommand.execute("deleter world"));
+                () -> this.deleteReminderCommand.execute("deleter world"));
         assertEquals("Deleted reminder \"world (On 2016-12-01 6.00PM)\" from task \"hello\".", result.getFeedback());
     }
 
@@ -125,14 +125,14 @@ public class DeleterCommandTest {
         task2.getReminders().add(new Reminder("hello again", LocalDateTime.of(2017, 1, 5, 3, 0)));
         this.schedule.addTask(task2);
         CommandResult result = assertNoChange(() -> this.schedule.getReminderList().size(),
-                () -> this.deleterCommand.execute("deleter hello"));
+                () -> this.deleteReminderCommand.execute("deleter hello"));
         assertEquals(
                 "Which one? (1-2, \"cancel\" to cancel the current operation)\nTask: hello world\n1. hello (On 2017-01-01 12.00AM)\nTask: say hello\n2. hello again (On 2017-01-05 3.00AM)",
                 result.getFeedback());
     }
 
     private String expectedInvalidArgumentMessage() {
-        return "Invalid arguments.\n\n" + this.deleterCommand.getCommandFormat() + "\n\n" + Command.CALLOUTS;
+        return "Invalid arguments.\n\n" + this.deleteReminderCommand.getCommandFormat() + "\n\n" + Command.CALLOUTS;
     }
 
     /**
@@ -141,9 +141,9 @@ public class DeleterCommandTest {
      */
     @Test
     public void testAwaitingUserResponse() {
-        assertFalse(this.deleterCommand.isAwaitingUserResponse());
+        assertFalse(this.deleteReminderCommand.isAwaitingUserResponse());
         this.setupMultipleRemindersAndExecuteAmbiguousCommand();
-        assertTrue(this.deleterCommand.isAwaitingUserResponse());
+        assertTrue(this.deleteReminderCommand.isAwaitingUserResponse());
     }
 
     /**
@@ -153,9 +153,9 @@ public class DeleterCommandTest {
     public void testUserResponseCancel() {
         this.setupMultipleRemindersAndExecuteAmbiguousCommand();
         CommandResult result = assertNoChange(() -> this.schedule.getReminderList().size(),
-                () -> this.deleterCommand.processUserResponse("cancel"));
+                () -> this.deleteReminderCommand.processUserResponse("cancel"));
         assertEquals("OK! Not deleting anything.", result.getFeedback());
-        assertFalse(this.deleterCommand.isAwaitingUserResponse());
+        assertFalse(this.deleteReminderCommand.isAwaitingUserResponse());
     }
 
     /**
@@ -165,10 +165,10 @@ public class DeleterCommandTest {
     public void testUserResponseValidIndex() {
         this.setupMultipleRemindersAndExecuteAmbiguousCommand();
         CommandResult result = assertChangeBy(() -> this.schedule.getReminderList().size(), -1,
-                () -> this.deleterCommand.processUserResponse("1"));
+                () -> this.deleteReminderCommand.processUserResponse("1"));
         assertEquals("Deleted reminder \"wash up (On 2016-11-01 5.00PM)\" from task \"hello world\".",
                 result.getFeedback());
-        assertFalse(this.deleterCommand.isAwaitingUserResponse());
+        assertFalse(this.deleteReminderCommand.isAwaitingUserResponse());
     }
 
     /**
@@ -178,11 +178,11 @@ public class DeleterCommandTest {
     public void testUserResponseInvalidIndex() {
         this.setupMultipleRemindersAndExecuteAmbiguousCommand();
         CommandResult result = assertNoChange(() -> this.schedule.getReminderList().size(),
-                () -> this.deleterCommand.processUserResponse("0"));
+                () -> this.deleteReminderCommand.processUserResponse("0"));
         String expectedResponse = "That's not a valid index. Enter a number between 1 and 3, or \"cancel\" to cancel the current operation:\n"
                 + "Task: hello world\n1. wash up (On 2016-11-01 5.00PM)\nTask: hello\n2. wash laundry (On 2016-12-01 3.00AM)\n3. wash car (On 2016-12-02 3.00AM)";
         assertEquals(expectedResponse, result.getFeedback());
-        assertTrue(this.deleterCommand.isAwaitingUserResponse());
+        assertTrue(this.deleteReminderCommand.isAwaitingUserResponse());
     }
 
     /**
@@ -192,10 +192,10 @@ public class DeleterCommandTest {
     public void testUserResponseInvalidResponse() {
         this.setupMultipleRemindersAndExecuteAmbiguousCommand();
         CommandResult result = assertNoChange(() -> this.schedule.getReminderList().size(),
-                () -> this.deleterCommand.processUserResponse("roses are red"));
+                () -> this.deleteReminderCommand.processUserResponse("roses are red"));
         String expectedResponse = "I don't understand \"roses are red\".\n"
                 + "Enter a number to indicate which reminder to delete.\nTask: hello world\n1. wash up (On 2016-11-01 5.00PM)\nTask: hello\n2. wash laundry (On 2016-12-01 3.00AM)\n3. wash car (On 2016-12-02 3.00AM)";
         assertEquals(expectedResponse, result.getFeedback());
-        assertTrue(this.deleterCommand.isAwaitingUserResponse());
+        assertTrue(this.deleteReminderCommand.isAwaitingUserResponse());
     }
 }
