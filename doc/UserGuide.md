@@ -118,9 +118,9 @@ This brings up the list of Linenux commands with their description and format. I
 | Command                 		| Description                               | Format                                                        	 	         |
 |-------------------------------|-------------------------------------------|--------------------------------------------------------------------------------|
 | [`add`](#add) 		  		| Adding a task.	   	     	  		    | `add` TASK_NAME [st/START_TIME] [et/END_TIME] [#/TAG_NAME]...   	 		     |
-| [`remind`](#remind) 	  		| Setting a reminder for a task.  	      	| `remind` KEYWORDS t/TIME n/NOTE...                        	 		         |
+| [`remind`](#remind) 	  		| Setting a reminder for a task.  	      	| `remind` KEYWORDS t/TIME n/NOTES                        	 		             |
 | [`edit`](#edit) 		  		| Editing a task.   	  		            | `edit` KEYWORDS [n/TASK_NAME...] [st/START_TIME] [et/END_TIME] [#/TAG_NAME]... |
-| [`editr`](#editr)       		| Editing a reminder.                       | `editr` KEYWORDS [t/TIME] [n/NOTE...]                      	 	 	         |
+| [`editr`](#editr)       		| Editing a reminder.                       | `editr` KEYWORDS [t/TIME] [n/NOTES]                      	 	 	             |
 | [`rename`](#rename)	  		| Renaming a tag.						    | `rename` TAG_NAME #/TAG_NAME												     |
 | [`done`](#done) 	      		| Marking a task as done.       	  	 	| `done` KEYWORDS										             	         |
 | [`undone`](#undone)     		| Marking a task as undone.                 | `undone` KEYWORDS                                                              |
