@@ -181,14 +181,13 @@ Adding a task has never been this easy. Just indicate the appropriate fields and
 > add watch videos on presidential election #/trump
 
 * Adding a deadline with tags 'household' and 'bills and money'.
-> add pay utility bills et/2016-10-16 5:00PM #/household #/bills and money
+> add pay utility bills et/tomorrow 5.00pm #/household #/bills and money
 
 * Adding an event with tag 'household'.
-> add house warming st/2016-10-16 5:00pm et/2016-10-16 9:00pm #/household
+> add house warming st/tomorrow 7.00pm et/tomorrow 9.00pm #/household
 ```
 
-<img src="images/userGuide/addCommand.png">
-> Figure 2: Adding a task to Linenux
+<img src="images/userGuide/add.png">
 
 ##### *Remind*
 
@@ -202,26 +201,24 @@ Setting reminders is as simple as adding a task. Just specify the appropriate fi
 
 ```
 * Setting a reminder for the event 'house warming' with the note 'buy groceries'.
-> remind house warming t/2016-10-16 07:00am n/buy groceries
+> remind house warming t/tomorrow 7.00am n/buy groceries
 ```
 
-<img src="images/userGuide/remindCommand.png">
-> Figure 3: Adding a reminder to a task
+<img src="images/userGuide/remind.png">
 
 *Did you know?*
 
-Have you wonder why we use the word `KEYWORDS` rather than `TASK_NAME`? This is because the `remind` command actually searches for task names containing those keywords! For example, consider the scenario below :
+Have you wondered why we use the word `KEYWORD` rather than `TASK_NAME`? This is because the `remind` command actually searches for task names containing those keywords! For example, consider the scenario below :
 
 ```
-> add cs2101 assignment et/2016-10-16 11:59pm
-> add cs2103 assignment et/2016-10-18 11:59pm
-> remind assignment n/finish assignment t/2016-10-15 10:00pm
+> add cs2101 assignment et/tomorrow 11.59pm
+> add cs2103 assignment et/tomorrow 11.59pm
+> remind assignment n/finish assignment t/tomorrow 10.00pm
 ```
 
-<img src="images/userGuide/multipleTaskFound.png">
-> Figure 4: Multiple Task Found
+<img src="images/userGuide/multipleResult.png">
 
-In this scenario, since there are multiple task names with the keyword `assignment`, both results are returned and you get to choose, via specifying an index, which task is the reminder for. This mechanism is known as fuzzy searching and it is implemented for all commands with the field `KEYWORD`. How cool is that?
+In this scenario, since there are multiple task names with the keyword `assignment`, both results are returned and you get to choose, via specifying an index, which task is the reminder for. This searching mechanism is implemented for all commands with the field `KEYWORD`. How cool is that?
 
 #### Editing Tasks and Reminders
 
@@ -229,7 +226,7 @@ In this scenario, since there are multiple task names with the keyword `assignme
 
 In a perfect world, everything will go according to plan. Unfortunately, things change all the time and we need to be able to respond accordingly. Thus, to make any changes to your tasks, we have the `edit` command.
 
-It uses the same fuzzy searching mechanism as `remind` and it will update the respective fields of the task to their new values. However, do take note that any new tags you add to a task with replace all existing tags.
+It uses the same searching mechanism as `remind` and it will update the respective fields of the task to their new values. However, do take note that any new tags you add to a task with replace all existing tags.
 
 Also, to remove fields, we will use a dash as shown in the examples below. You can remove all fields except for`n/TASK_NAME`.
 
@@ -241,23 +238,25 @@ Also, to remove fields, we will use a dash as shown in the examples below. You c
 
 ```
 * Adding an event with tags 'hobby' and 'rest day'.
-> add play golf st/2016-10-16 7:00am et/2016-10-16 9:00am #/hobby #/rest day
+> add play golf st/tomorrow 7.00am et/tomorrow 9.00am #/hobby #/rest day
 
 * Changing the name of the event from 'play golf' to 'play chess'.
-> edit play golf n/play chess
+> edit golf n/play chess
 
 * Changing the starting and ending time of the event 'play chess'.
-> edit play chess st/2016-10-16 7:00pm et/2016-10-16 9:00pm
+> edit chess st/tomorrow 7.00pm et/tomorrow 9.00pm
 
 * Replacing both tags 'hobby' and 'rest day' with the tag 'fun'.
-> edit play chess #/fun
+> edit chess #/fun
 
 * Changing 'play chess' from an event to a to-do.
-> edit play chess st/- et/-
+> edit chess st/- et/-
 
 * Removing all tags associated with the to-do 'play chess'.
-> edit play chess #/-
+> edit chess #/-
 ```
+
+<img src="images/userGuide/edit.png">
 
 ##### *Editr*
 
