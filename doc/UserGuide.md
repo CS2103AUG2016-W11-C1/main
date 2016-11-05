@@ -19,7 +19,7 @@
     * [Finding Freetime](#finding-freetime)
     * [Undoing Previous Command](#undoing-previous-command)
     * [Making Aliases for Commands](#making-aliases-for-commands)
-    * [Changing Path for Storage File](#changing-path-for-storage-file)
+    * [Saving and Loading Storage File](#saving-and-loading-storage-file)
     * [Getting Program Information](#getting-program-information)
     * [Seeking Help](#seeking-help)
     * [Exiting Linenux](#exiting-linenux)
@@ -125,18 +125,18 @@ This brings up the list of Linenux commands with their description and format. I
 | [`delete`](#delete) 	  		| Deleting a task. 	                        | `delete` KEYWORD... 										      		      |
 | [`deleter`](#deleter)   		| Deleting a reminder.                      | `deleter` KEYWORD...                                                        |
 | [`clear`](#clear)       		| Clearing a set of tasks.		            | `clear` [#/TAG...]											       		  |
-| [`freetime`](#freetime) 		| Finding a free timeslot.   	  	 	    | `freetime` [st/START_TIME] et/END_TIME 				                      |
 | [`list`](#list) 		  		| Listing tasks and reminders.              | `list` [KEYWORD...] [st/START_TIME] [et/END_TIME] [#/TAG...] [d/DONE] 	  |
 | [`today`](#today)       		| Listing tasks and reminders for today.    | `today` 													        	      |
 | [`tomorrow`](#tomorrow) 		| Listing tasks and reminders for tomorrow. | `tomorrow` 													 		      |
 | [`view`](#view)         		| Viewing details around a task.            | `view` KEYWORD...                                                           |
+| [`freetime`](#freetime) 		| Finding a free timeslot.   	  	 	    | `freetime` [st/START_TIME] et/END_TIME 				                      |
 | [`undo`](#undo) 		  		| Undoing the previous command.          	| `undo` 				   									     		      |
-| [`help`](#help) 		  		| Seeking help.			                    | `help` [COMMMAND_NAME]    									 		      |
 | [`alias`](#alias)       		| Making aliases for the commands.          | `alias` COMMMAND_NAME n/NEW_NAME                               		      |
 | [`unalias`](#unalias)   		| Removing aliases for the commands.        | `unalias` ALIAS                                                             |
 | [`save`](#save)         		| Saving the schedule to another folder.    | `save` NEW_PATH                                                             |
 | [`load`](#load)               | Loading a schedule from another folder.   | `load` PATH                                                                 |
 | [`information`](#information) | Getting information about the program.    | `information`                                                               |
+| [`help`](#help) 		  		| Seeking help.			                    | `help` [COMMMAND_NAME]    									 		      |
 | [`exit`](#exit) 	   	        | Exiting Linenux. 			                | `exit` 			       									     		      |
 
 ## Supported Time Formats
