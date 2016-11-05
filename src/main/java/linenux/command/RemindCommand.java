@@ -41,7 +41,7 @@ public class RemindCommand extends AbstractCommand {
     public RemindCommand(Schedule schedule) {
         this.schedule = schedule;
         this.timeParserManager = new TimeParserManager(new ISODateWithTimeParser(), new StandardDateWithTimeParser(), new TodayWithTimeParser(), new TomorrowWithTimeParser());
-        this.reminderArgumentParser = new ReminderArgumentParser(this.timeParserManager, COMMAND_FORMAT, CALLOUTS);
+        this.reminderArgumentParser = new ReminderArgumentParser(this.timeParserManager);
         this.TRIGGER_WORDS.add(TRIGGER_WORD);
     }
 

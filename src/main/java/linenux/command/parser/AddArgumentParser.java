@@ -1,6 +1,5 @@
 package linenux.command.parser;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import linenux.command.result.CommandResult;
@@ -13,13 +12,11 @@ import linenux.util.Either;
 /**
  * Parser for the argument portion of add command.
  **/
-public class AddArgumentParser {
-    public static String COMMAND_FORMAT;
-    public static String CALLOUTS;
-
-    private TimeParserManager timeParserManager;
+public class AddArgumentParser extends BaseArgumentParser {
     private GenericParser genericParser = new GenericParser();
     private GenericParser.GenericParserResult parseResult;
+    public String commandFormat;
+    public String callouts;
 
     //@@author A0135788M
     /**
@@ -30,8 +27,8 @@ public class AddArgumentParser {
      */
     public AddArgumentParser(TimeParserManager timeParserManager, String commandFormat, String callouts) {
         this.timeParserManager = timeParserManager;
-        AddArgumentParser.COMMAND_FORMAT = commandFormat;
-        AddArgumentParser.CALLOUTS = callouts;
+        this.commandFormat = commandFormat;
+        this.callouts = callouts;
     }
 
     //@@author A0144915A
@@ -147,37 +144,15 @@ public class AddArgumentParser {
         }
     }
 
-    /**
-     * Attempts to parse a date time string.
-     * @param string The {@code String} to parse.
-     * @return An {@code Either}. Its left slot is a {@code LocalDateTime} if {@code string} can be parsed. Otherwise,
-     * its right slot contains a {@code CommandResult} describing the error.
-     */
-    private Either<LocalDateTime, CommandResult> parseDateTime(String string) {
-        if (this.timeParserManager.canParse(string)) {
-            return Either.left(this.timeParserManager.delegateTimeParser(string));
-        } else {
-            return Either.right(makeInvalidDateTimeResult(string));
-        }
-    }
-
     //@@author A0135788M
     /**
      * @return A {@code CommandResult} when the user argument is invalid.
      */
     private CommandResult makeInvalidArgumentResult() {
-        return () -> "Invalid arguments.\n\n" + COMMAND_FORMAT + "\n\n" + CALLOUTS;
+        return () -> "Invalid arguments.\n\n" + commandFormat + "\n\n" + callouts;
     }
 
     //@@author A0144915A
-    /**
-     * @param dateTime A {@code String} given by the user.
-     * @return A {@code CommandResult} describing that {@code dateTime} cannot be parsed.
-     */
-    private CommandResult makeInvalidDateTimeResult(String dateTime) {
-        return () -> "Cannot parse \"" + dateTime + "\".";
-    }
-
     /**
      * @return A {@code CommandResult} describing that a {@code Task} cannot have a start time without an end time.
      */

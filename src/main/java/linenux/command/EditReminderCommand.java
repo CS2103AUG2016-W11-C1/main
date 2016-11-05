@@ -47,7 +47,7 @@ public class EditReminderCommand extends AbstractCommand {
     public EditReminderCommand(Schedule schedule) {
         this.schedule = schedule;
         this.timeParserManager = new TimeParserManager(new ISODateWithTimeParser(), new StandardDateWithTimeParser(), new TodayWithTimeParser(), new TomorrowWithTimeParser());
-        this.editReminderArgumentParser = new EditReminderArgumentParser(this.timeParserManager, COMMAND_FORMAT, CALLOUTS);
+        this.editReminderArgumentParser = new EditReminderArgumentParser(this.timeParserManager);
         this.TRIGGER_WORDS.add(TRIGGER_WORD);
     }
 

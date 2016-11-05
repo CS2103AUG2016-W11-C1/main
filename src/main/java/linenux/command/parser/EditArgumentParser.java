@@ -1,6 +1,5 @@
 package linenux.command.parser;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import linenux.command.result.CommandResult;
@@ -12,12 +11,10 @@ import linenux.util.Either;
 /**
  * Parses new details of task to be edited.
  */
-public class EditArgumentParser {
-    public static String COMMAND_FORMAT;
-    public static String CALLOUTS;
-
-    private TimeParserManager timeParserManager;
+public class EditArgumentParser extends BaseArgumentParser {
     private GenericParser.GenericParserResult parseResult;
+    public String commandFormat;
+    public String callouts;
 
     //@@author A0135788M
     /**
@@ -28,8 +25,8 @@ public class EditArgumentParser {
      */
     public EditArgumentParser(TimeParserManager timeParserManager, String commandFormat, String callouts) {
         this.timeParserManager = timeParserManager;
-        EditArgumentParser.COMMAND_FORMAT = commandFormat;
-        EditArgumentParser.CALLOUTS = callouts;
+        this.commandFormat = commandFormat;
+        this.callouts = callouts;
     }
 
     //@@author A0144915A
@@ -82,7 +79,7 @@ public class EditArgumentParser {
      */
     private Either<Task, CommandResult> updateStartTime(Task task) {
         if (this.parseResult.getArguments("st").size() > 0) {
-            return parseDateTime(this.parseResult.getArguments("st").get(0))
+            return parseCancellableDateTime(this.parseResult.getArguments("st").get(0))
                     .bind(t -> Either.left(task.setStartTime(t)));
         } else {
             return Either.left(task);
@@ -97,7 +94,7 @@ public class EditArgumentParser {
      */
     private Either<Task, CommandResult> updateEndTime(Task task) {
         if (this.parseResult.getArguments("et").size() > 0) {
-            return parseDateTime(this.parseResult.getArguments("et").get(0))
+            return parseCancellableDateTime(this.parseResult.getArguments("et").get(0))
                     .bind(t -> Either.left(task.setEndTime(t)));
         } else {
             return Either.left(task);
@@ -174,22 +171,6 @@ public class EditArgumentParser {
         }
     }
 
-    /**
-     * Attempts to parse a date time string.
-     * @param string The {@code String} to parse.
-     * @return An {@code Either}. Its left slot is a {@code LocalDateTime} if {@code string} can be parsed. Otherwise,
-     * its right slot contains a {@code CommandResult} describing the error.
-     */
-    private Either<LocalDateTime, CommandResult> parseDateTime(String string) {
-        if (this.timeParserManager.canParse(string)) {
-            return Either.left(this.timeParserManager.delegateTimeParser(string));
-        } else if (string.matches("\\s*-\\s*")) {
-            return Either.left(null);
-        } else {
-            return Either.right(makeInvalidDateTimeResult(string));
-        }
-    }
-
     //@@author A0135788M
     /**
      * @return A {@code CommandResult} indicating that there is no instructions for change.
@@ -203,15 +184,7 @@ public class EditArgumentParser {
      * @return A {@code CommandResult} when the user argument is invalid.
      */
     private CommandResult makeInvalidArgumentResult() {
-        return () -> "Invalid arguments.\n\n" + COMMAND_FORMAT + "\n\n" + CALLOUTS;
-    }
-
-    /**
-     * @param dateTime A {@code String} given by the user.
-     * @return A {@code CommandResult} describing that {@code dateTime} cannot be parsed.
-     */
-    private CommandResult makeInvalidDateTimeResult(String dateTime) {
-        return () -> "Cannot parse \"" + dateTime + "\".";
+        return () -> "Invalid arguments.\n\n" + this.commandFormat + "\n\n" + this.callouts;
     }
 
     /**

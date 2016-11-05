@@ -459,6 +459,6 @@ public class AddCommandTest {
 
     //@@author A0135788M
     private String expectedInvalidArgumentMessage() {
-        return "Invalid arguments.\n\n" + AddArgumentParser.COMMAND_FORMAT + "\n\n" + AddArgumentParser.CALLOUTS;
+        return "Invalid arguments.\n\n" + this.addCommand.getCommandFormat() + "\n\n" + Command.CALLOUTS;
     }
 }
