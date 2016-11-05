@@ -14,14 +14,15 @@
     * [Renaming Tags](#renaming-tags)
     * [Marking Tasks as Done](#marking-tasks-as-done)
     * [Deleting Tasks and Reminders](#deleting-tasks-and-reminders)
-    * [Finding Freetime](#finding-freetime)
     * [Listing Tasks and Reminders](#listing-tasks-and-reminders)
     * [Viewing a Task](#viewing-a-task)
-    * [Undo](#undo)
-    * [Alias for Commands](#alias-for-commands)
+    * [Finding Freetime](#finding-freetime)
+    * [Undoing Previous Command](#undoing-previous-command)
+    * [Making Aliases for Commands](#making-aliases-for-commands)
     * [Changing Path for Storage File](#changing-path-for-storage-file)
+    * [Getting Program Information](#getting-program-information)
+    * [Seeking Help](#seeking-help)
     * [Exiting Linenux](#exiting-linenux)
-    * [Help](#help)
 * [Shortcut Keys](#shortcut-keys)
 * [Conclusion](#conclusion)
 
@@ -74,9 +75,9 @@ You worry that you might not have enough cash to buy groceries and decide to wit
 
 `> remind buy groceries n/withdraw money et/today 6.00pm`
 
-*Step 3: Making spelling mistakes*
+*Step 3: Making spelling mistakes.*
 
-Linenux provides a quick way to fix typing mistakes. Type the following line in the command box:
+Linenux provides a quick way to fix typing errors. Type the following line in the command box:
 
 `> addd play the piano`
 
