@@ -56,7 +56,11 @@ public class FreeTimeCommand extends AbstractCommand {
 
         ArrayList<TimeInterval> freetime = getFreeTime(queryInterval.getLeft());
 
-        return makeResult(freetime);
+        if (freetime.isEmpty()) {
+            return this.makeNoFreeTimeResult();
+        } else {
+            return makeResult(freetime);
+        }
     }
 
     @Override
@@ -184,5 +188,9 @@ public class FreeTimeCommand extends AbstractCommand {
             }
             return builder.toString();
         };
+    }
+
+    private CommandResult makeNoFreeTimeResult() {
+        return () -> "You don't have any free time in that period.";
     }
 }
