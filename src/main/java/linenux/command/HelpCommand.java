@@ -12,7 +12,7 @@ import linenux.util.StringsSimilarity;
 public class HelpCommand extends AbstractCommand {
     private static final String TRIGGER_WORD = "help";
     private static final String DESCRIPTION = "Shows this help message.";
-    private static final String COMMAND_FORMAT = "help";
+    private static final String COMMAND_FORMAT = "help [COMMAND_NAME]";
 
     private ArrayList<Command> commands;
 

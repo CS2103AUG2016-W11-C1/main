@@ -1,18 +1,18 @@
 package linenux.command;
 
-import linenux.command.result.CommandResult;
-import linenux.control.ControlUnit;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import linenux.command.result.CommandResult;
+import linenux.control.ControlUnit;
+
 //@@author A0144915A
 public class SaveCommand extends AbstractCommand {
     private static final String TRIGGER_WORD = "save";
     private static final String DESCRIPTION = "Save the schedule into the specified file.";
-    private static final String COMMAND_FORMAT = "save PATH";
+    private static final String COMMAND_FORMAT = "save NEW_PATH";
 
     private ControlUnit controlUnit;
     private Path basePath;

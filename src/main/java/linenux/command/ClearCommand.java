@@ -15,7 +15,7 @@ import linenux.util.ArrayListUtil;
 public class ClearCommand extends AbstractCommand {
     private static final String TRIGGER_WORD = "clear";
     private static final String DESCRIPTION = "Clears the schedule of all done tasks.";
-    private static final String COMMAND_FORMAT = "clear";
+    private static final String COMMAND_FORMAT = "clear [#/TAG]";
 
     private Schedule schedule;
 
