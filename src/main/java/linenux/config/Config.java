@@ -2,9 +2,6 @@ package linenux.config;
 
 import java.util.Collection;
 
-/**
- * Created by yihangho on 11/3/16.
- */
 public interface Config {
     public String getVersionNo();
     public String getScheduleFilePath();

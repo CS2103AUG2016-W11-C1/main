@@ -82,10 +82,6 @@ public class EditReminderArgumentParser {
         return () -> "No changes to be made!";
     }
 
-    private CommandResult makeNoChangeResult() {
-        return () -> "No changes to be made!";
-    }
-
     private CommandResult makeInvalidDateTimeResult(String dateTime) {
         return () -> "Cannot parse \"" + dateTime + "\".";
     }

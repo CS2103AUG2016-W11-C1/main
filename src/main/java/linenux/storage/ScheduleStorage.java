@@ -1,7 +1,5 @@
 package linenux.storage;
 
-import java.nio.file.Paths;
-
 import linenux.model.Schedule;
 
 //@@author A0135788M
@@ -9,9 +7,6 @@ import linenux.model.Schedule;
  * Reads and writes Schedule to the file format.
  */
 public interface ScheduleStorage {
-    public static final String DEFAULT_FILE_PATH = Paths.get(".").toAbsolutePath().toString();
-    public static final String FILENAME = "Schedule.xml";
-
     /**
      * Reads schedule from file.
      */

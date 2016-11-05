@@ -13,7 +13,6 @@ import linenux.time.parser.ISODateWithTimeParser;
 import linenux.time.parser.StandardDateWithTimeParser;
 import linenux.time.parser.TodayWithTimeParser;
 import linenux.time.parser.TomorrowWithTimeParser;
-import linenux.util.ArrayListUtil;
 import linenux.util.Either;
 import linenux.util.RemindersListUtil;
 
@@ -46,7 +45,6 @@ public class ListCommand extends AbstractCommand {
         assert this.schedule != null;
 
         ArrayList<Task> tasks = this.schedule.getTaskList();
-        ArrayList<Task> doneTasks = new ArrayList<>();
         ArrayList<Reminder> reminders = this.schedule.getReminderList();
 
         if (tasks.isEmpty() && reminders.isEmpty()) {
@@ -79,9 +77,7 @@ public class ListCommand extends AbstractCommand {
         ArrayList<Reminder> actualFilterReminders = new ArrayList<Reminder>();
 
         //If users request for done tasks only, we will not show any reminders
-        if (doneOnly) {
-            //does no search for reminders, leaves it as an empty ArrayList
-        } else {
+        if (!doneOnly) {
             Either<ArrayList<Reminder>, CommandResult> filterReminders = this.listArgumentFilter.filterReminders(arguments, reminders);
             if (filterReminders.isRight()) {
                 return filterReminders.getRight();
@@ -91,9 +87,7 @@ public class ListCommand extends AbstractCommand {
         }
 
         //Remove all done tasks if field d/ is not yes amd all
-        if (actualViewDone.equals(VIEW_DONE) || actualViewDone.equals(VIEW_DONE_ONLY)) {
-            //no filtering of done tasks occurs.
-        } else {
+        if (!actualViewDone.equals(VIEW_DONE) && !actualViewDone.equals(VIEW_DONE_ONLY)) {
             actualFilterTasks = this.listArgumentFilter.filterUndoneTasks(actualFilterTasks);
         }
 
