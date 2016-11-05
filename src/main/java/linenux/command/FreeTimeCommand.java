@@ -29,7 +29,6 @@ public class FreeTimeCommand extends AbstractCommand {
 
     private Schedule schedule;
     private TimeParserManager timeParserManager;
-    private Clock clock;
     private FreeTimeArgumentParser argumentParser;
 
     public FreeTimeCommand(Schedule schedule) {
@@ -40,7 +39,6 @@ public class FreeTimeCommand extends AbstractCommand {
         this.schedule = schedule;
         this.timeParserManager = new TimeParserManager(new ISODateWithTimeParser(), new StandardDateWithTimeParser(), new TodayWithTimeParser(), new TomorrowWithTimeParser());
         this.argumentParser = new FreeTimeArgumentParser(this.timeParserManager, clock);
-        this.clock = clock;
         this.TRIGGER_WORDS.add(TRIGGER_WORD);
     }
 
