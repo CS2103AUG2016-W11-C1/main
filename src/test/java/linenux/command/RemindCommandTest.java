@@ -252,7 +252,7 @@ public class RemindCommandTest {
         this.schedule.addTask(new Task("todo 2"));
         CommandResult result = assertNoChange(() -> this.totalNumberOfReminders(),
                 () -> this.remindCommand.execute("remind todo t/2016-01-01 05.00PM"));
-        assertEquals("Which one? (1-2)\n1. Todo\n2. todo 2", result.getFeedback());
+        assertEquals("Which one? (1-2, \"cancel\" to cancel the current operation)\n1. Todo\n2. todo 2", result.getFeedback());
     }
 
     /**
@@ -297,7 +297,7 @@ public class RemindCommandTest {
         this.setupTaskWithSameNameAndExecuteAmbiguousCommand();
         CommandResult result = assertNoChange(() -> getSearchResult("Todo").get(0).getReminders().size(),
                 () -> this.remindCommand.getUserResponse("0"));
-        assertEquals("That's not a valid index. Enter a number between 1 and 2:\n" + "1. Todo\n2. Todo 2",
+        assertEquals("That's not a valid index. Enter a number between 1 and 2, or \"cancel\" to cancel the current operation:\n" + "1. Todo\n2. Todo 2",
                 result.getFeedback());
         assertTrue(this.remindCommand.awaitingUserResponse());
     }

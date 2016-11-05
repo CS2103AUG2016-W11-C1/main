@@ -114,7 +114,7 @@ public class UndoneCommandTest {
         this.schedule.addTask(task1);
         this.schedule.addTask(task2);
         CommandResult result = this.undoneCommand.execute("undone hello");
-        assertEquals("Which one? (1-2)\n1. hello world\n2. say hello", result.getFeedback());
+        assertEquals("Which one? (1-2, \"cancel\" to cancel the current operation)\n1. hello world\n2. say hello", result.getFeedback());
     }
 
     /**
@@ -166,7 +166,7 @@ public class UndoneCommandTest {
         assertFalse(taskList.get(0).isNotDone());
 
         CommandResult result = this.undoneCommand.getUserResponse("0");
-        String expectedResponse = "That's not a valid index. Enter a number between 1 and 2:\n"
+        String expectedResponse = "That's not a valid index. Enter a number between 1 and 2, or \"cancel\" to cancel the current operation:\n"
                 + "1. hello world\n2. say hello from the other side";
         assertEquals(expectedResponse, result.getFeedback());
         taskList = getSearchResult("hello");

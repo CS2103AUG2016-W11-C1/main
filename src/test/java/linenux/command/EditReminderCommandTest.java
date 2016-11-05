@@ -193,7 +193,7 @@ public class EditReminderCommandTest {
         this.setupMultipleHelloRemindersAndExecuteAmbiguousCommand();
         CommandResult result = this.editReminderCommand.getUserResponse("3");
 
-        String expectedResult = "That's not a valid index. Enter a number between 1 and 2:\n" + "Task: hello\n"
+        String expectedResult = "That's not a valid index. Enter a number between 1 and 2, or \"cancel\" to cancel the current operation:\n" + "Task: hello\n"
                 + "1. world (On 2016-01-01 5.00PM)\n" + "2. hello world (On 2017-01-01 5.00PM)";
         assertEquals(expectedResult, result.getFeedback());
     }

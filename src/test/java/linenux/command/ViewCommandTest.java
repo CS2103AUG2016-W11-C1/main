@@ -111,7 +111,7 @@ public class ViewCommandTest {
     @Test
     public void testCommandResultWhenMultipleMatchesFound() {
         CommandResult result = this.setupMultipleHelloTaskAndExecuteAmbiguousCommand();
-        assertEquals("Which one? (1-2)\n1. hello it's me\n2. hello from the other side", result.getFeedback());
+        assertEquals("Which one? (1-2, \"cancel\" to cancel the current operation)\n1. hello it's me\n2. hello from the other side", result.getFeedback());
     }
 
     /**
@@ -153,7 +153,7 @@ public class ViewCommandTest {
     public void testUserResponseInvalidIndex() {
         this.setupMultipleHelloTaskAndExecuteAmbiguousCommand();
         CommandResult result = this.viewCommand.getUserResponse("0");
-        String expectedResponse = "That's not a valid index. Enter a number between 1 and 2:\n" +
+        String expectedResponse = "That's not a valid index. Enter a number between 1 and 2, or \"cancel\" to cancel the current operation:\n" +
                 "1. hello it's me\n2. hello from the other side";
         assertEquals(expectedResponse, result.getFeedback());
         assertTrue(this.viewCommand.awaitingUserResponse());
