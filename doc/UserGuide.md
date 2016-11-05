@@ -115,31 +115,31 @@ This brings up the list of Linenux commands with their description and format. I
 4. *The order of the fields do not matter.*
 5. *The notation `...` means that you can have more than one instance of that field.*
 
-| Command                 		| Description                               | Format                                                        	 	         |
-|-------------------------------|-------------------------------------------|--------------------------------------------------------------------------------|
-| [`add`](#add) 		  		| Adding a task.	   	     	  		    | `add` TASK_NAME [st/START_TIME] [et/END_TIME] [#/TAG]...   	 		         |
-| [`remind`](#remind) 	  		| Setting a reminder for a task.  	      	| `remind` KEYWORDS t/TIME n/NOTE                       	 		             |
-| [`edit`](#edit) 		  		| Editing a task.   	  		            | `edit` KEYWORDS [n/TASK_NAME] [st/START_TIME] [et/END_TIME] [#/TAG]...         |
-| [`editr`](#editr)       		| Editing a reminder.                       | `editr` KEYWORDS [t/TIME] [n/NOTE]                      	 	 	             |
-| [`rename`](#rename)	  		| Renaming a tag.						    | `rename` OLD_TAG #/NEW_TAG											         |
-| [`done`](#done) 	      		| Marking a task as done.       	  	 	| `done` KEYWORDS										             	         |
-| [`undone`](#undone)     		| Marking a task as undone.                 | `undone` KEYWORDS                                                              |
-| [`delete`](#delete) 	  		| Deleting a task. 	                        | `delete` KEYWORDS 										      		         |
-| [`deleter`](#deleter)   		| Deleting a reminder.                      | `deleter` KEYWORDS                                                             |
-| [`clear`](#clear)       		| Clearing a set of tasks.		            | `clear` [#/TAG_NAME]											       		     |
-| [`list`](#list) 		  		| Listing tasks and reminders.              | `list` [KEYWORDS] [st/START_TIME] [et/END_TIME] [#/TAG] [d/DONE] 	             |
-| [`today`](#today)       		| Listing tasks and reminders for today.    | `today` 													        	         |
-| [`tomorrow`](#tomorrow) 		| Listing tasks and reminders for tomorrow. | `tomorrow` 													 		         |
-| [`view`](#view)         		| Viewing details around a task.            | `view` KEYWORDS                                                                |
-| [`freetime`](#freetime) 		| Finding a free timeslot.   	  	 	    | `freetime` [st/START_TIME] et/END_TIME 				                         |
-| [`undo`](#undo) 		  		| Undoing the previous command.          	| `undo` 				   									     		         |
-| [`alias`](#alias)       		| Making aliases for the commands.          | `alias` COMMMAND_NAME NEW_NAME                               		             |
-| [`unalias`](#unalias)   		| Removing aliases for the commands.        | `unalias` ALIAS                                                                |
-| [`save`](#save)         		| Saving the schedule to another folder.    | `save` NEW_PATH                                                                |
-| [`load`](#load)               | Loading a schedule from another folder.   | `load` PATH                                                                    |
-| [`information`](#information) | Getting information about the program.    | `information`                                                                  |
-| [`help`](#help) 		  		| Seeking help.			                    | `help` [COMMMAND_NAME]    									 		         |
-| [`exit`](#exit) 	   	        | Exiting Linenux. 			                | `exit` 			       									     		         |
+| Command                 		| Description                               | Format                                                        	 |
+|-------------------------------|-------------------------------------------|--------------------------------------------------------------------|
+| [`add`](#add) 		  		| Adding a task.	   	     	  		    | `add` TASK [st/START_TIME] [et/END_TIME] [#/TAG]...   	 		 |
+| [`remind`](#remind) 	  		| Setting a reminder for a task.  	      	| `remind` KEYWORDS t/TIME n/NOTE                       	 		 |
+| [`edit`](#edit) 		  		| Editing a task.   	  		            | `edit` KEYWORDS [n/TASK] [st/START_TIME] [et/END_TIME] [#/TAG]...  |
+| [`editr`](#editr)       		| Editing a reminder.                       | `editr` KEYWORDS [t/TIME] [n/NOTE]                      	 	 	 |
+| [`rename`](#rename)	  		| Renaming a tag.						    | `rename` OLD_TAG #/NEW_TAG										 |
+| [`done`](#done) 	      		| Marking a task as done.       	  	 	| `done` KEYWORDS										             |
+| [`undone`](#undone)     		| Marking a task as undone.                 | `undone` KEYWORDS                                                  |
+| [`delete`](#delete) 	  		| Deleting a task. 	                        | `delete` KEYWORDS 										      	 |
+| [`deleter`](#deleter)   		| Deleting a reminder.                      | `deleter` KEYWORDS                                                 |
+| [`clear`](#clear)       		| Clearing a set of tasks.		            | `clear` [#/TAG]											       	 |
+| [`list`](#list) 		  		| Listing tasks and reminders.              | `list` [KEYWORDS] [st/START_TIME] [et/END_TIME] [#/TAG] [d/DONE] 	 |
+| [`today`](#today)       		| Listing tasks and reminders for today.    | `today` 													         |
+| [`tomorrow`](#tomorrow) 		| Listing tasks and reminders for tomorrow. | `tomorrow` 													 	 |
+| [`view`](#view)         		| Viewing details around a task.            | `view` KEYWORDS                                                    |
+| [`freetime`](#freetime) 		| Finding a free timeslot.   	  	 	    | `freetime` [st/START_TIME] et/END_TIME 				             |
+| [`undo`](#undo) 		  		| Undoing the previous command.          	| `undo` 				   									     	 |
+| [`alias`](#alias)       		| Making aliases for the commands.          | `alias` COMMMAND_NAME NEW_NAME                               		 |
+| [`unalias`](#unalias)   		| Removing aliases for the commands.        | `unalias` ALIAS                                                    |
+| [`save`](#save)         		| Saving the schedule to another folder.    | `save` NEW_PATH                                                    |
+| [`load`](#load)               | Loading a schedule from another folder.   | `load` PATH                                                        |
+| [`information`](#information) | Getting information about the program.    | `information`                                                      |
+| [`help`](#help) 		  		| Seeking help.			                    | `help` [COMMMAND_NAME]    									 	 |
+| [`exit`](#exit) 	   	        | Exiting Linenux. 			                | `exit` 			       									     	 |
 
 ## Supported Time Formats
 
