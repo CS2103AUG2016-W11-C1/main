@@ -622,7 +622,7 @@ Provides program information.
 
 ##### *Help*
 
-We all need a helping hand every once in a while. Lucky for you, we are with you every step of the way. If you have forgotten how to use a command, or want to know more about what Linenux can do, just type `help` and we will tell you all that you need to know. You no longer need to refer to this user guide every now and then, or carry a heavy user manual everywhere you go. How convenient is that?
+We all need a helping hand every once in a while. Lucky for you, we are with you every step of the way. If you have forgotten how to use a command, or want to know more about what Linenux can do, just type `help` and we will tell you all that you need to know. Help also displays the current aliases for the command.
 
 *Format:*
 
@@ -634,9 +634,11 @@ We all need a helping hand every once in a while. Lucky for you, we are with you
 * Help for all commands.
 > help
 
-* Help for add command.
-> help add
+* Help for information command.
+> help information
 ```
+
+<img src="images/userGuide/help.png">
 
 #### Exiting Linenux
 
