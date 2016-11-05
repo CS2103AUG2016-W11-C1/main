@@ -60,27 +60,27 @@ public class SaveCommandTest extends FileCommandsTest {
                 "Do you want to overwrite it? (yes/no)";
         assertEquals(expectedResult, result.getFeedback());
         assertEquals("existingPath", this.config.getScheduleFilePath());
-        assertTrue(this.saveCommand.awaitingUserResponse());
+        assertTrue(this.saveCommand.isAwaitingUserResponse());
 
-        result = this.saveCommand.getUserResponse("bla");
+        result = this.saveCommand.processUserResponse("bla");
         expectedResult = "I don't understand that. Do you want to overwrite " + target + "? (yes/no)";
         assertEquals(expectedResult, result.getFeedback());
         assertEquals("existingPath", this.config.getScheduleFilePath());
-        assertTrue(this.saveCommand.awaitingUserResponse());
+        assertTrue(this.saveCommand.isAwaitingUserResponse());
 
-        result = this.saveCommand.getUserResponse("no");
+        result = this.saveCommand.processUserResponse("no");
         expectedResult = "OK! Not overwriting " + target;
         assertEquals(expectedResult, result.getFeedback());
         assertEquals("existingPath", this.config.getScheduleFilePath());
-        assertFalse(this.saveCommand.awaitingUserResponse());
+        assertFalse(this.saveCommand.isAwaitingUserResponse());
 
         this.saveCommand.execute("save hello.xml");
-        assertTrue(this.saveCommand.awaitingUserResponse());
-        result = this.saveCommand.getUserResponse("yes");
+        assertTrue(this.saveCommand.isAwaitingUserResponse());
+        result = this.saveCommand.processUserResponse("yes");
         expectedResult = "Saved to " + target;
         assertEquals(expectedResult, result.getFeedback());
         assertEquals(target, this.config.getScheduleFilePath());
-        assertFalse(this.saveCommand.awaitingUserResponse());
+        assertFalse(this.saveCommand.isAwaitingUserResponse());
     }
 
     @Test
@@ -99,7 +99,7 @@ public class SaveCommandTest extends FileCommandsTest {
         assertEquals(expectedFeedback, result.getFeedback());
         assertEquals("existingPath", this.config.getScheduleFilePath());
 
-        result = this.saveCommand.getUserResponse("yes");
+        result = this.saveCommand.processUserResponse("yes");
         expectedFeedback = "Cannot save to " + target;
         assertEquals(expectedFeedback, result.getFeedback());
         assertEquals("existingPath", this.config.getScheduleFilePath());

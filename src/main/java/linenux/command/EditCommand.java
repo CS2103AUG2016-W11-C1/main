@@ -85,7 +85,7 @@ public class EditCommand extends AbstractCommand {
      * @return {@code true} if and only if this {@code Command} is awaiting for user response.
      */
     @Override
-    public boolean awaitingUserResponse() {
+    public boolean isAwaitingUserResponse() {
         return requiresUserResponse;
     }
 
@@ -95,7 +95,7 @@ public class EditCommand extends AbstractCommand {
      * @return A {@code CommandResult}, which is the result of processing {@code userInput}.
      */
     @Override
-    public CommandResult getUserResponse(String userInput) {
+    public CommandResult processUserResponse(String userInput) {
         assert this.parseResult != null;
         assert this.foundTasks != null;
         assert this.schedule != null;

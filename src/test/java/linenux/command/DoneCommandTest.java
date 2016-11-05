@@ -113,9 +113,9 @@ public class DoneCommandTest {
      */
     @Test
     public void testAwaitingUserResponse() {
-        assertFalse(this.doneCommand.awaitingUserResponse());
+        assertFalse(this.doneCommand.isAwaitingUserResponse());
         this.setupMultipleHelloTasksAndExecuteAmbiguousCommand();
-        assertTrue(this.doneCommand.awaitingUserResponse());
+        assertTrue(this.doneCommand.isAwaitingUserResponse());
     }
 
     /**
@@ -124,9 +124,9 @@ public class DoneCommandTest {
     @Test
     public void testUserResponseCancel() {
         this.setupMultipleHelloTasksAndExecuteAmbiguousCommand();
-        CommandResult result = this.doneCommand.getUserResponse("cancel");
+        CommandResult result = this.doneCommand.processUserResponse("cancel");
         assertEquals("OK! Not marking any task as done.", result.getFeedback());
-        assertFalse(this.doneCommand.awaitingUserResponse());
+        assertFalse(this.doneCommand.isAwaitingUserResponse());
     }
 
     /**
@@ -138,12 +138,12 @@ public class DoneCommandTest {
         ArrayList<Task> taskList = getSearchResult("hello");
         assertFalse(taskList.get(0).isDone());
 
-        CommandResult result = this.doneCommand.getUserResponse("1");
+        CommandResult result = this.doneCommand.processUserResponse("1");
         assertEquals("\"hello world\" is marked as done.", result.getFeedback());
         taskList = getSearchResult("hello");
         assertTrue(taskList.get(0).isDone());
 
-        assertFalse(this.doneCommand.awaitingUserResponse());
+        assertFalse(this.doneCommand.isAwaitingUserResponse());
     }
 
     /**
@@ -155,14 +155,14 @@ public class DoneCommandTest {
         ArrayList<Task> taskList = getSearchResult("hello");
         assertFalse(taskList.get(0).isDone());
 
-        CommandResult result = this.doneCommand.getUserResponse("0");
+        CommandResult result = this.doneCommand.processUserResponse("0");
         String expectedResponse = "That's not a valid index. Enter a number between 1 and 2, or \"cancel\" to cancel the current operation:\n" +
                 "1. hello world\n2. say hello from the other side";
         assertEquals(expectedResponse, result.getFeedback());
         taskList = getSearchResult("hello");
         assertFalse(taskList.get(0).isDone());
 
-        assertTrue(this.doneCommand.awaitingUserResponse());
+        assertTrue(this.doneCommand.isAwaitingUserResponse());
     }
 
     /**
@@ -174,14 +174,14 @@ public class DoneCommandTest {
         ArrayList<Task> taskList = getSearchResult("hello");
         assertFalse(taskList.get(0).isDone());
 
-        CommandResult result = this.doneCommand.getUserResponse("roses are red");
+        CommandResult result = this.doneCommand.processUserResponse("roses are red");
         String expectedResponse = "I don't understand \"roses are red\".\n" +
                 "Enter a number to indicate which task to mark as done.\n1. hello world\n2. say hello from the other side";
         assertEquals(expectedResponse, result.getFeedback());
         taskList = getSearchResult("hello");
         assertFalse(taskList.get(0).isDone());
 
-        assertTrue(this.doneCommand.awaitingUserResponse());
+        assertTrue(this.doneCommand.isAwaitingUserResponse());
     }
 
     //@@author A0144915A

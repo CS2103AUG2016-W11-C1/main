@@ -56,12 +56,12 @@ public class UndoneCommand extends AbstractCommand {
     }
 
     @Override
-    public boolean awaitingUserResponse() {
+    public boolean isAwaitingUserResponse() {
         return requiresUserResponse;
     }
 
     @Override
-    public CommandResult getUserResponse(String userInput) {
+    public CommandResult processUserResponse(String userInput) {
         assert this.foundTasks != null;
         assert this.schedule != null;
 
