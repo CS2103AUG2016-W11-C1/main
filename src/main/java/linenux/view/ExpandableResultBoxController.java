@@ -9,7 +9,6 @@ import linenux.control.ControlUnit;
 import linenux.model.Reminder;
 import linenux.model.Task;
 import linenux.util.ArrayListUtil;
-import linenux.util.RemindersListUtil;
 
 import java.time.Clock;
 import java.time.LocalDateTime;
@@ -141,7 +140,7 @@ public class ExpandableResultBoxController {
                 .sortBy(Reminder::getTimeOfReminder)
                 .value();
 
-        return RemindersListUtil.display(reminders);
+        return ArrayListUtil.display(reminders);
     }
 
     /**

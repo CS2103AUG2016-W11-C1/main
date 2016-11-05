@@ -260,4 +260,22 @@ public class ArrayListUtil {
         output.add(elem);
         return output;
     }
+
+    /**
+     * Display a list of {@code Object}.
+     * @param list The {@code ArrayList} to display.
+     * @return The formatted {@code String}.
+     */
+    public static String display(ArrayList<? extends Object> list) {
+        StringBuilder builder = new StringBuilder();
+
+        for (int i = 0; i < list.size(); i++) {
+            builder.append(i + 1);
+            builder.append(". ");
+            builder.append(list.get(i).toString());
+            builder.append('\n');
+        }
+
+        return builder.toString().trim();
+    }
 }

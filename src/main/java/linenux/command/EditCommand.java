@@ -14,8 +14,8 @@ import linenux.time.parser.ISODateWithTimeParser;
 import linenux.time.parser.StandardDateWithTimeParser;
 import linenux.time.parser.TodayWithTimeParser;
 import linenux.time.parser.TomorrowWithTimeParser;
+import linenux.util.ArrayListUtil;
 import linenux.util.Either;
-import linenux.util.TasksListUtil;
 
 /**
  * Edits a task in the schedule.
@@ -215,7 +215,7 @@ public class EditCommand extends AbstractCommand {
             StringBuilder builder = new StringBuilder();
             builder.append("I don't understand \"" + userInput + "\".\n");
             builder.append("Enter a number to indicate which task to edit.\n");
-            builder.append(TasksListUtil.display(this.foundTasks));
+            builder.append(ArrayListUtil.display(this.foundTasks));
             return builder.toString();
         };
     }

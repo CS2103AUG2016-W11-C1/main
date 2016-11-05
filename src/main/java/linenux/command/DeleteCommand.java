@@ -7,7 +7,7 @@ import linenux.command.result.PromptResults;
 import linenux.command.result.SearchResults;
 import linenux.model.Schedule;
 import linenux.model.Task;
-import linenux.util.TasksListUtil;
+import linenux.util.ArrayListUtil;
 
 /**
  * Deletes a task from the schedule.
@@ -170,7 +170,7 @@ public class DeleteCommand extends AbstractCommand {
             StringBuilder builder = new StringBuilder();
             builder.append("I don't understand \"" + userInput + "\".\n");
             builder.append("Enter a number to indicate which task to delete.\n");
-            builder.append(TasksListUtil.display(this.foundTasks));
+            builder.append(ArrayListUtil.display(this.foundTasks));
             return builder.toString();
         };
     }

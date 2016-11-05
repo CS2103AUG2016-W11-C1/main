@@ -8,8 +8,7 @@ import linenux.command.result.SearchResults;
 import linenux.model.Reminder;
 import linenux.model.Schedule;
 import linenux.model.Task;
-import linenux.util.RemindersListUtil;
-import linenux.util.TasksListUtil;
+import linenux.util.ArrayListUtil;
 
 //@@author A0135788M
 /**
@@ -150,7 +149,7 @@ public class ViewCommand extends AbstractCommand {
         if (reminders.size() == 0) {
             builder.append("You have not set any reminders for this task.");
         } else {
-            builder.append(RemindersListUtil.display(reminders));
+            builder.append(ArrayListUtil.display(reminders));
         }
 
         return () -> builder.toString().trim();
@@ -173,7 +172,7 @@ public class ViewCommand extends AbstractCommand {
             StringBuilder builder = new StringBuilder();
             builder.append("I don't understand \"" + userInput + "\".\n");
             builder.append("Enter a number to indicate which task to view.\n");
-            builder.append(TasksListUtil.display(this.foundTasks));
+            builder.append(ArrayListUtil.display(this.foundTasks));
             return builder.toString();
         };
     }
