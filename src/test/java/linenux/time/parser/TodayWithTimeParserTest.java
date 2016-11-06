@@ -1,21 +1,30 @@
 package linenux.time.parser;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import java.time.Clock;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+
 //@@author A0140702X
 /**
  * JUnit test for TodayWithTime time format.
  */
 public class TodayWithTimeParserTest {
-    TimeParser parser;
+    private TimeParser parser;
 
     @Before
     public void setupParser() {
-        this.parser = new TodayWithTimeParser();
+        Clock clock = Clock.fixed(Instant.parse("2016-01-01T07:24:00.00Z"), ZoneId.of("Asia/Singapore"));
+        TodayWithTimeParser parser = new TodayWithTimeParser();
+        parser.setClock(clock);
+        this.parser = parser;
     }
 
     /**
@@ -61,5 +70,11 @@ public class TodayWithTimeParserTest {
         assertFalse(this.parser.respondTo("2:05PM"));
         assertFalse(this.parser.respondTo("2016-01-01"));
         assertFalse(this.parser.respondTo("2016-01-01 14:00"));
+    }
+
+    @Test
+    public void testParse_validInput_correctOutputReturned() {
+        LocalDateTime output = this.parser.parse("today 5.00PM");
+        assertEquals(LocalDateTime.of(2016, 1, 1, 17, 00), output);
     }
 }
