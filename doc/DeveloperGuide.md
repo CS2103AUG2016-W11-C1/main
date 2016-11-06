@@ -637,3 +637,31 @@ We decided to add reminders as Jim can use it to remind himself about his import
 *Fantastical*
 * Only available on Mac.
 * Not free and the paid version is expensive.
+
+# Types of Tests
+## Unit Tests
+Example: [`TodayWithTimeParserTest`](https://github.com/CS2103AUG2016-W11-C1/main/blob/e850198163971412ddcde7c2da6cbcaf416f77a5/src/test/java/linenux/time/parser/TodayWithTimeParserTest.java)
+
+The `TodayWithTimeParser` class is chosen to be a unit of test. `TodayWithTimeParserTest` is considered unit test as the unit
+does not interact with other parts of the code. This is achieved by injecting mocked dependencies. In this case,
+`TodayWithTimeParser` needs to determine the current time. A mocked `Clock` object is injected and will always return the same
+time.
+
+## Integration Tests
+Example: [`AddCommandTest#execute_validEvent_taskAdded`](https://github.com/CS2103AUG2016-W11-C1/main/blob/e850198163971412ddcde7c2da6cbcaf416f77a5/src/test/java/linenux/command/AddCommandTest.java#L127-L142)
+
+The `execute_validEvent_taskAdded` test ensures that the `AddCommand`, `Schedule`, `State`, and `Task` classes work in tandem
+and produce the expected changes in response to a user input.
+
+Example: [`AutoCompleteTest`](https://github.com/CS2103AUG2016-W11-C1/main/blob/e850198163971412ddcde7c2da6cbcaf416f77a5/src/test/java/linenux/gui/AutoCompleteTest.java)
+
+The `AutoCompleteTest` ensures that the `CommandBoxController`, `AutoCompleter`, and `TernarySearchTree` integrates well. This
+is done by simulating an actual user interaction and ensure that the expected suggestion show up in the command box.
+
+## System/Acceptance Tests
+Example: [`SaveCommandTest`](https://github.com/CS2103AUG2016-W11-C1/main/blob/e850198163971412ddcde7c2da6cbcaf416f77a5/src/test/java/linenux/command/SaveCommandTest.java)
+
+`SaveCommandTest` ensures that the application conform to customer requirements, that is, the ability to save the schedule to
+a specified file. Further, the test suite also explores failing scenarios and recoveries from these failures. For example,
+`SaveCommandTest` covers unlikely but probable cases where a file is not writable and a directory is not writable (applicable
+only to the Unix environment).
