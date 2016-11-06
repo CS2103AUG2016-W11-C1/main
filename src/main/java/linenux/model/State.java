@@ -25,7 +25,12 @@ public class State {
      * @param other The {@code State} to copy from.
      */
     public State(State other) {
-        this.tasks = new ArrayList<>(other.tasks);
+        this.tasks = new ArrayList<>();
+
+        for (Task t : other.tasks) {
+            this.tasks.add(new Task(t.getTaskName(), t.isDone(), t.getStartTime(), t.getEndTime(), t.getTags(),
+                    t.getReminders()));
+        }
     }
 
     /**
@@ -102,9 +107,8 @@ public class State {
         assert (reminder.getReminders().size() == 1);
 
         int taskIndex = this.tasks.indexOf(reminder.getTask());
-        int reminderIndex = this.tasks.get(taskIndex).getReminders().indexOf(reminder.getReminders().get(0));
         State output = new State(this);
-        output.tasks.get(taskIndex).getReminders().remove(reminderIndex);
+        output.tasks.set(taskIndex, output.tasks.get(taskIndex).removeReminder(reminder.getReminders().get(0)));
         return output;
     }
 
