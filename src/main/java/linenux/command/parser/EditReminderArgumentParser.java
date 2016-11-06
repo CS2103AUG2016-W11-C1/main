@@ -1,6 +1,5 @@
 package linenux.command.parser;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import linenux.command.result.CommandResult;
@@ -12,24 +11,15 @@ import linenux.util.Either;
 /**
  * Parses new details of reminder to be edited.
  */
-public class EditReminderArgumentParser {
-    public static String COMMAND_FORMAT;
-    public static String CALLOUTS;
-
-    private TimeParserManager timeParserManager;
+public class EditReminderArgumentParser extends BaseArgumentParser {
     private GenericParser.GenericParserResult parseResult;
-
     //@@author A0140702X
     /**
      * The public constructor for {@code EditReminderArgumentParser}.
      * @param timeParserManager A {@code TimeParserManager} used to parse any date time string.
-     * @param commandFormat A {@code String} representing the format of the command using this class.
-     * @param callouts A {@code String}, which is an extra message added to the command result when argument is invalid.
      */
-    public EditReminderArgumentParser(TimeParserManager timeParserManager, String commandFormat, String callouts) {
+    public EditReminderArgumentParser(TimeParserManager timeParserManager) {
         this.timeParserManager = timeParserManager;
-        EditArgumentParser.COMMAND_FORMAT = commandFormat;
-        EditArgumentParser.CALLOUTS = callouts;
     }
 
     //@@author A0144915A
@@ -59,7 +49,7 @@ public class EditReminderArgumentParser {
      */
     private Either<Reminder, CommandResult> extractTime(Reminder original) {
         if (this.parseResult.getArguments("t").size() > 0) {
-            return parseDateTime(this.parseResult.getArguments("t").get(0))
+            return parseCancellableDateTime(this.parseResult.getArguments("t").get(0))
                     .bind(t -> Either.left(original.setTimeOfReminder(t)));
         } else {
             return Either.left(original);
@@ -102,33 +92,9 @@ public class EditReminderArgumentParser {
 
     //@@author A0140702X
     /**
-     * Attempts to parse a date time string.
-     * @param string The {@code String} to parse.
-     * @return An {@code Either}. Its left slot is a {@code LocalDateTime} if {@code string} can be parsed. Otherwise,
-     * its right slot contains a {@code CommandResult} describing the error.
-     */
-    private Either<LocalDateTime, CommandResult> parseDateTime(String string) {
-        if (this.timeParserManager.canParse(string)) {
-            return Either.left(this.timeParserManager.delegateTimeParser(string));
-        } else if (string.matches("\\s*-\\s*")) {
-            return Either.left(null);
-        } else {
-            return Either.right(makeInvalidDateTimeResult(string));
-        }
-    }
-
-    /**
      * @return A {@code CommandResult} indicating that there is no instructions for change.
      */
     private CommandResult makeNoArgumentsResult() {
         return () -> "No changes to be made!";
-    }
-
-    /**
-     * @param dateTime A {@code String} given by the user.
-     * @return A {@code CommandResult} describing that {@code dateTime} cannot be parsed.
-     */
-    private CommandResult makeInvalidDateTimeResult(String dateTime) {
-        return () -> "Cannot parse \"" + dateTime + "\".";
     }
 }

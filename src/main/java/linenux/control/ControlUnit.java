@@ -10,7 +10,7 @@ import linenux.command.AliasCommand;
 import linenux.command.ClearCommand;
 import linenux.command.Command;
 import linenux.command.DeleteCommand;
-import linenux.command.DeleterCommand;
+import linenux.command.DeleteReminderCommand;
 import linenux.command.DoneCommand;
 import linenux.command.EditCommand;
 import linenux.command.EditReminderCommand;
@@ -185,7 +185,7 @@ public class ControlUnit {
         this.commandManager.addCommand(new UndoneCommand(this.schedule));
         this.commandManager.addCommand(new DeleteCommand(this.schedule));
 
-        this.commandManager.addCommand(new DeleterCommand(this.schedule));
+        this.commandManager.addCommand(new DeleteReminderCommand(this.schedule));
         this.commandManager.addCommand(new ClearCommand(this.schedule));
         this.commandManager.addCommand(new ListCommand(this.schedule));
         this.commandManager.addCommand(new TodayCommand(this.schedule));

@@ -47,7 +47,7 @@ public class EditReminderCommand extends AbstractCommand {
     public EditReminderCommand(Schedule schedule) {
         this.schedule = schedule;
         this.timeParserManager = new TimeParserManager(new ISODateWithTimeParser(), new StandardDateWithTimeParser(), new TodayWithTimeParser(), new TomorrowWithTimeParser());
-        this.editReminderArgumentParser = new EditReminderArgumentParser(this.timeParserManager, COMMAND_FORMAT, CALLOUTS);
+        this.editReminderArgumentParser = new EditReminderArgumentParser(this.timeParserManager);
         this.TRIGGER_WORDS.add(TRIGGER_WORD);
     }
 
@@ -97,7 +97,7 @@ public class EditReminderCommand extends AbstractCommand {
      * @return {@code true} if and only if this {@code Command} is awaiting for user response.
      */
     @Override
-    public boolean awaitingUserResponse() {
+    public boolean isAwaitingUserResponse() {
         return requiresUserResponse;
     }
 
@@ -107,7 +107,7 @@ public class EditReminderCommand extends AbstractCommand {
      * @return A {@code CommandResult}, which is the result of processing {@code userInput}.
      */
     @Override
-    public CommandResult getUserResponse(String userInput) {
+    public CommandResult processUserResponse(String userInput) {
         assert this.parseResult != null;
         assert this.schedule != null;
         assert this.searchResults != null;

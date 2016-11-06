@@ -1,7 +1,5 @@
 package linenux.command.parser;
 
-import java.time.LocalDateTime;
-
 import linenux.command.result.CommandResult;
 import linenux.control.TimeParserManager;
 import linenux.model.Reminder;
@@ -10,24 +8,16 @@ import linenux.util.Either;
 /**
  * A parser used to parse the arguments for the remind command.
  */
-public class ReminderArgumentParser {
-    public static String COMMAND_FORMAT;
-    public static String CALLOUTS;
-
-    private TimeParserManager timeParserManager;
+public class ReminderArgumentParser extends BaseArgumentParser {
     private GenericParser.GenericParserResult parseResult;
 
     //@@author A0135788M
     /**
      * The public constructor for {@code ReminderArgumentParser}.
      * @param timeParserManager A {@code TimeParserManager} used to parse any date time string.
-     * @param commandFormat A {@code String} representing the format of the command using this class.
-     * @param callouts A {@code String}, which is an extra message added to the command result when argument is invalid.
      */
-    public ReminderArgumentParser(TimeParserManager timeParserManager, String commandFormat, String callouts) {
+    public ReminderArgumentParser(TimeParserManager timeParserManager) {
         this.timeParserManager = timeParserManager;
-        ReminderArgumentParser.COMMAND_FORMAT = commandFormat;
-        ReminderArgumentParser.CALLOUTS = callouts;
     }
 
     //@@author A0144915A
@@ -74,28 +64,6 @@ public class ReminderArgumentParser {
         } else {
             return Either.right(makeWithoutNoteResult());
         }
-    }
-
-    /**
-     * Attempts to parse a date time string.
-     * @param string The {@code String} to parse.
-     * @return An {@code Either}. Its left slot is a {@code LocalDateTime} if {@code string} can be parsed. Otherwise,
-     * its right slot contains a {@code CommandResult} describing the error.
-     */
-    private Either<LocalDateTime, CommandResult> parseDateTime(String string) {
-        if (this.timeParserManager.canParse(string)) {
-            return Either.left(this.timeParserManager.delegateTimeParser(string));
-        } else {
-            return Either.right(makeInvalidDateTimeResult(string));
-        }
-    }
-
-    /**
-     * @param dateTime A {@code String} given by the user.
-     * @return A {@code CommandResult} describing that {@code dateTime} cannot be parsed.
-     */
-    private CommandResult makeInvalidDateTimeResult(String dateTime) {
-        return () -> "Cannot parse \"" + dateTime + "\".";
     }
 
     /**

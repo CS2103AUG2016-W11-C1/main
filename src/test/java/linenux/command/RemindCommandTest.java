@@ -260,9 +260,9 @@ public class RemindCommandTest {
      */
     @Test
     public void testAwaitingUserResponse() {
-        assertFalse(this.remindCommand.awaitingUserResponse());
+        assertFalse(this.remindCommand.isAwaitingUserResponse());
         this.setupTaskWithSameNameAndExecuteAmbiguousCommand();
-        assertTrue(this.remindCommand.awaitingUserResponse());
+        assertTrue(this.remindCommand.isAwaitingUserResponse());
     }
 
     /**
@@ -272,9 +272,9 @@ public class RemindCommandTest {
     public void testUserResponseCancel() {
         this.setupTaskWithSameNameAndExecuteAmbiguousCommand();
         CommandResult result = assertNoChange(() -> this.totalNumberOfReminders(),
-                () -> this.remindCommand.getUserResponse("cancel"));
+                () -> this.remindCommand.processUserResponse("cancel"));
         assertEquals("OK! Not adding new reminder.", result.getFeedback());
-        assertFalse(this.remindCommand.awaitingUserResponse());
+        assertFalse(this.remindCommand.isAwaitingUserResponse());
     }
 
     /**
@@ -284,9 +284,9 @@ public class RemindCommandTest {
     public void testUserResponseValidIndex() {
         this.setupTaskWithSameNameAndExecuteAmbiguousCommand();
         CommandResult result = assertChangeBy(() -> this.schedule.getTaskList().get(0).getReminders().size(), 1,
-                () -> this.remindCommand.getUserResponse("1"));
+                () -> this.remindCommand.processUserResponse("1"));
         assertEquals("Added reminder on 2016-01-01 5.00PM for Todo", result.getFeedback());
-        assertFalse(this.remindCommand.awaitingUserResponse());
+        assertFalse(this.remindCommand.isAwaitingUserResponse());
     }
 
     /**
@@ -296,10 +296,10 @@ public class RemindCommandTest {
     public void testUserResponseInvalidIndex() {
         this.setupTaskWithSameNameAndExecuteAmbiguousCommand();
         CommandResult result = assertNoChange(() -> getSearchResult("Todo").get(0).getReminders().size(),
-                () -> this.remindCommand.getUserResponse("0"));
+                () -> this.remindCommand.processUserResponse("0"));
         assertEquals("That's not a valid index. Enter a number between 1 and 2, or \"cancel\" to cancel the current operation:\n" + "1. Todo\n2. Todo 2",
                 result.getFeedback());
-        assertTrue(this.remindCommand.awaitingUserResponse());
+        assertTrue(this.remindCommand.isAwaitingUserResponse());
     }
 
     /**
@@ -309,10 +309,10 @@ public class RemindCommandTest {
     public void testUserResponseInvalidUserResponse() {
         this.setupTaskWithSameNameAndExecuteAmbiguousCommand();
         CommandResult result = assertNoChange(() -> getSearchResult("Todo").get(0).getReminders().size(),
-                () -> this.remindCommand.getUserResponse("One"));
+                () -> this.remindCommand.processUserResponse("One"));
         assertEquals("I don't understand \"One\".\nEnter a number to indicate which task to add reminder to:\n"
                 + "1. Todo\n2. Todo 2", result.getFeedback());
-        assertTrue(this.remindCommand.awaitingUserResponse());
+        assertTrue(this.remindCommand.isAwaitingUserResponse());
     }
 
     //@@author A0144915A

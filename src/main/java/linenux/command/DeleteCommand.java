@@ -7,7 +7,7 @@ import linenux.command.result.PromptResults;
 import linenux.command.result.SearchResults;
 import linenux.model.Schedule;
 import linenux.model.Task;
-import linenux.util.TasksListUtil;
+import linenux.util.ArrayListUtil;
 
 /**
  * Deletes a task from the schedule.
@@ -69,7 +69,7 @@ public class DeleteCommand extends AbstractCommand {
      * @return {@code true} if and only if this {@code Command} is awaiting for user response.
      */
     @Override
-    public boolean awaitingUserResponse() {
+    public boolean isAwaitingUserResponse() {
         return requiresUserResponse;
     }
 
@@ -79,7 +79,7 @@ public class DeleteCommand extends AbstractCommand {
      * @return A {@code CommandResult}, which is the result of processing {@code userInput}.
      */
     @Override
-    public CommandResult getUserResponse(String userInput) {
+    public CommandResult processUserResponse(String userInput) {
         assert this.foundTasks != null;
         assert this.schedule != null;
 
@@ -170,7 +170,7 @@ public class DeleteCommand extends AbstractCommand {
             StringBuilder builder = new StringBuilder();
             builder.append("I don't understand \"" + userInput + "\".\n");
             builder.append("Enter a number to indicate which task to delete.\n");
-            builder.append(TasksListUtil.display(this.foundTasks));
+            builder.append(ArrayListUtil.display(this.foundTasks));
             return builder.toString();
         };
     }

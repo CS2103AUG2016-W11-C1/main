@@ -8,7 +8,6 @@ import linenux.command.result.SearchResults;
 import linenux.model.Schedule;
 import linenux.model.Task;
 import linenux.util.ArrayListUtil;
-import linenux.util.TasksListUtil;
 
 //@@author A0140702X
 public class UndoneCommand extends AbstractCommand {
@@ -56,12 +55,12 @@ public class UndoneCommand extends AbstractCommand {
     }
 
     @Override
-    public boolean awaitingUserResponse() {
+    public boolean isAwaitingUserResponse() {
         return requiresUserResponse;
     }
 
     @Override
-    public CommandResult getUserResponse(String userInput) {
+    public CommandResult processUserResponse(String userInput) {
         assert this.foundTasks != null;
         assert this.schedule != null;
 
@@ -122,7 +121,7 @@ public class UndoneCommand extends AbstractCommand {
             StringBuilder builder = new StringBuilder();
             builder.append("I don't understand \"" + userInput + "\".\n");
             builder.append("Enter a number to indicate which task to mark as undone.\n");
-            builder.append(TasksListUtil.display(this.foundTasks));
+            builder.append(ArrayListUtil.display(this.foundTasks));
             return builder.toString();
         };
     }

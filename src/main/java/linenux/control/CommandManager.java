@@ -19,8 +19,8 @@ public class CommandManager {
      */
     public CommandResult delegateCommand(String userInput) {
         for (Command command : this.commands) {
-            if (command.awaitingUserResponse()) {
-                return command.getUserResponse(userInput);
+            if (command.isAwaitingUserResponse()) {
+                return command.processUserResponse(userInput);
             }
         }
 
