@@ -51,7 +51,7 @@ Linenux is a command-line, task manager application designed for consumers who a
 7. Run `gradle run` in your terminal to ensure that everything is working properly.
 
 #### Coding Standards
-Our coding standards can be found [here](https://oss-generic.github.io/process/codingstandards/coding-standards-java.html)
+Our coding standards can be found [here](https://oss-generic.github.io/process/codingstandards/coding-standards-java.html).
 
 To ensure code readablity on Github, please follow the following instructions to set up your Code Formatter Profile on Eclipse:
 
@@ -90,8 +90,7 @@ Linenux follows the Model-View-Controller (MVC) pattern which is made up of 3 ma
 
 #### Model Component
 
-<img src="images/modelDiagram.png">
-> Figure 4: Model Diagram
+<img src="images/developerGuide/model.png">
 
 ##### *Schedule class*
 

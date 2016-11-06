@@ -64,7 +64,7 @@ public class RemindCommand extends AbstractCommand {
             return makeNoKeywordsResult();
         }
 
-        ArrayList<Task> tasks = this.schedule.search(result.getKeywords());
+        ArrayList<Task> tasks = this.schedule.searchTasks(result.getKeywords());
 
         if (tasks.size() == 0) {
             return SearchResults.makeNotFoundResult(result.getKeywords());

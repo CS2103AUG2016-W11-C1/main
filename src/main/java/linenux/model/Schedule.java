@@ -99,8 +99,8 @@ public class Schedule {
     }
 
     //@@author A0144915A
-    public ArrayList<Task> search(String keywords) {
-        return search(keywords.split("\\s+"));
+    public ArrayList<Task> searchTasks(String keywords) {
+        return searchTasks(keywords.split("\\s+"));
     }
 
     //@@author A0135788M
@@ -111,8 +111,8 @@ public class Schedule {
      *            Search keywords
      * @return List of {@code Task} matching the keywords.
      */
-    public ArrayList<Task> search(String[] keywords) {
-        return getMostRecentState().search(keywords);
+    public ArrayList<Task> searchTasks(String[] keywords) {
+        return getMostRecentState().searchTasks(keywords);
     }
 
     /**
@@ -122,8 +122,8 @@ public class Schedule {
      * @return List of {@code Task} with tags matching the keywords.
      */
     // @@author A0127694U
-    public ArrayList<Task> searchTag(String tagName) {
-        return getMostRecentState().searchTag(tagName);
+    public ArrayList<Task> searchTasksWithTag(String tagName) {
+        return getMostRecentState().searchTasksWithTag(tagName);
     }
 
     /**
@@ -131,8 +131,8 @@ public class Schedule {
      * @param keywords The keywords to search for.
      * @return An {@code ArrayList} of {@code Reminder} matching the keywords.
      */
-    public ArrayList<Reminder> searchReminder(String keywords) {
-        return searchReminder(keywords.split("\\s+"));
+    public ArrayList<Reminder> searchReminders(String keywords) {
+        return searchReminders(keywords.split("\\s+"));
     }
 
     /**
@@ -141,8 +141,8 @@ public class Schedule {
      * @param keywords Search keywords
      * @return List of {@code Reminder} matching the keywords.
      */
-    public ArrayList<Reminder> searchReminder(String[] keywords) {
-        return getMostRecentState().searchReminder(keywords);
+    public ArrayList<Reminder> searchReminders(String[] keywords) {
+        return getMostRecentState().searchReminders(keywords);
     }
 
     // @@author A0140702X

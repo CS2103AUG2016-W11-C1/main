@@ -55,7 +55,7 @@ public class RemindCommandTest {
      */
     private ArrayList<Task> getSearchResult(String keywords) {
         String[] keywordsArr = keywords.split("\\s+");
-        return this.schedule.search(keywordsArr);
+        return this.schedule.searchTasks(keywordsArr);
     }
 
     /**
