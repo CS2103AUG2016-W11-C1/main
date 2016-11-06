@@ -3,7 +3,6 @@ package linenux.util;
 import java.util.ArrayList;
 
 import linenux.command.util.ReminderSearchResult;
-import linenux.model.Reminder;
 
 //@@author A0140702X
 public class RemindersListUtil {
