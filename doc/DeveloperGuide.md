@@ -249,22 +249,69 @@ Gradle is a build automation tool. It can automate build-related tasks such as:
 
 The gradle configuration for this project is defined in the build script `build.gradle`.
 
+Yihang's Addition
+
+Gradle can either be invoked using the `gradle` command if Gradle is installed system-wide or the included wrapper scripts
+`gradlew` and `gradlew.bat`.
+
+This project supports the following Gradle tasks (which can be invoked by running `gradle TASK_NAME`):
+
+- `clean`: Deletes built artifacts. This is helpful when outdated build artifacts is interfering with the latest build
+environment.
+- `build`: Builds the project for distribution. In particular, `build/distributions/linenux.zip` is generated and is suitable
+for public consumption.
+- `test`: Run the test suite. This includes GUI tests in headless mode.
+
+Gradle will automatically download the required dependencies when necessary.
+
+/Yihang's Addition
+
 #### Continuous Integration
 
-Travis CI is a Continuous Integration platform for GitHub projects. It runs the projects' tests automatically whenever new code is pushed to the repo. This ensures that existing functionality and features have not been broken by the changes.
+Travis CI is a Continuous Integration platform for GitHub projects. It runs the projects' tests automatically whenever new code is pushed to the repository. This ensures that existing functionality and features have not been broken by the changes.
 
 Whenever you push code to the repository, the current Travis CI set up will:
 * Runs the `./gradlew test` command
 
+Yihang's Addition
+
+As a developer, there is no extra steps needed to use Travis. Travis will automatically build all pushes to the main
+repository.
+
+Also, email notifications will be sent to the relevant developers when a push breaks or fixes the test suite.
+
+Build statuses are also shown for each pull request for the convenience of the reviewers. Do take note that builds for pull
+request might be outdated (for e.g., when more commits are added to the destination branch). Hence, it is highly recommended
+for the reviewers to perform a rebuild (either via Travis or manually) before accepting a pull request.
+
+/Yihang's Addition
+
 #### Making a Release
 
 Linenux automatically creates a new release by using Travis. To create a new release, you can push a tagged commit to GitHub.
+
+Yihang's Addition (Can probably just replace the original one with this)
+
+GitHub automatically treats Git tags as releases. However, GitHub also allows arbitrary files (for e.g., built binaries) to be included with these release. Travis is configured to attach the built JAR files to these releases.
+
+There is no extra steps needed to make use of this feature - Travis has been configured to pick up tagged commits and attach
+the appropriate files.
+
+/Yihang's Addition
 
 #### Managing Dependecies
 
 A project often depends on third-party libraries. Linenux manages these dependencies using Gradle.
 
 Gradle will automatically download all the required dependencies when any Gradle command is invoked so you do not have to worry about managing these dependencies manually.
+
+Yihang's Addition
+
+Linenux depends on a handful of third-party libraries. These dependencies are declared in `build.gradle` under the aptly-named
+`dependencies` block. Gradle will manage (download, update, or delete) these dependencies as necessary (for example, before a
+build) to ensure that the build environment has the correct set of dependencies.
+
+/Yihang's Addition
 
 <br>
 
@@ -578,3 +625,31 @@ We decided to add reminders as Jim can use it to remind himself about his import
 *Fantastical*
 * Only available on Mac.
 * Not free and the paid version is expensive.
+
+# Types of Tests
+## Unit Tests
+Example: [`TodayWithTimeParserTest`](https://github.com/CS2103AUG2016-W11-C1/main/blob/e850198163971412ddcde7c2da6cbcaf416f77a5/src/test/java/linenux/time/parser/TodayWithTimeParserTest.java)
+
+The `TodayWithTimeParser` class is chosen to be a unit of test. `TodayWithTimeParserTest` is considered unit test as the unit
+does not interact with other parts of the code. This is achieved by injecting mocked dependencies. In this case,
+`TodayWithTimeParser` needs to determine the current time. A mocked `Clock` object is injected and will always return the same
+time.
+
+## Integration Tests
+Example: [`AddCommandTest#execute_validEvent_taskAdded`](https://github.com/CS2103AUG2016-W11-C1/main/blob/e850198163971412ddcde7c2da6cbcaf416f77a5/src/test/java/linenux/command/AddCommandTest.java#L127-L142)
+
+The `execute_validEvent_taskAdded` test ensures that the `AddCommand`, `Schedule`, `State`, and `Task` classes work in tandem
+and produce the expected changes in response to a user input.
+
+Example: [`AutoCompleteTest`](https://github.com/CS2103AUG2016-W11-C1/main/blob/e850198163971412ddcde7c2da6cbcaf416f77a5/src/test/java/linenux/gui/AutoCompleteTest.java)
+
+The `AutoCompleteTest` ensures that the `CommandBoxController`, `AutoCompleter`, and `TernarySearchTree` integrates well. This
+is done by simulating an actual user interaction and ensure that the expected suggestion show up in the command box.
+
+## System/Acceptance Tests
+Example: [`SaveCommandTest`](https://github.com/CS2103AUG2016-W11-C1/main/blob/e850198163971412ddcde7c2da6cbcaf416f77a5/src/test/java/linenux/command/SaveCommandTest.java)
+
+`SaveCommandTest` ensures that the application conform to customer requirements, that is, the ability to save the schedule to
+a specified file. Further, the test suite also explores failing scenarios and recoveries from these failures. For example,
+`SaveCommandTest` covers unlikely but probable cases where a file is not writable and a directory is not writable (applicable
+only to the Unix environment).
