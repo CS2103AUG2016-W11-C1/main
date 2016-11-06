@@ -7,6 +7,7 @@ import java.util.Collections;
 
 import linenux.util.ArrayListUtil;
 
+//@@author A0135788M
 /**
  * Represents a task in the schedule. Only taskName is a required field and
  * cannot be an empty string.
@@ -19,7 +20,6 @@ public class Task {
     private ArrayList<String> tags;
     private ArrayList<Reminder> reminders;
 
-    //@@author A0127694U
     /**
      * Constructor for tagged To-Dos (tasks with no deadlines or predetermined
      * time slots).
@@ -51,7 +51,6 @@ public class Task {
         this(taskName, startTime, endTime, new ArrayList<>());
     }
 
-    //@@author A0135788M
     /**
      * Constructor for To-Dos (tasks with no deadlines or predetermined time
      * slots).
@@ -67,7 +66,6 @@ public class Task {
         this(taskName, false, null, endTime, tags, new ArrayList<>());
     }
 
-    //@@author A0135788M
     /**
      * Constructor for Events (tasks with predetermined time slots).
      */
@@ -87,7 +85,6 @@ public class Task {
         this.reminders = reminders;
     }
 
-    //@@author A0144915A
     /**
      * Copy constructor.
      * @param other The other {@code Task} to copy from.
@@ -118,8 +115,6 @@ public class Task {
         }
     }
 
-    //@@author A0144915A
-
     /**
      * @return {@code true} if and only if this {@code Task} is a todo.
      */
@@ -141,7 +136,6 @@ public class Task {
         return startTime != null && endTime != null;
     }
 
-    //@@author A0135788M
     /**
      * @return {@code true} if and only if this {@code Task} is marked as done.
      */
@@ -155,8 +149,6 @@ public class Task {
     public boolean isNotDone() {
         return isDone == false;
     }
-
-    //@@author A0140702X
 
     /**
      * @param other Another {@code Object} to compare with.
@@ -218,8 +210,6 @@ public class Task {
         return result;
     }
 
-    //@@author A0140702X
-
     /**
      * @param tag The tag to check.
      * @return {@code true} if and only if this {@code Task} has {@code tag}.
@@ -229,10 +219,6 @@ public class Task {
                 .value();
         return lowercaseTags.contains(tag.toLowerCase());
     }
-
-    /* Getters */
-
-    //@@author A0135788M
 
     /**
      * @return The name of the task.
@@ -255,7 +241,6 @@ public class Task {
         return this.endTime;
     }
 
-    //@@author A0127694U
     /**
      * @return An {@code ArrayList} of tags.
      */
@@ -263,7 +248,6 @@ public class Task {
         return this.tags;
     }
 
-    //@@author A0135788M
     /**
      * @return An {@code ArrayList} of {@code Reminder}.
      */
@@ -271,9 +255,6 @@ public class Task {
         return this.reminders;
     }
 
-    /* Setters */
-
-    //@@author A0144915A
     /**
      * @param taskName The new task name.
      * @return A new {@code Task} with the updated name.
@@ -323,7 +304,6 @@ public class Task {
         return output;
     }
 
-    //@@author A0144915A
     /**
      * @param reminder The {@code Reminder} to add.
      * @return A new {@code Task} by adding a new reminder.
@@ -344,7 +324,6 @@ public class Task {
         return output;
     }
 
-    //@@author A0127694U
     /**
      * @param reminder The {@code Reminder} to remove from this {@code Task}.
      * @return A new {@code Task} by removing {@code reminder}.
@@ -376,7 +355,6 @@ public class Task {
         return builder.toString();
     }
 
-    //@author A0144915A
     /**
      * @param keywords The search keywords.
      * @return An {@code ArrayList} of {@code Reminder} matching the keywords.

@@ -1,6 +1,6 @@
 package linenux.command;
 
-import static junit.framework.TestCase.assertEquals;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -15,6 +15,7 @@ import linenux.model.Reminder;
 import linenux.model.Schedule;
 import linenux.model.Task;
 
+//@@author A0140702X
 /**
  * JUnit test for list command.
  */
@@ -22,7 +23,6 @@ public class ListCommandTest {
     private Schedule schedule;
     private ListCommand listCommand;
 
-    //@@author A0144915A
     @Before
     public void setupListCommand() {
         this.schedule = new Schedule();
@@ -33,7 +33,7 @@ public class ListCommandTest {
      * Test list all.
      */
     @Test
-    public void testRespondToListWithoutParams() {
+    public void respondTo_noArgument_trueReturned() {
         assertTrue(this.listCommand.respondTo("list"));
     }
 
@@ -41,7 +41,7 @@ public class ListCommandTest {
      * Test search function in list.
      */
     @Test
-    public void testRespondToListWithKeywords() {
+    public void respondTo_withArgument_trueReturned() {
         assertTrue(this.listCommand.respondTo("list bla"));
     }
 
@@ -49,7 +49,7 @@ public class ListCommandTest {
      * Test that list command is case insenstive.
      */
     @Test
-    public void testCaseInsensitiveRespondToList() {
+    public void respondTo_upperCase_trueReturned() {
         assertTrue(this.listCommand.respondTo("LiSt"));
     }
 
@@ -57,7 +57,7 @@ public class ListCommandTest {
      * Test that list command response to invalid datetime.
      */
     @Test
-    public void testInvalidDateTimeResponse() {
+    public void execute_invalidTime_commandResultReturned() {
         this.schedule.addTask(new Task("todo"));
         CommandResult result = this.listCommand.execute("list st/not time");
         String expectedResult = "Cannot parse \"not time\".";
@@ -69,7 +69,7 @@ public class ListCommandTest {
      * Test that list command response to end time before start time.
      */
     @Test
-    public void testEndTimeBeforeStartTimeResponse() {
+    public void execute_endTimeBeforeStartTime_commandResultReturned() {
         this.schedule.addTask(new Task("todo"));
         CommandResult result = this.listCommand.execute("list st/2016-01-01 5.00PM et/2015-01-01 5.00PM");
         String expectedResult = "End time cannot come before start time.";
@@ -81,7 +81,7 @@ public class ListCommandTest {
      * Test that list command does not respond to other commands.
      */
     @Test
-    public void testDoesNotRespondToOtherCommands() {
+    public void respondTo_otherCommand_falseReturned() {
         assertFalse(this.listCommand.respondTo("whaddup"));
     }
 
@@ -90,7 +90,7 @@ public class ListCommandTest {
      * reminders
      */
     @Test
-    public void testDisplayTheEntireList() {
+    public void execute_noArgument_allTasksReturned() {
         this.schedule.addTask(new Task("First Task"));
         this.schedule.addTask(new Task("Second Task"));
         this.schedule.addTask(new Task("Deadline", null, LocalDateTime.of(2016, 1, 1, 17, 0)));
@@ -107,12 +107,11 @@ public class ListCommandTest {
         assertEquals(expectedFeedback, result.getFeedback());
     }
 
-    //@@author A0140702X
     /**
      * Test that list command displays multiple tasks correctly.
      */
     @Test
-    public void testDisplayTasksMatchingKeywords() {
+    public void execute_withKeywords_tasksMatchingTheKeywordsReturned() {
         Task task1 = new Task("hello");
         Task task2 = new Task("world");
         Task task3 = new Task("hello world");
@@ -125,9 +124,8 @@ public class ListCommandTest {
                 this.schedule.getFilteredTasks().contains(task2) && this.schedule.getFilteredTasks().contains(task3));
     }
 
-    //@@author A0127694U
     @Test
-    public void testNoMatchingKeywords() {
+    public void execute_noMatch_commandResultReturn() {
         this.schedule.addTask(new Task("hi!"));
 
         CommandResult result = this.listCommand.execute("list hello");
@@ -140,7 +138,7 @@ public class ListCommandTest {
      * Test that list command displays multiple reminders correctly.
      */
     @Test
-    public void testDisplayRemindersMatchingKeywords() {
+    public void execute_keywords_remindersMatchingTheKeywordsReturned() {
         Task hello = new Task("hello");
         hello = hello.addReminder(new Reminder("world domination", LocalDateTime.of(2016, 2, 1, 17, 0)));
         hello = hello.addReminder(new Reminder("is my occupation", LocalDateTime.of(2016, 1, 1, 17, 0)));
@@ -160,7 +158,7 @@ public class ListCommandTest {
      * Test that list command displays multiple reminders and tasks correctly.
      */
     @Test
-    public void testDisplayTaskAndRemindersMatchingKeywords() {
+    public void execute_keywords_tasksAndRemindersMatchingTheKeywordsReturned() {
         Task hello = new Task("hello");
         hello = hello.addReminder(new Reminder("world domination", LocalDateTime.of(2016, 2, 1, 17, 0)));
         hello = hello.addReminder(new Reminder("is my occupation", LocalDateTime.of(2016, 1, 1, 17, 0)));
@@ -179,12 +177,11 @@ public class ListCommandTest {
         assertEquals(expectedFeedback, result.getFeedback());
     }
 
-    //@@author A0140702X
     /**
      * Test that list command filters by start time
      */
     @Test
-    public void testFilterTaskAndRemindersByStartTime() {
+    public void execute_startTime_tasksAndRemindersReturned() {
         Task todo = new Task("todo");
         todo = todo.addReminder(new Reminder("todo before", LocalDateTime.of(2015, 1, 1, 17, 0)));
         todo = todo.addReminder(new Reminder("todo after", LocalDateTime.of(2017, 1, 1, 17, 0)));
@@ -229,7 +226,7 @@ public class ListCommandTest {
      * Test that list command filters by end time
      */
     @Test
-    public void testFilterTaskAndRemindersByEndTime() {
+    public void execute_endTime_tasksAndRemindersReturned() {
         Task todo = new Task("todo");
         todo = todo.addReminder(new Reminder("todo before", LocalDateTime.of(2015, 1, 1, 17, 0)));
         todo = todo.addReminder(new Reminder("todo after", LocalDateTime.of(2017, 1, 1, 17, 0)));
@@ -278,7 +275,7 @@ public class ListCommandTest {
      * Test that list command filters by start and end time
      */
     @Test
-    public void testFilterTaskAndRemindersByStartAndEndTime() {
+    public void execute_startTimeAndEndTime_tasksAndRemindersReturned() {
         Task todo = new Task("todo");
         todo = todo.addReminder(new Reminder("todo before", LocalDateTime.of(2015, 1, 1, 17, 0)));
         todo = todo.addReminder(new Reminder("todo after", LocalDateTime.of(2017, 1, 1, 17, 0)));
@@ -335,7 +332,7 @@ public class ListCommandTest {
      * Test that list command filters task by tags
      */
     @Test
-    public void testFilterTaskByTags() {
+    public void execute_tags_tasksReturned() {
         ArrayList<String> tags1 = new ArrayList<>();
         ArrayList<String> tags2 = new ArrayList<>();
         ArrayList<String> tags3 = new ArrayList<>();
@@ -366,7 +363,7 @@ public class ListCommandTest {
      * Test that list command filters by tags does not show reminders
      */
     @Test
-    public void testFilterTaskByTagsDoesNotShowReminders() {
+    public void execute_tags_remindersNotReturned() {
         ArrayList<String> tags1 = new ArrayList<>();
         ArrayList<String> tags2 = new ArrayList<>();
         ArrayList<String> tags3 = new ArrayList<>();
@@ -401,7 +398,7 @@ public class ListCommandTest {
      * Test that list command filters by tags is case-insensitive
      */
     @Test
-    public void testFilterTaskAndRemindersByTagsCaseInsensitive() {
+    public void execute_tags_caseInsensitive() {
         ArrayList<String> tags1 = new ArrayList<>();
         ArrayList<String> tags2 = new ArrayList<>();
         ArrayList<String> tags3 = new ArrayList<>();
@@ -432,7 +429,7 @@ public class ListCommandTest {
      * Test that default list command does not show done task.
      */
     @Test
-    public void testDefaultListNotShowDone() {
+    public void execute_noDoneFlag_doneTasksAreNotShown() {
         Task todo1 = new Task("todo 1");
         Task todo2 = new Task("todo 2");
 
@@ -453,7 +450,7 @@ public class ListCommandTest {
      * Test that list command field d/yes (view done only)
      */
     @Test
-    public void testFilterTaskAndRemindersByDoneOnly() {
+    public void execute_doneFlagYes_doneTasksReturned() {
         Task todo1 = new Task("todo 1");
         Task todo2 = new Task("todo 2");
 
@@ -474,7 +471,7 @@ public class ListCommandTest {
      * Test that list command field d/all (view all including done)
      */
     @Test
-    public void testViewTaskAndRemindersIncludingDone() {
+    public void execute_doneFlagAll_allTasksReturned() {
         Task todo1 = new Task("todo 1");
         Task todo2 = new Task("todo 2");
 
@@ -495,7 +492,7 @@ public class ListCommandTest {
      * Test that list command field d/ when invalid
      */
     @Test
-    public void testInvalidDoneField() {
+    public void execute_doneFlagInvalid_commandResultReturn() {
         Task todo = new Task("todo");
 
         this.schedule.addTask(todo);

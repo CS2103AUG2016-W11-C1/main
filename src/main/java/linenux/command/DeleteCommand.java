@@ -9,6 +9,7 @@ import linenux.model.Schedule;
 import linenux.model.Task;
 import linenux.util.ArrayListUtil;
 
+//@@author A0127694U
 /**
  * Deletes a task from the schedule.
  */
@@ -24,7 +25,6 @@ public class DeleteCommand extends AbstractCommand {
     private boolean requiresUserResponse;
     private ArrayList<Task> foundTasks;
 
-    //@@author A0144915A
     /**
      * Constructs a {@code DeleteCommand}.
      * @param schedule The {@code Schedule} to search and delete {@code Task} from.
@@ -51,7 +51,7 @@ public class DeleteCommand extends AbstractCommand {
             return makeNoKeywordsResult();
         }
 
-        ArrayList<Task> tasks = this.schedule.search(keywords);
+        ArrayList<Task> tasks = this.schedule.searchTasks(keywords);
 
         if (tasks.size() == 0) {
             return SearchResults.makeNotFoundResult(keywords);
@@ -103,7 +103,6 @@ public class DeleteCommand extends AbstractCommand {
         }
     }
 
-    //@@author A0135788M
     /**
      * @return A {@code String} representing the default command word.
      */
@@ -145,7 +144,6 @@ public class DeleteCommand extends AbstractCommand {
         return () -> "Invalid arguments.\n\n" + COMMAND_FORMAT + "\n\n" + CALLOUTS;
     }
 
-    //@@author A0144915A
     /**
      * @param task The deleted {@code Task}.
      * @return A {@code CommandResult} indicating that {@code task} is deleted.

@@ -1,17 +1,19 @@
 package linenux.time.parser;
 
+import java.time.Clock;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-//@@author A0135788M
+//@@author A0140702X
 /**
  * Parse date and time in the form of "today 5.00pm"
  */
 public class TodayWithTimeParser implements TimeParser {
     private static final String TODAY_TIME_PATTERN = "(?i)^today (1[012]|[1-9]).[0-5][0-9](\\s)?(am|pm)";
 
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-M-d h.mma");
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-M-d h.mma");
+    private Clock clock = Clock.systemDefaultZone();
 
     /**
      * Checks if the user input corresponds to the format of the respective
@@ -34,11 +36,14 @@ public class TodayWithTimeParser implements TimeParser {
     public LocalDateTime parse(String input) {
         assert input.matches(TODAY_TIME_PATTERN);
 
-        String todayDate = LocalDate.now().toString();
+        String todayDate = LocalDate.now(this.clock).toString();
         String time = input.split("\\s+")[1];
         String todayDateTime = todayDate + " " + time;
 
         return LocalDateTime.parse(todayDateTime.toUpperCase(), formatter);
     }
 
+    public void setClock(Clock clock) {
+        this.clock = clock;
+    }
 }

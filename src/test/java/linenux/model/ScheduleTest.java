@@ -12,20 +12,20 @@ import org.junit.Test;
 
 import linenux.command.util.ReminderSearchResult;
 
+//@@author A0135788M
 /**
  * JUnit test for schedule.
  */
 public class ScheduleTest {
     private Schedule schedule;
 
-    //@@author A0144915A
     @Before
     public void setupSchedule() {
         this.schedule = new Schedule();
     }
 
     @Test
-    public void testAddTask() {
+    public void addTaskToTaskList() {
         int beforeSize = this.schedule.getTaskList().size();
         this.schedule.addTask(new Task("bla"));
         int afterSize = this.schedule.getTaskList().size();
@@ -33,9 +33,8 @@ public class ScheduleTest {
         assertEquals(beforeSize + 1, afterSize);
     }
 
-    //@@author A0127694U
     @Test
-    public void testClear() {
+    public void clear_taskListNotEmpty_taskListEmpty() {
         Task task1 = new Task("hello");
         Task task2 = new Task("blah");
         this.schedule.addTask(task1);
@@ -48,9 +47,8 @@ public class ScheduleTest {
         assertEquals(originalSize - 2, endSize);
     }
 
-    //@@author A0144915A
     @Test
-    public void testSearch() {
+    public void search_searchByKeywords_expectedTaskReturned() {
         String[] keywords = {"hello", "WoRlD"};
         Task match1 = new Task("Say Hello");
         Task match2 = new Task("Around the world");
@@ -60,14 +58,13 @@ public class ScheduleTest {
         this.schedule.addTask(mismatch);
         this.schedule.addTask(match2);
 
-        ArrayList<Task> tasks = this.schedule.search(keywords);
+        ArrayList<Task> tasks = this.schedule.searchTasks(keywords);
 
         assertEquals(2, tasks.size());
     }
 
-    //@@author A0127694U
     @Test
-    public void testEdit() {
+    public void edit_modifyTask_modifiedTaskMatchesExpected() {
         this.schedule.clear();
         Task originalTask = new Task("hello");
         this.schedule.addTask(originalTask);
@@ -77,9 +74,8 @@ public class ScheduleTest {
         assertEquals(this.schedule.getTaskList().get(0), editedTask);
     }
 
-    //@@author A0144915A
     @Test
-    public void testDelete() {
+    public void delete_taskInTaskList_taskListDoesNotContainDeletedTask() {
         Task task = new Task("bla");
         this.schedule.addTask(task);
         int beforeSize = this.schedule.getTaskList().size();
@@ -90,9 +86,8 @@ public class ScheduleTest {
         assertTrue(this.schedule.getTaskList().indexOf(task) == -1);
     }
 
-    // @@author A0127694U
     @Test
-    public void testDeleteReminder() {
+    public void deleteReminder_taskWithSingleReminder_remindersIsEmpty() {
         this.schedule.clear();
         Task task = new Task("blah");
         Reminder r = new Reminder("reminder", LocalDateTime.of(2016, 1, 1, 1, 0));
@@ -109,9 +104,8 @@ public class ScheduleTest {
         assertEquals(0, this.schedule.getTaskList().get(0).getReminders().size());
     }
 
-    //@@author A0135788M
     @Test
-    public void testMaxStates() {
+    public void states_maxStates_statesDoesNotExceedMax() {
         for (int i = 0; i < Schedule.MAX_STATES; i++) {
             this.schedule.addTask(new Task("task" + Integer.toString(i)));
         }

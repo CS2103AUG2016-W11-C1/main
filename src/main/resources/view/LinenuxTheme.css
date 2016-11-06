@@ -1,4 +1,4 @@
-/* @@author A0135788M */
+/* @@author A0127694U */
 
 .vBox {
 	-fx-background-color: #83bdb8;
@@ -16,7 +16,7 @@
 }
 
 .commandBox {
-    -fx-font-size: 12pt;
+    -fx-font-size: 16pt;
     -fx-font-family: "Consolas";
     -fx-font-weight: bold;
     -fx-text-fill: white;

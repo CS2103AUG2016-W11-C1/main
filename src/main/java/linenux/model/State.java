@@ -6,6 +6,7 @@ import java.util.Collections;
 import linenux.command.util.ReminderSearchResult;
 import linenux.util.ArrayListUtil;
 
+//@@author A0135788M
 /**
  * Represents a snapshot in time of a schedule. The State class is immutable.
  */
@@ -24,7 +25,12 @@ public class State {
      * @param other The {@code State} to copy from.
      */
     public State(State other) {
-        this.tasks = new ArrayList<>(other.tasks);
+        this.tasks = new ArrayList<>();
+
+        for (Task t : other.tasks) {
+            this.tasks.add(new Task(t.getTaskName(), t.isDone(), t.getStartTime(), t.getEndTime(), t.getTags(),
+                    t.getReminders()));
+        }
     }
 
     /**
@@ -59,7 +65,6 @@ public class State {
         return output;
     }
 
-    // @@author A0127694U
     /**
      * Updates the specified task.
      *
@@ -77,7 +82,6 @@ public class State {
         return output;
     }
 
-    // @@author A0135788M
     /**
      * Delete the specified task.
      *
@@ -92,7 +96,6 @@ public class State {
         return output;
     }
 
-    // @@author A0127694U
     /**
      * Delete the specified reminder.
      *
@@ -104,9 +107,8 @@ public class State {
         assert (reminder.getReminders().size() == 1);
 
         int taskIndex = this.tasks.indexOf(reminder.getTask());
-        int reminderIndex = this.tasks.get(taskIndex).getReminders().indexOf(reminder.getReminders().get(0));
         State output = new State(this);
-        output.tasks.get(taskIndex).getReminders().remove(reminderIndex);
+        output.tasks.set(taskIndex, output.tasks.get(taskIndex).removeReminder(reminder.getReminders().get(0)));
         return output;
     }
 
@@ -124,7 +126,7 @@ public class State {
      *            Search keywords
      * @return List of {@code Task} matching the keywords.
      */
-    public ArrayList<Task> search(String[] keywords) {
+    public ArrayList<Task> searchTasks(String[] keywords) {
         ArrayList<String> keywordsList = new ArrayListUtil.ChainableArrayListUtil<>(keywords)
                 .map(String::toLowerCase)
                 .value();
@@ -146,7 +148,7 @@ public class State {
      *            Search keywords
      * @return List of {@code Task} matching the keywords.
      */
-    public ArrayList<Reminder> searchReminder(String[] keywords) {
+    public ArrayList<Reminder> searchReminders(String[] keywords) {
         ArrayList<Reminder> result = new ArrayList<>();
 
         for (Task t : this.tasks) {
@@ -173,7 +175,6 @@ public class State {
         }).value();
     }
 
-    // @@author A0127694U
     /**
      * Performs case-insensitive tag search using keywords.
      *
@@ -181,7 +182,7 @@ public class State {
      *            Search keywords
      * @return List of {@code Task} matching the keywords.
      */
-    public ArrayList<Task> searchTag(String tagName) {
+    public ArrayList<Task> searchTasksWithTag(String tagName) {
         ArrayList<Task> result = this.tasks;
 
         result = new ArrayListUtil.ChainableArrayListUtil<>(result).filter(task -> task.hasTag(tagName)).value();

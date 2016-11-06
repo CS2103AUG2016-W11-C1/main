@@ -17,6 +17,7 @@ import linenux.time.parser.TomorrowWithTimeParser;
 import linenux.util.ArrayListUtil;
 import linenux.util.Either;
 
+//@@author A0127694U
 /**
  * Edits a task in the schedule.
  */
@@ -35,7 +36,6 @@ public class EditCommand extends AbstractCommand {
     private TimeParserManager timeParserManager;
     private EditArgumentParser editArgumentParser;
 
-    //@@author A0127694U
     /**
      * Constructs an {@code EditCommand}.
      * @param schedule The {@code Schedule} to search and edit {@code Task} from.
@@ -47,7 +47,6 @@ public class EditCommand extends AbstractCommand {
         this.TRIGGER_WORDS.add(TRIGGER_WORD);
     }
 
-    //@@author A0135788M
     /**
      * Executes the command based on {@code userInput}. This method operates under the assumption that
      * {@code respondTo(userInput)} is {@code true}.
@@ -67,7 +66,7 @@ public class EditCommand extends AbstractCommand {
             return makeNoKeywordsResult();
         }
 
-        ArrayList<Task> tasks = this.schedule.search(result.getKeywords());
+        ArrayList<Task> tasks = this.schedule.searchTasks(result.getKeywords());
 
         if (tasks.size() == 0) {
             return SearchResults.makeNotFoundResult(result.getKeywords());
@@ -80,7 +79,6 @@ public class EditCommand extends AbstractCommand {
         }
     }
 
-    //@@author A0127694U
     /**
      * @return {@code true} if and only if this {@code Command} is awaiting for user response.
      */
@@ -119,7 +117,6 @@ public class EditCommand extends AbstractCommand {
         }
     }
 
-    //@@author A0135788M
     /**
      * @return A {@code String} representing the default command word.
      */
@@ -169,7 +166,6 @@ public class EditCommand extends AbstractCommand {
         }
     }
 
-    //@@author A0135788M
     /**
      * Updates the user response status.
      * @param requiresUserResponse Whether or not this {@code Command} is expecting user response.
@@ -189,7 +185,6 @@ public class EditCommand extends AbstractCommand {
         return () -> "Invalid arguments.\n\n" + COMMAND_FORMAT + "\n\n" + CALLOUTS;
     }
 
-    //@@author A0127694U
     /**
      * @param original The {@code Task} before being edited.
      * @param task The updated {@code Task}.

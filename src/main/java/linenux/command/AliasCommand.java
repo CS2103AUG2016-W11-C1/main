@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 
 import linenux.command.result.CommandResult;
 
+//@@author A0135788M
 /**
  * Creates an alias for commands.
  */
@@ -18,7 +19,6 @@ public class AliasCommand extends AbstractCommand {
 
     private ArrayList<Command> commands;
 
-    //@@author A0144915A
     /**
      * Constructs an {@code AliasCommand}.
      * @param commands An {@code ArrayList} of {@code Command} that can be aliased.
@@ -70,7 +70,6 @@ public class AliasCommand extends AbstractCommand {
         return makeSuccessfulAliasResult(command, alias);
     }
 
-    //@@author A0135788M
     /**
      * @return A {@code String} representing the default command word.
      */
@@ -95,7 +94,6 @@ public class AliasCommand extends AbstractCommand {
         return COMMAND_FORMAT;
     }
 
-    //@@author A0144915A
     /**
      * @param command A {@code String} representing a trigger word for some {@code Command}.
      * @return {@code true} if and only if there is some {@code Command} that respond to {@code command}.
@@ -109,7 +107,6 @@ public class AliasCommand extends AbstractCommand {
         return false;
     }
 
-    //@@author A0135788M
     /**
      * Check if {@code alias} is a valid alias.
      * @param alias A {@code String} representing the alias.
@@ -120,7 +117,6 @@ public class AliasCommand extends AbstractCommand {
         return matcher.matches();
     }
 
-    //@@author A0144915A
     /**
      * Check if {@code alias} can be used as an alias.
      * @param alias A {@code String} representing the alias.
@@ -136,7 +132,6 @@ public class AliasCommand extends AbstractCommand {
         return true;
     }
 
-    //@@author A0135788M
     /**
      * @return A {@code CommandResult} indicating that the input format is invalid.
      */
@@ -159,7 +154,6 @@ public class AliasCommand extends AbstractCommand {
         return () -> "Alias must be alphanumeric.";
     }
 
-    //@@author A0144915A
     /**
      * @param alias A {@code String} representing the alias the that user is trying to create.
      * @return A {@code CommandResult} indicating the {@code alias} is used for some other {@code Command}.
@@ -168,7 +162,6 @@ public class AliasCommand extends AbstractCommand {
         return () -> "\"" + alias + "\" is used for another command.";
     }
 
-    //@@author A0135788M
     /**
      * @param command The {@code Command} that {@code alias} is now pointing to.
      * @param alias A {@code String} representing the alias that the user is creating.

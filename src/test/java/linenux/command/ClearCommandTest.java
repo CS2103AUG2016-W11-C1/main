@@ -1,9 +1,9 @@
 package linenux.command;
 
-import static junit.framework.TestCase.assertFalse;
-import static junit.framework.TestCase.assertTrue;
 import static linenux.helpers.Assert.assertChangeBy;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 
@@ -49,7 +49,7 @@ public class ClearCommandTest {
      * Test that command responds to the correct format.
      */
     @Test
-    public void testRespondToViewWithKeywords() {
+    public void respondTo_inputThatStartsWithClear_trueReturned() {
         assertTrue(this.clearCommand.respondTo("clear #/hashtag"));
     }
 
@@ -57,7 +57,7 @@ public class ClearCommandTest {
      * Test that command is case insensitive.
      */
     @Test
-    public void testCaseInsensitiveRespondToView() {
+    public void respondTo_upperCase_trueReturned() {
         assertTrue(this.clearCommand.respondTo("ClEaR #/hashtag"));
     }
 
@@ -65,7 +65,7 @@ public class ClearCommandTest {
      * Test that command does not respond to other commands.
      */
     @Test
-    public void testDoesNotRespondToOtherCommands() {
+    public void respondTo_otherCommands_falseReturned() {
         assertFalse(this.clearCommand.respondTo("notclear"));
     }
 
@@ -73,7 +73,7 @@ public class ClearCommandTest {
      * Test the result when there are no tasks to clear.
      */
     @Test
-    public void testCommandResultWhenNoTaskToClear() {
+    public void execute_noTasksToClear_commandResultReturned() {
         this.schedule.clear();
         CommandResult result = this.clearCommand.execute("clear");
         assertEquals("There are no done tasks to clear!", result.getFeedback());
@@ -83,21 +83,21 @@ public class ClearCommandTest {
      * Test the result when there are tasks to clear.
      */
     @Test
-    public void testCommandResultWhenWithTaskToClear() {
+    public void execute_hasDoneTasks_doneTasksCleared() {
         assertChangeBy(() -> this.schedule.getTaskList().size(),
             -1,
             () -> this.clearCommand.execute("clear"));
 
         //Ensure that the correct task is cleared
         ArrayList<Task> tasks = this.schedule.getTaskList();
-        assertTrue(!tasks.contains(this.task2));
+        assertFalse(tasks.contains(this.task2));
     }
 
     /**
      * Test that command clears the result with hashtag.
      */
     @Test
-    public void testClearWithHashtag() {
+    public void execute_byHashTag_doneTasksCleared() {
         assertChangeBy(() -> this.schedule.getTaskList().size(), -1, () -> this.clearCommand.execute("clear #/hello"));
 
         // Ensure that the correct task is cleared

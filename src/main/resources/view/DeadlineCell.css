@@ -1,3 +1,4 @@
+/* @@author A0127694U */
 .deadlineCell {
     -fx-background-color: #83bdb8;
 }
@@ -48,5 +49,5 @@
 .deadlineCell .tags {
     -fx-alignment: center-right;
     -fx-opacity: .5;
-    -fx-font-size: 12px;
+    -fx-font-size: 14px;
 }

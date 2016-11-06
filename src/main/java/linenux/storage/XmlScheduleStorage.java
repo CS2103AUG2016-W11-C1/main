@@ -49,10 +49,6 @@ public class XmlScheduleStorage implements ScheduleStorage {
             JAXBContext context = JAXBContext.newInstance(AdaptedSchedule.class);
             Unmarshaller u = context.createUnmarshaller();
 
-            if (!hasScheduleFile()) {
-                createFile();
-            }
-
             AdaptedSchedule aSchedule = (AdaptedSchedule) u.unmarshal(this.getFilePath().toFile());
             output = aSchedule.convertToModel();
         } catch (Exception e) {

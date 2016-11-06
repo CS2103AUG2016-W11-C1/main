@@ -1,9 +1,11 @@
+/* @@author A0135788M */
 .expandable-result-box {
     -fx-border-color: transparent transparent #80deea transparent;
     -fx-border-width: 3px;
 }
 
 .expandable-result-box .result {
+    -fx-font-size: 16pt;
     -fx-text-fill: white;
     -fx-background-color: #83bdb8;
     -fx-border-color: #80deea transparent transparent transparent;

@@ -26,9 +26,7 @@ public class SaveCommandTest extends FileCommandsTest {
     }
 
     @Test
-    public void testWritableNewFileByAbsolutePath() throws Exception {
-        // Save to a writable, but non-existent file by absolute path.
-        // Config and storage should be updated.
+    public void execute_writableAbsolutePath_scheduleSaved() throws Exception {
         Path anotherTempDir = Files.createTempDirectory("tmp").toAbsolutePath();
         Path targetPath = anotherTempDir.resolve("schedule.xml");
         String target = targetPath.toString();
@@ -40,9 +38,7 @@ public class SaveCommandTest extends FileCommandsTest {
     }
 
     @Test
-    public void testWritableNewFileByRelativePath() {
-        // Save to a writable, but non-existent file by relative path.
-        // Config and storage should be updated with the absolute path.
+    public void execute_writableRelativePath_scheduleSaved() {
         CommandResult result = this.saveCommand.execute("save hello.xml");
         String expectedPath = this.tempDir.resolve("hello.xml").toString();
         String expectedResult = "Saved to " + expectedPath;
@@ -51,9 +47,7 @@ public class SaveCommandTest extends FileCommandsTest {
     }
 
     @Test
-    public void testWritableExistingFile() throws Exception {
-        // Save to a writable, but existing file.
-        // Should prompt the user.
+    public void execute_existingFile() throws Exception {
         String target = this.tempDir.resolve("hello.xml").toString();
         new FileOutputStream(target).close();
         CommandResult result = this.saveCommand.execute("save hello.xml");
@@ -85,10 +79,7 @@ public class SaveCommandTest extends FileCommandsTest {
     }
 
     @Test
-    public void testNonWritableFile() throws Exception {
-        // Save to a non-writable file.
-        // Should return the correct command result.
-        // Config and storage should not be updated.
+    public void execute_nonWritableFile_commandResultReturn() throws Exception {
         String target = this.tempDir.resolve("notWritable.xml").toString();
         File f = new File(target);
         new FileOutputStream(f).close();
@@ -107,7 +98,7 @@ public class SaveCommandTest extends FileCommandsTest {
     }
 
     @Test
-    public void testNonWritableParent() {
+    public void execute_parentIsNotWritable_commandResultReturned() {
         File f = new File(this.tempDir.toString());
         boolean updated = f.setWritable(false); // Windows does not support this.
         if (!updated) {
@@ -122,7 +113,7 @@ public class SaveCommandTest extends FileCommandsTest {
     }
 
     @Test
-    public void testNonExistentParentFolder() {
+    public void execute_parentDirectoryNonExistent_missingDirectoryCreated() {
         CommandResult result = this.saveCommand.execute("save subdir/schedule.xml");
 
         Path parent = this.tempDir.resolve("subdir");
@@ -142,7 +133,7 @@ public class SaveCommandTest extends FileCommandsTest {
     }
 
     @Test
-    public void testInvalidArgument() {
+    public void execute_invalidArgument_commandResultReturned() {
         CommandResult result = this.saveCommand.execute("save");
         String expectedFeedback = "Invalid arguments.\n\n" +
                 "save NEW_PATH\n\n" +

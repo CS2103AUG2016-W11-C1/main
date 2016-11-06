@@ -5,13 +5,13 @@ import linenux.control.TimeParserManager;
 import linenux.model.Reminder;
 import linenux.util.Either;
 
+//@@author A0140702X
 /**
  * A parser used to parse the arguments for the remind command.
  */
 public class ReminderArgumentParser extends BaseArgumentParser {
     private GenericParser.GenericParserResult parseResult;
 
-    //@@author A0135788M
     /**
      * The public constructor for {@code ReminderArgumentParser}.
      * @param timeParserManager A {@code TimeParserManager} used to parse any date time string.
@@ -20,7 +20,6 @@ public class ReminderArgumentParser extends BaseArgumentParser {
         this.timeParserManager = timeParserManager;
     }
 
-    //@@author A0144915A
     /**
      * Attempts to parse an argument given by the user.
      * @param result A {@code GenericParserResult}, which is the output of {@code GenericParser}.

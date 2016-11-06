@@ -13,15 +13,14 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
-import linenux.command.parser.AddArgumentParser;
 import linenux.command.result.CommandResult;
 import linenux.model.Schedule;
 import linenux.model.Task;
 
+//@@author A0144915A
 /**
  * JUnit test for add command.
  */
-//@@author A0144915A
 public class AddCommandTest {
     private Schedule schedule;
     private AddCommand addCommand;
@@ -32,13 +31,12 @@ public class AddCommandTest {
         this.addCommand = new AddCommand(this.schedule);
     }
 
-    //@@author A0127694U
     /**
      * Test that respondTo detects various versions of the commands. It should return true even if
      * the format of the arguments are invalid.
      */
     @Test
-    public void testRespondToAddTaskCommand() {
+    public void respondTo_inputStartingWithAdd_trueReturned() {
         assertTrue(this.addCommand.respondTo("add"));
         assertTrue(this.addCommand.respondTo("add #/"));
         assertTrue(this.addCommand.respondTo("add #/category"));
@@ -72,12 +70,11 @@ public class AddCommandTest {
         assertTrue(this.addCommand.respondTo("add CS2103T Tutorial st2016-01-01 et2016-01-01 #category #tag"));
     }
 
-    //@@author A0144915A
     /**
      * Test that respondTo is case-insensitive.
      */
     @Test
-    public void testCaseInsensitiveAddTaskCommand() {
+    public void respondTo_upperCase_trueReturned() {
         assertTrue(this.addCommand.respondTo("AdD CS2103T Tutorial"));
     }
 
@@ -85,7 +82,7 @@ public class AddCommandTest {
      * Test that respondTo will return false for commands not related to add tasks.
      */
     @Test
-    public void testNotRespondToOtherCommands() {
+    public void respondTo_otherCommands_falseReturned() {
         assertFalse(this.addCommand.respondTo("halp"));
     }
 
@@ -93,7 +90,7 @@ public class AddCommandTest {
      * Test that executing the add task command will correctly add new to-do to the schedule.
      */
     @Test
-    public void testExecuteAddTodo() {
+    public void execute_validTodo_taskAdded() {
         assertChangeBy(() -> this.schedule.getTaskList().size(),
                 1,
                 () -> this.addCommand.execute("add CS2103T Tutorial"));
@@ -114,7 +111,7 @@ public class AddCommandTest {
      * Test that executing the add task command will correctly add new deadline to the schedule.
      */
     @Test
-    public void testExecuteAddDeadline() {
+    public void execute_validDeadline_taskAdded() {
         assertChangeBy(() -> this.schedule.getTaskList().size(),
                 1,
                 () -> this.addCommand.execute("add CS2103T Tutorial et/2016-01-01 5.00PM"));
@@ -131,7 +128,7 @@ public class AddCommandTest {
      * Test that executing the add task command will correctly add new event to the schedule.
      */
     @Test
-    public void testExecuteAddEvent() {
+    public void execute_validEvent_taskAdded() {
         assertChangeBy(() -> this.schedule.getTaskList().size(),
                 1,
                 () -> this.addCommand.execute("add CS2103T Tutorial st/2016-01-01 5.00PM et/2016-01-02 5.00PM"));
@@ -144,13 +141,12 @@ public class AddCommandTest {
         assertEquals(LocalDateTime.of(2016, 1, 2, 17, 0), addedTask.getEndTime());
     }
 
-    //@@author A0127694U
     /**
      * Test that executing the add task command will correctly add a tagged Todo
      * with a single tag to schedule.
      */
     @Test
-    public void testExecuteAddTaskSingleTag() {
+    public void execute_validTodoWithTag_taskAdded() {
         this.schedule.clear();
         assertChangeBy(() -> this.schedule.getTaskList().size(), 1,
                 () -> this.addCommand.execute("add CS2103T Tutorial #/tag1 tag2"));
@@ -168,7 +164,7 @@ public class AddCommandTest {
      * with multiple tags to schedule.
      */
     @Test
-    public void testExecuteAddTaskMultipleTag() {
+    public void execute_validTodoWithMultipleTags_taskAdded() {
         this.schedule.clear();
         assertChangeBy(() -> this.schedule.getTaskList().size(), 1,
                 () -> this.addCommand.execute("add CS2103T Tutorial #/tag1 tag2 #/tag3"));
@@ -187,7 +183,7 @@ public class AddCommandTest {
      *
      */
     @Test
-    public void testExecuteAddTaskRepeatedTag() {
+    public void execute_validTodoWithRepeatedTags_taskAdded() {
         this.schedule.clear();
         assertChangeBy(() -> this.schedule.getTaskList().size(), 1,
                 () -> this.addCommand.execute("add CS2103T Tutorial #/tag #/tag"));
@@ -200,12 +196,11 @@ public class AddCommandTest {
         assertEquals("tag", addedTask.getTags().get(0));
     }
 
-    //@@author A0144915A
     /**
      * Test that order of times do not matter.
      */
     @Test
-    public void testExecuteAddTaggedEventIgnoringOrderOfTimes() {
+    public void execute_shuffleEventFlags_taskAdded() {
         assertChangeBy(() -> this.schedule.getTaskList().size(),
                 1,
                 () -> this.addCommand
@@ -229,7 +224,7 @@ public class AddCommandTest {
      * Test that executing an add task command should return the correct result.
      */
     @Test
-    public void testExecuteAddCommandResult() {
+    public void execute_validTodo_commandResultReturned() {
         CommandResult result = this.addCommand.execute("add CS2103T Tutorial");
         assertEquals("Added CS2103T Tutorial", result.getFeedback());
     }
@@ -238,7 +233,7 @@ public class AddCommandTest {
      * Test that adding a new deadline should return the correct result.
      */
     @Test
-    public void testExecuteAddDeadlineResult() {
+    public void execute_validDeadline_commandResultReturned() {
         CommandResult result = this.addCommand.execute("add CS2103T Tutorial et/2016-01-01 5.00PM");
         assertEquals("Added CS2103T Tutorial (Due 2016-01-01 5.00PM)", result.getFeedback());
     }
@@ -247,30 +242,28 @@ public class AddCommandTest {
      * Test that adding a new event should return the correct result.
      */
     @Test
-    public void testExecuteAddEventResult() {
+    public void execute_validEvent_commandResultReturned() {
         CommandResult result = this.addCommand.execute("add CS2103T Tutorial st/2016-01-01 5.00PM et/2016-01-02 5.00PM");
         assertEquals("Added CS2103T Tutorial (2016-01-01 5.00PM - 2016-01-02 5.00PM)", result.getFeedback());
     }
 
-    //@@author A0127694U
     /**
      * Test that adding a new Todo with a single tag returns the correct result
      * message.
      *
      */
     @Test
-    public void testExecuteAddTaskTagResult() {
+    public void execute_validTodoWithTag_commandResultReturned() {
         CommandResult result = this.addCommand.execute("add CS2103T Tutorial #/tag1 tag2");
         assertEquals("Added CS2103T Tutorial [Tags: \"tag1 tag2\" ]", result.getFeedback());
     }
 
-    //@@author A0144915A
     /**
      * Test the result when running without a task name
      *
      */
     @Test
-    public void testMissingTaskNameCommandResult() {
+    public void execute_noTaskName_commandResultReturned() {
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
                 () -> this.addCommand.execute("add"));
         assertEquals(expectedInvalidArgumentMessage(), result.getFeedback());
@@ -280,7 +273,7 @@ public class AddCommandTest {
      * Test the result when the task name consists of only empty spaces.
      */
     @Test
-    public void testTaskNameIsEmptyCommandResult() {
+    public void execute_emptyTaskName_commandResultReturned() {
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
                 () -> this.addCommand.execute("add             "));
         assertEquals(expectedInvalidArgumentMessage(), result.getFeedback());
@@ -290,7 +283,7 @@ public class AddCommandTest {
      * Test that task name cannot be empty.
      */
     @Test
-    public void testStartTimeWithoutTaskName() {
+    public void execute_noTaskNameWithFlag_commandResultReturned() {
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
                 () -> this.addCommand.execute("add st/2016-01-01 5:00PM"));
         assertEquals(expectedInvalidArgumentMessage(), result.getFeedback());
@@ -300,26 +293,24 @@ public class AddCommandTest {
      * Test that task name cannot be empty.
      */
     @Test
-    public void testEndTimeWithoutTaskName() {
+    public void execute_deadlineWithoutTaskName_commandResultReturned() {
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
                 () -> this.addCommand.execute("add et/2016-01-01 5:00PM"));
         assertEquals(expectedInvalidArgumentMessage(), result.getFeedback());
     }
 
-    //@@author A0127694U
-    /**
-     * Test that invalid time formats are not accepted.
-     */
     @Test
-    public void testTagWithoutStartName() {
+    public void execute_tagWithoutTaskName_commandResultReturned() {
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
                 () -> this.addCommand.execute("add #/tag1 tag2"));
         assertEquals(expectedInvalidArgumentMessage(), result.getFeedback());
     }
 
-    //@@author A0144915A
+    /**
+     * Test that invalid time formats are not accepted.
+     */
     @Test
-    public void testInvalidStartTime() {
+    public void execute_invalidStartTimeFormat_commandResultReturned() {
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
                 () -> this.addCommand.execute("add hello st/yesterday et/2016-12-31 11:59PM"));
 
@@ -330,56 +321,52 @@ public class AddCommandTest {
      * Test that invalid time formats are not accepted.
      */
     @Test
-    public void testInvalidEndTime() {
+    public void execute_invalidEndTimeFormat_commandResultReturned() {
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
                 () -> this.addCommand.execute("add hello et/tomorrow"));
 
         assertEquals("Cannot parse \"tomorrow\".", result.getFeedback());
     }
 
-    //@@author A0127694U
     /**
      * Test that adding tag with empty spaces in category will return an error.
      */
     @Test
-    public void testEmptyTag() {
+    public void execute_emptyTag_commandResultReturned() {
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
                 () -> this.addCommand.execute("add hello #/      "));
 
         assertEquals(expectedInvalidArgumentMessage(), result.getFeedback());
     }
 
-    //@@author A0144915A
     /**
      * Test that no tasks are created with start time only.
      *
      */
     @Test
-    public void testStartTimeWithoutEndTime() {
+    public void execute_startTimeWithoutEndTime_commandResultReturned() {
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
                 () -> this.addCommand.execute("add hello st/2016-01-01 5.00PM"));
 
         assertEquals("Cannot create task with start time but without end time.", result.getFeedback());
     }
 
-    //@@author A0144915A
     /**
      * Test that end time cannot be before start time.
      */
     @Test
-    public void testEndTimeBeforeStartTime() {
+    public void execute_endTimeBeforeStartTime_commandResultReturned() {
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
                 () -> this.addCommand.execute("add hello st/2016-01-02 5.00PM et/2016-01-01 5.00PM"));
 
         assertEquals("End time cannot come before start time.", result.getFeedback());
     }
 
-    //@@author A0140702X
     /**
      * Test that duplicate to-do is not added
      */
     @Test
-    public void testAddDuplicateToDo() {
+    public void execute_duplicatedTodo_commandResultReturned() {
         this.schedule.addTask(new Task("todo"));
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
                 () -> this.addCommand.execute("add todo"));
@@ -390,7 +377,7 @@ public class AddCommandTest {
      * Test that duplicate deadline is not added
      */
     @Test
-    public void testAddDuplicateDeadline() {
+    public void execute_duplicatedDeadline_commandResultReturned() {
         this.schedule.addTask(new Task("deadline", LocalDateTime.of(2016, 1, 1, 17, 0)));
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
                 () -> this.addCommand.execute("add deadline et/2016-01-01 5.00PM"));
@@ -401,7 +388,7 @@ public class AddCommandTest {
      * Test that duplicate event is not added
      */
     @Test
-    public void testAddDuplicateEvent() {
+    public void execute_duplicatedEvent_commandResultReturned() {
         this.schedule
                 .addTask(new Task("event", LocalDateTime.of(2016, 1, 1, 17, 0), LocalDateTime.of(2017, 1, 1, 17, 0)));
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
@@ -414,7 +401,7 @@ public class AddCommandTest {
      * Test that similar to-do is added
      */
     @Test
-    public void testAddSimilarToDo() {
+    public void execute_similarTodo_taskAdded() {
         this.schedule.addTask(new Task("todo", LocalDateTime.of(2016, 1, 1, 17, 0)));
         this.schedule
                 .addTask(new Task("todo", LocalDateTime.of(2016, 1, 1, 17, 0), LocalDateTime.of(2017, 1, 1, 17, 0)));
@@ -427,7 +414,7 @@ public class AddCommandTest {
      * Test that similar deadline is added
      */
     @Test
-    public void testAddSimilarDeadline() {
+    public void execute_similarDeadline_taskAdded() {
         this.schedule.addTask(new Task("deadline"));
         this.schedule.addTask(new Task("deadline", LocalDateTime.of(2019, 1, 1, 17, 0)));
         this.schedule.addTask(
@@ -446,7 +433,7 @@ public class AddCommandTest {
      * Test that similar event is added
      */
     @Test
-    public void testAddSimilarEvent() {
+    public void execute_similarEvent_taskAdded() {
         this.schedule.addTask(new Task("event"));
         this.schedule.addTask(
                 new Task("event", LocalDateTime.of(2016, 1, 1, 17, 0)));
@@ -457,7 +444,6 @@ public class AddCommandTest {
     }
 
 
-    //@@author A0135788M
     private String expectedInvalidArgumentMessage() {
         return "Invalid arguments.\n\n" + this.addCommand.getCommandFormat() + "\n\n" + Command.CALLOUTS;
     }

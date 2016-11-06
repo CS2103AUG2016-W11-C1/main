@@ -12,7 +12,7 @@ import javafx.scene.layout.AnchorPane;
 import linenux.model.Task;
 import linenux.util.ArrayListUtil;
 
-//@@author A0144915A
+//@@author A0140702X
 /**
  * View component used to display a single todo.
  */

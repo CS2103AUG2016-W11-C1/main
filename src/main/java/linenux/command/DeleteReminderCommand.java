@@ -10,10 +10,10 @@ import linenux.model.Schedule;
 import linenux.util.ArrayListUtil;
 import linenux.util.RemindersListUtil;
 
+//@@author A0127694U
 /**
  * Handles deletion of reminders from schedule.
  */
-// @@author A0127694U
 public class DeleteReminderCommand extends AbstractCommand {
     private static final String TRIGGER_WORD = "deleter";
     private static final String DESCRIPTION = "Deletes a task reminder from the schedule.";
@@ -109,7 +109,6 @@ public class DeleteReminderCommand extends AbstractCommand {
         }
     }
 
-    // @@author A0135788M
     /**
      * @return A {@code String} representing the default command word.
      */
@@ -151,7 +150,6 @@ public class DeleteReminderCommand extends AbstractCommand {
         return () -> "Invalid arguments.\n\n" + COMMAND_FORMAT + "\n\n" + CALLOUTS;
     }
 
-    // @@author A0144915A
     /**
      * @param remind The {@code ReminderSearchResult} indicated the deleted result.
      * @return A {@code CommandResult} indicating that {@code task} is deleted.

@@ -16,6 +16,7 @@ import linenux.time.parser.TomorrowWithTimeParser;
 import linenux.util.ArrayListUtil;
 import linenux.util.Either;
 
+//@@author A0140702X
 /**
  * Generates a list of tasks based on userInput.
  */
@@ -30,7 +31,6 @@ public class ListCommand extends AbstractCommand {
     private TimeParserManager timeParserManager;
     private ListArgumentFilter listArgumentFilter;
 
-    //@@author A0140702X
     public ListCommand(Schedule schedule) {
         this.schedule = schedule;
         this.timeParserManager = new TimeParserManager(new ISODateWithTimeParser(), new StandardDateWithTimeParser(), new TodayWithTimeParser(), new TomorrowWithTimeParser());
@@ -38,7 +38,6 @@ public class ListCommand extends AbstractCommand {
         this.TRIGGER_WORDS.add(TRIGGER_WORD);
     }
 
-    //@@author A0140702X
     /**
      * Executes the command based on {@code userInput}. This method operates under the assumption that
      * {@code respondTo(userInput)} is {@code true}.
@@ -67,8 +66,8 @@ public class ListCommand extends AbstractCommand {
         }
 
         if (!result.getKeywords().isEmpty()) {
-            tasks = this.schedule.search(result.getKeywords());
-            reminders = this.schedule.searchReminder(result.getKeywords());
+            tasks = this.schedule.searchTasks(result.getKeywords());
+            reminders = this.schedule.searchReminders(result.getKeywords());
         }
 
         String actualViewDone = viewDone.getLeft();
@@ -106,7 +105,6 @@ public class ListCommand extends AbstractCommand {
         }
     }
 
-    //@@author A0144915A
     /**
      * @return A {@code String} representing the default command word.
      */
@@ -123,7 +121,6 @@ public class ListCommand extends AbstractCommand {
         return DESCRIPTION;
     }
 
-    //@@author A0135788M
     /**
      * @return A {@code String} describing the format that this {@code Command} expects.
      */
@@ -132,7 +129,6 @@ public class ListCommand extends AbstractCommand {
         return COMMAND_FORMAT;
     }
 
-    //@@author A0140702X
     private Either<String, CommandResult> extractViewDone(GenericParser.GenericParserResult result) {
         ArrayList<String> flags = result.getArguments("d");
 

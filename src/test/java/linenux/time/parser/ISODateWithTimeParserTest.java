@@ -25,7 +25,7 @@ public class ISODateWithTimeParserTest {
      * Test that parser responds to valid format.
      */
     @Test
-    public void testRespondToValidFormat() {
+    public void respondTo_validInputFormat_trueReturned() {
         assertTrue(this.parser.respondTo("2016-10-01 2.05PM"));
     }
 
@@ -33,15 +33,16 @@ public class ISODateWithTimeParserTest {
      * Test that parser responds to lowercase am and pm.
      */
     @Test
-    public void testRespondToSmallAmPm() {
+    public void respondTo_lowerCaseAmPm_trueReturned() {
         assertTrue(this.parser.respondTo("2016-10-01 2.05am"));
+        assertTrue(this.parser.respondTo("2016-10-01 2.05pm"));
     }
 
     /**
      * Test that parser responds to invalid format.
      */
     @Test
-    public void testDoesNotRespondToInValidFormat() {
+    public void respondTo_invalidInputFormat_falseReturned() {
         assertFalse(this.parser.respondTo("Jan 1, 2016 2:05PM"));
         assertFalse(this.parser.respondTo("yesterday"));
         assertFalse(this.parser.respondTo("2:05PM"));
@@ -53,7 +54,7 @@ public class ISODateWithTimeParserTest {
      * Test that parser parses correctly for uppercase AM.
      */
     @Test
-    public void testParseAM() {
+    public void parse_upperCaseAm_parsedDateMatchesExpected() {
         LocalDateTime dateTime = this.parser.parse("2016-10-01 9.23AM");
         LocalDateTime expectedDateTime = LocalDateTime.of(2016, 10, 01, 9, 23);
         assertEquals(expectedDateTime, dateTime);
@@ -63,7 +64,7 @@ public class ISODateWithTimeParserTest {
      * Test that parser parses correctly for uppercase PM.
      */
     @Test
-    public void testParsePM() {
+    public void parse_upperCasePm_parsedDateMatchesExpected() {
         LocalDateTime dateTime = this.parser.parse("2016-10-01 2.05PM");
         LocalDateTime expectedDateTime = LocalDateTime.of(2016, 10, 01, 14, 5);
         assertEquals(expectedDateTime, dateTime);
@@ -73,9 +74,19 @@ public class ISODateWithTimeParserTest {
      * Test that parser parses correctly for lowercase AM.
      */
     @Test
-    public void testParseSmallAm() {
+    public void parse_lowerCaseAm_parsedDateMatchesExpected() {
         LocalDateTime dateTime = this.parser.parse("2016-10-01 9.23am");
         LocalDateTime expectedDateTime = LocalDateTime.of(2016, 10, 01, 9, 23);
+        assertEquals(expectedDateTime, dateTime);
+    }
+
+    /**
+     * Test that parser parses correctly for lowercase PM.
+     */
+    @Test
+    public void parse_lowerCasePm_parsedDateMatchesExpected() {
+        LocalDateTime dateTime = this.parser.parse("2016-10-01 9.23pm");
+        LocalDateTime expectedDateTime = LocalDateTime.of(2016, 10, 01, 21, 23);
         assertEquals(expectedDateTime, dateTime);
     }
 }

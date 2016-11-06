@@ -13,7 +13,7 @@ import linenux.model.Task;
 import linenux.util.ArrayListUtil;
 import linenux.view.components.EventCell;
 
-//@@author A0144915A
+//@@author A0127694U
 /**
  * Controller for the event box, which displays all the events
  */
