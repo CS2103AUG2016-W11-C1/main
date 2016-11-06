@@ -18,7 +18,7 @@ public abstract class GuiTest {
     private Path tempDir;
 
     @Before
-    public void setup() throws Exception {
+    public void setupGuiTest() throws Exception {
         tempDir = Files.createTempDirectory("tmp");
 
         FxToolkit.registerPrimaryStage();
@@ -33,7 +33,7 @@ public abstract class GuiTest {
     }
 
     @After
-    public void teardown() {
+    public void teardownSetup() {
         tempDir.resolve("config.json").toFile().delete();
         tempDir.resolve("schedule.xml").toFile().delete();
         tempDir.toFile().delete();

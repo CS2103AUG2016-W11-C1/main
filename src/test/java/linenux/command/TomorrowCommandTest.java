@@ -13,7 +13,7 @@ import java.time.ZoneId;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-//@@author A0144915A
+//@@author A0127694U
 public class TomorrowCommandTest {
     private TomorrowCommand tomorrowCommand;
 
@@ -50,21 +50,21 @@ public class TomorrowCommandTest {
     }
 
     @Test
-    public void testRespondTo() {
+    public void respondTo_inputThatBeginsWithTomorrow_trueReturned() {
         assertTrue(this.tomorrowCommand.respondTo("tomorrow"));
         assertTrue(this.tomorrowCommand.respondTo("tomorrow bla"));
         assertTrue(this.tomorrowCommand.respondTo("toMorrow"));
     }
 
     @Test
-    public void testNotRespondTo() {
+    public void respondTo_otherCommands_falseReturned() {
         assertFalse(this.tomorrowCommand.respondTo("tomorrowa"));
         assertFalse(this.tomorrowCommand.respondTo("atomorrow"));
         assertFalse(this.tomorrowCommand.respondTo("tomorro"));
     }
 
     @Test
-    public void testExecute() {
+    public void execute_commandResultReturned() {
         this.tomorrowCommand.execute("tomorrow");
 
         assertTrue(this.schedule.getFilteredTasks().contains(this.todo));

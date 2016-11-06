@@ -2,6 +2,7 @@ package linenux.command;
 
 import linenux.command.result.CommandResult;
 
+//@@author A0140702X
 /**
  * Exits the program.
  */
@@ -10,7 +11,6 @@ public class ExitCommand extends AbstractCommand {
     private static final String DESCRIPTION = "Exits the program.";
     public static final String COMMAND_FORMAT = "exit";
 
-    //@@author A0144915A
     /**
      * Constructs an {@code ExitCommand}.
      */
@@ -18,7 +18,6 @@ public class ExitCommand extends AbstractCommand {
         this.TRIGGER_WORDS.add(TRIGGER_WORD);
     }
 
-    //@@author A0135788M
     /**
      * Executes the command based on {@code userInput}. This method operates under the assumption that
      * {@code respondTo(userInput)} is {@code true}.
@@ -33,7 +32,6 @@ public class ExitCommand extends AbstractCommand {
         return null;
     }
 
-    //@@author A0144915A
     /**
      * @return A {@code String} representing the default command word.
      */
@@ -50,7 +48,6 @@ public class ExitCommand extends AbstractCommand {
         return DESCRIPTION;
     }
 
-    //@@author A0135788M
     /**
      * @return A {@code String} describing the format that this {@code Command} expects.
      */

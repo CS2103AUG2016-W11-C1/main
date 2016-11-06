@@ -7,7 +7,7 @@ import java.time.format.DateTimeFormatter;
 import linenux.command.result.CommandResult;
 import linenux.model.Schedule;
 
-//@@author A0144915A
+//@@author A0127694U
 public class TomorrowCommand extends AbstractCommand {
     private static final String TRIGGER_WORD = "tomorrow";
     private static final String DESCRIPTION = "Lists tasks and reminders for tomorrow.";

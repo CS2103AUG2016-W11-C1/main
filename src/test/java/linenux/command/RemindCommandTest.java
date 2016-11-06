@@ -18,6 +18,7 @@ import linenux.model.Schedule;
 import linenux.model.Task;
 import linenux.util.ArrayListUtil;
 
+//@@author A0140702X
 /**
  * JUnit test for remind command.
  */
@@ -25,7 +26,6 @@ public class RemindCommandTest {
     private Schedule schedule;
     private RemindCommand remindCommand;
 
-    //@@author A0144915A
     @Before
     public void setupRemindCommand() {
         Task todo = new Task("Todo");
@@ -39,7 +39,6 @@ public class RemindCommandTest {
         this.remindCommand = new RemindCommand(this.schedule);
     }
 
-    //@@author A0135788M
     private void setupTaskWithSameNameAndExecuteAmbiguousCommand() {
         this.schedule.addTask(new Task("Todo 2"));
         this.remindCommand.execute("remind Todo t/2016-01-01 05.00PM n/Hey");
@@ -63,7 +62,7 @@ public class RemindCommandTest {
      * return true even if the format of the arguments are invalid.
      */
     @Test
-    public void testRespondToRemindCommand() {
+    public void respondTo_inputThatStartsWithRemind_trueReturned() {
         assertTrue(this.remindCommand.respondTo("remind"));
         assertTrue(this.remindCommand.respondTo("remind task"));
         assertTrue(this.remindCommand.respondTo("remind task t/2016-01-01"));
@@ -74,7 +73,7 @@ public class RemindCommandTest {
      * Test respondTo is case-insensitive.
      */
     @Test
-    public void testCaseInsensitiveRemindCommand() {
+    public void repondTo_upperCase_trueReturned() {
         assertTrue(this.remindCommand.respondTo("ReMiNd task t/2016-01-01"));
     }
 
@@ -83,18 +82,17 @@ public class RemindCommandTest {
      * reminders.
      */
     @Test
-    public void testNotRespondToOtherCommands() {
+    public void respondTo_otherCommands_falseReturned() {
         assertFalse(this.remindCommand.respondTo("notremind"));
         assertFalse(this.remindCommand.respondTo("remindr"));
     }
 
-    //@@author A0135788M
     /**
      * Test that executing adding reminder to a To-Do should return correct
      * result.
      */
     @Test
-    public void testExecuteAddReminderToDo() {
+    public void execute_remindTodo_reminderAdded() {
         assertChangeBy(() -> getSearchResult("Todo").get(0).getReminders().size(), 1,
                 () -> this.remindCommand.execute("remind Todo t/2000-01-01 05.00PM n/Attend Workshop"));
         ArrayList<Reminder> reminders = getSearchResult("Todo").get(0).getReminders();
@@ -108,7 +106,7 @@ public class RemindCommandTest {
      * return correct result.
      */
     @Test
-    public void testExecuteAddReminderWithDiffParamOrderToToDo() {
+    public void execute_shuffleFlags_reminderAdded() {
         assertChangeBy(() -> getSearchResult("Todo").get(0).getReminders().size(), 1,
                 () -> this.remindCommand.execute("remind Todo n/Attend Workshop t/2000-01-01 05.00PM"));
         ArrayList<Reminder> reminders = getSearchResult("Todo").get(0).getReminders();
@@ -122,7 +120,7 @@ public class RemindCommandTest {
      * result.
      */
     @Test
-    public void testExecuteAddReminderToDeadline() {
+    public void execute_deadline_reminderAdded() {
         assertChangeBy(() -> getSearchResult("Deadline").get(0).getReminders().size(), 1,
                 () -> this.remindCommand.execute("remind deadline t/2000-01-01 05.00PM n/Attend Workshop"));
         ArrayList<Reminder> reminders = getSearchResult("Deadline").get(0).getReminders();
@@ -136,7 +134,7 @@ public class RemindCommandTest {
      * should return correct result.
      */
     @Test
-    public void testExecuteAddReminderWithDiffParamOrderToDeadline() {
+    public void execute_shuffleDeadlineFlags_reminderAdded() {
         assertChangeBy(() -> getSearchResult("Deadline").get(0).getReminders().size(), 1,
                 () -> this.remindCommand.execute("remind deadline n/Attend Workshop t/2000-01-01 05.00PM"));
         ArrayList<Reminder> reminders = getSearchResult("Deadline").get(0).getReminders();
@@ -150,7 +148,7 @@ public class RemindCommandTest {
      * result.
      */
     @Test
-    public void testExecuteAddReminderToEvent() {
+    public void execute_event_reminderAdded() {
         assertChangeBy(() -> getSearchResult("Event").get(0).getReminders().size(), 1,
                 () -> this.remindCommand.execute("remind Event t/2000-01-01 05.00PM n/Attend Workshop"));
         ArrayList<Reminder> reminders = getSearchResult("Event").get(0).getReminders();
@@ -164,7 +162,7 @@ public class RemindCommandTest {
      * return correct result.
      */
     @Test
-    public void testExecuteAddReminderWithDiffParamOrderToEvent() {
+    public void execute_eventFlagsShuffled_reminderAdded() {
         assertChangeBy(() -> getSearchResult("Event").get(0).getReminders().size(), 1,
                 () -> this.remindCommand.execute("remind Event n/Attend Workshop t/2000-01-01 05.00PM"));
         ArrayList<Reminder> reminders = getSearchResult("Event").get(0).getReminders();
@@ -173,12 +171,11 @@ public class RemindCommandTest {
         assertEquals("Attend Workshop", addedReminder.getNote());
     }
 
-    //@@author A0140702X
     /**
      * Test the result when no task name is given to search.
      */
     @Test
-    public void testWithoutTaskNameCommandResult() {
+    public void execute_noTaskName_commandResultReturned() {
         ArrayList<Task> tasks = this.schedule.getTaskList();
         CommandResult result = assertNoChange(() -> {
             int size = 0;
@@ -191,10 +188,10 @@ public class RemindCommandTest {
     }
 
     /**
-     * Test the result when no task name is given to search.
+     * Test the result when no reminder note is given to search.
      */
     @Test
-    public void testWithoutNotesCommandResult() {
+    public void execute_noReminderNote_commandResultReturned() {
         ArrayList<Task> tasks = this.schedule.getTaskList();
         CommandResult result = assertNoChange(() -> {
             int size = 0;
@@ -210,29 +207,27 @@ public class RemindCommandTest {
      * Test the result when no time is given for the reminder.
      */
     @Test
-    public void testWithoutTimeCommandResult() {
+    public void execute_noTime_commandResultReturned() {
         CommandResult result = assertNoChange(() -> getSearchResult("Todo").get(0).getReminders().size(),
                 () -> this.remindCommand.execute("remind todo n/hey"));
         assertEquals("Cannot create reminder without date.", result.getFeedback());
     }
 
-    //@@author A0135788M
     /**
      * Test the result when time is invalid.
      */
     @Test
-    public void testInvalidTimeCommandResult() {
+    public void execute_invalidTime_commandResultReturned() {
         CommandResult result = assertNoChange(() -> getSearchResult("Todo").get(0).getReminders().size(),
                 () -> this.remindCommand.execute("remind todo t/tomorrow"));
         assertEquals("Cannot parse \"tomorrow\".", result.getFeedback());
     }
 
-    //@@author A0140702X
     /**
      * Test the result when no match is found.
      */
     @Test
-    public void testCommandResultWhenNoMatchFound() {
+    public void execute_taskNotFound_commandResultReturned() {
         ArrayList<Task> tasks = this.schedule.getTaskList();
         CommandResult result = assertNoChange(() -> {
             int size = 0;
@@ -248,7 +243,7 @@ public class RemindCommandTest {
      * Test the result when multiple matches are found.
      */
     @Test
-    public void testCommandResultWhenMultipleMatchesFound() {
+    public void execute_multipleMatches_commandResultReturned() {
         this.schedule.addTask(new Task("todo 2"));
         CommandResult result = assertNoChange(() -> this.totalNumberOfReminders(),
                 () -> this.remindCommand.execute("remind todo t/2016-01-01 05.00PM"));
@@ -259,7 +254,7 @@ public class RemindCommandTest {
      * Test that command is waiting user response.
      */
     @Test
-    public void testAwaitingUserResponse() {
+    public void isAwaitingUserResponse_multipleMatches_trueReturned() {
         assertFalse(this.remindCommand.isAwaitingUserResponse());
         this.setupTaskWithSameNameAndExecuteAmbiguousCommand();
         assertTrue(this.remindCommand.isAwaitingUserResponse());
@@ -269,7 +264,7 @@ public class RemindCommandTest {
      * Test the result when user cancel response.
      */
     @Test
-    public void testUserResponseCancel() {
+    public void processUserResponse_cancel_isNotAwaitingUserResponse() {
         this.setupTaskWithSameNameAndExecuteAmbiguousCommand();
         CommandResult result = assertNoChange(() -> this.totalNumberOfReminders(),
                 () -> this.remindCommand.processUserResponse("cancel"));
@@ -281,7 +276,7 @@ public class RemindCommandTest {
      * Test the result when user inputs valid index.
      */
     @Test
-    public void testUserResponseValidIndex() {
+    public void processUserResponse_validIndex_reminderAdded() {
         this.setupTaskWithSameNameAndExecuteAmbiguousCommand();
         CommandResult result = assertChangeBy(() -> this.schedule.getTaskList().get(0).getReminders().size(), 1,
                 () -> this.remindCommand.processUserResponse("1"));
@@ -293,7 +288,7 @@ public class RemindCommandTest {
      * Test the result when user inputs invalid index.
      */
     @Test
-    public void testUserResponseInvalidIndex() {
+    public void processUserResponse_invalidIndex_commandResultReturned() {
         this.setupTaskWithSameNameAndExecuteAmbiguousCommand();
         CommandResult result = assertNoChange(() -> getSearchResult("Todo").get(0).getReminders().size(),
                 () -> this.remindCommand.processUserResponse("0"));
@@ -306,7 +301,7 @@ public class RemindCommandTest {
      * Test the result when user inputs invalid response.
      */
     @Test
-    public void testUserResponseInvalidUserResponse() {
+    public void processUserResponse_invalidResponse_commandResultReturned() {
         this.setupTaskWithSameNameAndExecuteAmbiguousCommand();
         CommandResult result = assertNoChange(() -> getSearchResult("Todo").get(0).getReminders().size(),
                 () -> this.remindCommand.processUserResponse("One"));
@@ -315,7 +310,6 @@ public class RemindCommandTest {
         assertTrue(this.remindCommand.isAwaitingUserResponse());
     }
 
-    //@@author A0144915A
     private int totalNumberOfReminders() {
         return new ArrayListUtil.ChainableArrayListUtil<>(this.schedule.getTaskList())
                 .map(Task::getReminders)

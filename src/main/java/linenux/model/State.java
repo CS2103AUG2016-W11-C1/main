@@ -6,6 +6,7 @@ import java.util.Collections;
 import linenux.command.util.ReminderSearchResult;
 import linenux.util.ArrayListUtil;
 
+//@@author A0135788M
 /**
  * Represents a snapshot in time of a schedule. The State class is immutable.
  */
@@ -59,7 +60,6 @@ public class State {
         return output;
     }
 
-    // @@author A0127694U
     /**
      * Updates the specified task.
      *
@@ -77,7 +77,6 @@ public class State {
         return output;
     }
 
-    // @@author A0135788M
     /**
      * Delete the specified task.
      *
@@ -92,7 +91,6 @@ public class State {
         return output;
     }
 
-    // @@author A0127694U
     /**
      * Delete the specified reminder.
      *
@@ -173,7 +171,6 @@ public class State {
         }).value();
     }
 
-    // @@author A0127694U
     /**
      * Performs case-insensitive tag search using keywords.
      *

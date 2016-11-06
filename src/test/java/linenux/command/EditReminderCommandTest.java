@@ -15,6 +15,7 @@ import linenux.model.Reminder;
 import linenux.model.Schedule;
 import linenux.model.Task;
 
+//@@author A0140702X
 /**
  * JUnit test for edit reminder command.
  */
@@ -22,7 +23,6 @@ public class EditReminderCommandTest {
     private Schedule schedule;
     private EditReminderCommand editReminderCommand;
 
-    //@@author A0140702X
     @Before
     public void setupEditrCommand() {
         this.schedule = new Schedule();
@@ -41,18 +41,16 @@ public class EditReminderCommandTest {
         this.editReminderCommand.execute("editr world n/wat t/2018-01-01 5.00PM");
     }
 
-    //@@author A0144915A
     private String expectedInvalidArgumentMessage() {
         return "Invalid arguments.\n\n" + this.editReminderCommand.getCommandFormat() + "\n\n" + Command.CALLOUTS;
     }
 
-    //@@author A0140702X
     /**
      * Test that respondTo detects various versions of the commands. It should
      * return true even if the format of the arguments are invalid.
      */
     @Test
-    public void testRespondToEditTaskCommand() {
+    public void respondTo_inputThatStartsWithEdits_trueReturned() {
         assertTrue(this.editReminderCommand.respondTo("editr"));
         assertTrue(this.editReminderCommand.respondTo("editr n/note"));
         assertTrue(this.editReminderCommand.respondTo("editr t/2016-01-01 5.00PM"));
@@ -64,12 +62,11 @@ public class EditReminderCommandTest {
         assertTrue(this.editReminderCommand.respondTo("editr reminder n/note t/2016-01-01 5.00PM"));
     }
 
-    //@@author A0144915A
     /**
      * Test that respondTo is case-insensitive.
      */
     @Test
-    public void testCaseInsensitiveEditTaskCommand() {
+    public void respondTo_upperCase_trueReturned() {
         assertTrue(this.editReminderCommand.respondTo("EdITr reminder n/note t/2016-01-01 5.00PM"));
     }
 
@@ -77,17 +74,16 @@ public class EditReminderCommandTest {
      * Test that respondTo will return false for commands not related to edit reminder.
      */
     @Test
-    public void testNotRespondToOtherCommands() {
+    public void respondTo_otherCommand_falseReturned() {
         assertFalse(this.editReminderCommand.respondTo("halp"));
     }
 
-    //@@author A0140702X
     /**
      * Test that executing the edit reminder command will correctly edit existing
      * reminder in schedule.
      */
     @Test
-    public void testEditReminderWhenSingleReminderFound() {
+    public void execute_oneMatch_reminderUpdated() {
         Task task = new Task("hello");
         Reminder reminder = new Reminder("reminder", LocalDateTime.of(2016, 01, 01, 17, 00));
         task = task.addReminder(reminder);
@@ -107,7 +103,7 @@ public class EditReminderCommandTest {
      * reminder in schedule.
      */
     @Test
-    public void testEditReminderNotedoWhenSingleReminderFound() {
+    public void execute_updateNote_reminderUpdated() {
         Task task = new Task("hello");
         Reminder reminder = new Reminder("reminder", LocalDateTime.of(2016, 01, 01, 17, 00));
         task = task.addReminder(reminder);
@@ -127,7 +123,7 @@ public class EditReminderCommandTest {
      * reminder in schedule.
      */
     @Test
-    public void testEditReminderTimedoWhenSingleReminderFound() {
+    public void execute_updateTime_reminderUpdated() {
         Task task = new Task("hello");
         Reminder reminder = new Reminder("reminder", LocalDateTime.of(2016, 01, 01, 17, 00));
         task = task.addReminder(reminder);
@@ -143,7 +139,7 @@ public class EditReminderCommandTest {
     }
 
     @Test
-    public void testCommandResultWhenMultipleMatchesFound() {
+    public void execute_multipleMatches_commandResultReturned() {
         Task task = new Task("hello");
         Reminder reminder1 = new Reminder("world", LocalDateTime.of(2016, 1, 1, 17, 0));
         Reminder reminder2 = new Reminder("hello world", LocalDateTime.of(2017, 1, 1, 17, 0));
@@ -158,14 +154,14 @@ public class EditReminderCommandTest {
     }
 
     @Test
-    public void testAwaitingUserResponse() {
+    public void isAwaitingUserResponse_multipleMatches_trueReturned() {
         assertFalse(this.editReminderCommand.isAwaitingUserResponse());
         this.setupMultipleHelloRemindersAndExecuteAmbiguousCommand();
         assertTrue(this.editReminderCommand.isAwaitingUserResponse());
     }
 
     @Test
-    public void testUserResponseCancel() {
+    public void processUserResponse_cancel_isNotAwaitingUserResponse() {
         this.setupMultipleHelloRemindersAndExecuteAmbiguousCommand();
         CommandResult result = this.editReminderCommand.processUserResponse("cancel");
         assertEquals("OK! Not editing anything.", result.getFeedback());
@@ -173,7 +169,7 @@ public class EditReminderCommandTest {
     }
 
     @Test
-    public void testUserResponseValidIndex() {
+    public void processUserResponse_validIndex_taskUpdated() {
         this.setupMultipleHelloRemindersAndExecuteAmbiguousCommand();
         CommandResult result = this.editReminderCommand.processUserResponse("1");
 
@@ -189,7 +185,7 @@ public class EditReminderCommandTest {
     }
 
     @Test
-    public void testUserResponseInvalidIndex() {
+    public void processUserInput_invalidIndex_commandResultReturned() {
         this.setupMultipleHelloRemindersAndExecuteAmbiguousCommand();
         CommandResult result = this.editReminderCommand.processUserResponse("3");
 
@@ -199,7 +195,7 @@ public class EditReminderCommandTest {
     }
 
     @Test
-    public void testUserResponseInvalidResponse() {
+    public void processUserInput_invalidInput_commandResultReturned() {
         this.setupMultipleHelloRemindersAndExecuteAmbiguousCommand();
         CommandResult result = this.editReminderCommand.processUserResponse("asd");
 
@@ -214,7 +210,7 @@ public class EditReminderCommandTest {
      * reminder in schedule ignoring order of argument.
      */
     @Test
-    public void testEditReminderIgnoringOrderOfArguments() {
+    public void execute_flagsShuffled_taskUpdated() {
         Task task = new Task("hello");
         Reminder reminder = new Reminder("reminder", LocalDateTime.of(2016, 01, 01, 17, 00));
         task = task.addReminder(reminder);
@@ -230,7 +226,7 @@ public class EditReminderCommandTest {
     }
 
     @Test
-    public void testEditReminderInvalidTime() {
+    public void execute_invalidTime_commandResultReturned() {
         Task task = new Task("hello");
         Reminder reminder = new Reminder("reminder", LocalDateTime.of(2016, 01, 01, 17, 00));
         task = task.addReminder(reminder);
@@ -242,7 +238,7 @@ public class EditReminderCommandTest {
     }
 
     @Test
-    public void testEditReminderNoKeywords() {
+    public void execute_noKeywords_commandResultReturned() {
         Task task = new Task("hello");
         Reminder reminder = new Reminder("reminder", LocalDateTime.of(2016, 01, 01, 17, 00));
         task = task.addReminder(reminder);
@@ -254,7 +250,7 @@ public class EditReminderCommandTest {
     }
 
     @Test
-    public void testEditReminderNoArguments() {
+    public void execute_noFlags_reminderNotUpdated() {
         Task task = new Task("hello");
         Reminder reminder = new Reminder("reminder", LocalDateTime.of(2016, 01, 01, 17, 00));
         task = task.addReminder(reminder);
@@ -266,7 +262,7 @@ public class EditReminderCommandTest {
     }
 
     @Test
-    public void testNoMatchFound() {
+    public void execute_noMatch_commandResultReturned() {
         Task task = new Task("hello");
         Reminder reminder = new Reminder("reminder", LocalDateTime.of(2016, 01, 01, 17, 00));
         task = task.addReminder(reminder);

@@ -1,10 +1,10 @@
 package linenux.command;
 
-import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.assertFalse;
-import static junit.framework.TestCase.assertTrue;
 import static linenux.helpers.Assert.assertChangeBy;
 import static linenux.helpers.Assert.assertNoChange;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -13,6 +13,7 @@ import linenux.command.result.CommandResult;
 import linenux.model.Schedule;
 import linenux.model.Task;
 
+//@@author A0127694U
 /**
  * JUnit test for delete command.
  */
@@ -20,7 +21,6 @@ public class DeleteCommandTest {
     private Schedule schedule;
     private DeleteCommand deleteCommand;
 
-    //@@author A0144915A
     @Before
     public void setupDeleteCommand() {
         this.schedule = new Schedule();
@@ -33,24 +33,22 @@ public class DeleteCommandTest {
         this.deleteCommand.execute("delete hello");
     }
 
-    //@@author A0135788M
     /**
      * Test that respondTo detects various versions of the commands. It should return true even if
      * the format of the arguments are invalid.
      */
     @Test
-    public void testRespondToDeleteCommand() {
+    public void respondTo_inputThatStartsWithDelete_trueReturned() {
         assertTrue(this.deleteCommand.respondTo("delete"));
         assertTrue(this.deleteCommand.respondTo("delete    "));
         assertTrue(this.deleteCommand.respondTo("delete hello"));
     }
 
-    //@@author A0144915A
     /**
      * Test that the delete command is case insensitive.
      */
     @Test
-    public void testCaseInsensitiveRespondToDeleteCommand() {
+    public void respondTo_upperCase_trueReturned() {
         assertTrue(this.deleteCommand.respondTo("dElEte hello"));
     }
 
@@ -58,16 +56,15 @@ public class DeleteCommandTest {
      * Test that respondTo will return false for commands not related to delete tasks.
      */
     @Test
-    public void testDoesNotRespondToOtherCommands() {
+    public void respondTo_otherCommands_falseReturned() {
         assertFalse(this.deleteCommand.respondTo("walala"));
     }
 
-    //@@author A0135788M
     /**
      * Test invalid arguments.
      */
     @Test
-    public void testInvalidArguments() {
+    public void execute_invalidArgument_commandResultReturned() {
         CommandResult result1 = this.deleteCommand.execute("delete");
         CommandResult result2 = this.deleteCommand.execute("delete ");
         CommandResult result3 = this.deleteCommand.execute("delete      ");
@@ -77,24 +74,22 @@ public class DeleteCommandTest {
         assertEquals(expectedInvalidArgumentMessage(), result3.getFeedback());
     }
 
-    //@@author A0144915A
     /**
      * Test the feedback when no match is found.
      */
     @Test
-    public void testCommandResultWhenNoMatchFound() {
+    public void execute_taskNotFound_commandResultReturned() {
         this.schedule.addTask(new Task("flkasdjfaklsdfjaldf"));
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
                 () -> this.deleteCommand.execute("delete that nasty todo"));
         assertEquals("Cannot find task names with \"that nasty todo\".", result.getFeedback());
     }
 
-    //@@author A0144915A
     /**
      * Test the feedback when only one match is found.
      */
     @Test
-    public void testCommandResultWhenOnlyOneMatchFound() {
+    public void execute_oneMatchFound_taskDeleted() {
         this.schedule.addTask(new Task("hello"));
         this.schedule.addTask(new Task("i can' type"));
         CommandResult result = assertChangeBy(() -> this.schedule.getTaskList().size(),
@@ -107,7 +102,7 @@ public class DeleteCommandTest {
      * Test the feedback when multiple matches are found.
      */
     @Test
-    public void testCommandResultWhenMultipleMatchesFound() {
+    public void execute_multipleMatches_commandResultReturned() {
         this.schedule.addTask(new Task("hello world"));
         this.schedule.addTask(new Task("say hello"));
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
@@ -119,7 +114,7 @@ public class DeleteCommandTest {
      * Test the command is awaiting user response when multiple matches are found.
      */
     @Test
-    public void testAwaitingUserResponse() {
+    public void isAwaitingUserResponse_multipleMatches_trueReturned() {
         assertFalse(this.deleteCommand.isAwaitingUserResponse());
         this.setupMultipleHelloTasksAndExecuteAmbiguousCommand();
         assertTrue(this.deleteCommand.isAwaitingUserResponse());
@@ -129,7 +124,7 @@ public class DeleteCommandTest {
      * Test that cancel works properly.
      */
     @Test
-    public void testUserResponseCancel() {
+    public void processUserResponse_cancel_isNotAwaitingUserResponse() {
         this.setupMultipleHelloTasksAndExecuteAmbiguousCommand();
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
                 () -> this.deleteCommand.processUserResponse("cancel"));
@@ -141,7 +136,7 @@ public class DeleteCommandTest {
      * Test that task is deleted if user selects a valid index.
      */
     @Test
-    public void testUserResponseValidIndex() {
+    public void processUserResponse_validIndex_taskDeleted() {
         this.setupMultipleHelloTasksAndExecuteAmbiguousCommand();
         CommandResult result = assertChangeBy(() -> this.schedule.getTaskList().size(),
                 -1,
@@ -154,7 +149,7 @@ public class DeleteCommandTest {
      * Test that task is not deleted if user selects an invalid index.
      */
     @Test
-    public void testUserResponseInvalidIndex() {
+    public void processUserResponse_invalidIndex_commandResultReturned() {
         this.setupMultipleHelloTasksAndExecuteAmbiguousCommand();
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
                 () -> this.deleteCommand.processUserResponse("0"));
@@ -168,7 +163,7 @@ public class DeleteCommandTest {
      * Test that task is not deleted if user types an invalid response.
      */
     @Test
-    public void testUserResponseInvalidResponse() {
+    public void processUserResponse_invalidInput_commandResultReturned() {
         this.setupMultipleHelloTasksAndExecuteAmbiguousCommand();
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
                 () -> this.deleteCommand.processUserResponse("roses are red"));
@@ -178,7 +173,6 @@ public class DeleteCommandTest {
         assertTrue(this.deleteCommand.isAwaitingUserResponse());
     }
 
-    //@@author A0135788M
     private String expectedInvalidArgumentMessage() {
         return "Invalid arguments.\n\n" + this.deleteCommand.getCommandFormat() + "\n\n" + Command.CALLOUTS;
     }

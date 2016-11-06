@@ -7,7 +7,7 @@ import javafx.collections.ObservableList;
 import linenux.command.util.ReminderSearchResult;
 import linenux.util.ArrayListUtil;
 
-
+//@@author A0135788M
 /**
  * Contains all outstanding tasks.
  */
@@ -16,7 +16,6 @@ public class Schedule {
     private final ObservableList<State> states = FXCollections.observableArrayList();
     private final ObservableList<ArrayList<Task>> filteredTaskList = FXCollections.observableArrayList();
 
-    //@@author A0144915A
     /**
      * Constructs an empty schedule
      */
@@ -24,7 +23,6 @@ public class Schedule {
         this.states.add(new State());
     }
 
-    //@@author A0135788M
     public Schedule(State s) {
         this.states.add(s);
     }
@@ -36,7 +34,6 @@ public class Schedule {
         addState(getMostRecentState().addTask(task));
     }
 
-    //@@author A0144915A
     /**
      * Replace {@code originalTask} with {@code newTask}.
      * @param originalTask The original task.
@@ -46,12 +43,10 @@ public class Schedule {
         addState(getMostRecentState().updateTask(originalTask, newTask));
     }
 
-    // @@author A0127694U
     public void updateTask(ArrayList<Task> originalTasks, ArrayList<Task> newTasks) {
         addState(getMostRecentState().updateTasks(originalTasks, newTasks));
     }
 
-    //@@author A0135788M
     /**
      * Delete the specified task.
      *
@@ -61,14 +56,12 @@ public class Schedule {
         addState(getMostRecentState().deleteTask(task));
     }
 
-    //@@author A0140702X
     /**
      * Deletes the specified reminder.
      *
      * @param reminder
      *            The reminder to delete.
      */
-    // @@author A0127694U
     public void deleteReminder(ReminderSearchResult reminder) {
         addState(getMostRecentState().deleteReminder(reminder));
     }
@@ -89,7 +82,6 @@ public class Schedule {
         addState(newState);
     }
 
-    //@@author A0135788M
     /**
      * Clears all tasks from the schedule
      */
@@ -103,7 +95,6 @@ public class Schedule {
         return searchTasks(keywords.split("\\s+"));
     }
 
-    //@@author A0135788M
     /**
      * Performs case-insensitive task search using keywords.
      *
@@ -145,7 +136,6 @@ public class Schedule {
         return getMostRecentState().searchReminders(keywords);
     }
 
-    // @@author A0140702X
     /**
      * Checks if the task given is a unique task.
      */
@@ -161,8 +151,6 @@ public class Schedule {
         }
     }
 
-
-    //@@author A0135788M
     /**
      * Returns the list of states.
      */
@@ -170,12 +158,10 @@ public class Schedule {
         return states;
     }
 
-    //@@author A0140702X
     public ObservableList<ArrayList<Task>> getFilteredTaskList() {
         return filteredTaskList;
     }
 
-    //@@author A0135788M
     /**
      * Returns the list of tasks.
      */
@@ -183,7 +169,6 @@ public class Schedule {
         return getMostRecentState().getTaskList();
     }
 
-    //@@author A0140702X
     /**
      * Returns the list of filtered tasks.
      */
@@ -195,7 +180,6 @@ public class Schedule {
         return filteredTaskList.get(0);
     }
 
-    //@@author A0127694U
     /**
      * Returns the list of all task reminders.
      */
@@ -208,7 +192,6 @@ public class Schedule {
         return result;
     }
 
-    //@@author A0144915A
     /**
      * Remove the last state if there are more than one.
      *
@@ -230,7 +213,6 @@ public class Schedule {
         this.filteredTaskList.setAll(other.filteredTaskList);
     }
 
-    //@@author A0140702X
     /**
      * Adds a new list of filtered tastes into filteredTaskList
      * @param filteredTasks
@@ -240,7 +222,6 @@ public class Schedule {
         filteredTaskList.add(filteredTasks);
     }
 
-    //@@author A0144915A
     /**
      * Returns the most recent state of schedule
      */

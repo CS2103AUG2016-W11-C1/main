@@ -30,7 +30,7 @@ public class UndoCommandTest {
      * Should only return true if the user input is "undo" without any other spaces or characters.
      */
     @Test
-    public void testRespondToUndoCommand() {
+    public void respondTo_undo_trueReturned() {
         assertTrue(undoCommand.respondTo("undo"));
         assertTrue(undoCommand.respondTo("undo "));
         assertTrue(undoCommand.respondTo(" undo"));
@@ -40,7 +40,7 @@ public class UndoCommandTest {
      * Test that respondTo is case-insensitive.
      */
     @Test
-    public void testCaseInsensitiveUndoCommand() {
+    public void respondTo_upperCase_trueReturned() {
         assertTrue(undoCommand.respondTo("UnDo"));
     }
 
@@ -48,7 +48,7 @@ public class UndoCommandTest {
      * Test that respondTo will return false for commands not related to add tasks.
      */
     @Test
-    public void testNotRespondToOtherCommands() {
+    public void respondTo_otherCommands_falseReturned() {
         assertFalse(this.undoCommand.respondTo("halp"));
     }
 
@@ -56,7 +56,7 @@ public class UndoCommandTest {
      * Test that undo successfully removes a state if number of states > 1.
      */
     @Test
-    public void testExecuteUndo() {
+    public void execute_validInput_lastActionUndone() {
         this.schedule.addTask(new Task("task1"));
         assertChangeBy(() -> this.schedule.getStates().size(),
                 -1,
@@ -67,7 +67,7 @@ public class UndoCommandTest {
      * Test that undo does not remove the last state if number of states = 1.
      */
     @Test
-    public void testExecuteUndoWhenStateIsOne() {
+    public void execute_nothingToUndo_nothingHappens() {
         assertNoChange(() -> this.schedule.getStates().size(),
                 () -> this.undoCommand.execute("undo"));
     }
@@ -76,7 +76,7 @@ public class UndoCommandTest {
      * Test successful undo message.
      */
     @Test
-    public void testSuccessfulUndo() {
+    public void execute_validCommand_commandResultReturned() {
         this.schedule.addTask(new Task("task1"));
         assertEquals("Successfully undo last command.", this.undoCommand.execute("undo").getFeedback());
     }
@@ -85,7 +85,7 @@ public class UndoCommandTest {
      * Test no more states to undo message.
      */
     @Test
-    public void testUnsuccessfulUndo() {
+    public void execute_invalidCommand_commandResultReturned() {
         assertEquals("No more commands to undo!", this.undoCommand.execute("undo").getFeedback());
     }
 }

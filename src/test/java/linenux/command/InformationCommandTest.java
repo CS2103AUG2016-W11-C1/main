@@ -39,7 +39,7 @@ public class InformationCommandTest {
      * return true even if the format of the arguments are invalid.
      */
     @Test
-    public void testRespondToInformationCommand() {
+    public void respondTo_information_trueReturned() {
         assertTrue(this.informationCommand.respondTo("information"));
     }
 
@@ -47,7 +47,7 @@ public class InformationCommandTest {
      * Test that respondTo is case-insensitive.
      */
     @Test
-    public void testCaseInsensitiveInformationCommand() {
+    public void respondTo_upperCase_trueReturned() {
         assertTrue(this.informationCommand.respondTo("inFORMatIon"));
     }
 
@@ -56,7 +56,7 @@ public class InformationCommandTest {
      * tasks.
      */
     @Test
-    public void testNotRespondToOtherCommands() {
+    public void respondTo_otherCommands_falseReturned() {
         assertFalse(this.informationCommand.respondTo("halp"));
     }
 
@@ -64,7 +64,7 @@ public class InformationCommandTest {
      * Test information command.
      */
     @Test
-    public void testInformationCommand() {
+    public void execute_validInput_commandResultReturned() {
         CommandResult result = this.informationCommand.execute("information");
         String output = "Version: " + VERSION_NO + "\n\nCurrent Working Directory: \n"
                 + Paths.get("").toAbsolutePath().toString() + "\n\nCurrent Schedule Location: \n" + DEFAULT_FILE_PATH

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import linenux.command.Command;
 import linenux.command.result.CommandResult;
 
+//@@author A0140702X
 /**
  * A collection class to contain all commands that the program can handle.
  */
@@ -12,7 +13,6 @@ public class CommandManager {
     private ArrayList<Command> commands = new ArrayList<>();
     private Command catchAllCommand = null;
 
-    //@@author A0135788M
     /**
      * Assigns the appropriate command to the user input. Contract: only 1
      * command should be awaiting user response at any point in time.
@@ -33,7 +33,6 @@ public class CommandManager {
         return this.catchAllCommand.execute(userInput);
     }
 
-    //@@author A0135788M
     /**
      * @return An {@code ArrayList} of {@code Command}.
      */
@@ -41,7 +40,6 @@ public class CommandManager {
         return this.commands;
     }
 
-    //@@author A0144915A
     /**
      * Add a new {@code Command} into the manager.
      * @param command The new {@code Command} to add.

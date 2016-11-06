@@ -15,7 +15,7 @@ import linenux.control.ControlUnit;
 import linenux.util.LogsCenter;
 import linenux.util.ThrowableUtil;
 
-//@@author A0144915A
+//@@author A0135788M
 /**
  * Controller for the main window.
  */

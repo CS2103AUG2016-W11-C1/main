@@ -2,6 +2,7 @@ package linenux.config;
 
 import java.util.Collection;
 
+//@@author A0144915A
 public interface Config {
     /**
      * @return The version of the program that created the config file.

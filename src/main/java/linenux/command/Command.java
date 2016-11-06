@@ -5,13 +5,13 @@ import java.util.Set;
 
 import linenux.command.result.CommandResult;
 
+//@@author A0135788M
 /**
  * All command types must support interface methods.
  */
 public interface Command {
     public static final String CALLOUTS = "* Non-compulsory fields are in square brackets.\n* Arguments are case insensitive.";
 
-    //@@author A0144915A
     /**
      * Checks if the user input corresponds to the format of the respective
      * command.
@@ -55,7 +55,6 @@ public interface Command {
      */
     public String getDescription();
 
-    //@@author A0135788M
     /**
      * @return A {@code String} describing the format that this {@code Command} expects.
      */
@@ -66,7 +65,6 @@ public interface Command {
      */
     public String getPattern();
 
-    //@@author A0144915A
 
     /**
      * Add a new alias.
@@ -86,7 +84,6 @@ public interface Command {
      */
     public void removeAlias(String alias);
 
-    //@@author A0135788M
     /**
      * Returns the list of trigger words for that command.
      * @return an ArrayList of trigger words for that command.

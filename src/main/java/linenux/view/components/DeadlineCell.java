@@ -14,7 +14,7 @@ import linenux.model.Task;
 import linenux.util.ArrayListUtil;
 import linenux.util.LocalDateTimeUtil;
 
-//@@author A0135788M
+//@@author A0127694U
 /**
  * View component used to display a single deadline.
  */

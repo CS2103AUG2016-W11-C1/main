@@ -9,7 +9,7 @@ import javafx.scene.input.KeyCode;
 import linenux.control.ControlUnit;
 import linenux.util.AutoCompleter;
 
-//@@author A0144915A
+//@@author A0127694U
 /**
  * Controller for the command box, which is where the user enters the command.
  */

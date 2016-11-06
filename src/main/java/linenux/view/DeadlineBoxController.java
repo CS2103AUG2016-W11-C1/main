@@ -13,7 +13,7 @@ import linenux.model.Task;
 import linenux.util.ArrayListUtil;
 import linenux.view.components.DeadlineCell;
 
-//@@author A0144915A
+//@@author A0140702X
 /**
  * Controller for the deadline box, which displays all the deadlines
  */

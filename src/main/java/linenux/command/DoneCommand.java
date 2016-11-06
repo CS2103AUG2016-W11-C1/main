@@ -9,6 +9,7 @@ import linenux.model.Schedule;
 import linenux.model.Task;
 import linenux.util.ArrayListUtil;
 
+//@@author A0135788M
 /**
  * Marks task as done.
  */
@@ -24,7 +25,6 @@ public class DoneCommand extends AbstractCommand {
     private boolean requiresUserResponse;
     private ArrayList<Task> foundTasks;
 
-    //@@author A0135788M
     /**
      * Constructs an {@code AliasCommand}.
      * @param schedule The {@code Schedule} to search and update {@code Task} from.
@@ -34,7 +34,6 @@ public class DoneCommand extends AbstractCommand {
         this.TRIGGER_WORDS.add(TRIGGER_WORD);
     }
 
-    //@@author A0144915
     /**
      * Executes the command based on {@code userInput}. This method operates under the assumption that
      * {@code respondTo(userInput)} is {@code true}.
@@ -68,7 +67,6 @@ public class DoneCommand extends AbstractCommand {
         }
     }
 
-    //@@author A0135788M
     /**
      * @return {@code true} if and only if this {@code Command} is awaiting for user response.
      */
@@ -107,7 +105,6 @@ public class DoneCommand extends AbstractCommand {
         }
     }
 
-    //@@author A0144915A
     /**
      * @return A {@code String} representing the default command word.
      */
@@ -116,7 +113,6 @@ public class DoneCommand extends AbstractCommand {
         return TRIGGER_WORD;
     }
 
-    //@@author A0135788M
     /**
      * @return A {@code String} describing what this {@code Command} does.
      */

@@ -12,6 +12,7 @@ import org.junit.Test;
 import linenux.command.result.CommandResult;
 import linenux.model.Schedule;
 
+//@@author A0135788M
 /**
  * JUnit test for alias command.
  */
@@ -21,7 +22,6 @@ public class AliasCommandTest {
     private DeleteCommand deleteCommand;
     private Schedule schedule;
 
-    //@@author A0144915A
     @Before
     public void setupAliasCommand() {
         this.schedule = new Schedule();
@@ -30,13 +30,12 @@ public class AliasCommandTest {
         this.aliasCommand = new AliasCommand(ArrayListUtil.fromArray(new Command[] {this.addCommand, this.deleteCommand}));
     }
 
-    //@@author A0135788M
     /**
      * Test that respondTo detects various versions of the commands. It should return true even if
      * the format of the arguments are invalid.
      */
     @Test
-    public void testRespondToAliasTaskCommand() {
+    public void respondTo_inputStartingWithAlias_trueReturned() {
         assertTrue(this.aliasCommand.respondTo("alias"));
         assertTrue(this.aliasCommand.respondTo("alias add"));
         assertTrue(this.aliasCommand.respondTo("alias add ad"));
@@ -46,7 +45,7 @@ public class AliasCommandTest {
      * Test that respondTo is case-insensitive.
      */
     @Test
-    public void testCaseInsensitiveAddTaskCommand() {
+    public void repondTo_upperCase_trueReturned() {
         assertTrue(this.aliasCommand.respondTo("AliAs add ad"));
     }
 
@@ -54,7 +53,7 @@ public class AliasCommandTest {
      * Test that respondTo will return false for commands not related to add tasks.
      */
     @Test
-    public void testNotRespondToOtherCommands() {
+    public void respondTo_otherCommands_trueReturned() {
         assertFalse(this.aliasCommand.respondTo("halp"));
     }
 
@@ -62,7 +61,7 @@ public class AliasCommandTest {
      * Test invalid arguments.
      */
     @Test
-    public void testInvalidArguments() {
+    public void execute_invalidArgument_commandResultReturned() {
         CommandResult result = this.aliasCommand.execute("alias add");
         assertEquals("Invalid arguments.\n\n" + this.aliasCommand.getCommandFormat() + "\n\n" + Command.CALLOUTS, result.getFeedback());
     }
@@ -71,7 +70,7 @@ public class AliasCommandTest {
      * Test no such command to alias.
      */
     @Test
-    public void testNoSuchCommandToAlias() {
+    public void execute_invalidCommand_commandResultReturned() {
         CommandResult result = this.aliasCommand.execute("alias hi h");
         assertEquals("No such command to make alias for.", result.getFeedback());
     }
@@ -80,7 +79,7 @@ public class AliasCommandTest {
      * Test alias command must be alphanumeric.
      */
     @Test
-    public void testAliasCommandIsAlphanumeric() {
+    public void execute_invalidAlias_commandResultReturned() {
         CommandResult result = this.aliasCommand.execute("alias add add1234");
         assertEquals("add1234 is now the alias for the add command.", result.getFeedback());
 
@@ -88,12 +87,11 @@ public class AliasCommandTest {
         assertEquals("Alias must be alphanumeric.", result.getFeedback());
     }
 
-    //@@author A0144915A
     /**
      * Test alias creates an alias.
      */
     @Test
-    public void testAliasFunctionality() {
+    public void execute_validInput_aliasSetUp() {
         this.aliasCommand.execute("alias add addi");
         assertChangeBy(() -> this.schedule.getTaskList().size(), 1,
                 () -> this.addCommand.execute("addi CS2103T Tutorial #/tag1 tag2"));
@@ -103,7 +101,7 @@ public class AliasCommandTest {
      * Ensure that aliases can only be used once.
      */
     @Test
-    public void testReusedAlias() {
+    public void execute_usedAlias_commandResultReturned() {
         this.aliasCommand.execute("alias add addi");
         assertTrue(this.addCommand.respondTo("addi"));
         CommandResult result = this.aliasCommand.execute("alias add addi");
@@ -112,7 +110,7 @@ public class AliasCommandTest {
     }
 
     @Test
-    public void testSecondCommandInList() {
+    public void execute_aliasSecondCommandInCommandManager_aliasSetUp() {
         this.aliasCommand.execute("alias delete d");
         assertTrue(this.deleteCommand.respondTo("d"));
     }

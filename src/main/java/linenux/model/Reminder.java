@@ -3,6 +3,7 @@ package linenux.model;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+//@@author A0127694U
 /**
  * Represents a reminder for a task.
  * Both note and timeOfReminder are required fields.
@@ -11,7 +12,6 @@ public class Reminder {
     private String note;
     private LocalDateTime timeOfReminder;
 
-    //@@author A0144915A
     /**
      * Instantiates a {@code Reminder} with no note and time.
      */
@@ -19,7 +19,6 @@ public class Reminder {
         this(null, null);
     }
 
-    //@@author A0135788M
     /**
      * Instantiates a {@code Reminder} with the specified note and time.
      * @param note The note of the reminder.
@@ -30,7 +29,6 @@ public class Reminder {
         this.timeOfReminder = timeOfReminder;
     }
 
-    //@@author A0144915A
     /**
      * The copy constructor of {@code Reminder}.
      * @param other The other instance of {@code Reminder} to copy from.
@@ -40,7 +38,6 @@ public class Reminder {
         this.timeOfReminder = other.timeOfReminder;
     }
 
-    //@@author A0140702X
     /**
      * @return The textual representation of the {@code Reminder}.
      */
@@ -55,7 +52,6 @@ public class Reminder {
         }
     }
 
-    // @@author A0140702X
     /**
      * Check equality.
      * @param other Another {@code Object} to compare with.
@@ -92,12 +88,11 @@ public class Reminder {
      */
     @Override
     public int hashCode() {
-        return note.hashCode() ^ timeOfReminder.hashCode();
+        return note.toLowerCase().hashCode() ^ timeOfReminder.hashCode();
     }
 
     /* Getters */
 
-    //@@author A0135788M
     /**
      * @return The note of the reminder.
      */
@@ -114,7 +109,6 @@ public class Reminder {
 
     /* Setters */
 
-    //@@author A0144915A
     /**
      * Update the note of the reminder.
      * @param newNote The new note.

@@ -8,6 +8,7 @@ import linenux.model.Task;
 import linenux.util.ArrayListUtil;
 import linenux.util.Either;
 
+//@@author A0127694U
 /**
  * Parses new details of task to be edited.
  */
@@ -16,7 +17,6 @@ public class EditArgumentParser extends BaseArgumentParser {
     public String commandFormat;
     public String callouts;
 
-    //@@author A0135788M
     /**
      * The public constructor for {@code EditArgumentParser}.
      * @param timeParserManager A {@code TimeParserManager} used to parse any date time string.
@@ -29,7 +29,6 @@ public class EditArgumentParser extends BaseArgumentParser {
         this.callouts = callouts;
     }
 
-    //@@author A0144915A
     /**
      * Attempts to parse an argument given by the user.
      * @param original A {@code Task}, the original {@code Task} object.
@@ -171,7 +170,6 @@ public class EditArgumentParser extends BaseArgumentParser {
         }
     }
 
-    //@@author A0135788M
     /**
      * @return A {@code CommandResult} indicating that there is no instructions for change.
      */
@@ -179,7 +177,6 @@ public class EditArgumentParser extends BaseArgumentParser {
         return () -> "No changes to be made!";
     }
 
-    //@@author A0135788
     /**
      * @return A {@code CommandResult} when the user argument is invalid.
      */

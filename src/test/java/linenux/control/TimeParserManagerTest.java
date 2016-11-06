@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import linenux.time.parser.TimeParser;
 
-//@@author A0144915A
+//@@author A0127694U
 /**
  * JUnit test for time parser manager.
  */
@@ -18,7 +18,7 @@ public class TimeParserManagerTest {
      * Test that parses can correctly parse.
      */
     @Test
-    public void testCanParse() {
+    public void canParse_trueOrFalseParser_trueWhenParserIsTrue() {
         TimeParser trueParser = new TimeParser() {
             @Override
             public boolean respondTo(String u) {

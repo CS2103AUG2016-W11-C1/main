@@ -32,7 +32,7 @@ public class HelpCommandTest {
      * return true even if invalid.
      */
     @Test
-    public void testRespondToHelpCommand() {
+    public void respondTo_inputThatStartsWithHelp_trueReturned() {
         assertTrue(this.helpCommand.respondTo("help"));
         assertTrue(this.helpCommand.respondTo("help add"));
         assertTrue(this.helpCommand.respondTo("help edit"));
@@ -43,7 +43,7 @@ public class HelpCommandTest {
      * Test that respondTo is case-insensitive
      */
     @Test
-    public void testCaseInsensitiveRespondTo() {
+    public void respondTo_upperCase_trueReturned() {
         assertTrue(this.helpCommand.respondTo("hElP"));
     }
 
@@ -51,7 +51,7 @@ public class HelpCommandTest {
      * Test does not respond to other commands
      */
     @Test
-    public void testNotRespondToOtherCommands() {
+    public void respondTo_otherCommand_falseReturned() {
         assertFalse(this.helpCommand.respondTo("wat"));
     }
 
@@ -59,7 +59,7 @@ public class HelpCommandTest {
      * Test too many arguments given
      */
     @Test
-    public void testInvalidArguments() {
+    public void execute_invalidArgument_commandResultReturned() {
         CommandResult result = this.helpCommand.execute("help add 2");
         assertEquals("Too many arguments given. Please only search for one command at a time.", result.getFeedback());
     }
@@ -68,7 +68,7 @@ public class HelpCommandTest {
      * Test suggestion given for invalid command.
      */
     @Test
-    public void testSuggestionForInvalidCommand() {
+    public void execute_invalidCommand_suggestionGiven() {
         CommandResult result = this.helpCommand.execute("help addd");
         assertEquals("Invalid command given for help. Did you mean \'add\'?", result.getFeedback());
     }
@@ -77,7 +77,7 @@ public class HelpCommandTest {
      * Test execution of help command without specifying any command.
      */
     @Test
-    public void testExecuteHelpCommand() {
+    public void execute_withoutArgument_commandResultReturned() {
         CommandResult result = this.helpCommand.execute("help");
         String addDescription = addCommand.getTriggerWord() + " - \nDescription: " + addCommand.getDescription()
                 + "\nFormat: "
@@ -94,7 +94,7 @@ public class HelpCommandTest {
      * Test execution of help command with specified command
      */
     @Test
-    public void testExecuteHelpForSpecificCommand() {
+    public void execute_specificCommnad_commandResultReturned() {
         CommandResult result = this.helpCommand.execute("help add");
         String addDescription = addCommand.getTriggerWord() + " - \nDescription: " + addCommand.getDescription()
                 + "\nFormat: " + addCommand.getCommandFormat();
@@ -105,7 +105,7 @@ public class HelpCommandTest {
      * Test execution of help command with for command with alias
      */
     @Test
-    public void testExecuteHelpWithCommandsWithAlias() {
+    public void execute_commandAlias_commandResultReturned() {
         this.addCommand.setAlias("a");
         this.addCommand.setAlias("ad");
         this.editCommand.setAlias("e");

@@ -1,9 +1,5 @@
 package linenux.command;
 
-import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.assertFalse;
-import static junit.framework.TestCase.assertTrue;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -13,6 +9,10 @@ import org.junit.Test;
 import linenux.command.result.CommandResult;
 import linenux.model.Schedule;
 import linenux.model.Task;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 //@@author A0135788M
 /**
@@ -48,7 +48,7 @@ public class DoneCommandTest {
      * the format of the arguments are invalid.
      */
     @Test
-    public void testRespondToDoneCommand() {
+    public void respondTo_inputThatBeginsWithDone_trueReturned() {
         assertTrue(this.doneCommand.respondTo("done"));
         assertTrue(this.doneCommand.respondTo("done   "));
         assertTrue(this.doneCommand.respondTo("done hello"));
@@ -58,7 +58,7 @@ public class DoneCommandTest {
      * Test that the done command is case insensitive.
      */
     @Test
-    public void testCaseInsensitiveRespondToDoneCommand() {
+    public void respondTo_upperCase_trueReturned() {
         assertTrue(this.doneCommand.respondTo("dOnE hello"));
     }
 
@@ -66,7 +66,7 @@ public class DoneCommandTest {
      * Test that respondTo will return false for commands not related to done.
      */
     @Test
-    public void testDoesNotRespondToOtherCommands() {
+    public void respondTo_otherCommands_falseReturned() {
         assertFalse(this.doneCommand.respondTo("scooby-dooby-doo"));
     }
 
@@ -74,7 +74,7 @@ public class DoneCommandTest {
      * Test the feedback when no match is found.
      */
     @Test
-    public void testCommandResultWhenNoMatchFound() {
+    public void execute_noMatch_commandResultReturned() {
         this.schedule.addTask(new Task("Shot through the heart"));
         CommandResult result = this.doneCommand.execute("done and you are to blame");
         assertEquals("Cannot find task names with \"and you are to blame\".", result.getFeedback());
@@ -84,7 +84,7 @@ public class DoneCommandTest {
      * Test the feedback when only one match is found.
      */
     @Test
-    public void testCommandResultWhenOnlyOneMatchFound() {
+    public void execute_oneMatch_taskMarkedAsDone() {
         this.schedule.addTask(new Task("Live like we are dying"));
         this.schedule.addTask(new Task("Play on broken strings"));
 
@@ -101,7 +101,7 @@ public class DoneCommandTest {
      * Test the feedback when multiple matches are found.
      */
     @Test
-    public void testCommandResultWhenMultipleMatchesFound() {
+    public void execute_multipleMatches_commandResultReturned() {
         this.schedule.addTask(new Task("hello world"));
         this.schedule.addTask(new Task("say hello"));
         CommandResult result = this.doneCommand.execute("done hello");
@@ -112,7 +112,7 @@ public class DoneCommandTest {
      * Test the command is awaiting user response when multiple matches are found.
      */
     @Test
-    public void testAwaitingUserResponse() {
+    public void isAwaitingUserResponse_multipleMatches_trueReturned() {
         assertFalse(this.doneCommand.isAwaitingUserResponse());
         this.setupMultipleHelloTasksAndExecuteAmbiguousCommand();
         assertTrue(this.doneCommand.isAwaitingUserResponse());
@@ -122,7 +122,7 @@ public class DoneCommandTest {
      * Test that cancel works properly.
      */
     @Test
-    public void testUserResponseCancel() {
+    public void processUserResponse_cancel_isNotAwaitingUserResponse() {
         this.setupMultipleHelloTasksAndExecuteAmbiguousCommand();
         CommandResult result = this.doneCommand.processUserResponse("cancel");
         assertEquals("OK! Not marking any task as done.", result.getFeedback());
@@ -133,7 +133,7 @@ public class DoneCommandTest {
      * Test that task is marked as done if user selects a valid index.
      */
     @Test
-    public void testUserResponseValidIndex() {
+    public void processUserResponse_validIndex_taskMarkedAsDone() {
         this.setupMultipleHelloTasksAndExecuteAmbiguousCommand();
         ArrayList<Task> taskList = getSearchResult("hello");
         assertFalse(taskList.get(0).isDone());
@@ -150,7 +150,7 @@ public class DoneCommandTest {
      * Test that task is not marked as done if user selects an invalid index.
      */
     @Test
-    public void testUserResponseInvalidIndex() {
+    public void processUserResponse_invalidIndex_commandResultReturned() {
         this.setupMultipleHelloTasksAndExecuteAmbiguousCommand();
         ArrayList<Task> taskList = getSearchResult("hello");
         assertFalse(taskList.get(0).isDone());
@@ -169,7 +169,7 @@ public class DoneCommandTest {
      * Test that task is not marked as done if user types an invalid response.
      */
     @Test
-    public void testUserResponseInvalidResponse() {
+    public void processUserResponse_invalidResponse_commandResultReturned() {
         this.setupMultipleHelloTasksAndExecuteAmbiguousCommand();
         ArrayList<Task> taskList = getSearchResult("hello");
         assertFalse(taskList.get(0).isDone());
@@ -184,9 +184,8 @@ public class DoneCommandTest {
         assertTrue(this.doneCommand.isAwaitingUserResponse());
     }
 
-    //@@author A0144915A
     @Test
-    public void testSearchOnlyUndoneTasks() {
+    public void execute_doneTasks_notShown() {
         this.schedule.addTask(new Task("hello"));
         this.schedule.addTask(new Task("hello", LocalDateTime.of(2017, 1, 1, 17, 0)).markAsDone());
 

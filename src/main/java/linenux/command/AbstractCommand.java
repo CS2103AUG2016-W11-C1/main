@@ -33,8 +33,8 @@ public abstract class AbstractCommand implements Command {
     }
 
     /**
-     * Make this {@code Command} to stop responding to {@code alias}.
-     * @param alias A {@code String} representing the alias to remove.
+     * Make this {@code Command} respond to {@code aliases}
+     * @param aliases A {@code String} representing the new aliases.
      */
     @Override
     public void setAliases(Collection<String> aliases) {
@@ -42,23 +42,29 @@ public abstract class AbstractCommand implements Command {
         this.TRIGGER_WORDS.add(this.getTriggerWord());
     }
 
+    /**
+     * Make this {@code Command} to stop responding to {@code alias}.
+     * @param alias A {@code String} representing the alias to remove.
+     */
     @Override
     public void removeAlias(String alias) {
         this.TRIGGER_WORDS.remove(alias);
     }
 
     /**
-     * @return A {@code String} representing a regular expression for this {@code Command}.
+     * @return A {@code Set} of all trigger words.
      */
     @Override
     public Set<String> getTriggerWords() {
         return TRIGGER_WORDS;
     }
 
+    /**
+     * @return A {@code String} representing a regular expression for this {@code Command}.
+     */
     @Override
     public String getPattern(){
         return "(?i)^\\s*(" + getTriggerWordsPattern() + ")(\\s+(?<argument>.*))?$";
-
     }
 
     /**

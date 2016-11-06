@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
-//@@author A0144915A
+//@@author A0127694U
 public class GenericParserTest {
     private GenericParser parser;
 
@@ -17,31 +17,31 @@ public class GenericParserTest {
     }
 
     @Test
-    public void testKeywordsWithoutFlags() {
+    public void parseKeywords_noFlags_keywordsReturned() {
         GenericParser.GenericParserResult result = parser.parse("hello world");
         assertEquals("hello world", result.getKeywords());
     }
 
     @Test
-    public void testTrimKeywordsWithoutFlags() {
+    public void parseKeywords_spacesWithNoFlags_trimmedKeywordsReturned() {
         GenericParser.GenericParserResult result = parser.parse("   hello world    ");
         assertEquals("hello world", result.getKeywords());
     }
 
     @Test
-    public void testKeywordsWithFlags() {
+    public void parseKeywords_withFlags_keywordsReturned() {
         GenericParser.GenericParserResult result = parser.parse("hello world st/12345");
         assertEquals("hello world", result.getKeywords());
     }
 
     @Test
-    public void testTrimKeywordsWithFlags() {
+    public void parseKeywords_spacesWithFlags_trimmedKeywordsReturned() {
         GenericParser.GenericParserResult result = parser.parse("  hello world      st/12345");
         assertEquals("hello world", result.getKeywords());
     }
 
     @Test
-    public void testExtractFlags() {
+    public void parseFlags_singleFlag_flagReturned() {
         GenericParser.GenericParserResult result = parser.parse("hello world st/12345");
         ArrayList<String> flagValues = result.getArguments("st");
         assertEquals(1, flagValues.size());
@@ -49,7 +49,7 @@ public class GenericParserTest {
     }
 
     @Test
-    public void testExtractRepeatedFlags() {
+    public void parseFlags_repeatedFlags_flagsReturned() {
         GenericParser.GenericParserResult result = parser.parse("hello world st/12345 st/67890");
         ArrayList<String> flagValues = result.getArguments("st");
         assertEquals(2, flagValues.size());
@@ -58,7 +58,7 @@ public class GenericParserTest {
     }
 
     @Test
-    public void testRepeatedButSeparatedFlags() {
+    public void parseFlags_repeatedButSeparatedFlags_flagsReturned() {
         GenericParser.GenericParserResult result = parser.parse("hello world st/1 et/2 st/3");
         ArrayList<String> flagValues = result.getArguments("st");
         assertEquals(2, flagValues.size());
@@ -70,7 +70,7 @@ public class GenericParserTest {
     }
 
     @Test
-    public void testNonWordFlags() {
+    public void parseFlags_nonWordsFlags_flagsReturned() {
         GenericParser.GenericParserResult result = parser.parse("hello world #/yo #/foo");
         ArrayList<String> flagValues = result.getArguments("#");
         assertEquals(2, flagValues.size());
@@ -79,7 +79,7 @@ public class GenericParserTest {
     }
 
     @Test
-    public void testMultiwordsFlags() {
+    public void parseFlags_multiWordsFlagValue_flagsReturned() {
         GenericParser.GenericParserResult result = parser.parse("hello world st/Jan 1 et/Jan 2");
         ArrayList<String> flagValues = result.getArguments("st");
         assertEquals(1, flagValues.size());
@@ -90,7 +90,7 @@ public class GenericParserTest {
     }
 
     @Test
-    public void testEmptyFlags() {
+    public void parseFlags_emptyFlagValue_flagReturned() {
         GenericParser.GenericParserResult result = parser.parse("hello st/");
         assertEquals("hello", result.getKeywords());
         ArrayList<String> flagValues = result.getArguments("st");
@@ -99,7 +99,7 @@ public class GenericParserTest {
     }
 
     @Test
-    public void testEmptyFlagFollowBySomething() {
+    public void parseFlags_emptyFlagValueFollowByAnotherFlag_flagsReturned() {
         GenericParser.GenericParserResult result = parser.parse("hello st/  et/12345");
         assertEquals("hello", result.getKeywords());
         ArrayList<String> flagValues = result.getArguments("st");
@@ -111,7 +111,7 @@ public class GenericParserTest {
     }
 
     @Test
-    public void testFlagValueContainsSlash() {
+    public void parseFlags_flagValueContainsSlash_flagReturned() {
         GenericParser.GenericParserResult result = parser.parse("hello st/2016/01/01");
         ArrayList<String> flagValues = result.getArguments("st");
         assertEquals(1, flagValues.size());
@@ -119,7 +119,7 @@ public class GenericParserTest {
     }
 
     @Test
-    public void testLastFlagValueWithTrailingSpaces() {
+    public void parseFlags_flagValueWithTrailingSpaces_flagReturned() {
         GenericParser.GenericParserResult result = parser.parse("hello st/12345       ");
         ArrayList<String> flagValue = result.getArguments("st");
         assertEquals(1, flagValue.size());
@@ -127,7 +127,7 @@ public class GenericParserTest {
     }
 
     @Test
-    public void testEmptyKeywords() {
+    public void parseFlags_noKeywords_flagReturned() {
         GenericParser.GenericParserResult result = parser.parse("st/12345");
         assertEquals("", result.getKeywords());
         ArrayList<String> flagValues = result.getArguments("st");

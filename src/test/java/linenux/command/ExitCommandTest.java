@@ -8,7 +8,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.contrib.java.lang.system.ExpectedSystemExit;
 
-//@@author A0135788M
+//@@author A0140702X
 /**
  * JUnit test for exit command.
  */
@@ -27,7 +27,7 @@ public class ExitCommandTest {
      * Test that respondTo detects various versions of the commands.
      */
     @Test
-    public void testRespondToExitCommand() {
+    public void respondTo_inputThatStartsWithExit_trueReturned() {
         assertTrue(this.exitCommand.respondTo("exit"));
         assertTrue(this.exitCommand.respondTo("exit    "));
         assertTrue(this.exitCommand.respondTo("exit now"));
@@ -37,7 +37,7 @@ public class ExitCommandTest {
      * Test that respondTo is case-insensitive.
      */
     @Test
-    public void testCaseInsensitiveExitCommand() {
+    public void respondTo_upperCase_trueReturned() {
         assertTrue(this.exitCommand.respondTo("ExIt"));
     }
 
@@ -45,7 +45,7 @@ public class ExitCommandTest {
      * Test that respondTo will return false for commands not related to exit.
      */
     @Test
-    public void testNotRespondToOtherCommands() {
+    public void respondTo_otherCommands_falseReturned() {
         assertFalse(this.exitCommand.respondTo("add"));
     }
 
@@ -53,7 +53,7 @@ public class ExitCommandTest {
      * Test that executing an exit command will quit the applications.
      */
     @Test
-    public void testExecuteExitCommand() {
+    public void execute() {
         exit.expectSystemExitWithStatus(0);
         this.exitCommand.execute("exit");
     }

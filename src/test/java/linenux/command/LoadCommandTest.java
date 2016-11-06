@@ -20,7 +20,7 @@ public class LoadCommandTest extends FileCommandsTest {
         this.loadCommand = new LoadCommand(this.controlUnit, this.tempDir);
     }
     @Test
-    public void testRelativePathFileExistAndReadable() throws Exception {
+    public void execute_existentAndReadableRelativePath_scheduleLoaded() throws Exception {
         String target = this.tempDir.resolve("hello.xml").toString();
         new FileOutputStream(target).close();
 
@@ -31,7 +31,7 @@ public class LoadCommandTest extends FileCommandsTest {
     }
 
     @Test
-    public void testAbsolutePathFileExistAndReadable() throws Exception {
+    public void execute_existentAndReadableAbsolutePath_scheduleLoaded() throws Exception {
         String target = this.tempDir.resolve("hello.xml").toString();
         new FileOutputStream(target).close();
 
@@ -42,7 +42,7 @@ public class LoadCommandTest extends FileCommandsTest {
     }
 
     @Test
-    public void testFileDoesNotExist() {
+    public void execute_pathDoesNotExist_commandResultReturned() {
         String target = this.tempDir.resolve("404.xml").toString();
 
         CommandResult result = this.loadCommand.execute("load 404.xml");
@@ -52,7 +52,7 @@ public class LoadCommandTest extends FileCommandsTest {
     }
 
     @Test
-    public void testFileExistsButNotReadable() throws Exception {
+    public void execute_fileExistsButNotReadable_commandResultReturned() throws Exception {
         String target = this.tempDir.resolve("hello.xml").toString();
         File f = new File(target);
         new FileOutputStream(f).close();
@@ -68,7 +68,7 @@ public class LoadCommandTest extends FileCommandsTest {
     }
 
     @Test
-    public void testFileIsNotAFile() {
+    public void execute_pathIsNotAFile_commandResultReturned() {
         String target = this.tempDir.resolve("hello.xml").toString();
         File f = new File(target);
         f.mkdirs();
@@ -80,7 +80,7 @@ public class LoadCommandTest extends FileCommandsTest {
     }
 
     @Test
-    public void testInvalidCommand() {
+    public void execute_invalidArgument_commandResultReturned() {
         CommandResult result = this.loadCommand.execute("load");
         String expectedFeedback = "Invalid arguments.\n\n" +
                 "load PATH\n\n" +

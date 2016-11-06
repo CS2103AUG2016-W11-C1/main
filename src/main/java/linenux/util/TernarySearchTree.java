@@ -2,7 +2,7 @@ package linenux.util;
 
 import java.util.ArrayList;
 
-//@@author A0135788M
+//@@author A0140702X
 /**
  * Ternary Search Tree data structure.
  */

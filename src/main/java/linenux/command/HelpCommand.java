@@ -6,6 +6,7 @@ import java.util.Set;
 import linenux.command.result.CommandResult;
 import linenux.util.StringsSimilarity;
 
+//@@author A0140702X
 /**
  * Displays available command and their formats.
  */
@@ -16,13 +17,15 @@ public class HelpCommand extends AbstractCommand {
 
     private ArrayList<Command> commands;
 
-    //@@author A0144915A
+    /**
+     * Instantiate the {@code HelpCommand}.
+     * @param commands An {@code ArrayList} of supported {@code Command}.
+     */
     public HelpCommand(ArrayList<Command> commands) {
         this.commands = commands;
         this.TRIGGER_WORDS.add(TRIGGER_WORD);
     }
 
-    //@@author A0140702X
     /**
      * Executes the command based on {@code userInput}. This method operates under the assumption that
      * {@code respondTo(userInput)} is {@code true}.
@@ -60,11 +63,14 @@ public class HelpCommand extends AbstractCommand {
         return displaySpecificHelp(commandRequested);
     }
 
+    /**
+     * @param commandRequested The {@code Command} that the user specified.
+     * @return {@code CommandResult} containing help for {@code commandRequested}.
+     */
     private CommandResult displaySpecificHelp(Command commandRequested) {
         return () -> makeHelpDescriptionForCommand(commandRequested);
     }
 
-    //@@author A0135788M
     /**
      * @return A {@code String} representing the default command word.
      */
@@ -89,7 +95,9 @@ public class HelpCommand extends AbstractCommand {
         return COMMAND_FORMAT;
     }
 
-    //@@author A0140702X
+    /**
+     * @return Formatted help message for all {@code Command}.
+     */
     private String displayAllHelp() {
         StringBuilder builder = new StringBuilder();
         for (Command command: this.commands) {
@@ -101,6 +109,10 @@ public class HelpCommand extends AbstractCommand {
         return builder.toString();
     }
 
+    /**
+     * @param command The {@code Command} to display help message.
+     * @return Formatted help message for {@code command}.
+     */
     private String makeHelpDescriptionForCommand(Command command) {
         StringBuilder builder = new StringBuilder();
         Set<String> aliasList = command.getTriggerWords();
@@ -128,10 +140,17 @@ public class HelpCommand extends AbstractCommand {
         return builder.toString();
     }
 
+    /**
+     * @return {@code CommandResult} indicating that argument is invalid.
+     */
     private CommandResult makeInvalidKeywordResponse() {
         return () -> "Too many arguments given. Please only search for one command at a time.";
     }
 
+    /**
+     * @param userInput The user response.
+     * @return {@code CommandResult} indicating that {@code userInput} is not a valid response.
+     */
     private CommandResult makeInvalidCommandResponse(String userInput) {
         assert (userInput.split(" ").length == 1);
 
@@ -154,10 +173,17 @@ public class HelpCommand extends AbstractCommand {
         }
     }
 
+    /**
+     * @return {@code CommandResult} indicating that the specified command is invalid.
+     */
     private CommandResult makeInvalidCommandResponse() {
         return () -> "Invalid command.";
     }
 
+    /**
+     * @param suggestion The suggested command.
+     * @return {@code CommandResult} indicating that the specified command is invalid.
+     */
     private CommandResult makeResponseWithSuggestion(String suggestion) {
         return () -> "Invalid command given for help. Did you mean \'" + suggestion + "\'?";
     }

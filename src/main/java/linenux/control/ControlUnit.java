@@ -36,6 +36,7 @@ import linenux.model.Schedule;
 import linenux.storage.ScheduleStorage;
 import linenux.storage.XmlScheduleStorage;
 
+//@@author A0135788M
 /**
  * Controls data flow for the entire application.
  */
@@ -47,7 +48,6 @@ public class ControlUnit {
     private Config config;
     private ArrayList<BiConsumer<String, CommandResult>> postExecuteListeners = new ArrayList<>();
 
-    //@@author A0135788M
     /**
      * Constructs a {@code ControlUnit} from a {@code Config}.
      * @param config A {@code Config} representing the application configuration.
@@ -95,7 +95,6 @@ public class ControlUnit {
         return result;
     }
 
-    //@@author A0144915A
     /**
      * @return The current {@code Schedule}.
      */

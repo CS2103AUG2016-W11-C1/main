@@ -1,11 +1,11 @@
 package linenux.util;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 import java.time.LocalDateTime;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.Before;
+import org.junit.Test;
 
 //@@author A0144915A
 public class LocalDateTimeUtilTest {
@@ -18,14 +18,14 @@ public class LocalDateTimeUtilTest {
     }
 
     @Test
-    public void testMin() {
+    public void min_earlierAndLaterTime_earlierTimeReturned() {
         assertEquals(first, LocalDateTimeUtil.min(first, first));
         assertEquals(first, LocalDateTimeUtil.min(first, second));
         assertEquals(first, LocalDateTimeUtil.min(second, first));
     }
 
     @Test
-    public void testMax() {
+    public void max_earlierAndLaterTime_laterTimeReturned() {
         assertEquals(first, LocalDateTimeUtil.max(first, first));
         assertEquals(second, LocalDateTimeUtil.max(first, second));
         assertEquals(second, LocalDateTimeUtil.max(second, first));
