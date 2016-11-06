@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import linenux.control.ControlUnit;
 import linenux.model.Reminder;
+import linenux.model.State;
 import linenux.model.Task;
 import linenux.util.ArrayListUtil;
 
@@ -31,6 +32,7 @@ public class ExpandableResultBoxController {
     private boolean isShowingReminders = true;
     private UserAction lastUserAction = UserAction.HIDE;
     private Clock clock = Clock.systemDefaultZone();
+    private boolean isShowingFilteredTasks = false;
 
     /**
      * Update the application {@code ControlUnit}.
@@ -42,6 +44,9 @@ public class ExpandableResultBoxController {
             this.setText(this.controlUnit.getLastCommandResultProperty().get().getFeedback());
         });
         this.renderInitialReminders();
+        this.controlUnit.getSchedule().getStates().addListener((ListChangeListener<? super State>) change -> {
+            this.onTaskListChange();
+        });
         this.controlUnit.getSchedule().getFilteredTaskList().addListener((ListChangeListener<? super ArrayList<Task>>) (change) -> {
             this.onFilteredTaskListChange();
         });
@@ -100,12 +105,26 @@ public class ExpandableResultBoxController {
         }
     }
 
+    private void onTaskListChange() {
+        ArrayList<Task> tasks = this.controlUnit.getSchedule().getTaskList();
+        ArrayList<Task> undoneTasks = new ArrayListUtil.ChainableArrayListUtil<>(tasks)
+                .filter(Task::isNotDone)
+                .value();
+
+        this.isShowingFilteredTasks = false;
+
+        if (this.isShowingReminders) {
+            this.renderReminders(undoneTasks);
+        }
+    }
+
     /**
      * Callback when filtered task changes.
      */
     private void onFilteredTaskListChange() {
+        this.isShowingFilteredTasks = true;
         if (this.isShowingReminders) {
-            this.renderReminders();
+            this.renderReminders(this.controlUnit.getSchedule().getFilteredTasks());
         }
     }
 
@@ -113,24 +132,24 @@ public class ExpandableResultBoxController {
      * Render the initial set of reminders.
      */
     private void renderInitialReminders() {
-        String formattedReminders = this.formatReminders();
+        String formattedReminders = this.formatReminders(this.controlUnit.getSchedule().getTaskList());
 
         if (!formattedReminders.isEmpty()) {
             this.lastUserAction = UserAction.SHOW;
             this.isShowingReminders = true;
             this.expanded.set(true);
-            this.renderReminders();
+            this.renderReminders(this.controlUnit.getSchedule().getTaskList());
         }
     }
 
     /**
      * @return Format the reminders that will be shown.
      */
-    private String formatReminders() {
+    private String formatReminders(ArrayList<Task> tasks) {
         LocalDateTime now = LocalDateTime.now(this.clock);
         LocalDateTime today = now.withHour(0).withMinute(0).withSecond(0);
 
-        ArrayList<Reminder> reminders = new ArrayListUtil.ChainableArrayListUtil<>(this.controlUnit.getSchedule().getFilteredTasks())
+        ArrayList<Reminder> reminders = new ArrayListUtil.ChainableArrayListUtil<>(tasks)
                 .map(Task::getReminders)
                 .foldr((x, xs) -> {
                     xs.addAll(x);
@@ -147,6 +166,14 @@ public class ExpandableResultBoxController {
      * Display the reminders on screen.
      */
     private void renderReminders() {
-        this.textArea.setText(formatReminders());
+        if (this.isShowingFilteredTasks) {
+            this.onFilteredTaskListChange();
+        } else {
+            this.onTaskListChange();
+        }
+    }
+
+    private void renderReminders(ArrayList<Task> tasks) {
+        this.textArea.setText(formatReminders(tasks));
     }
 }
