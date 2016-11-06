@@ -1,0 +1,556 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Schedule>
+    <state>
+        <tasks>
+            <taskName>Meeting With Prof</taskName>
+            <isDone>false</isDone>
+            <startTime>2016-11-17T15:00</startTime>
+            <endTime>2016-11-17T17:00</endTime>
+            <tags>
+                <tags>CS1010</tags>
+                <tags>Meeting</tags>
+            </tags>
+            <reminders/>
+        </tasks>
+        <tasks>
+            <taskName>v0.5 Submission</taskName>
+            <isDone>false</isDone>
+            <startTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <endTime>2016-11-07T23:59</endTime>
+            <tags>
+                <tags>Submission</tags>
+                <tags>CS2103</tags>
+                <tags>Project</tags>
+            </tags>
+            <reminders/>
+        </tasks>
+        <tasks>
+            <taskName>Practice Playing the Piano</taskName>
+            <isDone>false</isDone>
+            <startTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <endTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <tags>
+                <tags>Hobby</tags>
+            </tags>
+            <reminders/>
+        </tasks>
+        <tasks>
+            <taskName>Go Cycling</taskName>
+            <isDone>false</isDone>
+            <startTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <endTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <tags>
+                <tags>Hobby</tags>
+                <tags>Fun</tags>
+            </tags>
+            <reminders/>
+        </tasks>
+        <tasks>
+            <taskName>v0.5 Demo</taskName>
+            <isDone>false</isDone>
+            <startTime>2016-11-09T11:00</startTime>
+            <endTime>2016-11-09T11:15</endTime>
+            <tags>
+                <tags>CS2103</tags>
+                <tags>Project</tags>
+                <tags>Presentation</tags>
+            </tags>
+            <reminders>
+                <reminders>
+                    <note>Arrive early to set up.</note>
+                    <timeOfReminder>2016-11-09T10:40</timeOfReminder>
+                </reminders>
+            </reminders>
+        </tasks>
+        <tasks>
+            <taskName>Watch Dr Strange</taskName>
+            <isDone>false</isDone>
+            <startTime>2016-11-11T19:00</startTime>
+            <endTime>2016-11-11T21:00</endTime>
+            <tags>
+                <tags>Fun</tags>
+                <tags>Movie</tags>
+            </tags>
+            <reminders>
+                <reminders>
+                    <note>Buy tickets.</note>
+                    <timeOfReminder>2016-11-10T17:00</timeOfReminder>
+                </reminders>
+            </reminders>
+        </tasks>
+        <tasks>
+            <taskName>Written Reflection Assessment</taskName>
+            <isDone>false</isDone>
+            <startTime>2016-11-08T12:00</startTime>
+            <endTime>2016-11-08T13:30</endTime>
+            <tags>
+                <tags>Assessment</tags>
+                <tags>CS2101</tags>
+            </tags>
+            <reminders>
+                <reminders>
+                    <note>Review previous assignments.</note>
+                    <timeOfReminder>2016-11-07T23:59</timeOfReminder>
+                </reminders>
+            </reminders>
+        </tasks>
+        <tasks>
+            <taskName>Final Project Submission</taskName>
+            <isDone>false</isDone>
+            <startTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <endTime>2016-11-13T23:59</endTime>
+            <tags>
+                <tags>GEK1919</tags>
+                <tags>Project</tags>
+                <tags>Submission</tags>
+            </tags>
+            <reminders/>
+        </tasks>
+        <tasks>
+            <taskName>New Idea Presentation</taskName>
+            <isDone>false</isDone>
+            <startTime>2017-02-03T11:00</startTime>
+            <endTime>2017-02-03T13:00</endTime>
+            <tags>
+                <tags>Work</tags>
+                <tags>Presentation</tags>
+            </tags>
+            <reminders/>
+        </tasks>
+        <tasks>
+            <taskName>Buy Eggs</taskName>
+            <isDone>true</isDone>
+            <startTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <endTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <tags>
+                <tags>Errands</tags>
+            </tags>
+            <reminders/>
+        </tasks>
+        <tasks>
+            <taskName>Submit University Application</taskName>
+            <isDone>true</isDone>
+            <startTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <endTime>2014-04-03T23:59</endTime>
+            <tags>
+                <tags>Application</tags>
+            </tags>
+            <reminders/>
+        </tasks>
+        <tasks>
+            <taskName>Buy a New Laptop</taskName>
+            <isDone>false</isDone>
+            <startTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <endTime>2017-06-06T12:00</endTime>
+            <tags/>
+            <reminders/>
+        </tasks>
+        <tasks>
+            <taskName>Renew Phone Plan</taskName>
+            <isDone>false</isDone>
+            <startTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <endTime>2016-12-12T12:00</endTime>
+            <tags>
+                <tags>Errands</tags>
+            </tags>
+            <reminders/>
+        </tasks>
+        <tasks>
+            <taskName>Attend Wedding</taskName>
+            <isDone>false</isDone>
+            <startTime>2017-12-31T17:00</startTime>
+            <endTime>2017-12-31T22:00</endTime>
+            <tags>
+                <tags>Presents</tags>
+                <tags>Friend</tags>
+            </tags>
+            <reminders/>
+        </tasks>
+        <tasks>
+            <taskName>Volunteer for Charity</taskName>
+            <isDone>true</isDone>
+            <startTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <endTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <tags/>
+            <reminders/>
+        </tasks>
+        <tasks>
+            <taskName>Redecorate Bedroom</taskName>
+            <isDone>false</isDone>
+            <startTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <endTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <tags/>
+            <reminders/>
+        </tasks>
+        <tasks>
+            <taskName>Book Release</taskName>
+            <isDone>false</isDone>
+            <startTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <endTime>2017-05-23T00:00</endTime>
+            <tags>
+                <tags>New Book</tags>
+                <tags>Favourite Series</tags>
+            </tags>
+            <reminders>
+                <reminders>
+                    <note>Place preorder.</note>
+                    <timeOfReminder>2017-05-01T12:00</timeOfReminder>
+                </reminders>
+            </reminders>
+        </tasks>
+        <tasks>
+            <taskName>Go for HHN 6</taskName>
+            <isDone>true</isDone>
+            <startTime>2016-09-30T19:30</startTime>
+            <endTime>2016-10-31T01:30</endTime>
+            <tags>
+                <tags>Halloween</tags>
+                <tags>Fun</tags>
+            </tags>
+            <reminders/>
+        </tasks>
+        <tasks>
+            <taskName>Colour Run 2016</taskName>
+            <isDone>true</isDone>
+            <startTime>2016-08-20T13:00</startTime>
+            <endTime>2016-08-20T15:00</endTime>
+            <tags>
+                <tags>Fun</tags>
+                <tags>Hobby</tags>
+            </tags>
+            <reminders/>
+        </tasks>
+        <tasks>
+            <taskName>Give Birthday Present to Friend</taskName>
+            <isDone>false</isDone>
+            <startTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <endTime>2016-04-01T23:59</endTime>
+            <tags>
+                <tags>Presents</tags>
+                <tags>Friend</tags>
+            </tags>
+            <reminders>
+                <reminders>
+                    <note>Buy present for Friend's birthday.</note>
+                    <timeOfReminder>2016-03-01T12:00</timeOfReminder>
+                </reminders>
+            </reminders>
+        </tasks>
+        <tasks>
+            <taskName>Give Christmas Present to Parents</taskName>
+            <isDone>false</isDone>
+            <startTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <endTime>2016-12-25T23:59</endTime>
+            <tags>
+                <tags>Presents</tags>
+                <tags>Family</tags>
+            </tags>
+            <reminders/>
+        </tasks>
+        <tasks>
+            <taskName>Review Career Plans</taskName>
+            <isDone>false</isDone>
+            <startTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <endTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <tags>
+                <tags>Work</tags>
+            </tags>
+            <reminders/>
+        </tasks>
+        <tasks>
+            <taskName>Attend Career Fairs</taskName>
+            <isDone>false</isDone>
+            <startTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <endTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <tags>
+                <tags>Work</tags>
+            </tags>
+            <reminders/>
+        </tasks>
+        <tasks>
+            <taskName>Plan Graduation Trip</taskName>
+            <isDone>false</isDone>
+            <startTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <endTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <tags>
+                <tags>Fun</tags>
+                <tags>Friend</tags>
+                <tags>Graduation</tags>
+                <tags>Travel</tags>
+            </tags>
+            <reminders>
+                <reminders>
+                    <note>Invite friends.</note>
+                    <timeOfReminder>2016-11-10T11:00</timeOfReminder>
+                </reminders>
+            </reminders>
+        </tasks>
+        <tasks>
+            <taskName>Learn Ruby On Rails</taskName>
+            <isDone>false</isDone>
+            <startTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <endTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <tags>
+                <tags>Fun</tags>
+                <tags>Hobby</tags>
+                <tags>Programming</tags>
+            </tags>
+            <reminders/>
+        </tasks>
+        <tasks>
+            <taskName>Overseas Trip with Friends</taskName>
+            <isDone>true</isDone>
+            <startTime>2015-12-03T03:00</startTime>
+            <endTime>2015-12-16T17:00</endTime>
+            <tags>
+                <tags>Fun</tags>
+                <tags>Travel</tags>
+                <tags>Friend</tags>
+            </tags>
+            <reminders/>
+        </tasks>
+        <tasks>
+            <taskName>Graduation Trip</taskName>
+            <isDone>false</isDone>
+            <startTime>2018-06-06T05:00</startTime>
+            <endTime>2018-08-08T21:00</endTime>
+            <tags>
+                <tags>Fun</tags>
+                <tags>Friend</tags>
+                <tags>Graduation</tags>
+                <tags>Travel</tags>
+                <tags>Tentative</tags>
+            </tags>
+            <reminders/>
+        </tasks>
+        <tasks>
+            <taskName>Submit ATAP Proposal</taskName>
+            <isDone>false</isDone>
+            <startTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <endTime>2016-12-10T23:59</endTime>
+            <tags>
+                <tags>Tentative</tags>
+                <tags>Internship</tags>
+            </tags>
+            <reminders/>
+        </tasks>
+        <tasks>
+            <taskName>Read the News More Often</taskName>
+            <isDone>false</isDone>
+            <startTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <endTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <tags/>
+            <reminders/>
+        </tasks>
+        <tasks>
+            <taskName>Listen to More Music</taskName>
+            <isDone>false</isDone>
+            <startTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <endTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <tags/>
+            <reminders/>
+        </tasks>
+        <tasks>
+            <taskName>Study For Exams</taskName>
+            <isDone>false</isDone>
+            <startTime>2016-11-06T00:00</startTime>
+            <endTime>2016-11-30T23:59</endTime>
+            <tags>
+                <tags>Exam</tags>
+                <tags>Study</tags>
+                <tags>School</tags>
+            </tags>
+            <reminders/>
+        </tasks>
+        <tasks>
+            <taskName>Just a really really long todo which allows you to see the wrapping of text. Hopefully it's long enough now, but I'll make it longer just in case.</taskName>
+            <isDone>false</isDone>
+            <startTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <endTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <tags>
+                <tags>v0.5 demo</tags>
+            </tags>
+            <reminders/>
+        </tasks>
+        <tasks>
+            <taskName>Eusoff Dance Production</taskName>
+            <isDone>false</isDone>
+            <startTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <endTime>2016-02-05T19:30</endTime>
+            <tags>
+                <tags>Hall</tags>
+                <tags>Dance</tags>
+            </tags>
+            <reminders/>
+        </tasks>
+        <tasks>
+            <taskName>Introduction to Programming, in Swift Playgrounds</taskName>
+            <isDone>true</isDone>
+            <startTime>2016-10-22T13:00</startTime>
+            <endTime>2016-10-22T16:00</endTime>
+            <tags>
+                <tags>NUS Hackers</tags>
+                <tags>Programming</tags>
+            </tags>
+            <reminders/>
+        </tasks>
+        <tasks>
+            <taskName>SOC Welfare Pack Collection</taskName>
+            <isDone>false</isDone>
+            <startTime>2016-11-01T11:00</startTime>
+            <endTime>2016-11-03T13:00</endTime>
+            <tags>
+                <tags>Free</tags>
+                <tags>Welfare Pack</tags>
+            </tags>
+            <reminders/>
+        </tasks>
+        <tasks>
+            <taskName>Finish the Semester</taskName>
+            <isDone>false</isDone>
+            <startTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <endTime>2016-12-03T23:59</endTime>
+            <tags>
+                <tags>School</tags>
+            </tags>
+            <reminders/>
+        </tasks>
+        <tasks>
+            <taskName>Winter Break AY201617</taskName>
+            <isDone>false</isDone>
+            <startTime>2016-12-03T23:59</startTime>
+            <endTime>2017-01-08T23:59</endTime>
+            <tags/>
+            <reminders>
+                <reminders>
+                    <note>Think of fun things to do.</note>
+                    <timeOfReminder>2016-11-29T12:00</timeOfReminder>
+                </reminders>
+            </reminders>
+        </tasks>
+        <tasks>
+            <taskName>End of CS2103 Project</taskName>
+            <isDone>false</isDone>
+            <startTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <endTime>2016-11-09T11:15</endTime>
+            <tags>
+                <tags>Yay</tags>
+                <tags>Project</tags>
+                <tags>CS2103</tags>
+            </tags>
+            <reminders/>
+        </tasks>
+        <tasks>
+            <taskName>Send a Postcard</taskName>
+            <isDone>false</isDone>
+            <startTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <endTime>2016-11-09T15:00</endTime>
+            <tags>
+                <tags>Friend</tags>
+                <tags>Presents</tags>
+            </tags>
+            <reminders/>
+        </tasks>
+        <tasks>
+            <taskName>Do Report</taskName>
+            <isDone>true</isDone>
+            <startTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <endTime>2016-11-20T23:59</endTime>
+            <tags>
+                <tags>Project</tags>
+                <tags>Submission</tags>
+            </tags>
+            <reminders/>
+        </tasks>
+        <tasks>
+            <taskName>Read About World History</taskName>
+            <isDone>false</isDone>
+            <startTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <endTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <tags>
+                <tags>Hobby</tags>
+            </tags>
+            <reminders/>
+        </tasks>
+        <tasks>
+            <taskName>Train the Dog</taskName>
+            <isDone>false</isDone>
+            <startTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <endTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <tags/>
+            <reminders/>
+        </tasks>
+        <tasks>
+            <taskName>v0.5rc Submission</taskName>
+            <isDone>true</isDone>
+            <startTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <endTime>2016-11-02T23:59</endTime>
+            <tags>
+                <tags>CS2103</tags>
+                <tags>Project</tags>
+                <tags>Submission</tags>
+            </tags>
+            <reminders/>
+        </tasks>
+        <tasks>
+            <taskName>v0.4 Submission</taskName>
+            <isDone>true</isDone>
+            <startTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <endTime>2016-10-26T23:59</endTime>
+            <tags>
+                <tags>Submission</tags>
+                <tags>Project</tags>
+                <tags>CS2103</tags>
+            </tags>
+            <reminders/>
+        </tasks>
+        <tasks>
+            <taskName>v0.3 Submission</taskName>
+            <isDone>true</isDone>
+            <startTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <endTime>2016-10-19T23:59</endTime>
+            <tags>
+                <tags>Submission</tags>
+                <tags>CS2103</tags>
+                <tags>Project</tags>
+            </tags>
+            <reminders/>
+        </tasks>
+        <tasks>
+            <taskName>v0.2 Submission</taskName>
+            <isDone>true</isDone>
+            <startTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <endTime>2016-10-12T23:50</endTime>
+            <tags>
+                <tags>Submission</tags>
+                <tags>CS2103</tags>
+                <tags>Project</tags>
+            </tags>
+            <reminders/>
+        </tasks>
+        <tasks>
+            <taskName>v0.1 Submission</taskName>
+            <isDone>true</isDone>
+            <startTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <endTime>2016-10-05T23:59</endTime>
+            <tags>
+                <tags>Project</tags>
+                <tags>CS2103</tags>
+                <tags>Submission</tags>
+            </tags>
+            <reminders/>
+        </tasks>
+        <tasks>
+            <taskName>v0.0 Submission</taskName>
+            <isDone>true</isDone>
+            <startTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <endTime>2016-09-28T23:59</endTime>
+            <tags>
+                <tags>Submission</tags>
+                <tags>CS2103</tags>
+                <tags>Project</tags>
+            </tags>
+            <reminders/>
+        </tasks>
+    </state>
+</Schedule>

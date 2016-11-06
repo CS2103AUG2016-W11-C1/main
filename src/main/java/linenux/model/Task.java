@@ -364,7 +364,7 @@ public class Task {
             return "";
         }
 
-        builder.append(" [");
+        builder.append(" [ ");
         builder.append("Tags:");
         for (String s : this.tags) {
             builder.append(" \"");
