@@ -25,21 +25,10 @@ public class Main extends Application {
 
     protected Config config = new JsonConfig();
 
-    public static void main(String args) {
-        launch(args);
-    }
-
     @Override
     public void start(Stage primaryStage) {
         logger.info("Setting up main window");
         setupMainWindow(primaryStage);
-    }
-
-    @Override
-    public void stop() throws Exception {
-        logger.info("Stopping the application");
-        super.stop();
-        System.exit(0);
     }
 
     /**
