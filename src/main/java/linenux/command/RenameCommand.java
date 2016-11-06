@@ -15,7 +15,7 @@ import linenux.model.Task;
 public class RenameCommand extends AbstractCommand {
     private static final String TRIGGER_WORD = "rename";
     private static final String DESCRIPTION = "Changes the name of specified tag in all tasks.";
-    public static final String COMMAND_FORMAT = "rename TAG_NAME... #/TAG...";
+    public static final String COMMAND_FORMAT = "rename OLD_TAG #/NEW_TAG";
 
     private Schedule schedule;
 

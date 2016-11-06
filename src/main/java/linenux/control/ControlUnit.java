@@ -176,31 +176,33 @@ public class ControlUnit {
      */
     private void initializeCommands() {
         this.commandManager.addCommand(new AddCommand(this.schedule));
-        this.commandManager.addCommand(new EditReminderCommand(this.schedule));
-        this.commandManager.addCommand(new DeleteReminderCommand(this.schedule));
+        this.commandManager.addCommand(new RemindCommand(this.schedule));
         this.commandManager.addCommand(new EditCommand(this.schedule));
+        this.commandManager.addCommand(new EditReminderCommand(this.schedule));
+
         this.commandManager.addCommand(new RenameCommand(this.schedule));
         this.commandManager.addCommand(new DoneCommand(this.schedule));
         this.commandManager.addCommand(new UndoneCommand(this.schedule));
-        this.commandManager.addCommand(new RemindCommand(this.schedule));
         this.commandManager.addCommand(new DeleteCommand(this.schedule));
+
+        this.commandManager.addCommand(new DeleteReminderCommand(this.schedule));
         this.commandManager.addCommand(new ClearCommand(this.schedule));
-
         this.commandManager.addCommand(new ListCommand(this.schedule));
-        this.commandManager.addCommand(new ViewCommand(this.schedule));
         this.commandManager.addCommand(new TodayCommand(this.schedule));
-        this.commandManager.addCommand(new TomorrowCommand(this.schedule));
 
+        this.commandManager.addCommand(new TomorrowCommand(this.schedule));
+        this.commandManager.addCommand(new ViewCommand(this.schedule));
+        this.commandManager.addCommand(new FreeTimeCommand(this.schedule));
+        this.commandManager.addCommand(new UndoCommand(this.schedule));
+
+        this.commandManager.addCommand(new AliasCommand(this.commandManager.getCommandList()));
+        this.commandManager.addCommand(new UnaliasCommand(this.commandManager.getCommandList()));
         this.commandManager.addCommand(new SaveCommand(this));
         this.commandManager.addCommand(new LoadCommand(this));
 
-        this.commandManager.addCommand(new UndoCommand(this.schedule));
-        this.commandManager.addCommand(new FreeTimeCommand(this.schedule));
-        this.commandManager.addCommand(new HelpCommand(this.commandManager.getCommandList()));
-        this.commandManager.addCommand(new AliasCommand(this.commandManager.getCommandList()));
-        this.commandManager.addCommand(new UnaliasCommand(this.commandManager.getCommandList()));
-        this.commandManager.addCommand(new ExitCommand());
         this.commandManager.addCommand(new InformationCommand(this.config));
+        this.commandManager.addCommand(new HelpCommand(this.commandManager.getCommandList()));
+        this.commandManager.addCommand(new ExitCommand());
 
         this.commandManager.setCatchAllCommand(new InvalidCommand(this));
     }

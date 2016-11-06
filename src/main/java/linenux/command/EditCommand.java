@@ -23,7 +23,7 @@ import linenux.util.Either;
 public class EditCommand extends AbstractCommand {
     private static final String TRIGGER_WORD = "edit";
     private static final String DESCRIPTION = "Edits a task in the schedule.";
-    public static final String COMMAND_FORMAT = "edit KEYWORDS... [n/NEW_NAME][st/START_TIME][et/END_TIME][#/TAG...]...";
+    public static final String COMMAND_FORMAT = "edit KEYWORDS [n/TASK] [st/START_TIME] [et/END_TIME] [#/TAG]...";
 
     private static final String NUMBER_PATTERN = "^\\d+$";
     private static final String CANCEL_PATTERN = "^cancel$";

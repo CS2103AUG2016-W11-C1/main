@@ -22,7 +22,7 @@ import linenux.util.Either;
 public class ListCommand extends AbstractCommand {
     private static final String TRIGGER_WORD = "list";
     private static final String DESCRIPTION = "Lists tasks and reminders.";
-    private static final String COMMAND_FORMAT = "list [KEYWORDS...] [st/START_TIME] [et/END_TIME] [#/TAG]";
+    private static final String COMMAND_FORMAT = "list [KEYWORDS] [st/START_TIME] [et/END_TIME] [#/TAG] [d/DONE]";
     private static final String VIEW_DONE_ONLY = "yes";
     private static final String VIEW_DONE = "all";
 

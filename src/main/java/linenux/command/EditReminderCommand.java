@@ -27,7 +27,7 @@ public class EditReminderCommand extends AbstractCommand {
 
     private static final String TRIGGER_WORD = "editr";
     private static final String DESCRIPTION = "Edits a reminder in the schedule.";
-    public static final String COMMAND_FORMAT = "editr KEYWORDS... [t/TIME] [n/NOTE]";
+    public static final String COMMAND_FORMAT = "editr KEYWORDS [t/TIME] [n/NOTE]";
 
     private static final String NUMBER_PATTERN = "^\\d+$";
     private static final String CANCEL_PATTERN = "^cancel$";
