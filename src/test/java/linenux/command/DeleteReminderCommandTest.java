@@ -127,7 +127,7 @@ public class DeleteReminderCommandTest {
         CommandResult result = assertNoChange(() -> this.schedule.getReminderList().size(),
                 () -> this.deleteReminderCommand.execute("deleter hello"));
         assertEquals(
-                "Which one? (1-2, \"cancel\" to cancel the current operation)\nTask: hello world\n1. hello (On 2017-01-01 12.00AM)\nTask: say hello\n2. hello again (On 2017-01-05 3.00AM)",
+                "Which one? (1-2, \"cancel\" to cancel the current operation)\nTask: hello world\n1. hello (On 2017-01-01 12.00AM)\n\nTask: say hello\n2. hello again (On 2017-01-05 3.00AM)",
                 result.getFeedback());
     }
 
@@ -176,7 +176,7 @@ public class DeleteReminderCommandTest {
         CommandResult result = assertNoChange(() -> this.schedule.getReminderList().size(),
                 () -> this.deleteReminderCommand.processUserResponse("0"));
         String expectedResponse = "That's not a valid index. Enter a number between 1 and 3, or \"cancel\" to cancel the current operation:\n"
-                + "Task: hello world\n1. wash up (On 2016-11-01 5.00PM)\nTask: hello\n2. wash laundry (On 2016-12-01 3.00AM)\n3. wash car (On 2016-12-02 3.00AM)";
+                + "Task: hello world\n1. wash up (On 2016-11-01 5.00PM)\n\nTask: hello\n2. wash laundry (On 2016-12-01 3.00AM)\n3. wash car (On 2016-12-02 3.00AM)";
         assertEquals(expectedResponse, result.getFeedback());
         assertTrue(this.deleteReminderCommand.isAwaitingUserResponse());
     }
@@ -190,7 +190,7 @@ public class DeleteReminderCommandTest {
         CommandResult result = assertNoChange(() -> this.schedule.getReminderList().size(),
                 () -> this.deleteReminderCommand.processUserResponse("roses are red"));
         String expectedResponse = "I don't understand \"roses are red\".\n"
-                + "Enter a number to indicate which reminder to delete.\nTask: hello world\n1. wash up (On 2016-11-01 5.00PM)\nTask: hello\n2. wash laundry (On 2016-12-01 3.00AM)\n3. wash car (On 2016-12-02 3.00AM)";
+                + "Enter a number to indicate which reminder to delete.\nTask: hello world\n1. wash up (On 2016-11-01 5.00PM)\n\nTask: hello\n2. wash laundry (On 2016-12-01 3.00AM)\n3. wash car (On 2016-12-02 3.00AM)";
         assertEquals(expectedResponse, result.getFeedback());
         assertTrue(this.deleteReminderCommand.isAwaitingUserResponse());
     }

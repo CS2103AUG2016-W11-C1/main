@@ -442,7 +442,7 @@ public class EditCommandTest {
         CommandResult result = assertNoChange(() -> this.schedule.getTaskList().size(),
                 () -> this.editCommand.execute("edit hello #/tag"));
 
-        String expectedResponse = "Edited \"hello\".\nNew task details: hello [Tags: \"tag\" ]";
+        String expectedResponse = "Edited \"hello\".\nNew task details: hello [ Tags: \"tag\" ]";
         assertEquals(expectedResponse, result.getFeedback());
     }
 

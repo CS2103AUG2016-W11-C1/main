@@ -255,7 +255,7 @@ public class AddCommandTest {
     @Test
     public void execute_validTodoWithTag_commandResultReturned() {
         CommandResult result = this.addCommand.execute("add CS2103T Tutorial #/tag1 tag2");
-        assertEquals("Added CS2103T Tutorial [Tags: \"tag1 tag2\" ]", result.getFeedback());
+        assertEquals("Added CS2103T Tutorial [ Tags: \"tag1 tag2\" ]", result.getFeedback());
     }
 
     /**

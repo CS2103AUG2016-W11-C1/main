@@ -79,6 +79,6 @@ public class TaskTest {
         ArrayList<String> tags = new ArrayList<>();
         tags.add("tag");
         Task task = new Task("hello", null, null, tags);
-        assertEquals("hello [Tags: \"tag\" ]", task.toString());
+        assertEquals("hello [ Tags: \"tag\" ]", task.toString());
     }
 }
