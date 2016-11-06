@@ -79,8 +79,7 @@ To ensure code readablity on Github, please follow the following instructions to
 
 #### Architecture
 
-<img src="images/architectureDiagram.png"/>
-> Figure 3: Architecture Diagram
+<img src="images/developerGuide/mvc.png"/>
 
 Linenux follows the Model-View-Controller (MVC) pattern which is made up of 3 main components.
 
