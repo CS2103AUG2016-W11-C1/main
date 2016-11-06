@@ -253,23 +253,23 @@ Tests can be found in the `./src/test/java` folder.
 
 ##### *Unit Tests*
 
-Example: [`TodayWithTimeParserTest`](https://github.com/CS2103AUG2016-W11-C1/main/blob/e850198163971412ddcde7c2da6cbcaf416f77a5/src/test/java/linenux/time/parser/TodayWithTimeParserTest.java)
+Example: [`TodayWithTimeParserTest.java`](https://github.com/CS2103AUG2016-W11-C1/main/blob/e850198163971412ddcde7c2da6cbcaf416f77a5/src/test/java/linenux/time/parser/TodayWithTimeParserTest.java)
 
-The `TodayWithTimeParser` class is chosen to be a unit of test. `TodayWithTimeParserTest` is considered unit test as the unit
+The **TodayWithTimeParser** class is chosen to be a unit of test. It is considered unit test as the unit
 does not interact with other parts of the code. This is achieved by injecting mocked dependencies. In this case,
-`TodayWithTimeParser` needs to determine the current time. A mocked `Clock` object is injected and will always return the same
+**TodayWithTimeParser** needs to determine the current time. A mocked `Clock` object is injected and will always return the same
 time.
 
 ##### *Integration Tests*
 
-Example: [`AddCommandTest#execute_validEvent_taskAdded`](https://github.com/CS2103AUG2016-W11-C1/main/blob/e850198163971412ddcde7c2da6cbcaf416f77a5/src/test/java/linenux/command/AddCommandTest.java#L127-L142)
+Example: [`AddCommandTest.java`](https://github.com/CS2103AUG2016-W11-C1/main/blob/e850198163971412ddcde7c2da6cbcaf416f77a5/src/test/java/linenux/command/AddCommandTest.java#L127-L142)
 
-The `execute_validEvent_taskAdded` test ensures that the `AddCommand`, `Schedule`, `State`, and `Task` classes work in tandem
+The `execute_validEvent_taskAdded` test ensures that the **AddCommand**, **Schedule**, **State**, and **Task** classes work in tandem
 and produce the expected changes in response to a user input.
 
-Example: [`AutoCompleteTest`](https://github.com/CS2103AUG2016-W11-C1/main/blob/e850198163971412ddcde7c2da6cbcaf416f77a5/src/test/java/linenux/gui/AutoCompleteTest.java)
+Example: [`AutoCompleteTest.java`](https://github.com/CS2103AUG2016-W11-C1/main/blob/e850198163971412ddcde7c2da6cbcaf416f77a5/src/test/java/linenux/gui/AutoCompleteTest.java)
 
-The `AutoCompleteTest` ensures that the `CommandBoxController`, `AutoCompleter`, and `TernarySearchTree` integrates well. This
+The **AutoCompleteTest** ensures that the **CommandBoxController**, **AutoCompleter**, and **TernarySearchTree** integrates well. This
 is done by simulating an actual user interaction and ensure that the expected suggestion show up in the command box.
 
 ## Dev Ops
