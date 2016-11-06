@@ -51,7 +51,7 @@ public class DeleteCommand extends AbstractCommand {
             return makeNoKeywordsResult();
         }
 
-        ArrayList<Task> tasks = this.schedule.search(keywords);
+        ArrayList<Task> tasks = this.schedule.searchTasks(keywords);
 
         if (tasks.size() == 0) {
             return SearchResults.makeNotFoundResult(keywords);

@@ -38,7 +38,7 @@ public class UndoneCommand extends AbstractCommand {
             return makeNoKeywordsResult();
         }
 
-        ArrayList<Task> tasks = new ArrayListUtil.ChainableArrayListUtil<>(this.schedule.search(keywords))
+        ArrayList<Task> tasks = new ArrayListUtil.ChainableArrayListUtil<>(this.schedule.searchTasks(keywords))
                 .filter(Task::isDone).value();
 
         if (tasks.size() == 0) {

@@ -124,7 +124,7 @@ public class State {
      *            Search keywords
      * @return List of {@code Task} matching the keywords.
      */
-    public ArrayList<Task> search(String[] keywords) {
+    public ArrayList<Task> searchTasks(String[] keywords) {
         ArrayList<String> keywordsList = new ArrayListUtil.ChainableArrayListUtil<>(keywords)
                 .map(String::toLowerCase)
                 .value();
@@ -146,7 +146,7 @@ public class State {
      *            Search keywords
      * @return List of {@code Task} matching the keywords.
      */
-    public ArrayList<Reminder> searchReminder(String[] keywords) {
+    public ArrayList<Reminder> searchReminders(String[] keywords) {
         ArrayList<Reminder> result = new ArrayList<>();
 
         for (Task t : this.tasks) {
@@ -181,7 +181,7 @@ public class State {
      *            Search keywords
      * @return List of {@code Task} matching the keywords.
      */
-    public ArrayList<Task> searchTag(String tagName) {
+    public ArrayList<Task> searchTasksWithTag(String tagName) {
         ArrayList<Task> result = this.tasks;
 
         result = new ArrayListUtil.ChainableArrayListUtil<>(result).filter(task -> task.hasTag(tagName)).value();

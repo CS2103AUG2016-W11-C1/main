@@ -39,7 +39,7 @@ public class RenameCommand extends AbstractCommand {
             return makeNoKeywordsResult();
         }
 
-        ArrayList<Task> results = this.schedule.searchTag(tagName);
+        ArrayList<Task> results = this.schedule.searchTasksWithTag(tagName);
 
         if (results.size() == 0) {
             return SearchResults.makeTagNotFoundResult(tagName);

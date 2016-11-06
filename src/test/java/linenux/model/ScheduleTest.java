@@ -60,7 +60,7 @@ public class ScheduleTest {
         this.schedule.addTask(mismatch);
         this.schedule.addTask(match2);
 
-        ArrayList<Task> tasks = this.schedule.search(keywords);
+        ArrayList<Task> tasks = this.schedule.searchTasks(keywords);
 
         assertEquals(2, tasks.size());
     }

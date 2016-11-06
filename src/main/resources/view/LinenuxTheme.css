@@ -16,7 +16,7 @@
 }
 
 .commandBox {
-    -fx-font-size: 12pt;
+    -fx-font-size: 16pt;
     -fx-font-family: "Consolas";
     -fx-font-weight: bold;
     -fx-text-fill: white;
