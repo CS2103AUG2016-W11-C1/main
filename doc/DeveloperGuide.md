@@ -214,8 +214,8 @@ These two classes work similarly as the **CommandManager** class and **Command**
 For complex commands that requires searching and mutating the data, we have abstracted the parsing implementation so that commands that have the format `command KEYWORDS flag1/value1 flag2/value2` can use the **GenericParser** class. It separates the user input into the keywords, and the flags and their respective values are put into a hash table with the flags as keys.
 
 #### Activity Diagram
-<img src="images/activityDiagram.png">
-> Figure 8: Acitivity Diagram of Linenux
+
+<img src="images/developerGuide/activity.png">
 
 The above activity diagram shows the generic flow of activities in Linenux.
 
