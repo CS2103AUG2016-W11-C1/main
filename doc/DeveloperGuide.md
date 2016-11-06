@@ -529,15 +529,13 @@ Use case ends.
 
 #### Appendix D : Glossary
 
-Users are able to create 2 objects, Tasks and Reminders.
+Linenux supports 3 kinds of tasks:
 
-Tasks are split into 3 different sub-categories:
+1. **To-dos**    (Tasks without start and end times)
+2. **Deadlines** (Tasks with end times only)
+3. **Events**    (Tasks with start and end times)
 
-1. Deadline: Tasks created with end dates only.
-2. Event: Tasks created with both start and end dates.
-3. To-do: Tasks created with no start and end dates.
-
-Tasks **cannot** be created with start dates only.
+Tasks cannot be created with start dates only.
 
 ##### *Commands Summary*
 
@@ -549,39 +547,47 @@ Tasks **cannot** be created with start dates only.
 4. *The order of the fields do not matter.*
 5. *The notation `...` means that you can have more than one instance of that field.*
 
-| Command                 | Description                               | Format                                                                  |
-|-------------------------|-------------------------------------------|-------------------------------------------------------------------------|
-| [`add`](#add)           | Adding a task.                            | `add` TASK_NAME [st/START_TIME] [et/END_TIME] [#/TAG]...                |
-| [`remind`](#remind)     | Setting a reminder for a task.            | `remind` KEYWORD t/TIME n/NOTE                                          |
-| [`edit`](#edit)         | Editing a task.                           | `edit` KEYWORDS [n/TASK_NAME] [st/START_TIME] [et/END_TIME] [#/TAG]...  |
-| [`editr`](#editr)       | Editing a reminder.                       | `editr` KEYWORDS [t/TIME] [n/NOTE...]                                   |
-| [`rename`](#rename)     | Renaming a tag.                           | `rename` KEYWORDS #/TAG                                                 |
-| [`done`](#done)         | Marking a task as done.                   | `done` KEYWORDS                                                         |
-| [`undone`](#undone)     | Marking a task as undone.                 | `undone` KEYWORDS                                                       |
-| [`delete`](#delete)     | Deleting a task.                          | `delete` KEYWORDS                                                       |
-| [`deleter`](#deleter)   | Deleting a reminder.                      | `deleter` KEYWORDS                                                      |
-| [`clear`](#clear)       | Clearing a set of tasks.                  | `clear` [#/TAG]                                                         |
-| [`freetime`](#freetime) | Finding a free timeslot.                  | `freetime` [st/START_TIME] et/END_TIME                                  |
-| [`list`](#list)         | Listing tasks and reminders.              | `list` [KEYWORDS] [st/START_TIME] [et/END_TIME] [#/TAG...] [d/DONE]     |
-| [`today`](#today)       | Listing tasks and reminders for today.    | `today`                                                                 |
-| [`tomorrow`](#tomorrow) | Listing tasks and reminders for tomorrow. | `tomorrow`                                                              |
-| [`view`](#view)         | Viewing details around a task.            | `view` KEYWORDS                                                         |
-| [`undo`](#undo)         | Undoing the previous command.             | `undo`                                                                  |
-| [`help`](#help)         | Seeking help.                             | `help` [COMMMAND_NAME]                                                  |
-| [`alias`](#alias)       | Making aliases for the commands.          | `alias` COMMMAND_NAME n/NEW_NAME                                        |
-| [`unalias`](#unalias)   | Removing aliases for the commands.        | `unalias` ALIAS                                                         |
-| [`path`](#path)         | Changing the filepath of the schedule.    | `path` NEW_PATH                                                         |
-| [`exit`](#exit)         | Exiting Linenux.                          | `exit`                                                                  |
+| Command                 		| Description                               | Format                                                        	 |
+|-------------------------------|-------------------------------------------|--------------------------------------------------------------------|
+| [`add`](#add) 		  		| Adding a task.	   	     	  		    | `add` TASK [st/START_TIME] [et/END_TIME] [#/TAG]...   	 		 |
+| [`remind`](#remind) 	  		| Setting a reminder for a task.  	      	| `remind` KEYWORDS t/TIME n/NOTE                       	 		 |
+| [`edit`](#edit) 		  		| Editing a task.   	  		            | `edit` KEYWORDS [n/TASK] [st/START_TIME] [et/END_TIME] [#/TAG]...  |
+| [`editr`](#editr)       		| Editing a reminder.                       | `editr` KEYWORDS [t/TIME] [n/NOTE]                      	 	 	 |
+| [`rename`](#rename)	  		| Renaming a tag.						    | `rename` OLD_TAG #/NEW_TAG										 |
+| [`done`](#done) 	      		| Marking a task as done.       	  	 	| `done` KEYWORDS										             |
+| [`undone`](#undone)     		| Marking a task as undone.                 | `undone` KEYWORDS                                                  |
+| [`delete`](#delete) 	  		| Deleting a task. 	                        | `delete` KEYWORDS 										      	 |
+| [`deleter`](#deleter)   		| Deleting a reminder.                      | `deleter` KEYWORDS                                                 |
+| [`clear`](#clear)       		| Clearing a set of tasks.		            | `clear` [#/TAG]											       	 |
+| [`list`](#list) 		  		| Listing tasks and reminders.              | `list` [KEYWORDS] [st/START_TIME] [et/END_TIME] [#/TAG] [d/DONE] 	 |
+| [`today`](#today)       		| Listing tasks and reminders for today.    | `today` 													         |
+| [`tomorrow`](#tomorrow) 		| Listing tasks and reminders for tomorrow. | `tomorrow` 													 	 |
+| [`view`](#view)         		| Viewing details around a task.            | `view` KEYWORDS                                                    |
+| [`freetime`](#freetime) 		| Finding a free timeslot.   	  	 	    | `freetime` [st/START_TIME] et/END_TIME 				             |
+| [`undo`](#undo) 		  		| Undoing the previous command.          	| `undo` 				   									     	 |
+| [`alias`](#alias)       		| Making aliases for the commands.          | `alias` COMMMAND_NAME NEW_NAME                               		 |
+| [`unalias`](#unalias)   		| Removing aliases for the commands.        | `unalias` ALIAS                                                    |
+| [`save`](#save)         		| Saving the schedule to another folder.    | `save` NEW_PATH                                                    |
+| [`load`](#load)               | Loading a schedule from another folder.   | `load` PATH                                                        |
+| [`information`](#information) | Getting information about the program.    | `information`                                                      |
+| [`help`](#help) 		  		| Seeking help.			                    | `help` [COMMMAND_NAME]    									 	 |
+| [`exit`](#exit) 	   	        | Exiting Linenux. 			                | `exit` 			       									     	 |
 
 ##### *Supported Time Formats*
 
-*All of the examples below have the equivalent meaning to the time 26 October 2016, 5.50pm*
+| Format               | Example                |
+|----------------------|------------------------|
+| dd MMMM yyyy hh.mma  | 01 Jan 2016 5.50pm     |
+| yyyy-MM-dd hh.mma    | 2016-10-16 5.50pm      |
+| today 5.50pm         | today 5.50pm           |
+| tomorrow 5.50pm      | tommorrow 5.50pm       |
 
-| Format             | Example                |
-|--------------------|------------------------|
-| dd month yy hh.mma | 26 October 2016 5.50pm |
-| yyyy-MM-dd hh:mma  | 2016-10-16 5:50pm      |
-| ddMMyyyy HHmm      | 16102016 1750          |
+##### *Shortcut Keys*
+
+| Key                         | Function                                                                                   |
+|-----------------------------|--------------------------------------------------------------------------------------------|
+| <kbd>↑</kbd> / <kbd>↓</kbd> | Cycles through your most recently used commands without having to type everything again.   |
+| <kbd>Tab</kbd>              | Autocompletes the command word for you. 												   |
 
 #### Appendix E : Product Survey
 
