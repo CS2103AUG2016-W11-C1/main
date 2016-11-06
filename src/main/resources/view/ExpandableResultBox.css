@@ -4,6 +4,7 @@
 }
 
 .expandable-result-box .result {
+    -fx-font-size: 20pt;
     -fx-text-fill: white;
     -fx-background-color: #83bdb8;
     -fx-border-color: #80deea transparent transparent transparent;

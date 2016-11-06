@@ -258,8 +258,6 @@ Also, to remove fields, we will use a dash as shown in the examples below. You c
 > edit chess #/-
 ```
 
-<img src="images/userGuide/edit.png">
-
 ##### *Editr*
 
 `editr` is the `edit` command for reminders. It works similar to the `edit` command, with the same earching mechanism which searches for a reminder by its note. However, since both the time and note fields are compulsory, you will not be able to remove any of the fields.
@@ -418,11 +416,11 @@ Also, if you need to see the tasks that you have completed, simply add the `d/DO
 * List both completed and incompleted tasks.
 > list d/all
 
-* List all incomplete tasks with tag 'assignment'.
-> list #/assignment
+* List all incomplete tasks with tag 'nus'.
+> list #/nus
 
-* List all incomplete tasks from 16 October 2016, 12.00am to 25 December 2016, 11.59pm and with tags 'assignment'.
-> list st/2016-10-16 12.00am et/2016-12-25 11.59pm #/assignment
+* List all incomplete tasks from 16 October 2016, 12.00am to 25 December 2016, 11.59pm and with tags 'nus'.
+> list st/2016-10-16 12.00am et/2016-12-25 11.59pm #/nus
 ```
 
 <img src="images/userGuide/listAll.png">
