@@ -309,6 +309,7 @@ Gradle is a build automation tool. It can automate build-related tasks such as:
 The gradle configuration for this project is defined in the build script `build.gradle`.
 
 Yihang's Addition
+
 Gradle can either be invoked using the `gradle` command if Gradle is installed system-wide or the included wrapper scripts
 `gradlew` and `gradlew.bat`.
 
@@ -321,6 +322,7 @@ for public consumption.
 - `test`: Run the test suite. This includes GUI tests in headless mode.
 
 Gradle will automatically download the required dependencies when necessary.
+
 /Yihang's Addition
 
 #### Continuous Integration
@@ -331,6 +333,7 @@ Whenever you push code to the repository, the current Travis CI set up will:
 * Runs the `./gradlew test` command
 
 Yihang's Addition
+
 As a developer, there is no extra steps needed to use Travis. Travis will automatically build all pushes to the main
 repository.
 
@@ -339,6 +342,7 @@ Also, email notifications will be sent to the relevant developers when a push br
 Build statuses are also shown for each pull request for the convenience of the reviewers. Do take note that builds for pull
 request might be outdated (for e.g., when more commits are added to the destination branch). Hence, it is highly recommended
 for the reviewers to perform a rebuild (either via Travis or manually) before accepting a pull request.
+
 /Yihang's Addition
 
 #### Making a Release
@@ -346,10 +350,12 @@ for the reviewers to perform a rebuild (either via Travis or manually) before ac
 Linenux automatically creates a new release by using Travis. To create a new release, you can push a tagged commit to GitHub.
 
 Yihang's Addition (Can probably just replace the original one with this)
+
 GitHub automatically treats Git tags as releases. However, GitHub also allows arbitrary files (for e.g., built binaries) to be included with these release. Travis is configured to attach the built JAR files to these releases.
 
 There is no extra steps needed to make use of this feature - Travis has been configured to pick up tagged commits and attach
 the appropriate files.
+
 /Yihang's Addition
 
 #### Managing Dependecies
@@ -359,9 +365,11 @@ A project often depends on third-party libraries. Linenux manages these dependen
 Gradle will automatically download all the required dependencies when any Gradle command is invoked so you do not have to worry about managing these dependencies manually.
 
 Yihang's Addition
+
 Linenux depends on a handful of third-party libraries. These dependencies are declared in `build.gradle` under the aptly-named
 `dependencies` block. Gradle will manage (download, update, or delete) these dependencies as necessary (for example, before a
 build) to ensure that the build environment has the correct set of dependencies.
+
 /Yihang's Addition
 
 <br>
