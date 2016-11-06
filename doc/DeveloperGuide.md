@@ -129,7 +129,7 @@ A **Task** object can have tags and reminders. Tags are strings that allow users
 
 ##### *ScheduleStorage Interface*
 
-The **ScheduleStorage** interface defines the necessary methods that the **Controller** requires to read and write to a file type. It allows the data to persist when the user exits the application. Currently, all schedule files are saved as an XML file type format but you can extend it to other file types by implementing this interface.
+The **ScheduleStorage** interface defines the necessary methods that the **Controller** requires to read and write to a file type. It allows the data to persist when the user exits the application. Currently, all schedule files are saved as an XML file type format but you can extend it to other file types by implementing this interface. This interface follows the Dependency Inversion Principle and prevents the **Controller** component to be tightly coupled with a certain file type.
 
 *Notable APIs:* [`ScheduleStorage.java`](https://github.com/CS2103AUG2016-W11-C1/main/blob/master/src/main/java/linenux/storage/ScheduleStorage.java)
 
@@ -160,7 +160,9 @@ The **ControlUnit** class is the "brain" of Linenux and is responsible for setti
 
 ##### *CommandManager Class*
 
-The **CommandManager** class is responsible for delegating the user input to the right command. The sequence diagram below shows the flow of a typical command.
+The **CommandManager** class holds a list of commands and is responsible for delegating the user input to the right command. This design follows the Open-Closed Principle and makes it easy to add new commands. 
+
+The sequence diagram below shows the flow of a typical command.
 
 <img src="images/developerGuide/sequence.png">
 
