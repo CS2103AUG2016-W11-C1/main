@@ -40,6 +40,6 @@
 .eventCell .tags {
     -fx-alignment: center-right;
     -fx-opacity: .5;
-    -fx-font-size: 12px;
+    -fx-font-size: 14px;
     -fx-text-fill: white;
 }

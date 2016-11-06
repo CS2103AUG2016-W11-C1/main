@@ -90,8 +90,9 @@ public class Schedule {
         addState(newState);
     }
 
-    public ArrayList<Task> search(String keywords) {
-        return search(keywords.split("\\s+"));
+    //@@author A0144915A
+    public ArrayList<Task> searchTasks(String keywords) {
+        return searchTasks(keywords.split("\\s+"));
     }
 
     /**
@@ -101,8 +102,8 @@ public class Schedule {
      *            Search keywords
      * @return List of {@code Task} matching the keywords.
      */
-    public ArrayList<Task> search(String[] keywords) {
-        return getMostRecentState().search(keywords);
+    public ArrayList<Task> searchTasks(String[] keywords) {
+        return getMostRecentState().searchTasks(keywords);
     }
 
     /**
@@ -111,8 +112,9 @@ public class Schedule {
      * @param tagName Tag name to look for.
      * @return List of {@code Task} with tags matching the keywords.
      */
-    public ArrayList<Task> searchTag(String tagName) {
-        return getMostRecentState().searchTag(tagName);
+    // @@author A0127694U
+    public ArrayList<Task> searchTasksWithTag(String tagName) {
+        return getMostRecentState().searchTasksWithTag(tagName);
     }
 
     /**
@@ -120,8 +122,8 @@ public class Schedule {
      * @param keywords The keywords to search for.
      * @return An {@code ArrayList} of {@code Reminder} matching the keywords.
      */
-    public ArrayList<Reminder> searchReminder(String keywords) {
-        return searchReminder(keywords.split("\\s+"));
+    public ArrayList<Reminder> searchReminders(String keywords) {
+        return searchReminders(keywords.split("\\s+"));
     }
 
     /**
@@ -130,8 +132,8 @@ public class Schedule {
      * @param keywords Search keywords
      * @return List of {@code Reminder} matching the keywords.
      */
-    public ArrayList<Reminder> searchReminder(String[] keywords) {
-        return getMostRecentState().searchReminder(keywords);
+    public ArrayList<Reminder> searchReminders(String[] keywords) {
+        return getMostRecentState().searchReminders(keywords);
     }
 
     /**

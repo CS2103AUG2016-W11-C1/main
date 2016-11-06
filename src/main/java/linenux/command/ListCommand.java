@@ -66,8 +66,8 @@ public class ListCommand extends AbstractCommand {
         }
 
         if (!result.getKeywords().isEmpty()) {
-            tasks = this.schedule.search(result.getKeywords());
-            reminders = this.schedule.searchReminder(result.getKeywords());
+            tasks = this.schedule.searchTasks(result.getKeywords());
+            reminders = this.schedule.searchReminders(result.getKeywords());
         }
 
         String actualViewDone = viewDone.getLeft();

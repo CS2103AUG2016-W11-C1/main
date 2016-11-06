@@ -30,7 +30,7 @@ public class UndoneCommandTest {
      * format and schedule is not null.
      */
     private ArrayList<Task> getSearchResult(String keywords) {
-        return this.schedule.search(keywords);
+        return this.schedule.searchTasks(keywords);
     }
 
     private void setupMultipleHelloTasksAndExecuteAmbiguousCommand() {
