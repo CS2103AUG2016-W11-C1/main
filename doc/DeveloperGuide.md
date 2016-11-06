@@ -129,6 +129,8 @@ A **Task** object can have tags and reminders. Tags are strings that allow users
 
 The **ScheduleStorage** interface defines the necessary methods that the **Controller** requires to read and write to a file type. It allows the data to persist when the user exits the application. Currently, all schedule files are saved as an XML file type format but you can extend it to other file types by implementing this interface.
 
+*Notable APIs:* [`ScheduleStorage.java`](https://github.com/CS2103AUG2016-W11-C1/main/blob/master/src/main/java/linenux/storage/ScheduleStorage.java)
+
 | Return type | Method and Description                                                            |
 | ----------- | ----------------------------------------------------------------------------------|
 | Schedule    | `loadScheduleFromFile()`: reads a file and returns the schedule from the file.    |
@@ -145,75 +147,53 @@ The **View Component** uses the JavaFx UI framework. The layout of these UI part
 
 <img src="images/developerGuide/controller.png">
 
-##### *Overview*
+##### *ControlUnit Class*
 
-The **MainWindowController** takes the user input and sends it to the "brain" of Linenux, the **ControlUnit** class. The **ControlUnit** class is in charge of retrieving the appropriate schedule from storage and passing it over to the **CommandManager** class. The **CommandManager** class then delegates the right command based on the user input.
+The **ControlUnit** class is the "brain" of Linenux and is responsible for setting up the application. Its responsibilities are:
+
+1. Retreiving the appropriate schedule file from storage and initializing the **Schedule** class.
+2. Initializing an instance of the supported commands.
+3. Passes the user input to the **Command** class.
+4. Relays any feedback from the **Command** class to the **View** component.
 
 ##### *CommandManager Class*
 
-``` java
-public CommandResult delegateCommand(String userInput) {
-    for (Command command : commandList) {
-        if (command.awaitingUserResponse()) {
-            return command.userResponse(userInput);
-        }
-    }
+The **CommandManager** class is responsible for delegating the right command based on the user input. The sequence diagram below shows the flow of a typical command.
 
-    for (Command command : commandList) {
-        if (command.respondTo(userInput)) {
-            return command.execute(userInput);
-        }
-    }
+<img src="images/developerGuide/sequence.png">
 
-    return this.catchAllCommand.execute(userInput);
-}
-```
-The above code shows how the **CommandManager** class delegates the right command based on the user input. Every command class must implement the **Command** interface.
-
-<img src="images/sequenceDiagramGeneric.png">
-> Figure 7: Sequence Diagram for executing a Generic Command
-
-The sequence diagram above shows the flow of a typical command.
-
-However, we understand that some commands would require some form of user response. For example, our `delete` command requires user to choose which task to delete if more than one task is found. Thus, in the case where you require user response, you can set the command as awaiting response and the next user input will be delegated to that command (as seen in the code snippet above).
-
-However, do take note that at any point in time, only one command is awaiting user response. Thus, once your command is resolved, ensure that it is not awaiting for any user response.
+Since some commands require some form of user response, we will first check if any commands are awaiting user response. Note that at most one command can be awaiting user response at any point in time. If there are no command waiting for user response, it is assumed that the user entered a command and the **CommandManager** class will assign the right command based on the user input. Finally, a feedback in the form of a **CommandResult** instance will be returned and displayed in the **View** component.
 
 ##### *Command Interface*
 
-**Command** interface lists all the required method that a command must have, so, to implement a new command, you will need to ensure that it implements the **Command** interface. The methods are:
+**Command** interface defines the necessary methods that **CommandManager** requires to allocate the correct command based on the user input.
 
-| Return type | Method and Description |
-| ----------- | ---------------------- |
-| Boolean     | `respondTo(String userInput)`: checks if command responds to userInput. |
-| CommandResult | `execute(String userInput)`: executes the command. <br> Contract: use respondTo to check before calling execute. |
-| Boolean     | `awaitingUserResponse()`: checks if the command is awaiting for a response from the user. |
-| CommandResult | `userResponse(String userInput)`: carries out user response. |
-| String      | `getTriggerWord()`: returns command word. |
-| String      | `getDescription()`: returns description of command. |
-| String      | `getCommandFormat()`: returns command format. |
-| String      | `getPattern()`: returns regex pattern. |
-| void        | `setAlias(String alias)`: set a new alias for the command. |
-| void        | `removeAlias(String alias)`: removes an alias for the command. |
+*Notable APIs:* [`Command.java`](https://github.com/CS2103AUG2016-W11-C1/main/blob/master/src/main/java/linenux/command/Command.java)
 
-*Important!!*
-> As seen in Figure 7, whenever an input is given by the user, the **CommandManager** will loop through a list of Commands that it is keeping track of.
-
-> Thus, when you implement a new command, make sure that you add your command into **CommandManager**'s commandList through the it's initializeCommands() mathod.
+| Return type   | Method and Description                                                                                           |
+| --------------| -----------------------------------------------------------------------------------------------------------------|
+| Boolean       | `respondTo(String userInput)`: checks if command responds to userInput.                                          |
+| CommandResult | `execute(String userInput)`: executes the command.                                                               |
+| Boolean       | `isAwaitingUserResponse()`: checks if the command is awaiting for a response from the user.                      |
+| CommandResult | `processUserResponse(String userInput)`: carries out user response.                                              |
 
 ##### *AbstractCommand Class*
 
-As many of the commands are similar in their implementation of some of the interface methods, we have abstracted the implementation into the **AbstractCommand** class. The methods are:
+As many of the commands are similar in their implementation of some of the interface methods, we have abstracted the implementation into the **AbstractCommand** class.
 
-1. `respondTo`
-2. `setAlias`
-3. `removeAlias`
-4. `getPattern`
+*Notable APIs:* [`AbstractCommand.java`](https://github.com/CS2103AUG2016-W11-C1/main/blob/master/src/main/java/linenux/command/AbstractCommand.java)
 
-Thus, when you implement a new command, for convenience, you can make your command inherit the **AbstractCommand** class for the implementation the above listed methods.
+| Return type | Method and Description                                         | 
+| ----------- | ---------------------------------------------------------------|
+| String      | `getPattern()`: returns regex pattern.                         |
+| void        | `setAlias(String alias)`: set a new alias for the command.     |
+| void        | `removeAlias(String alias)`: removes an alias for the command. |
 
-*Important!!*
-> When your command extends AbstractCommand, ensure that in your command's constructor, the command's trigger word is added into TRIGGER_WORDS, an ArrayList<String> that is instantiated in AbstractCommand.
+##### *TimeParserManager Class*
+
+##### *TimeParser Interface*
+
+##### *GenericParser Class*
 
 #### Activity Diagram
 <img src="images/activityDiagram.png">
