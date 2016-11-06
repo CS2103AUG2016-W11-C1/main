@@ -56,7 +56,7 @@ Double-click on the file to launch Linenux. Wait for a few seconds for the main 
 1. **To-do Panel** - shows to-dos.
 2. **Deadline Panel** - shows deadlines.
 3. **Event Panel** - shows events.
-4. **Display Panel** - shows reminders, help page and search results.
+4. **Result Panel** - shows reminders, help page and search results.
 5. **Command Box** - where you enter the command.
 
 *The list of deadlines, events and reminders are always ordered according to their urgency.*

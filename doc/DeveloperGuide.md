@@ -91,118 +91,59 @@ Linenux follows the Model-View-Controller (MVC) pattern which is made up of 3 ma
 
 <img src="images/developerGuide/model.png">
 
-##### *Schedule class*
+##### *Schedule and State class*
 
-The **Schedule** class stores a collection of states. A **State** is an immutable class that is created whenever a task or reminder is added or deleted from the **Schedule**. This design allows users to `undo` their previous command.
+The **Schedule** class stores the data of **Task** and **Reminder** instances in-memory. To facillitate the `undo` command, we introduce an intermediary class known as **State**. A **State** object represents the state of the **Schedule** class at a point in time. A new **State** object is added to the **Schedule** class whenever a task or reminder is created, updated or deleted. Thus, to `undo` a command, we can simply discard the most recent **State**.
 
-We have made all the models except **Schedule** immutable, thus any command that mutates data should do so through the Schedule model. Specifically, we have exposed three mutation methods:
+To properly capture the above behaviour, we have made **State**, **Task** and **Reminder** classes immutable. An immutable object is an object whose state cannot be modified after it is created. This means that any modification to a **Task** or **Reminder** object will cause a new **State** object to be added. This is why any methods that mutate the data should do so via the **Schedule** class.
+
+Specifically, we have exposed three mutation methods:
 
 1. `addTask`
 2. `updateTask`
-3. `deleteTask` / `deleteTasks`
+3. `deleteTask`
 
 *Notable APIs:* [`Schedule.java`](https://github.com/CS2103AUG2016-W11-C1/main/blob/master/src/main/java/linenux/model/Schedule.java)
 
-| Return type           | Method and Description |
-| --------------------- | ---------------------- |
-| void                  | `addTask(Task task)`: Adds the task into the schedule. |
-| void                  | `updateTask(Task originalTask, Task newTask)`: Updates the original task in the schedule with the new task. |
-| void                  | `deleteTask(Task task)`: Deletes the task from the schedule. |
-| void                  | `deleteTasks(ArrayList<Task> tasks)`: Deletes all the tasks in the list from the schedule. |
-| void                  | `clear()`: Deletes all tasks from the schedule. |
-| ArrayList<Task>       | `search(String keywords)`: Search and returns tasks based on given keywords. |
-| ArrayList<Reminder>   | `searchReminder(String keywords)`: Search and return reminders based on given keywords. |
-| ObservableList<State> | `getState()`: Returns list of state. |
-| ArrayList<Task>       | `getTaskList()`: Returns list of tasks in schedule. |
-| ObservableList<ArrayList<Task>> | `getFilteredTaskList()`: Returns list of ArrayList of filtered tasks. |
-| ArrayList<Task>       | `getFilterTasks()`: Returns the current filtered task |
-| void                  | `addFilterTasks(ArrayList<Task> filteredTasks)`: Will first clear the current filteredTaskList add the given list of tasks into it. |
-| ArrayList<Reminder>   | `getReminderList()`: Returns all the reminders in the schedule. |
-| Boolean               | `popState()`: Returns true and removes the most recent true if the list of states is not empty. Returns false otherwise. |
-| State                 | `getMostRecentState()`: Returns the most recent state of schedule. |
-| void                  | `addState(State)`: Adds a new state into the list of states. |
+| Return type  | Method and Description                                                                                       |
+| ------------ | -------------------------------------------------------------------------------------------------------------|
+| void         | `addTask(Task task)` : Adds the task into the schedule.                                                      |
+| void         | `updateTask(Task originalTask, Task newTask)` : Updates the original task in the schedule with the new task. |
+| void         | `deleteTask(Task task)` : Deletes the task from the schedule.                                                |
+| State        | `getMostRecentState()` : Returns the most recent state of schedule.                                          |
+| void         | `addState(State)` : Adds a new state into the list of states.                                                |
 
-##### *State Class*
+##### *Task and Reminder Class*
 
-The **State** class represents an immutable snapshot in time of the schedule.
-
-*Notable APIs:* [`State.java`](https://github.com/CS2103AUG2016-W11-C1/main/blob/master/src/main/java/linenux/model/State.java)
-
-| Return type | Method and Description |
-| ----------- | ---------------------- |
-| State       | `addTask(Task task)`: creates and returns a copy of the current state, with the task added into the copied state. |
-| State       | `updateTask(Task original, Task newTask)`: creates and returns a copy of the current state, where the original task is updated with the new task in the copied state. |
-| State       | `deleteTask(Task task)`: creates and returns a copy of the current state, deleting the task specified in the copied state. |
-| State       | `getTaskList()`: returns the task list in the current state. |
-
-##### *Task Class*
-
-The immutable **Task** class is made up of the name of the task, a start time, an end time and a list of reminders. There are 3 types of tasks:
+We classify all types of tasks into three categories:
 
 1. **Deadlines** - tasks that have an end time but no start time.
 2. **Events** - tasks that have both start and end times.
 3. **To-dos** - tasks that have neither start nor end times.
 
-*Notable APIs:* [`Task.java`](https://github.com/CS2103AUG2016-W11-C1/main/blob/master/src/main/java/linenux/model/Task.java)
+Note that we do not allow tasks with start time but without end time. A **Task** object is unique and no two **Task** object can have the same task name, start time and end time.
 
-| Return type | Method and Description |
-| ----------- | ---------------------- |
-| String      | `toString()`: returns the String representation of a Task. |
-| Boolean     | `isTodo()`: checks if Task is a todo. |
-| Boolean     | `isDeadline()`: checks if Task is a deadline. |
-| Boolean     | `isEvent()`: checks if Task is an event. |
-| Boolean     | `isDone()`: checks if Task is marked as done. |
-| Boolean     | `isNotDone()`: checks if Task is not marked as done. |
-| Boolean     | `hasTag(String tag)`: checks if Task contains a tag (case-insensitive). |
-| String      | `getTaskName()`: returns the name of the Task. |
-| LocalDateTime | `getStartTime()`: returns the start time of the Task. |
-| LocalDateTime | `getEndTime()`: returns the end time of the Task. |
-| ArrayList<String> | `getTags()`: returns all the tags of the Task in an arraylist. |
-| ArrayList<Reminder> | `getReminders()`: returns all the reminders of the Task in an arraylist. |
-| Task        | `setTaskName(String taskName)`: creates and returns a copy of the current Task with the new task name. |
-| Task        | `setStartTime(LocalDateTime startTime)`: creates and returns a copy of the current Task with the new start time. |
-| Task        | `setEndTime(LocalDateTime endTime)`: creates and returns a copy of the current Task with the new end time. |
-| Task        | `markAsDone()`: creates and returns a copy of the current Task, with it set to Done. |
-| Task        | `addReminder(Reminder reminder)`: creates and return a copy of the current Task, adding reminder into it's list of reminders. |
-| Task        | `setTags(ArrayList<String> tags)`: creates and returns a copy of the current Task, replacing all the original tags with the new tags. |
+A **Task** object can have tags and reminders. Tags are strings that allow users to further categorize their tasks, while reminders notify users on certain key points as the task draw nearer to its end time. 
 
+##### *ScheduleStorage Interface*
 
-##### *Reminder Class*
+The **ScheduleStorage** interface defines the necessary methods that the **Controller** requires to read and write to a file type. It allows the data to persist when the user exits the application. Currently, all schedule files are saved as an XML file type format but you can extend it to other file types by implementing this interface.
 
-The immutable **Reminder** class allows our users to set one or more reminders for their tasks.
-
-*Notable APIs:* [`Reminder.java`](https://github.com/CS2103AUG2016-W11-C1/main/blob/master/src/main/java/linenux/model/Reminder.java)
-
-| Return type | Method and Description |
-| ----------- | ---------------------- |
-| String      | `toString()`: returns the String representation of a Reminder. |
-| String      | `getNote()`: returns the note of the reminder. |
-| LocalDateTime | `getTimeOfReminder()`: returns the time of reminder. |
-| Reminder    | `setNote(String newNote)`: creates and returns a copy of the current Reminder with the new note. |
-| Reminder    | `setTimeOfReminder(LocalDateTime newTimeOfReminder)`: creates and returns a copy of the current Reminder with the new time of reminder. |
-
-##### *Storage*
-
-The **ScheduleStorage** interface lists all the methods that our `Controller` will require to save the schedule into a file format to ensure that in-memory data persists after the application is stored. The methods are:
-
-| Return type | Method and Description |
-| ----------- | ---------------------- |
-| Schedule    | `loadScheduleFromFile()`: reads a file and returns the schedule from the file. |
+| Return type | Method and Description                                                            |
+| ----------- | ----------------------------------------------------------------------------------|
+| Schedule    | `loadScheduleFromFile()`: reads a file and returns the schedule from the file.    |
 | void        | `saveScheduleToFile(Schedule schedule)`: writes the given schedule into the file. |
-| Boolean     | `hasScheduleFile()`: checks if the schedule file exits. |
-| void        | `setFilePath(String filePath)`: sets a new file path.   |
-
-Currently, we have implemented **XMLScheduleStorage** class, which will save the schedule into an XML file. Thus, if you would like to implement saving to another file format, make sure you implement the **ScheduleStorage** interface.
+| Boolean     | `hasScheduleFile()`: checks if the schedule file exits.                           |
 
 #### View Component
-<img src="images/viewDiagram.png">
-> Figure 5: View Diagram
 
-The **View Component** follows the JavaFx UI framework. Each of the classes (**MainWindow**, **CommandBox** etc) has their own respective `.fxml` file stored in `src/main/resources/view`.
+<img src="images/developerGuide/view.png">
+
+The **View Component** uses the JavaFx UI framework. The layout of these UI parts are defined in the matching `.fxml` files that are found in the `src/main/resources/view` folder. Similarly, the look of these UI parts are styled in their respective `.css` files found in the same folder.
 
 #### Controller Component
-<img src="images/controllerDiagram.png">
-> Figure 6: Controller Diagram
+
+<img src="images/developerGuide/controller.png">
 
 ##### *Overview*
 
