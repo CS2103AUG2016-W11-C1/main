@@ -257,7 +257,7 @@ Example: [`TodayWithTimeParserTest.java`](https://github.com/CS2103AUG2016-W11-C
 
 The **TodayWithTimeParser** class is chosen to be a unit of test. It is considered unit test as the unit
 does not interact with other parts of the code. This is achieved by injecting mocked dependencies. In this case,
-**TodayWithTimeParser** needs to determine the current time. A mocked `Clock` object is injected and will always return the same
+**TodayWithTimeParser** needs to determine the current time. A mocked **Clock** object is injected and will always return the same
 time.
 
 ##### *Integration Tests*
