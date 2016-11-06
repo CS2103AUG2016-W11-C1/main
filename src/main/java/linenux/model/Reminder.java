@@ -88,7 +88,7 @@ public class Reminder {
      */
     @Override
     public int hashCode() {
-        return note.hashCode() ^ timeOfReminder.hashCode();
+        return note.toLowerCase().hashCode() ^ timeOfReminder.hashCode();
     }
 
     /* Getters */
