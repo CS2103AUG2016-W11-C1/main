@@ -30,6 +30,7 @@
 ## Introduction
 Linenux is a command-line, task manager application designed for consumers who are quick at typing. Being an open-source project, we understand that there are developers (yes, you) who want to contribute to the project but do not know where to begin. Thus, we have written this guide to inform newcomers to the project on the key design considerations and the overall software architecture. We hope that by the end of this developer guide, you will in a better position to start working on improving Linenux.
 <br>
+
 ## Setting up
 
 #### Prerequisites
@@ -58,14 +59,12 @@ To ensure code readablity on Github, please follow the following instructions to
 2. Expand `Java` > `Code Style` and select `Formatter`.
 3. Click the `Edit` button.
 
-<img src="images/eclipseEdit.png"/>
-> Figure 1: What you should be seeing at step 3
+    <img src="images/developerGuide/preferences.png"/>
 
 4. In the `Indentation` tab, under `General settings`, change `Tab Policy` to Spaces Only and check that `Indentation Size` and `Tab Size` are both set to 4.
 5. Click `OK` to save the profile.
 
-<img src="images/eclipseIndent.png"/>
-> Figure 2: Where you can find the settings to be changed
+    <img src="images/developerGuide/profile.png"/>
 
 #### Troubleshooting
 
@@ -75,8 +74,6 @@ To ensure code readablity on Github, please follow the following instructions to
 2. **Eclipse reports compile errors after new commits are pulled from Git.**
     * Reason: Eclipse fails to detect the changes made to your project during `git pull`.
     * Solution: Refresh your project in Eclipse by clicking on it in the package explorer window and pressing `F5`.
-
-<br>
 
 ## Design
 
