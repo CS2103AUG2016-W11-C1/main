@@ -1,6 +1,6 @@
 # Linenux
 
-![alt text](https://drive.google.com/open?id=0B26e0zi43lHQN1NDT28wT2Q5ejg)
+![alt text](https://drive.google.com/open?id=0B26e0zi43lHQblBLZXdacXFHQ2M)
 
 ## Introduction
 
