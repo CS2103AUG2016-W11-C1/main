@@ -379,6 +379,10 @@ Use Case ends.
 > 1b1. Linenux displays error message to indicate that task already exist in Schedule. <br>
   Use Case ends.
 
+1c. User types in invalid formats for the fields.
+> 1c1. Linenux displays error message indicating invalid formats for the fields. <br>
+  Use Case ends.  
+  
 ##### *Use Case 2: Setting a reminder for a task*
 
 *MSS*
@@ -390,6 +394,14 @@ Use Case ends.
 Use Case ends.
   
 *Extensions*
+
+1a. User omits compulsory fields.
+> 1a1. Linenux displays error message indicating missing fields. <br>
+  Use Case ends.
+
+1b. User types in invalid formats for the fields.
+> 1b1. Linenux displays error message indicating invalid formats for the fields. <br>
+  Use Case ends.
 
 3a. No task in schedule has name with keywords.
 > 3a1. Linenux shows error message to indicate no task found. <br>
@@ -411,117 +423,514 @@ Use Case ends.
 3d. Multiple tasks are found and user selects cancel. 
 > 3d1. Linenux displays the list of tasks with index containing keywords. <br>
   3d2. User types cancel. <br>
-  3d3. Linenux does not add the reminder to any task. <br>
+  3d3. Linenux does not add the reminder to any tasks. <br>
   Use Case ends.   
   
-##### *Use Case 2: List tasks*
+##### *Use Case 3: Editing a task*
 
 *MSS*
 
-1. User requests to list tasks giving certain parameters.
-2. Linenux filters all the tasks based given parameters and shows the filtered list of tasks to the User.
+1. User requests to edit a task.
+2. Linenux searches for tasks with names containing the keywords.
+3. Only one task with that keyword is found and Linenux edits that task. 
+4. Linenux displays success message. <br>
+Use Case ends.
+  
+*Extensions*
+
+1a. User omits compulsory fields.
+> 1a1. Linenux displays error message indicating missing fields. <br>
+  Use Case ends.
+
+1b. User types in invalid formats for the fields.
+> 1b1. Linenux displays error message indicating invalid formats for the fields. <br>
+  Use Case ends.
+
+3a. No task in schedule has name with keywords.
+> 3a1. Linenux shows error message to indicate no task found. <br>
+  Use Case ends.
+
+3b. Multiple tasks are found and user selects valid index. 
+> 3b1. Linenux displays the list of tasks with index containing keywords. <br>
+  3b2. User selects valid index. <br>
+  3b3. Linenux edits that task. <br>
+  3b4. Linenux displays success message. <br>
+  Use Case ends. 
+  
+3c. Multiple tasks are found and user selects invalid index. 
+> 3c1. Linenux displays the list of tasks with index containing keywords. <br>
+  3c2. User selects invalid index. <br>
+  3c3. Linenux displays error message to indicate invalid index. <br>
+  Use Case resumes at step 3c1.   
+  
+3d. Multiple tasks are found and user selects cancel. 
+> 3d1. Linenux displays the list of tasks with index containing keywords. <br>
+  3d2. User types cancel. <br>
+  3d3. Linenux does not edit any tasks. <br>
+  Use Case ends.   
+  
+##### *Use Case 4: Editing a reminder*
+
+*MSS*
+
+1. User requests to edit a reminder.
+2. Linenux searches for tasks with names containing the keywords.
+3. Only one reminder with that keyword is found and Linenux edits that reminder. 
+4. Linenux displays success message. <br>
+Use Case ends.
+  
+*Extensions*
+
+1a. User omits compulsory fields.
+> 1a1. Linenux displays error message indicating missing fields. <br>
+  Use Case ends.
+
+1b. User types in invalid formats for the fields.
+> 1b1. Linenux displays error message indicating invalid formats for the fields. <br>
+  Use Case ends.
+
+3a. No reminder in schedule has name with keywords.
+> 3a1. Linenux shows error message to indicate no reminder found. <br>
+  Use Case ends.
+
+3b. Multiple reminders are found and user selects valid index. 
+> 3b1. Linenux displays the list of reminders with index containing keywords. <br>
+  3b2. User selects valid index. <br>
+  3b3. Linenux edits that reminder. <br>
+  3b4. Linenux displays success message. <br>
+  Use Case ends. 
+  
+3c. Multiple reminders are found and user selects invalid index. 
+> 3c1. Linenux displays the list of reminders with index containing keywords. <br>
+  3c2. User selects invalid index. <br>
+  3c3. Linenux displays error message to indicate invalid index. <br>
+  Use Case resumes at step 3c1.   
+  
+3d. Multiple reminders are found and user selects cancel. 
+> 3d1. Linenux displays the list of reminders with index containing keywords. <br>
+  3d2. User types cancel. <br>
+  3d3. Linenux does not edit any reminders. <br>
+  Use Case ends.     
+  
+##### *Use Case 5: Renaming a tag*
+
+*MSS*
+
+1. User requests to rename a tag.
+2. Linenux searches for tasks with tags matching the tag name exactly.
+3. Linenux manages to find tasks with that tag and replaces it with the new tag. 
+4. Linenux displays success message. <br>
+Use Case ends.  
+  
+*Extensions*
+
+1a. User omits compulsory fields.
+> 1a1. Linenux displays error message indicating missing fields. <br>
+  Use Case ends.
+
+1b. User types in invalid formats for the fields.
+> 1b1. Linenux displays error message indicating invalid formats for the fields. <br>
+  Use Case ends.
+
+3a. No task in schedule has tag with that specific name.
+> 3a1. Linenux shows error message to indicate no tasks with that tag found. <br>
+  Use Case ends.  
+  
+##### *Use Case 6: Marking a task as done*
+
+*MSS*
+
+1. User requests to mark a task as done.
+2. Linenux searches for tasks with names containing the keywords.
+3. Only one task with that keyword is found and Linenux marks that task as done. 
+4. Linenux displays success message. <br>
+Use Case ends.
+  
+*Extensions*
+
+3a. No task in schedule has name with keywords.
+> 3a1. Linenux shows error message to indicate no task found. <br>
+  Use Case ends.
+
+3b. Multiple tasks are found and user selects valid index. 
+> 3b1. Linenux displays the list of tasks with index containing keywords. <br>
+  3b2. User selects valid index. <br>
+  3b3. Linenux marks that task as done. <br>
+  3b4. Linenux displays success message. <br>
+  Use Case ends. 
+  
+3c. Multiple tasks are found and user selects invalid index. 
+> 3c1. Linenux displays the list of tasks with index containing keywords. <br>
+  3c2. User selects invalid index. <br>
+  3c3. Linenux displays error message to indicate invalid index. <br>
+  Use Case resumes at step 3c1.   
+  
+3d. Multiple tasks are found and user selects cancel. 
+> 3d1. Linenux displays the list of tasks with index containing keywords. <br>
+  3d2. User types cancel. <br>
+  3d3. Linenux does not mark any tasks as done. <br>
+  Use Case ends.     
+  
+##### *Use Case 7: Marking a task as undone*
+
+*MSS*
+
+1. User requests to mark a done task as undone.
+2. Linenux searches for done tasks with names containing the keywords.
+3. Only one task with that keyword is found and Linenux marks that task as undone. 
+4. Linenux displays success message. <br>
+Use Case ends.
+  
+*Extensions*
+
+3a. No done task in schedule has name with keywords.
+> 3a1. Linenux shows error message to indicate no task found. <br>
+  Use Case ends.
+
+3b. Multiple done tasks are found and user selects valid index. 
+> 3b1. Linenux displays the list of done tasks with index containing keywords. <br>
+  3b2. User selects valid index. <br>
+  3b3. Linenux marks that done task as undone. <br>
+  3b4. Linenux displays success message. <br>
+  Use Case ends. 
+  
+3c. Multiple done tasks are found and user selects invalid index. 
+> 3c1. Linenux displays the list of done tasks with index containing keywords. <br>
+  3c2. User selects invalid index. <br>
+  3c3. Linenux displays error message to indicate invalid index. <br>
+  Use Case resumes at step 3c1.   
+  
+3d. Multiple done tasks are found and user selects cancel. 
+> 3d1. Linenux displays the list of done tasks with index containing keywords. <br>
+  3d2. User types cancel. <br>
+  3d3. Linenux does not mark any done tasks as undone. <br>
+  Use Case ends.    
+  
+##### *Use Case 8: Deleting a task*
+
+*MSS*
+
+1. User requests to delete a task.
+2. Linenux searches for tasks with names containing the keywords.
+3. Only one task with that keyword is found and Linenux deletes that task. 
+4. Linenux displays success message. <br>
+Use Case ends.
+  
+*Extensions*
+
+3a. No task in schedule has name with keywords.
+> 3a1. Linenux shows error message to indicate no task found. <br>
+  Use Case ends.
+
+3b. Multiple tasks are found and user selects valid index. 
+> 3b1. Linenux displays the list of tasks with index containing keywords. <br>
+  3b2. User selects valid index. <br>
+  3b3. Linenux deletes that task. <br>
+  3b4. Linenux displays success message. <br>
+  Use Case ends. 
+  
+3c. Multiple tasks are found and user selects invalid index. 
+> 3c1. Linenux displays the list of tasks with index containing keywords. <br>
+  3c2. User selects invalid index. <br>
+  3c3. Linenux displays error message to indicate invalid index. <br>
+  Use Case resumes at step 3c1.   
+  
+3d. Multiple tasks are found and user selects cancel. 
+> 3d1. Linenux displays the list of tasks with index containing keywords. <br>
+  3d2. User types cancel. <br>
+  3d3. Linenux does not delete any task. <br>
+  Use Case ends.     
+  
+##### *Use Case 9: Deleting a reminder*
+
+*MSS*
+
+1. User requests to delete a reminder.
+2. Linenux searches for tasks with names containing the keywords.
+3. Only one reminder with that keyword is found and Linenux deletes that reminder. 
+4. Linenux displays success message. <br>
+Use Case ends.
+  
+*Extensions*
+
+3a. No reminder in schedule has name with keywords.
+> 3a1. Linenux shows error message to indicate no reminder found. <br>
+  Use Case ends.
+
+3b. Multiple reminders are found and user selects valid index. 
+> 3b1. Linenux displays the list of reminders with index containing keywords. <br>
+  3b2. User selects valid index. <br>
+  3b3. Linenux deletes that reminder. <br>
+  3b4. Linenux displays success message. <br>
+  Use Case ends. 
+  
+3c. Multiple reminders are found and user selects invalid index. 
+> 3c1. Linenux displays the list of reminders with index containing keywords. <br>
+  3c2. User selects invalid index. <br>
+  3c3. Linenux displays error message to indicate invalid index. <br>
+  Use Case resumes at step 3c1.   
+  
+3d. Multiple reminders are found and user selects cancel. 
+> 3d1. Linenux displays the list of reminders with index containing keywords. <br>
+  3d2. User types cancel. <br>
+  3d3. Linenux does not delete any reminders. <br>
+  Use Case ends.     
+
+##### *Use Case 10: Clearing a set of task*
+
+*MSS*
+
+1. User requests to clear a set of task.
+2. Linenux clears all done task.
+3. Linenux displays success message. <br>
+Use Case ends.
+  
+*Extensions*
+
+1a. User types in invalid formats for the fields.
+> 1a1. Linenux displays error message indicating invalid formats for the fields. <br>
+  Use Case ends.
+
+2a. No done task to clear.
+> 2a1. Linenux shows alert message that says no done task to clear. <br>
+  Use Case ends.
+
+2b. No task in schedule has the tag that the user specified.
+> 2b1. Linenux shows error message to indicate no task with such tag found. <br>
+  Use Case ends.
+
+2c. Linenux found task with such tag.
+> 2c1. Linenux clears all tasks with such tag instead. <br>
+  2c2. Linenux displays success message. <br>
+  Use Case ends.  
+  
+##### *Use Case 11: Listing tasks and reminders*
+
+*MSS*
+
+1. User requests to see all undone tasks and reminders.
+2. Linenux shows the corresponding view. <br>
 Use Case ends.
 
 *Extensions*
 
-1a. User provides no parameters.
-> 1a1. Linenux will show all tasks and reminders for the next 7 days to the User.
-> Use Case ends.
+1a. User types in invalid formats for the fields.
+> 1a1. Linenux displays error message indicating invalid formats for the fields. <br>
+  Use Case ends.
 
-##### *Use Case 3: Using commands which has a search parameter.*
+1b. User gives search parameters.
+> 1b1. Linenux updates the view based on the search parameters. <br>
+  Use Case ends.
+  
+##### *Use Case 12: Listing tasks and reminders for today*
 
 *MSS*
 
-1. User uses a command which has a search parameter(e.g remind, edit, view etc).
-2. Linenux will search all task names and perform the command on the found task.
+1. User requests to see all undone tasks, overdued tasks and reminders for today.
+2. Linenux shows the corresponding view. <br>
+Use Case ends.  
+  
+##### *Use Case 13: Listing tasks and reminders for tomorrow*
+
+*MSS*
+
+1. User requests to see all undone tasks and reminders for tomorrow.
+2. Linenux shows the corresponding view. <br>
+Use Case ends.    
+
+##### *Use Case 14: Viewing details around a task*
+
+*MSS*
+
+1. User requests to view details around a task.
+2. Linenux searches for tasks with names containing the keywords.
+3. Only one task with that keyword is found and Linenux views that task. <br>
 Use Case ends.
+  
+*Extensions*
+
+3a. No task in schedule has name with keywords.
+> 3a1. Linenux shows error message to indicate no task found. <br>
+  Use Case ends.
+
+3b. Multiple tasks are found and user selects valid index. 
+> 3b1. Linenux displays the list of tasks with index containing keywords. <br>
+  3b2. User selects valid index. <br>
+  3b3. Linenux views that task. <br>
+  Use Case ends. 
+  
+3c. Multiple tasks are found and user selects invalid index. 
+> 3c1. Linenux displays the list of tasks with index containing keywords. <br>
+  3c2. User selects invalid index. <br>
+  3c3. Linenux displays error message to indicate invalid index. <br>
+  Use Case resumes at step 3c1.   
+  
+3d. Multiple tasks are found and user selects cancel. 
+> 3d1. Linenux displays the list of tasks with index containing keywords. <br>
+  3d2. User types cancel. <br>
+  3d3. Linenux does not view any task. <br>
+  Use Case ends.     
+
+##### *Use Case 15: Finding a free timeslot*
+
+*MSS*
+
+1. User requests when he/she is free in a given time range.
+2. Linenux computes the result based on events and shows the user when he/she is free. <br>
+Use Case ends.    
 
 *Extensions*
 
-2a. More than one task found with the given search parameter.
-> 2a1. Linenux will show the list of tasks, each with their index, found to the user and prompt the user for the index of the task to perform the command on.
-> 2a2. User provides the index of the task to perform the command on.
-> 2a3. Linenux performs the command on the requested task.
-> Use Case ends
+1a. User omits compulsory fields.
+> 1a1. Linenux displays error message indicating missing fields. <br>
+  Use Case ends.
 
-2a2a. User provides invalid index(not a number or number out of range).
-> 2a2a1. Linenux will show an error message and prompt the User with the list of found tasks again.
-> Use Case resumes at step 2a2.
+1b. User types in invalid formats for the fields.
+> 1b1. Linenux displays error message indicating invalid formats for the fields. <br>
+  Use Case ends.
 
-2a2b. User requests to cancel command.
-> 2a2b1. Linenux shows that the requested command is not performed.
-> Use Case ends.
-
-2b. No tasks were found with the given search parameters.
-> 2b1. Linenux shows error that no tasks were found.
-> Use Case ends.
-
-
-
-##### *Use Case 5: Delete task*
+##### *Use Case 16: Undoing the previous command*
 
 *MSS*
 
-1. User requests to delete task, providing search parameters for task.
-2. Linenux searches for the task (See Use Case for commands with search)l
-3. TaskManager deletes specific task from schedule and shows message indicating successful delete, including details of task deleted.
-Use Case ends.
-
-##### *Use Case 6: Mark task as done.*
-
-*MSS*
-
-1. User requests to mark task as done, providing search parameters for task.
-2. Linenux marks found task as done, and shows message indicating task is marked as done, including details of task.
-Use Case ends.
-
-##### *Use Case 7: Undo*
-
-*MSS*
-
-1. User requests to undo to previous state.
-2. Linenux undos to previous state.
-Use case ends.
+1. User requests to undo previous commands.
+2. Linenux undo previous command. 
+3. Linenux displays success message. <br>
+Use Case ends.   
 
 *Extensions*
 
-1a. No previous state to undo to.
-> 1a1. Linenux shows error indicating unable to undo.
-> Use Case ends
-
-##### *Use Case 8: Edit*
-
-*MSS*
-
-1. User requests to edit task, providing search parameters and changes to be made.
-2. Linenux searches for the task (See Use Case for commands with search).
-3. Linenux processes changes and shows changes made.
-Use Case ends.
-
-*Extensions*
-
-1a. Specified changes are invalid.
-> 1c1. Linenux shows error message indicating invalid changes.
-> Use case ends.
-
-##### *Use Case 9: Exit*
+2a. No more commands to undo.
+> 2a1. Linenux displays alert message indicating no more commands to undo. <br>
+  Use Case ends.
+  
+##### *Use Case 17: Making aliases for the commands*
 
 *MSS*
 
-1. User requests to exit application.
-2. Linenux prompts user to confirm application exit.
-3. User confirms exit.
-4. Linenux closes.
-Use case ends.
+1. User requests to make an alias for a command.
+2. Linenux sets the alias to the command. 
+3. Linenux displays success message. <br>
+Use Case ends.   
 
 *Extensions*
 
-2a. User cancels exit operation.
-> Use Case ends.
+1a. User omits compulsory fields.
+> 1a1. Linenux displays error message indicating missing fields. <br>
+  Use Case ends.
 
-3a. User confirms exit while Linenux is still processing information (e.g. reading/ saving a file).
-> 3a1. Linenux blocks input and closes after process is done.
-> Use Case ends.
+1b. Alias is not alphanumeric.
+> 1b1. Linenux displays error message that says alias must be alphanumeric. <br>
+  Use Case ends.
+  
+1c. Alias has been used by another command.
+> 1c1. Linenux displays error message that says alias is taken. <br>
+  Use Case ends.
+  
+##### *Use Case 18: Removing aliases for the commands*
+
+*MSS*
+
+1. User requests to remove an alias for a command.
+2. Linenux removes the alias. 
+3. Linenux displays success message. <br>
+Use Case ends.   
+
+*Extensions*
+
+1a. User omits compulsory fields.
+> 1a1. Linenux displays error message indicating missing fields. <br>
+  Use Case ends.
+
+1b. No such alias to remove.
+> 1b1. Linenux displays error message indicating no such alias. <br>
+  Use Case ends.
+  
+##### *Use Case 19: Saving the schedule to another folder*
+
+*MSS*
+
+1. User requests to save the schedule to another folder.
+2. Linenux saves the schedule to that folder. 
+3. Linenux displays success message. <br>
+Use Case ends.   
+
+*Extensions*
+
+1a. User omits compulsory fields.
+> 1a1. Linenux displays error message indicating missing fields. <br>
+  Use Case ends.
+
+1b. Linenux does not have permissions to write to that folder.
+> 1b1. Linenux shows an alert box. <br>
+  Use Case ends.
+
+1c. Folder does not exist.
+> 1c1. Linenux shows an alert box. <br>
+  Use Case ends.
+  
+##### *Use Case 20: Loading a schedule from another folder*
+
+*MSS*
+
+1. User requests to load a schedule from another folder.
+2. Linenux loads the schedule. 
+3. Linenux displays success message. <br>
+Use Case ends.   
+
+*Extensions*
+
+1a. User omits compulsory fields.
+> 1a1. Linenux displays error message indicating missing fields. <br>
+  Use Case ends.
+
+1b. Linenux does not have permissions to read to that folder.
+> 1b1. Linenux shows an alert box. <br>
+  Use Case ends.
+
+1c. File does not exist.
+> 1c1. Linenux shows an alert box. <br>
+  Use Case ends.  
+  
+##### *Use Case 21: Getting information about the program*
+
+*MSS*
+
+1. User requests to see information about the program.
+2. Linenux displays the information. <br>
+Use Case ends.   
+
+*Extensions*
+
+1a. Linenux cannot read Config file.
+> 1a1. Linenux shows an alert box. <br>
+  Use Case ends.
+  
+##### *Use Case 22: Seeking help*
+
+*MSS*
+
+1. User requests to see help page.
+2. Linenux displays the help page. <br>
+Use Case ends.   
+
+*Extensions*
+
+1a. User gives invalid command.
+> 1a1. Linenux shows error message that no such commands exist. <br>
+  Use Case ends.
+
+1b. User gives valid command.
+> 1a1. Linenux shows help only for that command. <br>
+  Use Case ends.  
+  
+##### *Use Case 23: Exiting Linenux*
+
+*MSS*
+
+1. User requests to exit program.
+2. The program closes. <br>
+Use Case ends.     
 
 #### Appendix C : Non Functional Requirements
 
