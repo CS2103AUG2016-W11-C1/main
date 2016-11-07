@@ -1,6 +1,6 @@
 # Linenux
 
-![alt text](https://drive.google.com/open?id=0B26e0zi43lHQblBLZXdacXFHQ2M)
+![alt text](https://github.com/CS2103AUG2016-W11-C1/main/blob/README/Screenshot.png)
 
 ## Introduction
 
