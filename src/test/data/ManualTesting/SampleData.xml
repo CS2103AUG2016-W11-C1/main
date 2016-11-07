@@ -597,7 +597,12 @@
                 <tags>LAJ1201</tags>
                 <tags>School</tags>
             </tags>
-            <reminders/>
+            <reminders>
+                <reminders>
+                    <note>Get a gift.</note>
+                    <timeOfReminder>2016-11-09T15:00</timeOfReminder>
+                </reminders>
+            </reminders>
         </tasks>
         <tasks>
             <taskName>Find a Philosophy in Life</taskName>
