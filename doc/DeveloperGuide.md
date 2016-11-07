@@ -1006,7 +1006,7 @@ Tasks cannot be created with start dates only.
 
 #### Appendix E : Product Survey
 
-##### Things we learnt:
+<img src="images/developerGuide/survey.png"/>
 
 Our group has surveyed 4 different task managers, Google Calendar, Todoist, Wunderlist and Fantastical. Below is a summary of what we have found:
 
@@ -1024,36 +1024,3 @@ Generally, the 4 task managers share the same basic functionalities to add and m
 Noting that Jim follows the Inbox Zero email management plan and how he will be adding all his tasks into the application, we would be able to look at all his events to judge when he is free. Hence, we believe that adding this feature would be able to help Jim better manage his tasks as he would be able to rasily find his free timeslots and schedule his work accordingly.
 
 We decided to add reminders as Jim can use it to remind himself about his important deadlines and events, especially in the case where his task list is flooded. Furthermore, he can use reminders as a way to remind himself to clear certain pre-requisites to a task.
-
-##### *Pros of Products Surveyed*
-<img src="images/ProductSurveyPros.jpeg"/>
-> Figure 9 Pros of Products Surveyed
-
-##### *Cons of Products Surveyed:*
-*Google Calendar*
-* Keyboard shortcuts needs to be discovered.
-* CLI commands is only for the addition of tasks.
-* Unable to add to-dos/floating tasks.
-* Inability to mark tasks as completed.
-* Only has limited color tags to categorize tasks.
-
-*Todoist*
-* Non-intuitive control.
-    * Can only view all tasks (in all categories) in 1 page when you select filters → all.
-* Cannot show all tasks as 1 single list.
-    * Even when showing all tasks, categorized tasks are segregated.
-* Many functions only accessible in paid version
-    * Exporting, comments, labels, etc.
-* No flexibility in setting duration of tasks shown.
-    * Can only show tasks due today or within 7 days.
-* Navigation can only be done by GLI.
-* Only supports To-Dos.
-
-*Wunderlist*
-* Only supports To-Dos.
-* Only has today and weekly view.
-* Only able to add 1 reminder to each task.
-
-*Fantastical*
-* Only available on Mac.
-* Not free and the paid version is expensive.
