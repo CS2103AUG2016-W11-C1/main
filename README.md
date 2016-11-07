@@ -1,6 +1,6 @@
 # Linenux
 
-![alt text](https://github.com/CS2103AUG2016-W11-C1/main/blob/README/Screenshot.png)
+![alt text](https://github.com/CS2103AUG2016-W11-C1/main/blob/master/Screenshot.png)
 
 ## Introduction
 
