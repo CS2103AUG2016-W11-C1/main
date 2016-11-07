@@ -97,7 +97,7 @@ Linenux follows the Model-View-Controller (MVC) pattern which is made up of 3 ma
 
 The **Schedule** class stores the data of **Task** and **Reminder** instances in-memory. To facillitate the `undo` command, we introduce an intermediary class known as **State**. A **State** object represents the state of the **Schedule** class at a point in time. A new **State** object is added to the **Schedule** class whenever a task or reminder is created, updated or deleted. Thus, to `undo` a command, we can simply discard the most recent **State**.
 
-To properly capture the above behaviour, we have made **State**, **Task** and **Reminder** classes immutable. An immutable object is an object whose state cannot be modified after it is created. This means that any modification to a **Task** or **Reminder** object will cause a new **State** object to be added. This is why any methods that mutate the data should do so via the **Schedule** class.
+To properly capture the above behaviour, we have made **State**, **Task** and **Reminder** classes immutable. An immutable object is an object whose state cannot be modified after it is created. This means that any modification to a **Task** or **Reminder** object will cause a new **State** object to be added. This is why any methods that mutate the data should do so via the **Schedule** class. This follows the Momento Pattern as it provides the **Schedule** class with the ability to restore itself to its previous state.
 
 Specifically, we have exposed three mutation methods:
 
@@ -129,7 +129,7 @@ A **Task** object can have tags and reminders. Tags are strings that allow users
 
 ##### *ScheduleStorage Interface*
 
-The **ScheduleStorage** interface defines the necessary methods that the **Controller** requires to read and write to a file type. It allows the data to persist when the user exits the application. Currently, all schedule files are saved as an XML file type format but you can extend it to other file types by implementing this interface. This interface follows the Dependency Inversion Principle and prevents the **Controller** component to be tightly coupled with a certain file type.
+The **ScheduleStorage** interface defines the necessary methods that the **Controller** requires to read and write to a file type. It allows the data to persist when the user exits the application. Currently, all schedule files are saved as an XML file type format but you can extend it to other file types by implementing this interface. This interface follows the Dependency Inversion Principle and prevents the **Controller** component to be tightly coupled with a certain file type. 
 
 *Notable APIs:* [`ScheduleStorage.java`](https://github.com/CS2103AUG2016-W11-C1/main/blob/master/src/main/java/linenux/storage/ScheduleStorage.java)
 
@@ -144,6 +144,8 @@ The **ScheduleStorage** interface defines the necessary methods that the **Contr
 <img src="images/developerGuide/view.png">
 
 The **View Component** uses the JavaFx UI framework. The layout of these UI parts are defined in the matching `.fxml` files that are found in the `src/main/resources/view` folder. Similarly, the look of these UI parts are styled in their respective `.css` files found in the same folder.
+
+The **TodoBox**, **DeadlineBox** and **EventBox** follows the Observable Pattern as it listens to changes in the states list of the **Schedule** class. Also whenever there is a list command, it listens to the filtered task lists and updates the view accordingly.
 
 #### Controller Component
 
@@ -160,7 +162,7 @@ The **ControlUnit** class is the "brain" of Linenux and is responsible for setti
 
 ##### *CommandManager Class*
 
-The **CommandManager** class holds a list of commands and is responsible for delegating the user input to the right command. This design follows the Open-Closed Principle and makes it easy to add new commands. 
+The **CommandManager** class holds a list of commands and is responsible for delegating the user input to the right command. It follows the Open-Closed Principle as it is easy to add new commands (open to extension) without having to modify other parts of the code (closed to modification).
 
 The sequence diagram below shows the flow of a typical command.
 
@@ -170,7 +172,7 @@ Since some commands require some form of user response, we will first check if a
 
 ##### *Command Interface*
 
-**Command** interface defines the necessary methods that **CommandManager** requires to allocate the correct command based on the user input.
+**Command** interface defines the necessary methods that **CommandManager** requires to allocate the correct command based on the user input. This follows the Command Pattern as the client, in this case the **CommandManager** class can treat each command type as a black box, calling the four methods in the table below whenever there is a user input.
 
 *Notable APIs:* [`Command.java`](https://github.com/CS2103AUG2016-W11-C1/main/blob/master/src/main/java/linenux/command/Command.java)
 
@@ -210,6 +212,24 @@ These two classes work similarly as the **CommandManager** class and **Command**
 | --------------| -----------------------------------------------------------------------------------|
 | Boolean       | `respondTo(String userInput)`: checks if TimeParser can parse the time format.     |
 | LocalDateTime | `parse(String userInput)`: converts the time string into a LocalDateTime instance. |
+
+##### *AddArgumentParser Class*
+
+The **Either** class is a data structure inspired by the functional programming world and it is used to represent an operation that can have two possible outcomes. For example, when parsing something, the output is either the result, or an error message. In the **AddArgumentParser** class, the desired result is the creation of a new **Task** object, while the error message happens when there are problems with parsing the user input. To improve code readability, we can use the Filter Pattern to filter through the different fields of a **Task**, and only proceeding to the next field if the criteria is met.
+
+``` java
+    public Either<Task, CommandResult> parse(String argument) {
+        this.parseResult = this.genericParser.parse(argument);
+
+        return Either.<Task, CommandResult>left(new Task(""))
+                .bind(this::extractTaskName)
+                .bind(this::extractStartTime)
+                .bind(this::extractEndTime)
+                .bind(this::extractTags)
+                .bind(this::ensureValidDateCombination)
+                .bind(this::ensureValidEventTimes);
+    }
+```
 
 ##### *GenericParser Class*
 
