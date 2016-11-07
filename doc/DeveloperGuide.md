@@ -29,6 +29,7 @@
     * [Appendix D: Glossary](#appendix-d--glossary)
     * [Appendix E: Product Survey](#appendix-e--product-survey)
 
+//@@A0140702X 
 ## Introduction
 Linenux is a command-line, task manager application designed for consumers who are quick at typing. Being an open-source project, we understand that there are developers (yes, you) who want to contribute to the project but do not know where to begin. Thus, we have written this guide to inform newcomers to the project on the key design considerations and the overall software architecture. We hope that by the end of this developer guide, you will in a better position to start working on improving Linenux.
 <br>
@@ -77,6 +78,7 @@ To ensure code readablity on Github, please follow the following instructions to
     * Reason: Eclipse fails to detect the changes made to your project during `git pull`.
     * Solution: Refresh your project in Eclipse by clicking on it in the package explorer window and pressing `F5`.
 
+//@@author A0135788M
 ## Design
 
 #### Architecture
@@ -115,6 +117,7 @@ Specifically, we have exposed three mutation methods:
 | State        | `getMostRecentState()`: Returns the most recent state of schedule.                                          |
 | void         | `addState(State)`: Adds a new state into the list of states.                                                |
 
+//@@author A0127694U
 ##### *Task and Reminder Class*
 
 We classify all types of tasks into three categories:
@@ -127,6 +130,7 @@ Note that we do not allow tasks with start time but without end time. A **Task**
 
 A **Task** object can have tags and reminders. Tags are strings that allow users to further categorize their tasks, while reminders notify users on certain key points as the task draw nearer to its end time. 
 
+//@@author A0144915A
 ##### *ScheduleStorage Interface*
 
 The **ScheduleStorage** interface defines the necessary methods that the **Controller** requires to read and write to a file type. It allows the data to persist when the user exits the application. Currently, all schedule files are saved as an XML file type format but you can extend it to other file types by implementing this interface. This interface follows the Interface Segregation Principle as defines method that is specific for the **Controller** use.
@@ -147,6 +151,7 @@ The **View Component** uses the JavaFx UI framework. The layout of these UI part
 
 The **TodoBox**, **DeadlineBox** and **EventBox** follows the Observable Pattern as it listens to changes in the states list of the **Schedule** class. Also whenever there is a list command, it listens to the filtered task lists and updates the view accordingly.
 
+//@@author A0127694U
 #### Controller Component
 
 <img src="images/developerGuide/controller.png">
@@ -160,6 +165,7 @@ The **ControlUnit** class is the "brain" of Linenux and is responsible for setti
 3. Passes the user input to the **Command** class.
 4. Relays any feedback from the **Command** class to the **View** component.
 
+//@@author A0140702X
 ##### *CommandManager Class*
 
 The **CommandManager** class holds a list of commands and is responsible for delegating the user input to the right command. It follows the Open-Closed Principle as it is easy to add new commands (open to extension) without having to modify other parts of the code (closed to modification).
@@ -170,6 +176,7 @@ The sequence diagram below shows the flow of a typical command.
 
 Since some commands require some form of user response, we will first check if any commands are awaiting user response. Note that at most one command can be awaiting user response at any point in time. If there are no command waiting for user response, it is assumed that the user entered a command and the **CommandManager** class will assign the right command based on the user input. Finally, a feedback in the form of a **CommandResult** instance will be returned and displayed in the **View** component.
 
+//@@author A0135788M
 ##### *Command Interface*
 
 **Command** interface defines the necessary methods that **CommandManager** requires to allocate the correct command based on the user input. This follows the Command Pattern as the client, in this case the **CommandManager** class can treat each command type as a black box, calling the four methods in the table below whenever there is a user input.
@@ -183,6 +190,7 @@ Since some commands require some form of user response, we will first check if a
 | Boolean       | `isAwaitingUserResponse()`: checks if the command is awaiting for a response from the user.                      |
 | CommandResult | `processUserResponse(String userInput)`: carries out user response.                                              |
 
+//@@author A0144915A
 ##### *AbstractCommand Class*
 
 As many of the commands are similar in their implementation of some of the interface methods, we have abstracted the implementation into the **AbstractCommand** class.
@@ -195,6 +203,7 @@ As many of the commands are similar in their implementation of some of the inter
 | void        | `setAlias(String alias)`: set a new alias for the command.     |
 | void        | `removeAlias(String alias)`: removes an alias for the command. |
 
+//@@author A0127694U
 ##### *TimeParserManager Class and TimeParser Interface*
 
 These two classes work similarly as the **CommandManager** class and **Command** interface. The **TimeParserManager** class is responsible for delegating the user input to the right **TimeParser** instance.
@@ -213,6 +222,7 @@ These two classes work similarly as the **CommandManager** class and **Command**
 | Boolean       | `respondTo(String userInput)`: checks if TimeParser can parse the time format.     |
 | LocalDateTime | `parse(String userInput)`: converts the time string into a LocalDateTime instance. |
 
+//@@author A0144915A
 ##### *AddArgumentParser Class*
 
 The **Either** class is a data structure inspired by the functional programming world and it is used to represent an operation that can have two possible outcomes. For example, when parsing something, the output is either the result, or an error message. In the **AddArgumentParser** class, the desired result is the creation of a new **Task** object, while the error message happens when there are problems with parsing the user input. To improve code readability, we can use the Filter Pattern to filter through the different fields of a **Task**, and only proceeding to the next field if the criteria is met.
@@ -231,16 +241,19 @@ The **Either** class is a data structure inspired by the functional programming 
     }
 ```
 
+//@@author A0135788M
 ##### *GenericParser Class*
 
 For complex commands that requires searching and mutating the data, we have abstracted the parsing implementation so that commands that have the format `command KEYWORDS flag1/value1 flag2/value2` can use the **GenericParser** class. It separates the user input into the keywords, and the flags and their respective values are put into a hash table with the flags as keys.
 
+//@@author A0140702X
 #### Activity Diagram
 
 <img src="images/developerGuide/activity.png">
 
 The above activity diagram shows the generic flow of activities in Linenux. The top half of the diagram shows the process of the program initialization. Linenux will show alert and exit if there are problems with the Config file as the **Config** class has the crucial responsibility of getting the Schedule filepath. On the other hand, not being able to create or read the Schedule file will not exit the program as it only affects the saving functionality and does not compromise the other functionalities in Linenux. The bottom half of the diagram shows the user interaction with the program and how Linenux deals with the user input.
 
+//@@author A0144915A
 ## Logging
 
 We are using `java.util.logging` package for logging. The **LogsCenter** class is used to manage the logging levels
@@ -258,6 +271,7 @@ and logging destinations.
 * `FINE` : Details that is not usually noteworthy but may be useful in debugging
   e.g. print the actual list instead of just its size
 
+//@@author A0135788M
 ## Testing
 
 Tests can be found in the `./src/test/java` folder. 
@@ -294,6 +308,7 @@ Example: [`AutoCompleteTest.java`](https://github.com/CS2103AUG2016-W11-C1/main/
 The **AutoCompleteTest** ensures that the **CommandBoxController**, **AutoCompleter**, and **TernarySearchTree** integrates well. This
 is done by simulating an actual user interaction and ensure that the expected suggestion show up in the command box.
 
+//@@author A0127694U
 ## Dev Ops
 
 #### Build Automation
@@ -318,6 +333,7 @@ for public consumption.
 
 Gradle will automatically download the required dependencies when necessary.
 
+//@@author A0140702X
 #### Continuous Integration
 
 Travis CI is a Continuous Integration platform for GitHub projects. It runs the projects' tests automatically whenever new code is pushed to the repository. This ensures that existing functionality and features have not been broken by the changes.
@@ -334,6 +350,7 @@ Build statuses are also shown for each pull request for the convenience of the r
 request might be outdated (for e.g., when more commits are added to the destination branch). Hence, it is highly recommended
 for the reviewers to perform a rebuild (either via Travis or manually) before accepting a pull request.
 
+//@@author A0144915A
 #### Making a Release
 
 GitHub automatically treats Git tags as releases. However, GitHub also allows arbitrary files (for e.g., built binaries) to be included with these release. Travis is configured to attach the built JAR files to these releases.
@@ -347,6 +364,8 @@ Linenux depends on a handful of third-party libraries. These dependencies are de
 `dependencies` block. Gradle will manage (download, update, or delete) these dependencies as necessary (for example, before a
 build) to ensure that the build environment has the correct set of dependencies.
 
+
+//@@author A0135788M
 ## Appendices
 
 #### Appendix A : User Stories
@@ -378,6 +397,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have)  - `* *`,  Low (un
 |`*`      | user      | have a mini-window mode                   | the application does not take up the whole screen.                                                          |
 |`*`      | user      | have multiple language support            | choose my preferred working language.                                                                       |
 
+//@@author A0127694U
 #### Appendix B : Use Cases
 
 ##### *Use Case 1: Adding a task*
@@ -445,7 +465,8 @@ Use Case ends.
   3d2. User types cancel. <br>
   3d3. Linenux does not add the reminder to any tasks. <br>
   Use Case ends.   
-  
+ 
+//@@author A0140702X 
 ##### *Use Case 3: Editing a task*
 
 *MSS*
@@ -532,6 +553,7 @@ Use Case ends.
   3d3. Linenux does not edit any reminders. <br>
   Use Case ends.     
   
+//@@author A0135788M
 ##### *Use Case 5: Renaming a tag*
 
 *MSS*
@@ -591,6 +613,7 @@ Use Case ends.
   3d3. Linenux does not mark any tasks as done. <br>
   Use Case ends.     
   
+//@@author A0144915A
 ##### *Use Case 7: Marking a task as undone*
 
 *MSS*
@@ -661,6 +684,7 @@ Use Case ends.
   3d3. Linenux does not delete any task. <br>
   Use Case ends.     
   
+//@@author A0127694U
 ##### *Use Case 9: Deleting a reminder*
 
 *MSS*
@@ -724,6 +748,7 @@ Use Case ends.
   2c2. Linenux displays success message. <br>
   Use Case ends.  
   
+//@@author A0140702X
 ##### *Use Case 11: Listing tasks and reminders*
 
 *MSS*
@@ -758,6 +783,7 @@ Use Case ends.
 2. Linenux shows the corresponding view. <br>
 Use Case ends.    
 
+//@@author A0135788M
 ##### *Use Case 14: Viewing details around a task*
 
 *MSS*
@@ -809,6 +835,7 @@ Use Case ends.
 > 1b1. Linenux displays error message indicating invalid formats for the fields. <br>
   Use Case ends.
 
+//@@author A0144915A
 ##### *Use Case 16: Undoing the previous command*
 
 *MSS*
@@ -847,6 +874,7 @@ Use Case ends.
 > 1c1. Linenux displays error message that says alias is taken. <br>
   Use Case ends.
   
+//@@author A0127694U
 ##### *Use Case 18: Removing aliases for the commands*
 
 *MSS*
@@ -889,6 +917,7 @@ Use Case ends.
 > 1c1. Linenux shows an alert box. <br>
   Use Case ends.
   
+//@@author A0140702X
 ##### *Use Case 20: Loading a schedule from another folder*
 
 *MSS*
@@ -926,6 +955,7 @@ Use Case ends.
 > 1a1. Linenux shows an alert box. <br>
   Use Case ends.
   
+//@@author A0144915A
 ##### *Use Case 22: Seeking help*
 
 *MSS*
@@ -952,6 +982,7 @@ Use Case ends.
 2. The program closes. <br>
 Use Case ends.     
 
+//@@author A0127694U
 #### Appendix C : Non Functional Requirements
 
 1. **Backup** - Should be easy for user to backup their data
@@ -972,6 +1003,7 @@ Linenux supports 3 kinds of tasks:
 
 Tasks cannot be created with start dates only.
 
+//@@author A0144915A
 ##### *Commands Summary*
 
 *Legend:*
@@ -1024,6 +1056,7 @@ Tasks cannot be created with start dates only.
 | <kbd>↑</kbd> / <kbd>↓</kbd> | Cycles through your most recently used commands without having to type everything again.   |
 | <kbd>Tab</kbd>              | Autocompletes the command word for you. 												   |
 
+//@@author A0140702X
 #### Appendix E : Product Survey
 
 <img src="images/developerGuide/survey.png"/>
