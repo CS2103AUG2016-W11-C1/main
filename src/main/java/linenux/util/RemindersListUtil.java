@@ -26,6 +26,8 @@ public class RemindersListUtil {
                 builder.append(result.getReminders().get(i).toString());
                 builder.append("\n");
             };
+
+            builder.append("\n");
         }
 
         return builder.toString().trim();
