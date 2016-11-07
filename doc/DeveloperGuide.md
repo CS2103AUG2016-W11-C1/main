@@ -364,37 +364,20 @@ Priorities: High (must have) - `* * *`, Medium (nice to have)  - `* *`,  Low (un
 
 *MSS*
 
-1. User requests to add task.
-2. Linenux adds task into schedule and shows message indicating successful add, including details of added task.
+1. User requests to add a task.
+2. Linenux adds the task into schedule and displays successful add message. <br>
 Use Case ends.
 
 *Extensions*
 
 1a. User provides start time without end time.
-> 1a1. TaskManager shows error message to indicate that task is not a valid task.
-> Use Case ends.
+> 1a1. Linenux shows error message to indicate that task is not a valid task. <br>
+  Use Case ends.
 
-1b. User provides no start time and end time.
-> 1b1. Linenux will categorize task as a To-Do.
-> Use Case resumes at step 2.
+1b. User adds a task that already exist in the Schedule.
+> 1b1. Linenux displays error message to indicate that task already exist in Schedule. <br>
+  Use Case ends.
 
-1c. User provides end time without start time.
-> 1c1. Linenux will categorize task as a Deadline.
-> Use Case resumes at step 2.
-
-1d. User provides start time and end time.
-> 1d1. Linenux will categorize task as an Event.
-> Use Case resumes at step 2.
-
-1e. User requests to add an event with an overlapping timeslot with an existing event.
-> 1e1. Linenux will show the list of overlapping events and prompts user for confirmation to add the event.
-> 1e2. User confirms to add task.
-> Use Case resumes at step 2.
-
-1e1a. User cancels the add.
-> 1e1a1. Linenux shows that task is not added.
-
-> Use Case ends.
 
 ##### *Use Case 2: List tasks*
 
