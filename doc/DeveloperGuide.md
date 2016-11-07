@@ -360,12 +360,13 @@ Priorities: High (must have) - `* * *`, Medium (nice to have)  - `* *`,  Low (un
 
 #### Appendix B : Use Cases
 
-##### *Use Case 1: Add task*
+##### *Use Case 1: Adding a task*
 
 *MSS*
 
 1. User requests to add a task.
-2. Linenux adds the task into schedule and displays successful add message. <br>
+2. Linenux adds the task into schedule.
+3. Linenux displays success message. <br>
 Use Case ends.
 
 *Extensions*
@@ -378,7 +379,41 @@ Use Case ends.
 > 1b1. Linenux displays error message to indicate that task already exist in Schedule. <br>
   Use Case ends.
 
+##### *Use Case 2: Setting a reminder for a task*
 
+*MSS*
+
+1. User requests to add a reminder for a task.
+2. Linenux searches for tasks with names containing the keywords.
+3. Only one task with that keyword is found and Linenux automatically sets the reminder to that task. 
+4. Linenux displays success message. <br>
+Use Case ends.
+  
+*Extensions*
+
+3a. No task in schedule has name with keywords.
+> 3a1. Linenux shows error message to indicate no task found. <br>
+  Use Case ends.
+
+3b. Multiple tasks are found and user selects valid index. 
+> 3b1. Linenux displays the list of tasks with index containing keywords. <br>
+  3b2. User selects valid index. <br>
+  3b3. Linenux sets the reminder to that task. <br>
+  3b4. Linenux displays success message. <br>
+  Use Case ends. 
+  
+3c. Multiple tasks are found and user selects invalid index. 
+> 3c1. Linenux displays the list of tasks with index containing keywords. <br>
+  3c2. User selects invalid index. <br>
+  3c3. Linenux displays error message to indicate invalid index. <br>
+  Use Case resumes at step 3c1.   
+  
+3d. Multiple tasks are found and user selects cancel. 
+> 3d1. Linenux displays the list of tasks with index containing keywords. <br>
+  3d2. User types cancel. <br>
+  3d3. Linenux does not add the reminder to any task. <br>
+  Use Case ends.   
+  
 ##### *Use Case 2: List tasks*
 
 *MSS*
@@ -421,14 +456,7 @@ Use Case ends.
 > 2b1. Linenux shows error that no tasks were found.
 > Use Case ends.
 
-##### *Use Case 4: Add reminder to task*
 
-*MSS*
-
-1. User requests to add reminder to task, providing search parameters for task.
-2. Linenux searches for the task (See Use Case for commands with search).
-3. Linenux adds reminder to the found task and shows message indicating successful add, including details of reminder and task that reminder was added to.
-Use Case ends.
 
 ##### *Use Case 5: Delete task*
 
