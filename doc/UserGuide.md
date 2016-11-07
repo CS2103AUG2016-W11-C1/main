@@ -26,6 +26,7 @@
 * [Shortcut Keys](#shortcut-keys)
 * [Conclusion](#conclusion)
 
+//@@author A0127694U
 ## About
 
 Everyone of us will face, at some point in our lives, the feeling of being overwhelmed by the amount of things to do: meeting project deadlines, attending a friend's wedding ceremony, paying the bills and the list goes on. This hectic pace of life is the new normal, but it doesn't mean we have to suffer in silence. We believe that everyone should have control over their own lives and Linenux is the key to achieving just that.
@@ -34,6 +35,7 @@ Linenux is essentially a task organiser. It helps you to prioritise your tasks b
 
 Without further ado, let's get started!
 
+//@@author A0140702X
 ## Getting Started
 
 #### Download
@@ -49,6 +51,7 @@ Without further ado, let's get started!
 
 Double-click on the file to launch Linenux. Wait for a few seconds for the main window to appear.
 
+//@@author A0144915A
 #### Visual Walkthrough
 
 <img src="images/userGuide/mainWindow.png">
@@ -61,6 +64,7 @@ Double-click on the file to launch Linenux. Wait for a few seconds for the main 
 
 *The list of deadlines, events and reminders are always ordered according to their urgency.*
 
+//@@author A0135788M
 #### Functional Walkthrough
 
 *This section is a scenario driven, step-by-step introduction on how to use Linenux. For a more in-depth coverage of the commands, refer to our [Commands](#commands) section in the user guide.*
@@ -141,6 +145,8 @@ This brings up the list of Linenux commands with their description and format. I
 | [`help`](#help) 		  		| Seeking help.			                    | `help` [COMMMAND_NAME]    									 	 |
 | [`exit`](#exit) 	   	        | Exiting Linenux. 			                | `exit` 			       									     	 |
 
+
+//@@author A0144915A
 ## Supported Time Formats
 
 | Format               | Example                |
@@ -150,6 +156,8 @@ This brings up the list of Linenux commands with their description and format. I
 | today 5.50pm         | today 5.50pm           |
 | tomorrow 5.50pm      | tommorrow 5.50pm       |
 
+
+//@@author A0135788M
 ## Commands
 
 *Notes:*
@@ -179,13 +187,13 @@ Adding a task has never been this easy. Just indicate the appropriate fields and
 *Examples:*
 
 ```
-* Adding a to-do with tag 'trump'.
+Explanation: Adding a to-do with tag 'trump'.
 > add watch videos on presidential election #/trump
 
-* Adding a deadline with tags 'household' and 'bills and money'.
+Explanation: Adding a deadline with tags 'household' and 'bills and money'.
 > add pay utility bills et/tomorrow 5.00pm #/household #/bills and money
 
-* Adding an event with tag 'household'.
+Explanation: Adding an event with tag 'household'.
 > add house warming st/tomorrow 7.00pm et/tomorrow 9.00pm #/household
 ```
 
@@ -202,7 +210,7 @@ Setting reminders is as simple as adding a task. Just specify the appropriate fi
 *Examples:*
 
 ```
-* Setting a reminder for the event 'house warming' with the note 'buy groceries'.
+Explanation: Setting a reminder for the event 'house warming' with the note 'buy groceries'.
 > remind house warming t/tomorrow 7.00am n/buy groceries
 ```
 
@@ -222,6 +230,7 @@ Have you wondered why we use the word `KEYWORDS` rather than `TASK`? This is bec
 
 In this scenario, since there are multiple task names with the keyword `assignment`, both results are returned and you get to choose, via specifying an index, which task is the reminder for. This searching mechanism is implemented for all commands with the field `KEYWORDS`. How cool is that?
 
+//@@author A0140702X
 #### Editing Tasks and Reminders
 
 ##### *Edit*
@@ -239,22 +248,22 @@ Also, to remove fields, we will use a dash as shown in the examples below. You c
 *Examples:*
 
 ```
-* Adding an event with tags 'hobby' and 'rest day'.
+Explanation: Adding an event with tags 'hobby' and 'rest day'.
 > add play golf st/tomorrow 7.00am et/tomorrow 9.00am #/hobby #/rest day
 
-* Changing the name of the event from 'play golf' to 'play chess'.
+Explanation: Changing the name of the event from 'play golf' to 'play chess'.
 > edit golf n/play chess
 
-* Changing the starting and ending time of the event 'play chess'.
+Explanation: Changing the starting and ending time of the event 'play chess'.
 > edit chess st/tomorrow 7.00pm et/tomorrow 9.00pm
 
-* Replacing both tags 'hobby' and 'rest day' with the tag 'fun'.
+Explanation: Replacing both tags 'hobby' and 'rest day' with the tag 'fun'.
 > edit chess #/fun
 
-* Changing 'play chess' from an event to a to-do.
+Explanation: Changing 'play chess' from an event to a to-do.
 > edit chess st/- et/-
 
-* Removing all tags associated with the to-do 'play chess'.
+Explanation: Removing all tags associated with the to-do 'play chess'.
 > edit chess #/-
 ```
 
@@ -269,13 +278,14 @@ Also, to remove fields, we will use a dash as shown in the examples below. You c
 *Examples:*
 
 ```
-* Setting a reminder for the event 'house warming' with the note 'buy groceries'.
+Explanation: Setting a reminder for the event 'house warming' with the note 'buy groceries'.
 > remind house warming t/tomorrow 7.00am n/buy groceries
 
-* Changing the time of a reminder with note.
+Explanation: Changing the time of a reminder with note.
 > editr buy groceries t/tomorrow 6:00am
 ```
 
+//@@author A0127694U
 #### Renaming Tags
 
 ##### *Rename*
@@ -289,10 +299,11 @@ Renaming a tag will change all tasks with that tag to the new tag.
 *Examples:*
 
 ```
-* Rename tag 'assignments' to 'nus assignments'.
+Explanation: Rename tag 'assignments' to 'nus assignments'.
 > rename assignments #/nus assignments
 ```
 
+//@@author A0127694U
 #### Marking Tasks as Done
 
 ##### *Done*
@@ -306,7 +317,7 @@ Yes! You’ve just completed a task. Since it’s completed, you wouldn’t want
 *Examples:*
 
 ```
-* Mark to-do 'write user guide' as done.
+Explanation: Mark to-do 'write user guide' as done.
 > done write user guide.
 ```
 
@@ -321,7 +332,7 @@ In cases where we accidentally mark an incomplete task as done, we can use the `
 *Examples:*
 
 ```
-* Mark to-do `write user guide` as undone.
+Explanation: Mark to-do `write user guide` as undone.
 > undone write user guide
 ```
 
@@ -340,7 +351,7 @@ delete KEYWORDS
 *Example:*
 
 ```
-* Delete an event 'cs2103 meeting'.
+Explanation: Delete an event 'cs2103 meeting'.
 > delete cs2103 meeting
 ```
 
@@ -357,7 +368,7 @@ deleter KEYWORDS
 *Example:*
 
 ```
-* Delete a reminder 'buy groceries'.
+Explanation: Delete a reminder 'buy groceries'.
 > delete buy groceries
 ```
 
@@ -372,13 +383,14 @@ To delete multiple tasks in the same category, the `clear` command can be used. 
 *Example:*
 
 ```
-* Clears all tasks marked as done.
+Explanation: Clears all tasks marked as done.
 > clear
 
-* Clears all tasks with tag 'assignment'.
+Explanation: Clears all tasks with tag 'assignment'.
 > clear #/assignment
 ```
 
+//@@author A0135788M
 #### Listing Tasks and Reminders
 
 ##### *List*
@@ -397,29 +409,29 @@ Also, if you need to see the tasks that you have completed, simply add the `d/DO
 *Examples:*
 
 ```
-* Lists all incomplete tasks and reminders.
+Explanation: Lists all incomplete tasks and reminders.
 > list
 
-* Lists all incomplete tasks and reminders containing the word `assignment`.
+Explanation: Lists all incomplete tasks and reminders containing the word `assignment`.
 > list assignment
 
-* List all incomplete tasks and reminders from now to 25 December 2016, 11.59pm.
+Explanation: List all incomplete tasks and reminders from now to 25 December 2016, 11.59pm.
   (Assuming now is some time before 25 Decemeber 2016.)
 > list et/2016-12-25 11.59pm
 
-* List all incomplete tasks and reminders from 16 October 2016, 12.00am to 25 December 2016, 11.59pm.
+Explanation: List all incomplete tasks and reminders from 16 October 2016, 12.00am to 25 December 2016, 11.59pm.
 > list st/2016-10-16 12.00am et/2016-12-25 11.59pm
 
-* List all completed tasks.
+Explanation: List all completed tasks.
 > list d/yes
 
-* List both completed and incompleted tasks.
+Explanation: List both completed and incompleted tasks.
 > list d/all
 
-* List all incomplete tasks with tag 'nus'.
+Explanation: List all incomplete tasks with tag 'nus'.
 > list #/nus
 
-* List all incomplete tasks from 16 October 2016, 12.00am to 25 December 2016, 11.59pm and with tags 'nus'.
+Explanation: List all incomplete tasks from 16 October 2016, 12.00am to 25 December 2016, 11.59pm and with tags 'nus'.
 > list st/2016-10-16 12.00am et/2016-12-25 11.59pm #/nus
 ```
 
@@ -427,6 +439,7 @@ Also, if you need to see the tasks that you have completed, simply add the `d/DO
 
 <img src="images/userGuide/listTag.png">
 
+//@@author A0140702X
 ##### *Today*
 
 Seeing as how you might want to know today's tasks frequently, instead of typing `list st/today 12.00am et/today 11.59pm`, we made it into a command itself! Your events that occur today will be shown as well.
@@ -438,7 +451,7 @@ Seeing as how you might want to know today's tasks frequently, instead of typing
 *Example:*
 
 ```
-* List all tasks today.
+Explanation: List all tasks today.
 > today
 ```
 
@@ -453,7 +466,7 @@ Similar as the command `today`, this is a syntactic sugar which is equivalent to
 *Example:*
 
 ```
-* List all tasks the next day.
+Explanation: List all tasks the next day.
 > tomorrow
 ```
 #### Viewing a Task
@@ -469,12 +482,13 @@ The command `list` only provides the general details surrounding a task. To see 
 *Example:*
 
 ```
-* View details regarding the deadline.
+Explanation: View details regarding the deadline.
 > view CS2101 assignment
 ```
 
 <img src="images/userGuide/view.png">
 
+//@@author A0144915A
 #### Finding Freetime
 
 ##### *Freetime*
@@ -488,15 +502,16 @@ Sometimes we might need to know when we are free. The `freetime` command shows y
 *Examples:*
 
 ```
-* Finding all free time slots from tomorrow 3.00pm to tomorrow 10.00pm.
+Explanation: Finding all free time slots from tomorrow 3.00pm to tomorrow 10.00pm.
 > freetime st/tomorrow 3.00pm et/tomorrow 10.00pm
 
-* Finding all free time slots from now to tomorrow 9.00pm.
+Explanation: Finding all free time slots from now to tomorrow 9.00pm.
 > freetime et/tomorrow 9.00pm
 ```
 
 <img src="images/userGuide/freetime.png">
 
+//@@author A0135788M
 #### Undoing Previous Command
 
 ##### *Undo*
@@ -525,10 +540,11 @@ You can undo up to ten such commands.
 *Example:*
 
 ```
-* Undo previous undo-able commands, if any.
+Explanation: Undo previous undo-able commands, if any.
 > undo
 ```
 
+//@@author A0144915A
 #### Making Aliases for Commands
 
 ##### *Alias*
@@ -542,13 +558,13 @@ Ever felt that the command `tomorrow` is too long to type? Or if you have a bett
 *Example:*
 
 ```
-* Adding an alias for tomorrow.
+Explanation: Adding an alias for tomorrow.
 > alias tomorrow tmr
 
-* Listing all incomplete tasks and reminders for the next day.
+Explanation: Listing all incomplete tasks and reminders for the next day.
 > tmr
 
-* Original command tomorrow will still work.
+Explanation: Original command tomorrow will still work.
 > tomorrow
 ```
 
@@ -561,7 +577,7 @@ After setting an alias for a command, you can remove it with the `unalias` comma
 `unalias ALIAS`
 
 ```
-* Removing alias tmr from tomorrow
+Explanation: Removing alias tmr from tomorrow
 > unalias tmr
 ```
 
@@ -578,7 +594,7 @@ You might want to store the schedule file in a separate folder. You can do so by
 *Example*
 
 ```
-* Saving the schedule file to the Downloads folder.
+Explanation: Saving the schedule file to the Downloads folder.
 > save C:\Users\Jim\Downloads\MySchedule.xml
 ```
 
@@ -593,10 +609,11 @@ Similarly, you can load a schedule file from another folder by specifying the fu
 *Example*
 
 ```
-* Loading a schedule file from the Documents folder.
+Explanation: Loading a schedule file from the Documents folder.
 > load C:\Users\Jim\Documents\.Schedule.xml
 ```
 
+//@@author A0127694U
 #### Getting Program Information
 
 ##### *Information*
@@ -610,12 +627,13 @@ Provides program information.
 *Example*
 
 ```
-* Gets program information.
+Explanation: Gets program information.
 > information
 ```
 
 <img src="images/userGuide/information.png">
 
+//@@author A0140702X
 #### Seeking Help
 
 ##### *Help*
@@ -629,10 +647,10 @@ We all need a helping hand every once in a while. Lucky for you, we are with you
 *Example:*
 
 ```
-* Help for all commands.
+Explanation: Help for all commands.
 > help
 
-* Help for information command.
+Explanation: Help for information command.
 > help information
 ```
 
@@ -651,10 +669,11 @@ When you are done for the day, to exit the program, you can just type `exit`!
 *Example:*
 
 ```
-* Exits the program.
+Explanation: Exits the program.
 > exit
 ```
 
+//@@author A0127694U
 ## Shortcut Keys
 
 *These keyboard shortcuts are not commands, but they help speed up navigation in Linenux. We hope that you find these shortcuts helpful.*
@@ -664,6 +683,7 @@ When you are done for the day, to exit the program, you can just type `exit`!
 | <kbd>↑</kbd> / <kbd>↓</kbd> | Cycles through your most recently used commands without having to type everything again.   |
 | <kbd>Tab</kbd>              | Autocompletes the command word for you. 												   |
 
+//@@author A0140702X
 ## Conclusion
 
 Thank you for taking the time to read our user guide. Please feel free to post in our [issue tracker](https://github.com/CS2103AUG2016-W11-C1/linenux/issues) if you notice any bugs or have any suggestions on how to improve. We will be extremely happy to hear from you so we can make Linenux even better. With that, have fun organising your tasks!
