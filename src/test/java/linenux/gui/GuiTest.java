@@ -9,7 +9,6 @@ import org.testfx.api.FxToolkit;
 
 import linenux.Main;
 import linenux.config.JsonConfig;
-import linenux.gui.GuiTest.TestMain;
 import linenux.helpers.BetterRobot;
 
 //@@author A0144915A

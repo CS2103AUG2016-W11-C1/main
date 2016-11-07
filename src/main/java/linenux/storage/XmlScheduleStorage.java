@@ -11,8 +11,6 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import linenux.config.Config;
 import linenux.model.Schedule;
 import linenux.model.adapted.AdaptedSchedule;

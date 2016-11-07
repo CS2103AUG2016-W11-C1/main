@@ -38,7 +38,6 @@ public class TodayCommand extends AbstractCommand {
     public CommandResult execute(String userInput) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-M-d h.mma");
         LocalDateTime now = LocalDateTime.now(this.clock);
-        LocalDateTime startOfToday = now.withHour(0).withMinute(0).withSecond(0);
         LocalDateTime endOfToday = now.withHour(23).withMinute(59).withSecond(59);
 
         return this.listCommand.execute("list et/" + endOfToday.format(formatter));

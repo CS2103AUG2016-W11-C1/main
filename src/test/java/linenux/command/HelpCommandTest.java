@@ -23,8 +23,7 @@ public class HelpCommandTest {
         this.schedule = new Schedule();
         this.addCommand = new AddCommand(this.schedule);
         this.editCommand = new EditCommand(this.schedule);
-        this.helpCommand = new HelpCommand(
-                ArrayListUtil.fromArray(new Command[] { this.addCommand, this.editCommand }));
+        this.helpCommand = new HelpCommand(ArrayListUtil.fromArray(new Command[] { this.addCommand, this.editCommand }));
     }
 
     /**
@@ -79,15 +78,10 @@ public class HelpCommandTest {
     @Test
     public void execute_withoutArgument_commandResultReturned() {
         CommandResult result = this.helpCommand.execute("help");
-        String addDescription = addCommand.getTriggerWord() + " - \nDescription: " + addCommand.getDescription()
-                + "\nFormat: "
-                + addCommand.getCommandFormat();
-        String editDescription = editCommand.getTriggerWord() + " - \nDescription: " + editCommand.getDescription()
-                + "\nFormat: "
-                + editCommand.getCommandFormat();
+        String addDescription = addCommand.getTriggerWord() + " - \nDescription: " + addCommand.getDescription() + "\nFormat: " + addCommand.getCommandFormat();
+        String editDescription = editCommand.getTriggerWord() + " - \nDescription: " + editCommand.getDescription() + "\nFormat: " + editCommand.getCommandFormat();
 
-        assertEquals(addDescription + "\n\n" + editDescription + "\n\n" + this.helpCommand.CALLOUTS,
-                result.getFeedback());
+        assertEquals(addDescription + "\n\n" + editDescription + "\n\n" + Command.CALLOUTS, result.getFeedback());
     }
 
     /**
@@ -96,8 +90,7 @@ public class HelpCommandTest {
     @Test
     public void execute_specificCommnad_commandResultReturned() {
         CommandResult result = this.helpCommand.execute("help add");
-        String addDescription = addCommand.getTriggerWord() + " - \nDescription: " + addCommand.getDescription()
-                + "\nFormat: " + addCommand.getCommandFormat();
+        String addDescription = addCommand.getTriggerWord() + " - \nDescription: " + addCommand.getDescription() + "\nFormat: " + addCommand.getCommandFormat();
         assertEquals(addDescription + "\n\n", result.getFeedback());
     }
 
@@ -112,12 +105,9 @@ public class HelpCommandTest {
         this.editCommand.setAlias("ed");
 
         CommandResult result = this.helpCommand.execute("help");
-        String addDescription = addCommand.getTriggerWord() + ", a, ad - \nDescription: " + addCommand.getDescription()
-                + "\nFormat: " + addCommand.getCommandFormat();
-        String editDescription = editCommand.getTriggerWord() + ", e, ed - \nDescription: "
-                + editCommand.getDescription() + "\nFormat: " + editCommand.getCommandFormat();
+        String addDescription = addCommand.getTriggerWord() + ", a, ad - \nDescription: " + addCommand.getDescription() + "\nFormat: " + addCommand.getCommandFormat();
+        String editDescription = editCommand.getTriggerWord() + ", e, ed - \nDescription: " + editCommand.getDescription() + "\nFormat: " + editCommand.getCommandFormat();
 
-        assertEquals(addDescription + "\n\n" + editDescription + "\n\n" + this.helpCommand.CALLOUTS,
-                result.getFeedback());
+        assertEquals(addDescription + "\n\n" + editDescription + "\n\n" + Command.CALLOUTS, result.getFeedback());
     }
 }

@@ -25,10 +25,19 @@ public class Main extends Application {
 
     protected Config config = new JsonConfig();
 
+    public static void main(String[] args) {
+        launch(args);
+    }
+
     @Override
     public void start(Stage primaryStage) {
         logger.info("Setting up main window");
         setupMainWindow(primaryStage);
+    }
+
+    @Override
+    public void stop() {
+        System.exit(0);
     }
 
     /**
@@ -66,6 +75,7 @@ public class Main extends Application {
     private void setUpStage(Stage primaryStage) {
         primaryStage.setTitle(APP_NAME);
         primaryStage.getIcons().add(new Image("/images/terminal.png"));
-        primaryStage.setMaximized(true);;
+        primaryStage.setMaximized(true);
+        ;
     }
 }

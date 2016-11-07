@@ -20,7 +20,6 @@ public class LogsCenter {
     private static final int MAX_FILE_SIZE_IN_BYTES = (int) (Math.pow(2, 20) * 5); // 5MB
     private static final String LOG_FILE = "linenux.log";
     private static Level currentLogLevel = Level.INFO;
-    private static final Logger logger = LogsCenter.getLogger(LogsCenter.class);
     private static FileHandler fileHandler;
     private static ConsoleHandler consoleHandler;
 
@@ -39,7 +38,8 @@ public class LogsCenter {
     }
 
     private static void addConsoleHandler(Logger logger) {
-        if (consoleHandler == null) consoleHandler = createConsoleHandler();
+        if (consoleHandler == null)
+            consoleHandler = createConsoleHandler();
         logger.addHandler(consoleHandler);
     }
 
@@ -52,7 +52,8 @@ public class LogsCenter {
 
     private static void addFileHandler(Logger logger) {
         try {
-            if (fileHandler == null) fileHandler = createFileHandler();
+            if (fileHandler == null)
+                fileHandler = createFileHandler();
             logger.addHandler(fileHandler);
         } catch (IOException e) {
             logger.warning("Error adding file handler for logger.");
@@ -76,8 +77,8 @@ public class LogsCenter {
      * Creates a Logger for the given class name.
      */
     public static <T> Logger getLogger(Class<T> clazz) {
-        if (clazz == null) return Logger.getLogger("");
+        if (clazz == null)
+            return Logger.getLogger("");
         return getLogger(clazz.getSimpleName());
     }
 }
-
