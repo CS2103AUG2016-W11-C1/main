@@ -366,18 +366,6 @@
             <reminders/>
         </tasks>
         <tasks>
-            <taskName>Study For Exams</taskName>
-            <isDone>false</isDone>
-            <startTime>2016-11-06T00:00</startTime>
-            <endTime>2016-11-30T23:59</endTime>
-            <tags>
-                <tags>Exam</tags>
-                <tags>Study</tags>
-                <tags>School</tags>
-            </tags>
-            <reminders/>
-        </tasks>
-        <tasks>
             <taskName>Just a really really long todo which allows you to see the wrapping of text. Hopefully it's long enough now, but I'll make it longer just in case.</taskName>
             <isDone>false</isDone>
             <startTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
@@ -623,6 +611,14 @@
             <tags>
                 <tags>Not Fun</tags>
             </tags>
+            <reminders/>
+        </tasks>
+        <tasks>
+            <taskName>Haven't Done This Yet</taskName>
+            <isDone>true</isDone>
+            <startTime>2016-11-11T13:00</startTime>
+            <endTime>2016-11-11T15:00</endTime>
+            <tags/>
             <reminders/>
         </tasks>
     </state>
